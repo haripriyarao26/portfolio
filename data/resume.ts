@@ -176,12 +176,12 @@ export const resumeData: ResumeData = {
     {
       title: "Microsoft Certified - Python",
       issuer: "Microsoft",
-      issueDate: "2024"
+      issueDate: "2019"
     },
     {
       title: "Microsoft Certified - JavaScript",
       issuer: "Microsoft",
-      issueDate: "2024"
+      issueDate: "2019"
     }
   ]
 };

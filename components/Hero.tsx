@@ -17,8 +17,8 @@ export default function Hero() {
           </h2>
           <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8">
             Building scalable platforms, AI-powered solutions, and engineering systems
-            that drive business growth. Passionate about full-stack development,
-            DevOps, and emerging technologies.
+            that drive business growth. Passionate about full-stack development
+            and leveraging AI to solve complex problems and create meaningful impact.
           </p>
         </div>
 

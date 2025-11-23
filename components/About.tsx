@@ -47,16 +47,17 @@ export default function About() {
             </div>
             <h3 className="text-xl font-semibold text-white mb-3">Product-Focused</h3>
             <p className="text-slate-300">
-              Led initiatives that scaled Onetera to $3M ARR, working directly with stakeholders to translate business needs into technical solutions.
+              Create impact by focusing on the overall product needs, working directly with stakeholders to understand business objectives and translate them into technical solutions that drive measurable results.
             </p>
           </div>
         </div>
 
         <div className="mt-12 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-xl p-8 border border-indigo-500/30">
           <p className="text-slate-300 text-lg leading-relaxed text-center">
-            As a <strong className="text-white">Lead Software Engineer</strong> at Onetera Technologies, I've been instrumental in scaling the engineering platform from 0 to $3M ARR. 
-            I specialize in building AI-powered solutions, architecting scalable systems, and leading cross-functional initiatives that drive business growth. 
-            My experience spans full-stack development, DevOps, AI/ML integration, and product engineering.
+            As a <strong className="text-white">Software Engineer 2/Technical Lead</strong> at Onetera, I contribute to the development of innovative SaaS solutions, leveraging my experience in technical leadership and MEAN Stack expertise. Collaborating with a versatile team, we focus on delivering impactful projects and driving success through efficient development practices.
+          </p>
+          <p className="text-slate-300 text-lg leading-relaxed text-center mt-4">
+            I hold a <strong className="text-white">Master of Science in Computer Science</strong> from the University of Southern California. My approach to technical leadership is rooted in fostering collaboration and leveraging cutting-edge technologies to accelerate organizational growth.
           </p>
         </div>
       </div>
