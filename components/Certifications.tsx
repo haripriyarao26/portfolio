@@ -1,7 +1,7 @@
 'use client';
 
 import { resumeData } from '@/data/resume';
-import { Certificate } from 'lucide-react';
+import { Award } from 'lucide-react';
 
 export default function Certifications() {
   return (
@@ -19,7 +19,7 @@ export default function Certifications() {
             >
               <div className="flex items-start gap-4">
                 <div className="bg-gradient-to-br from-blue-500 to-cyan-500 p-3 rounded-lg">
-                  <Certificate className="text-white" size={24} />
+                  <Award className="text-white" size={24} />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-white mb-2">{cert.title}</h3>
