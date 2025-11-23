@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Briefcase, Calendar, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Briefcase, Calendar, MapPin } from 'lucide-react';
 
 interface TimelineItem {
   position: string;
@@ -17,10 +17,10 @@ interface TimelineProps {
 
 export default function Timeline({ items }: TimelineProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,48 +84,28 @@ export default function Timeline({ items }: TimelineProps) {
   const lineColor = `hsl(${hue}, 75%, 55%)`;
   const lineColorLight = `hsl(${hue}, 75%, 65%)`;
 
-  // Carousel navigation
-  const nextSlide = () => {
-    setCarouselIndex((prev) => (prev + 1) % items.length);
-  };
-
-  const prevSlide = () => {
-    setCarouselIndex((prev) => (prev - 1 + items.length) % items.length);
-  };
-
-  // Update carousel scroll position
-  useEffect(() => {
-    if (carouselRef.current) {
-      const scrollPosition = carouselIndex * carouselRef.current.offsetWidth;
-      carouselRef.current.scrollTo({
-        left: scrollPosition,
-        behavior: 'smooth',
-      });
+  // Handle card expand/collapse
+  const toggleCard = (index: number) => {
+    if (expandedIndex === index) {
+      setExpandedIndex(null);
+    } else {
+      setExpandedIndex(index);
     }
-  }, [carouselIndex]);
+  };
 
-  // Update active index when carousel scrolls (for touch/swipe)
+  // Collapse expanded card on scroll
   useEffect(() => {
     const handleScroll = () => {
-      if (carouselRef.current) {
-        const scrollLeft = carouselRef.current.scrollLeft;
-        const itemWidth = carouselRef.current.offsetWidth;
-        const newIndex = Math.round(scrollLeft / itemWidth);
-        if (newIndex !== carouselIndex && newIndex >= 0 && newIndex < items.length) {
-          setCarouselIndex(newIndex);
-        }
+      const currentScrollY = window.scrollY;
+      if (expandedIndex !== null && Math.abs(currentScrollY - lastScrollY.current) > 50) {
+        setExpandedIndex(null);
       }
+      lastScrollY.current = currentScrollY;
     };
 
-    if (carouselRef.current) {
-      carouselRef.current.addEventListener('scroll', handleScroll, { passive: true });
-      return () => {
-        if (carouselRef.current) {
-          carouselRef.current.removeEventListener('scroll', handleScroll);
-        }
-      };
-    }
-  }, [carouselIndex, items.length]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [expandedIndex]);
 
   return (
     <div ref={timelineRef} className="relative py-12">
@@ -230,105 +210,67 @@ export default function Timeline({ items }: TimelineProps) {
         })}
       </div>
 
-      {/* Mobile Carousel */}
-      <div className="md:hidden relative w-full overflow-hidden">
-        {/* Carousel Container */}
-        <div
-          ref={carouselRef}
-          className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide w-full"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {items.map((item, index) => (
+      {/* Mobile Stacked Cards */}
+      <div className="md:hidden relative space-y-4">
+        {items.map((item, index) => {
+          const isExpanded = expandedIndex === index;
+          return (
             <div
               key={index}
-              className="w-full min-w-full snap-center px-4 flex-shrink-0"
+              className="px-4"
             >
-              <div className="relative">
-                {/* Content Card - Mobile (no timeline dot) */}
-                <div className="w-full">
-                  <div
-                    className={`bg-slate-800 rounded-xl p-4 md:p-6 border transition-all duration-500 w-full ${
-                      carouselIndex === index
-                        ? 'border-indigo-500 shadow-lg shadow-indigo-500/30'
-                        : 'border-slate-700'
-                    }`}
-                  >
-                    <div className="mb-4">
-                      <h3 className="text-2xl font-bold text-white mb-2">{item.position}</h3>
-                      <div className="flex items-center gap-2 text-indigo-400 font-semibold mb-3">
-                        <Briefcase size={18} />
-                        <span>{item.company}</span>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-4 text-slate-400 text-sm">
-                        <div className="flex items-center gap-2">
-                          <Calendar size={16} />
-                          <span>{item.period}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MapPin size={16} />
-                          <span>{item.location}</span>
-                        </div>
-                      </div>
+              <div
+                onClick={() => toggleCard(index)}
+                className={`bg-slate-800 rounded-xl p-4 border transition-all duration-300 cursor-pointer relative ${
+                  isExpanded
+                    ? 'border-indigo-500 shadow-lg shadow-indigo-500/30'
+                    : 'border-slate-700'
+                }`}
+                style={{
+                  maxHeight: isExpanded ? 'none' : '200px',
+                  overflow: isExpanded ? 'visible' : 'hidden',
+                }}
+              >
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-white mb-2">{item.position}</h3>
+                  <div className="flex items-center gap-2 text-indigo-400 font-semibold mb-2">
+                    <Briefcase size={16} />
+                    <span className="text-sm">{item.company}</span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3 text-slate-400 text-xs">
+                    <div className="flex items-center gap-1">
+                      <Calendar size={14} />
+                      <span>{item.period}</span>
                     </div>
-
-                    <ul className="space-y-3">
-                      {item.achievements.map((achievement, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <span
-                            className={`mt-1.5 transition-colors duration-500 ${
-                              carouselIndex === index ? 'text-indigo-500' : 'text-slate-500'
-                            }`}
-                          >
-                            ▹
-                          </span>
-                          <span className="text-slate-300 leading-relaxed">{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="flex items-center gap-1">
+                      <MapPin size={14} />
+                      <span>{item.location}</span>
+                    </div>
                   </div>
                 </div>
+
+                <ul className="space-y-2">
+                  {item.achievements.map((achievement, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span
+                        className={`mt-1 transition-colors duration-300 text-xs ${
+                          isExpanded ? 'text-indigo-500' : 'text-slate-500'
+                        }`}
+                      >
+                        ▹
+                      </span>
+                      <span className="text-slate-300 text-sm leading-relaxed">{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {!isExpanded && (
+                  <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-slate-800 to-transparent rounded-b-xl pointer-events-none" />
+                )}
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Carousel Navigation */}
-        <div className="flex items-center justify-between mt-6 px-4 mx-4">
-          <button
-            onClick={prevSlide}
-            className="p-3 bg-slate-800 hover:bg-indigo-600 rounded-full transition-all duration-300 border border-slate-700 hover:border-indigo-500"
-            aria-label="Previous"
-          >
-            <ChevronLeft className="text-white" size={24} />
-          </button>
-
-          {/* Carousel Indicators */}
-          <div className="flex gap-2">
-            {items.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCarouselIndex(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  carouselIndex === index
-                    ? 'w-8 bg-indigo-500'
-                    : 'w-2 bg-slate-600 hover:bg-slate-500'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={nextSlide}
-            className="p-3 bg-slate-800 hover:bg-indigo-600 rounded-full transition-all duration-300 border border-slate-700 hover:border-indigo-500"
-            aria-label="Next"
-          >
-            <ChevronRight className="text-white" size={24} />
-          </button>
-        </div>
+          );
+        })}
       </div>
     </div>
   );
