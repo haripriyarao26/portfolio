@@ -1,7 +1,7 @@
 'use client';
 
 import { resumeData } from '@/data/resume';
-import { Mail, Linkedin, MapPin, Download } from 'lucide-react';
+import { Linkedin, MapPin } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -22,14 +22,6 @@ export default function Hero() {
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-slate-300">
-          <a
-            href={`mailto:${resumeData.email}`}
-            className="flex items-center gap-2 hover:text-white transition-colors"
-          >
-            <Mail size={18} />
-            <span>{resumeData.email}</span>
-          </a>
-          <span className="hidden sm:inline">•</span>
           <a
             href={`https://${resumeData.linkedin}`}
             target="_blank"

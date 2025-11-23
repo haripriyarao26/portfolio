@@ -74,7 +74,7 @@ export const resumeData: ResumeData = {
         "Scaled Onetera's engineering platform to achieve $3M ARR, leading product, DevOps, and AI initiatives to improve performance and system stability.",
         "Architected a zero-downtime CI/CD pipeline with CircleCI, Vercel, and Render; reduced deployment time from 20 to 10 minutes and eliminated prior 10-minute downtime.",
         "Developing a spatial analysis tool for the City of San Jose's ADU permit agents that processes site plans to auto-generate compliance reports - including zoning validations - reducing manual review.",
-        "Developed an AI-powered Service & Permit Guide using GPT-4 to crawl municipal websites, parse content into MongoDB, and generate structured business and permit documentation.",
+        "Built an AI-powered extraction pipeline that processes city general plans to automatically extract, structure, and display text and images on our public-facing website (www.onetera.com/cities/richmond/view). Implemented multi-language translation support and advanced caching techniques, achieving sub-second page load times and reducing server load by 70%.",
         "Implemented comprehensive ClickHouse monitoring for LangGraph nodes to track latency, token usage, and agent performance in real time.",
         "Integrated BetterStack into the observability stack to enable real-time incident alerts, improving issue resolution responsiveness across environments.",
         "Launched Onetera Studio, a no-code configuration platform for program managers to manage logic, FAQs, and workflows independently, reducing engineering support requests by 60%.",

@@ -1,7 +1,7 @@
 'use client';
 
 import { resumeData } from '@/data/resume';
-import { Mail, Linkedin, MapPin, Send } from 'lucide-react';
+import { Linkedin, MapPin } from 'lucide-react';
 
 export default function Contact() {
   return (
@@ -16,18 +16,7 @@ export default function Contact() {
             I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology!
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <a
-              href={`mailto:${resumeData.email}`}
-              className="flex flex-col items-center p-6 bg-slate-700 rounded-lg hover:bg-indigo-600 transition-all duration-300 group"
-            >
-              <Mail className="text-indigo-400 group-hover:text-white mb-3" size={32} />
-              <span className="text-white font-semibold mb-2">Email</span>
-              <span className="text-slate-400 text-sm text-center group-hover:text-white">
-                {resumeData.email}
-              </span>
-            </a>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <a
               href={`https://${resumeData.linkedin}`}
               target="_blank"
@@ -46,16 +35,6 @@ export default function Contact() {
               <span className="text-white font-semibold mb-2">Location</span>
               <span className="text-slate-400 text-sm text-center">{resumeData.location}</span>
             </div>
-          </div>
-
-          <div className="text-center">
-            <a
-              href={`mailto:${resumeData.email}?subject=Let's Connect`}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300"
-            >
-              <Send size={18} />
-              Send Message
-            </a>
           </div>
         </div>
       </div>
