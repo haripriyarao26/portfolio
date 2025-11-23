@@ -15,6 +15,8 @@ export interface Certification {
   issuer: string;
   issueDate: string;
   credentialId?: string;
+  imageUrl?: string;
+  skills?: string[];
 }
 
 export interface Education {
@@ -79,7 +81,6 @@ export const resumeData: ResumeData = {
       location: "Los Angeles, CA",
       period: "Sep 2024 - Present",
       achievements: [
-        "Scaled Onetera's engineering platform to achieve $3M ARR, leading product, DevOps, and AI initiatives to improve performance and system stability.",
         "Architected a zero-downtime CI/CD pipeline with CircleCI, Vercel, and Render; reduced deployment time from 20 to 10 minutes and eliminated prior 10-minute downtime.",
         "Developing a spatial analysis tool for the City of San Jose's ADU permit agents that processes site plans to auto-generate compliance reports - including zoning validations - reducing manual review.",
         "Built an AI-powered extraction pipeline that processes city general plans to automatically extract, structure, and display text and images on our public-facing website (www.onetera.com/cities/richmond/view). Implemented multi-language translation support and advanced caching techniques, achieving sub-second page load times and reducing server load by 70%.",
@@ -144,6 +145,34 @@ export const resumeData: ResumeData = {
     }
   ],
   certifications: [
+    {
+      title: "Agentic AI for Developers: Concepts and Application for Enterprises",
+      issuer: "LinkedIn",
+      issueDate: "Nov 2025",
+      skills: ["AI Software Development", "Generative AI", "Artificial Intelligence (AI)", "AI Agents"],
+      imageUrl: "/certifications/agentic-ai-developers.png"
+    },
+    {
+      title: "Hands-On Agentic AI: Building AI Agents with LlamaIndex",
+      issuer: "LinkedIn",
+      issueDate: "Nov 2025",
+      skills: ["LLaMA", "AI Agents"],
+      imageUrl: "/certifications/hands-on-agentic-ai.png"
+    },
+    {
+      title: "Generative AI: Introduction to Large Language Models",
+      issuer: "LinkedIn",
+      issueDate: "Mar 2024",
+      skills: ["Large Language Models (LLM)", "Generative AI"],
+      imageUrl: "/certifications/generative-ai-llm.png"
+    },
+    {
+      title: "What Is Generative AI?",
+      issuer: "LinkedIn",
+      issueDate: "Feb 2024",
+      skills: ["Artificial Intelligence for Business", "Generative AI"],
+      imageUrl: "/certifications/what-is-generative-ai.png"
+    },
     {
       title: "Microsoft Certified - Python",
       issuer: "Microsoft",
