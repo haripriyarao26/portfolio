@@ -52,15 +52,6 @@ export default function Certifications() {
                       </div>
                     </div>
                   )}
-                  {cert.imageUrl && (
-                    <div className="mt-4">
-                      <img
-                        src={cert.imageUrl}
-                        alt={cert.title}
-                        className="w-full rounded-lg border border-slate-700"
-                      />
-                    </div>
-                  )}
                 </div>
               </div>
             </div>

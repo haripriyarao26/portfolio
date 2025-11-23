@@ -1,6 +1,6 @@
 'use client';
 
-import { User, Target, Rocket } from 'lucide-react';
+import { User, Target, Rocket, Sparkles } from 'lucide-react';
 
 export default function About() {
   return (
@@ -10,14 +10,14 @@ export default function About() {
           <span className="gradient-text">About Me</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
             <div className="bg-gradient-to-br from-blue-600 to-cyan-600 p-3 rounded-lg w-fit mb-4">
               <User className="text-white" size={24} />
             </div>
             <h3 className="text-xl font-semibold text-white mb-3">Full-Stack Engineer</h3>
             <p className="text-slate-300">
-              Passionate about building scalable applications from frontend to backend, with expertise in React, Next.js, Node.js, and cloud infrastructure.
+              Passionate about building scalable applications from frontend to backend.
             </p>
           </div>
 
@@ -25,9 +25,19 @@ export default function About() {
             <div className="bg-gradient-to-br from-purple-600 to-pink-600 p-3 rounded-lg w-fit mb-4">
               <Rocket className="text-white" size={24} />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-3">AI & DevOps</h3>
+            <h3 className="text-xl font-semibold text-white mb-3">AI</h3>
             <p className="text-slate-300">
-              Experienced in AI/ML integration, LangGraph, GPT-4, and architecting zero-downtime CI/CD pipelines that scale with business needs.
+              Experienced in AI/ML integration, LangGraph, GPT-4, and building intelligent systems that solve complex problems.
+            </p>
+          </div>
+
+          <div className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+            <div className="bg-gradient-to-br from-green-600 to-emerald-600 p-3 rounded-lg w-fit mb-4">
+              <Sparkles className="text-white" size={24} />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-3">0 → 1 Builder</h3>
+            <p className="text-slate-300">
+              Specialized in taking products from concept to launch, building foundational architecture and scalable systems from scratch.
             </p>
           </div>
 
