@@ -7,6 +7,14 @@ export interface ResumeData {
   skills: Skills;
   experience: Experience[];
   honors: Honor[];
+  certifications: Certification[];
+}
+
+export interface Certification {
+  title: string;
+  issuer: string;
+  issueDate: string;
+  credentialId?: string;
 }
 
 export interface Education {
@@ -133,6 +141,18 @@ export const resumeData: ResumeData = {
       location: "Los Angeles, CA",
       year: "2024",
       description: "Led technical interviews and mentoring sessions, improving hiring efficiency and team growth"
+    }
+  ],
+  certifications: [
+    {
+      title: "Microsoft Certified - Python",
+      issuer: "Microsoft",
+      issueDate: "2024"
+    },
+    {
+      title: "Microsoft Certified - JavaScript",
+      issuer: "Microsoft",
+      issueDate: "2024"
     }
   ]
 };
