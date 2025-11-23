@@ -12,7 +12,7 @@ export default function Hero() {
             <span className="gradient-text">{resumeData.name}</span>
           </h1>
           <h2 className="text-2xl md:text-3xl text-slate-300 mb-6">
-            Lead Software Engineer
+            Founding Engineer • Lead Engineer • AI Engineer
           </h2>
           <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8">
             Building scalable platforms, AI-powered solutions, and engineering systems
