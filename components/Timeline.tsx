@@ -129,7 +129,7 @@ export default function Timeline({ items }: TimelineProps) {
 
   return (
     <div ref={timelineRef} className="relative py-12">
-      {/* Timeline Line - Hidden on mobile, visible on desktop */}
+      {/* Timeline Line - Only visible on desktop/tablet (md and above) */}
       <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full">
         {/* Background line */}
         <div
@@ -140,26 +140,6 @@ export default function Timeline({ items }: TimelineProps) {
           }}
         />
         {/* Animated progress line */}
-        <div
-          className="absolute top-0 w-full transition-all duration-300 ease-out"
-          style={{
-            height: `${progress * 100}%`,
-            background: `linear-gradient(to bottom, ${lineColorLight}, ${lineColor})`,
-            boxShadow: `0 0 15px ${lineColor}50, 0 0 30px ${lineColor}30`,
-            borderRadius: '2px',
-          }}
-        />
-      </div>
-      
-      {/* Mobile Timeline Line */}
-      <div className="md:hidden absolute left-6 w-1 h-full">
-        <div
-          className="absolute top-0 w-full transition-all duration-300"
-          style={{
-            height: '100%',
-            background: 'rgba(148, 163, 184, 0.15)',
-          }}
-        />
         <div
           className="absolute top-0 w-full transition-all duration-300 ease-out"
           style={{
@@ -267,19 +247,8 @@ export default function Timeline({ items }: TimelineProps) {
               className="min-w-full snap-center px-4 flex-shrink-0"
             >
               <div className="relative">
-                {/* Timeline Dot - Mobile */}
-                <div className="absolute left-6 transform -translate-x-1/2 z-10">
-                  <div
-                    className={`w-4 h-4 rounded-full border-4 border-slate-900 transition-all duration-500 ${
-                      carouselIndex === index
-                        ? 'bg-gradient-to-br from-indigo-500 to-purple-500 shadow-lg shadow-indigo-500/50 scale-125'
-                        : 'bg-slate-700 scale-100'
-                    }`}
-                  />
-                </div>
-
-                {/* Content Card */}
-                <div className="ml-12">
+                {/* Content Card - Mobile (no timeline dot) */}
+                <div>
                   <div
                     className={`bg-slate-800 rounded-xl p-6 border transition-all duration-500 ${
                       carouselIndex === index
