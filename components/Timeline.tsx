@@ -231,11 +231,11 @@ export default function Timeline({ items }: TimelineProps) {
       </div>
 
       {/* Mobile Carousel */}
-      <div className="md:hidden relative">
+      <div className="md:hidden relative w-full overflow-hidden">
         {/* Carousel Container */}
         <div
           ref={carouselRef}
-          className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide"
+          className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide w-full"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -244,13 +244,13 @@ export default function Timeline({ items }: TimelineProps) {
           {items.map((item, index) => (
             <div
               key={index}
-              className="min-w-full snap-center px-4 flex-shrink-0"
+              className="w-full min-w-full snap-center px-4 flex-shrink-0"
             >
               <div className="relative">
                 {/* Content Card - Mobile (no timeline dot) */}
-                <div>
+                <div className="w-full">
                   <div
-                    className={`bg-slate-800 rounded-xl p-6 border transition-all duration-500 ${
+                    className={`bg-slate-800 rounded-xl p-4 md:p-6 border transition-all duration-500 w-full ${
                       carouselIndex === index
                         ? 'border-indigo-500 shadow-lg shadow-indigo-500/30'
                         : 'border-slate-700'
@@ -296,7 +296,7 @@ export default function Timeline({ items }: TimelineProps) {
         </div>
 
         {/* Carousel Navigation */}
-        <div className="flex items-center justify-between mt-6 px-4">
+        <div className="flex items-center justify-between mt-6 px-4 mx-4">
           <button
             onClick={prevSlide}
             className="p-3 bg-slate-800 hover:bg-indigo-600 rounded-full transition-all duration-300 border border-slate-700 hover:border-indigo-500"
