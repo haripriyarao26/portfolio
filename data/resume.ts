@@ -70,7 +70,7 @@ export const resumeData: ResumeData = {
   ],
   skills: {
     languages: ["Python", "JavaScript", "TypeScript", "C", "Java", "SQL", "HTML", "CSS", "GraphQL"],
-    frameworks: ["Next.js", "Flask", "Django", "Node.js", "Express", "CircleCI", "Vercel", "Render", "AWS"],
+    frameworks: ["Next.js", "Flask", "Django", "Node.js", "Express", "CircleCI", "Vercel", "Render", "AWS", "Supabase", "LangGraph"],
     libraries: ["React", "Chakra UI", "Bootstrap", "Scikit-Learn", "NLTK"],
     databases: ["PostgreSQL", "MongoDB", "Supabase", "ClickHouse"]
   },
@@ -81,12 +81,12 @@ export const resumeData: ResumeData = {
       location: "Los Angeles, CA",
       period: "Sep 2024 - Present",
       achievements: [
+        "Built and optimized Onetera, improving reliability and performance, which directly contributed to attracting investor confidence and securing a $3M seed raise.",
         "Architected a zero-downtime CI/CD pipeline with CircleCI, Vercel, and Render; reduced deployment time from 20 to 10 minutes and eliminated prior 10-minute downtime.",
-        "Developing a spatial analysis tool for the City of San Jose's ADU permit agents that processes site plans to auto-generate compliance reports - including zoning validations - reducing manual review.",
-        "Built an AI-powered extraction pipeline that processes city general plans to automatically extract, structure, and display text and images on our public-facing website (www.onetera.com/cities/richmond/view). Implemented multi-language translation support and advanced caching techniques, achieving sub-second page load times and reducing server load by 70%.",
-        "Implemented comprehensive ClickHouse monitoring for LangGraph nodes to track latency, token usage, and agent performance in real time.",
-        "Integrated BetterStack into the observability stack to enable real-time incident alerts, improving issue resolution responsiveness across environments.",
+        "Designed AI Agent workflows for general task planning and multi-language translation, reducing municipal one-time operational costs by 60-70% and freeing resources for high-impact services.",
+        "Monitored ClickHouse pipelines and integrated BetterStack alerts, reducing incident resolution by 40%.",
         "Launched Onetera Studio, a no-code configuration platform for program managers to manage logic, FAQs, and workflows independently, reducing engineering support requests by 60%.",
+        "Developed core components of Onetera's Agent Library, enabling cities to deploy pre-built AI agents for ADU permitting, business licensing, and rental programs. Cut service launch times from months to weeks and provided residents 24/7 self-service access.",
         "Serving as a forward-deployed engineer, attending city meetings and demos to gather requirements directly from stakeholders; translated civic needs into technical features that accelerated partnership adoption across multiple cities."
       ]
     },
@@ -96,9 +96,9 @@ export const resumeData: ResumeData = {
       location: "Los Angeles, CA",
       period: "Jan 2024 - Aug 2024",
       achievements: [
-        "Laid the foundation of Onetera's core architecture as a founding engineer, ensuring seamless integration of design and functionality with UI/UX teams, and establishing a scalable infrastructure using AWS and Next.js.",
+        "Laid the foundation of Onetera's core architecture as a founding engineer, ensuring seamless integration of design and functionality with UI/UX teams, and establishing a scalable infrastructure.",
         "Partnered directly with the Founder/CEO to conceptualize system architecture, define product roadmap, and coordinate with external vendors to integrate emerging GenAI technologies.",
-        "Took the product from 0 → 1 by setting up the entire system architecture from scratch - including repository structure, Git workflows, deployment strategy, and CI/CD integration - laying the foundation for a scalable product ecosystem.",
+        "Took the product from 0 to 1 by setting up the entire system architecture from scratch—including repository structure, Git workflows, deployment strategy, and CI/CD integration—laying the foundation for a scalable product ecosystem.",
         "Overhauled documentation standards, improving internal annotations and external developer guides, resulting in a 100% faster onboarding process for new team members.",
         "Developed and launched www.onetera.com, ensuring responsive, accessible and visually cohesive UI/UX using customized Chakra UI components."
       ]
@@ -121,10 +121,8 @@ export const resumeData: ResumeData = {
       period: "Jun 2021 - Jul 2022",
       achievements: [
         "Collaborated with cross-functional teams to build an enterprise recruitment platform supporting 4K+ employees, improving hiring visibility and data workflows.",
-        "Reduced the recruitment cycle time by 90% through workflow automation and reactive programming principles, significantly increasing process throughput.",
         "Developed two major system modules: a Hiring Flow for streamlined onboarding and a Candidate Portal, enhancing UI/UX with responsive front-end design.",
-        "Built an Analytics Dashboard with ANT Design, enabling executives to visualize hiring data through pie, line, and bar charts.",
-        "Implemented business logic for managing 100K+ candidate records and extended user flows to support new enterprise requirements."
+        "Built an Analytics Dashboard with ANT Design, enabling executives to visualize hiring data through pie, line, and bar charts."
       ]
     }
   ],
