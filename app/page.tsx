@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
@@ -13,6 +14,46 @@ import Awards from '@/components/Awards';
 import Contact from '@/components/Contact';
 
 export default function Home() {
+  useEffect(() => {
+    // Handle hash navigation on page load
+    const handleHashNavigation = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        // Remove the # symbol
+        const sectionId = hash.substring(1);
+        // Wait for the page to fully render
+        setTimeout(() => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            // Get the navigation bar height (64px = h-16)
+            const navHeight = 64;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 100);
+      }
+    };
+
+    // Run on initial load
+    handleHashNavigation();
+
+    // Also handle hash changes (when clicking links after page load)
+    const handleHashChange = () => {
+      handleHashNavigation();
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
   return (
     <main className="min-h-screen">
       <Navigation />
