@@ -4,10 +4,13 @@ import { Code2, Github, Globe, ArrowRight, FileText } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 import { projects } from '@/data/projects';
+import { useState } from 'react';
 
 export default function Projects() {
   const { ref, isVisible } = useScrollAnimation();
   const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
+  const [imageLoading, setImageLoading] = useState<{ [key: string]: boolean }>({});
+  const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
   
   return (
     <section id="projects" className="py-20 px-4 bg-slate-900/50">
@@ -40,13 +43,38 @@ export default function Projects() {
               {/* Project Image */}
               {project.images && project.images[0] && (
                 <div className="relative w-full h-48 overflow-hidden bg-slate-700">
-                  <img
-                    src={project.images[0].src}
-                    alt={project.images[0].alt}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                  <div className="absolute top-4 right-4">
+                  {imageLoading[project.id] && !imageError[project.id] && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-400"></div>
+                    </div>
+                  )}
+                  {!imageError[project.id] && (
+                    <img
+                      src={project.images[0].src}
+                      alt={project.images[0].alt}
+                      className={`w-full h-full object-cover transition-all duration-500 hover:scale-110 ${
+                        imageLoading[project.id] ? 'opacity-0' : 'opacity-100'
+                      }`}
+                      style={{ minHeight: '192px' }}
+                      onLoadStart={() => setImageLoading(prev => ({ ...prev, [project.id]: true }))}
+                      onLoad={() => {
+                        setImageLoading(prev => ({ ...prev, [project.id]: false }));
+                      }}
+                      onError={(e) => {
+                        console.error('Image failed to load:', project.images[0].src, e);
+                        setImageError(prev => ({ ...prev, [project.id]: true }));
+                        setImageLoading(prev => ({ ...prev, [project.id]: false }));
+                      }}
+                      loading="eager"
+                    />
+                  )}
+                  {imageError[project.id] && (
+                    <div className="flex items-center justify-center h-full text-slate-400 text-sm px-4 text-center">
+                      {project.images[0].alt}
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent pointer-events-none"></div>
+                  <div className="absolute top-4 right-4 pointer-events-none z-10">
                     <span className="text-xs px-2 py-1 bg-indigo-600/80 text-white rounded-full backdrop-blur-sm">
                       {project.images.length} {project.images.length === 1 ? 'image' : 'images'}
                     </span>
