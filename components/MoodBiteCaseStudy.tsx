@@ -1,0 +1,244 @@
+'use client';
+
+import { Github, Globe, Code2, Lightbulb, Target, CheckCircle, TrendingUp } from 'lucide-react';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+
+export default function MoodBiteCaseStudy() {
+  const { ref, isVisible } = useScrollAnimation();
+
+  return (
+    <section id="projects" className="py-20 px-4 bg-slate-900/50">
+      <div ref={ref} className={`max-w-5xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600/20 rounded-full mb-6">
+            <Code2 className="text-indigo-400" size={18} />
+            <span className="text-indigo-400 text-sm font-medium">Case Study</span>
+          </div>
+          <h2 className="text-5xl font-bold mb-4">
+            <span className="gradient-text">MoodBite</span>
+          </h2>
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            A mood-driven food recommendation agent powered by AI
+          </p>
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <a
+              href="https://github.com/haripriyarao26/MoodBite"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors"
+            >
+              <Github size={18} />
+              <span>View Code</span>
+            </a>
+            <a
+              href="https://haripriyarao26.github.io/MoodBite/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
+            >
+              <Globe size={18} />
+              <span>Live Demo</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Project Image */}
+        <div className="mb-16 rounded-xl overflow-hidden border border-slate-700">
+          <img
+            src="/projects/image.png"
+            alt="MoodBite application interface showing mood-driven food recommendations"
+            className="w-full h-auto"
+          />
+        </div>
+
+        {/* Problem */}
+        <div className="mb-16">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-red-500/20 rounded-lg">
+              <Lightbulb className="text-red-400" size={24} />
+            </div>
+            <h3 className="text-3xl font-bold text-white">The Problem</h3>
+          </div>
+          <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
+            <p className="text-slate-300 text-lg leading-relaxed mb-4">
+              Choosing what to eat can be overwhelming, especially when you're tired, stressed, or just not in the mood to decide. 
+              Traditional food apps require you to know what you want, but sometimes you just need a recommendation based on how you're feeling.
+            </p>
+            <p className="text-slate-300 text-lg leading-relaxed">
+              The challenge was to create an intelligent system that understands context—mood, time of day, energy level, and dietary preferences—to provide personalized food recommendations without requiring API keys or paid services.
+            </p>
+          </div>
+        </div>
+
+        {/* Process */}
+        <div className="mb-16">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-blue-500/20 rounded-lg">
+              <Target className="text-blue-400" size={24} />
+            </div>
+            <h3 className="text-3xl font-bold text-white">My Process</h3>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+              <h4 className="text-xl font-semibold text-white mb-3">1. Research & Planning</h4>
+              <p className="text-slate-300">
+                Researched free AI models available through Hugging Face Inference API. Explored mood analysis techniques and food recommendation algorithms. 
+                Designed the user flow to capture mood, time, energy level, and dietary preferences.
+              </p>
+            </div>
+
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+              <h4 className="text-xl font-semibold text-white mb-3">2. Design & Prototyping</h4>
+              <p className="text-slate-300 mb-3">
+                Created a clean, intuitive interface using Ant Design components. Focused on simplicity—users describe their mood in natural language, 
+                and the system handles the rest. Designed for mobile-first experience with responsive layouts.
+              </p>
+              <div className="mt-4 p-4 bg-slate-900/50 rounded-lg">
+                <p className="text-sm text-slate-400 mb-2">Design Principles:</p>
+                <ul className="list-disc list-inside space-y-1 text-slate-300 text-sm">
+                  <li>Minimal cognitive load - simple form inputs</li>
+                  <li>Natural language input for mood description</li>
+                  <li>Visual feedback for recommendations</li>
+                  <li>Accessible color contrast and typography</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+              <h4 className="text-xl font-semibold text-white mb-3">3. Development</h4>
+              <p className="text-slate-300 mb-3">
+                Built with Next.js 14 and TypeScript for type safety. Integrated Hugging Face Inference API for AI-powered recommendations. 
+                Implemented preference memory using localStorage for personalized experiences.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'].map((tech) => (
+                  <span key={tech} className="px-3 py-1 bg-indigo-600/20 text-indigo-400 rounded-full text-sm">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Solution */}
+        <div className="mb-16">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-green-500/20 rounded-lg">
+              <CheckCircle className="text-green-400" size={24} />
+            </div>
+            <h3 className="text-3xl font-bold text-white">The Solution</h3>
+          </div>
+          <div className="bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-xl p-8 border border-indigo-500/30">
+            <p className="text-slate-300 text-lg leading-relaxed mb-6">
+              MoodBite is a fully functional web application that provides personalized food recommendations based on:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                'Mood Analysis - Natural language understanding of user emotions',
+                'Time-Aware Recommendations - Contextual suggestions based on time of day',
+                'Energy Level Consideration - Matches food to current energy state',
+                'Dietary Preferences - Supports vegetarian, vegan, and cultural preferences',
+                'Memory System - Remembers preferences for better future recommendations',
+                'Zero API Costs - Uses free Hugging Face models, no API keys needed'
+              ].map((feature, idx) => (
+                <div key={idx} className="flex items-start gap-3">
+                  <CheckCircle className="text-green-400 mt-1 flex-shrink-0" size={18} />
+                  <span className="text-slate-300">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* My Role & Contributions */}
+        <div className="mb-16">
+          <h3 className="text-3xl font-bold text-white mb-6">My Role & Contributions</h3>
+          <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-xl font-semibold text-white mb-2">Full-Stack Development</h4>
+                <p className="text-slate-300">
+                  Designed and implemented the entire application from frontend UI to AI integration. 
+                  Created a seamless user experience with intuitive form inputs and real-time recommendations.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xl font-semibold text-white mb-2">AI Integration</h4>
+                <p className="text-slate-300">
+                  Researched and integrated Hugging Face Inference API, implementing prompt engineering techniques 
+                  to generate contextual food recommendations based on multiple input factors.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xl font-semibold text-white mb-2">UX/UI Design</h4>
+                <p className="text-slate-300">
+                  Designed a clean, accessible interface using Ant Design. Focused on reducing friction—users can 
+                  describe their mood naturally without complex forms or multiple steps.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-xl font-semibold text-white mb-2">Deployment & Optimization</h4>
+                <p className="text-slate-300">
+                  Deployed to GitHub Pages with optimized build configuration. Ensured fast load times and 
+                  responsive design across all devices.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Outcomes */}
+        <div className="mb-16">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-purple-500/20 rounded-lg">
+              <TrendingUp className="text-purple-400" size={24} />
+            </div>
+            <h3 className="text-3xl font-bold text-white">Outcomes</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+              <div className="text-3xl font-bold text-indigo-400 mb-2">100%</div>
+              <p className="text-slate-300">Free to Use</p>
+              <p className="text-sm text-slate-500 mt-1">No API keys or paid services required</p>
+            </div>
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+              <div className="text-3xl font-bold text-indigo-400 mb-2">5</div>
+              <p className="text-slate-300">Key Features</p>
+              <p className="text-sm text-slate-500 mt-1">Mood, time, energy, preferences, memory</p>
+            </div>
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+              <div className="text-3xl font-bold text-indigo-400 mb-2">0</div>
+              <p className="text-slate-300">Setup Time</p>
+              <p className="text-sm text-slate-500 mt-1">Works immediately, no configuration needed</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Tech Stack */}
+        <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
+          <h3 className="text-2xl font-bold text-white mb-6">Technology Stack</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { name: 'Next.js 14', category: 'Framework' },
+              { name: 'TypeScript', category: 'Language' },
+              { name: 'Ant Design', category: 'UI Library' },
+              { name: 'Hugging Face', category: 'AI/ML' },
+              { name: 'GitHub Pages', category: 'Hosting' },
+              { name: 'Tailwind CSS', category: 'Styling' },
+              { name: 'React Hooks', category: 'State' },
+              { name: 'localStorage', category: 'Storage' }
+            ].map((tech) => (
+              <div key={tech.name} className="text-center p-4 bg-slate-900/50 rounded-lg">
+                <div className="font-semibold text-white mb-1">{tech.name}</div>
+                <div className="text-xs text-slate-500">{tech.category}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

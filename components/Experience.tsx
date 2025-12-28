@@ -10,9 +10,11 @@ export default function Experience() {
   return (
     <section id="experience" className="py-20 px-0 md:px-4 bg-slate-900/50">
       <div ref={ref} className={`max-w-6xl mx-auto px-4 md:px-0 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <h2 className="text-4xl font-bold mb-12 text-center">
-          <span className="gradient-text">Professional Experience</span>
-        </h2>
+        <div className="section-header">
+          <h2 className="text-4xl font-bold text-center">
+            <span className="gradient-text">Professional Experience</span>
+          </h2>
+        </div>
 
         <Timeline items={resumeData.experience} />
       </div>

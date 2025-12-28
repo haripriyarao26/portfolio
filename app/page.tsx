@@ -3,9 +3,10 @@
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
+import SectionSeparator from '@/components/SectionSeparator';
 import Experience from '@/components/Experience';
 import Skills from '@/components/Skills';
-import Projects from '@/components/Projects';
+import MoodBiteCaseStudy from '@/components/MoodBiteCaseStudy';
 import Education from '@/components/Education';
 import Certifications from '@/components/Certifications';
 import Awards from '@/components/Awards';
@@ -16,13 +17,21 @@ export default function Home() {
     <main className="min-h-screen">
       <Navigation />
       <Hero />
+      <SectionSeparator />
       <About />
+      <SectionSeparator />
       <Experience />
+      <SectionSeparator />
       <Skills />
-      <Projects />
+      <SectionSeparator />
+      <MoodBiteCaseStudy />
+      <SectionSeparator />
       <Education />
+      <SectionSeparator />
       <Certifications />
+      <SectionSeparator />
       <Awards />
+      <SectionSeparator />
       <Contact />
       
       {/* Footer */}
