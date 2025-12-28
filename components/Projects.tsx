@@ -1,7 +1,6 @@
 'use client';
 
 import { ExternalLink, Code2 } from 'lucide-react';
-import Image from 'next/image';
 
 const projects = [
   {
@@ -9,45 +8,9 @@ const projects = [
     description: 'Mood-Driven Food Agent that provides personalized food recommendations based on your mood, time, and energy level. Uses free Hugging Face AI models with no API keys required.',
     tech: ['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'],
     highlight: 'AI-powered recommendations',
-    image: '/projects/moodbite.png',
+    image: '/projects/image.png',
     github: 'https://github.com/haripriyarao26/MoodBite',
     features: ['Mood Analysis', 'Time-Aware', 'Energy Level', 'Dietary Preferences', 'Memory'],
-  },
-  {
-    title: 'Spatial Analysis Tool for City of San Jose',
-    description: 'AI-powered tool that processes site plans to auto-generate compliance reports with zoning validations, reducing manual review time significantly.',
-    tech: ['Python', 'AI/ML', 'Spatial Analysis'],
-    highlight: 'Reduced manual review time',
-  },
-  {
-    title: 'AI-powered Service & Permit Guide',
-    description: 'Built using GPT-4 to crawl municipal websites, parse content into MongoDB, and generate structured business and permit documentation.',
-    tech: ['GPT-4', 'MongoDB', 'Python', 'LangGraph'],
-    highlight: 'Automated documentation generation',
-  },
-  {
-    title: 'Onetera Studio',
-    description: 'No-code configuration platform for program managers to manage logic, FAQs, and workflows independently.',
-    tech: ['Next.js', 'React', 'TypeScript'],
-    highlight: '60% reduction in engineering support requests',
-  },
-  {
-    title: 'Zero-Downtime CI/CD Pipeline',
-    description: 'Architected CI/CD pipeline with CircleCI, Vercel, and Render, reducing deployment time from 20 to 10 minutes.',
-    tech: ['CircleCI', 'Vercel', 'Render', 'DevOps'],
-    highlight: 'Zero downtime deployments',
-  },
-  {
-    title: 'Enterprise Recruitment Platform',
-    description: 'Built enterprise recruitment platform supporting 4K+ employees with analytics dashboard and automated workflows.',
-    tech: ['React', 'Java', 'Spring Boot', 'ANT Design'],
-    highlight: '90% reduction in recruitment cycle time',
-  },
-  {
-    title: 'Credit Risk Decision Platform',
-    description: 'End-to-end credit risk decision-making SaaS platform using Angular and Spring Boot.',
-    tech: ['Angular', 'Spring Boot', 'SaaS'],
-    highlight: '95% on-time deployment rate',
   },
 ];
 
@@ -59,19 +22,18 @@ export default function Projects() {
           <span className="gradient-text">Featured Projects</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 flex flex-col overflow-hidden"
+              className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 flex flex-col overflow-hidden max-w-2xl mx-auto"
             >
               {project.image && (
-                <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden -mx-6 -mt-6">
-                  <Image
+                <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden -mx-6 -mt-6">
+                  <img
                     src={project.image}
                     alt={project.title}
-                    fill
-                    className="object-cover"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               )}
