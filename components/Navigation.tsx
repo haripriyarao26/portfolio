@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navItems = [
@@ -15,7 +15,7 @@ const navItems = [
   { name: 'Contact', href: '#contact', group: 'main' },
 ];
 
-export default function Navigation() {
+function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -174,4 +174,6 @@ export default function Navigation() {
     </nav>
   );
 }
+
+export default memo(Navigation);
 

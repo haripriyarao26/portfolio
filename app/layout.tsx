@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import ResourceHints from '@/components/ResourceHints'
 
 export const metadata: Metadata = {
   title: 'Haripriya Rao - Portfolio',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ResourceHints />
+        {children}
+      </body>
     </html>
   )
 }

@@ -3,14 +3,15 @@
 import { Github, Globe, Code2, Lightbulb, Target, CheckCircle, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { getProjectById } from '@/data/projects';
+import LazyImage from './LazyImage';
 
 interface MoodBiteCaseStudyProps {
   projectId?: string;
 }
 
-export default function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
+function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
   const { ref, isVisible } = useScrollAnimation();
   const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
   const project = getProjectById(projectId);
@@ -97,10 +98,11 @@ export default function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCa
                   </button>
                 </>
               )}
-              <img
+              <LazyImage
                 src={project.images[selectedImageIndex].src}
                 alt={project.images[selectedImageIndex].alt}
                 className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+                priority={selectedImageIndex === 0}
               />
               {project.images[selectedImageIndex].caption && (
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-6">
@@ -130,7 +132,7 @@ export default function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCa
                       : 'border-slate-700 hover:border-slate-600'
                   }`}
                 >
-                  <img
+                  <LazyImage
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-32 object-cover"
@@ -388,3 +390,5 @@ export default function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCa
     </section>
   );
 }
+
+export default memo(MoodBiteCaseStudy);

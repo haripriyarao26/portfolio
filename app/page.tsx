@@ -1,17 +1,31 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import SectionSeparator from '@/components/SectionSeparator';
-import Experience from '@/components/Experience';
-import Skills from '@/components/Skills';
-import Projects from '@/components/Projects';
-import Education from '@/components/Education';
-import Certifications from '@/components/Certifications';
-import Awards from '@/components/Awards';
-import Contact from '@/components/Contact';
+
+// Lazy load components that are below the fold
+const Experience = lazy(() => import('@/components/Experience'));
+const Skills = lazy(() => import('@/components/Skills'));
+const Projects = lazy(() => import('@/components/Projects'));
+const Education = lazy(() => import('@/components/Education'));
+const Certifications = lazy(() => import('@/components/Certifications'));
+const Awards = lazy(() => import('@/components/Awards'));
+const Contact = lazy(() => import('@/components/Contact'));
+
+// Loading fallback component
+const SectionLoader = () => (
+  <div className="py-20 px-4">
+    <div className="max-w-6xl mx-auto">
+      <div className="animate-pulse">
+        <div className="h-8 bg-slate-800 rounded w-1/3 mb-4"></div>
+        <div className="h-4 bg-slate-800 rounded w-2/3"></div>
+      </div>
+    </div>
+  </div>
+);
 
 export default function Home() {
   useEffect(() => {
@@ -61,19 +75,33 @@ export default function Home() {
       <SectionSeparator />
       <About />
       <SectionSeparator />
-      <Experience />
+      <Suspense fallback={<SectionLoader />}>
+        <Experience />
+      </Suspense>
       <SectionSeparator />
-      <Skills />
+      <Suspense fallback={<SectionLoader />}>
+        <Skills />
+      </Suspense>
       <SectionSeparator />
-      <Projects />
+      <Suspense fallback={<SectionLoader />}>
+        <Projects />
+      </Suspense>
       <SectionSeparator />
-      <Education />
+      <Suspense fallback={<SectionLoader />}>
+        <Education />
+      </Suspense>
       <SectionSeparator />
-      <Certifications />
+      <Suspense fallback={<SectionLoader />}>
+        <Certifications />
+      </Suspense>
       <SectionSeparator />
-      <Awards />
+      <Suspense fallback={<SectionLoader />}>
+        <Awards />
+      </Suspense>
       <SectionSeparator />
-      <Contact />
+      <Suspense fallback={<SectionLoader />}>
+        <Contact />
+      </Suspense>
       
       {/* Footer */}
       <footer className="bg-slate-900 border-t border-slate-800 py-8 px-4">

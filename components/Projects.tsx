@@ -1,16 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, memo, useEffect } from 'react';
 import { Code2, Github, Globe, ArrowRight, FileText } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 import { projects } from '@/data/projects';
 import CaseStudyModal from './CaseStudyModal';
+import LazyImage from './LazyImage';
+import { preloadImages } from '@/utils/imageCache';
 
-export default function Projects() {
+function Projects() {
   const { ref, isVisible } = useScrollAnimation();
   const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+
+  // Preload first project image when component mounts
+  useEffect(() => {
+    if (projects.length > 0 && projects[0].images && projects[0].images[0]) {
+      preloadImages([projects[0].images[0].src]);
+    }
+  }, []);
   
   return (
     <section id="projects" className="py-20 px-4 bg-slate-900/50">
@@ -43,10 +52,11 @@ export default function Projects() {
               {/* Project Image */}
               {project.images && project.images[0] && (
                 <div className="relative w-full h-48 overflow-hidden bg-slate-700">
-                  <img
+                  <LazyImage
                     src={project.images[0].src}
                     alt={project.images[0].alt}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    priority={index === 0}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
                   <div className="absolute top-4 right-4">
@@ -135,3 +145,5 @@ export default function Projects() {
     </section>
   );
 }
+
+export default memo(Projects);

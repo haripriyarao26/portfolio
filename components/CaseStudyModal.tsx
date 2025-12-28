@@ -1,7 +1,7 @@
 'use client';
 
 import { X } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import MoodBiteCaseStudy from './MoodBiteCaseStudy';
 
 interface CaseStudyModalProps {
@@ -9,7 +9,7 @@ interface CaseStudyModalProps {
   onClose: () => void;
 }
 
-export default function CaseStudyModal({ projectId, onClose }: CaseStudyModalProps) {
+function CaseStudyModal({ projectId, onClose }: CaseStudyModalProps) {
   useEffect(() => {
     if (projectId) {
       // Prevent body scroll when modal is open
@@ -72,3 +72,5 @@ export default function CaseStudyModal({ projectId, onClose }: CaseStudyModalPro
     </div>
   );
 }
+
+export default memo(CaseStudyModal);
