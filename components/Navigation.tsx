@@ -94,7 +94,7 @@ export default function Navigation() {
                 Skills
               </a>
               <a
-                href="/case-study"
+                href="#projects"
                 className={`transition-colors duration-200 font-medium ${
                   activeSection === 'projects' ? 'text-white' : 'text-slate-300 hover:text-white'
                 }`}
@@ -155,7 +155,7 @@ export default function Navigation() {
               Skills
             </a>
             <a
-              href="/case-study"
+              href="#projects"
               className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >

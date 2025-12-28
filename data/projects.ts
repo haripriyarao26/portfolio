@@ -22,12 +22,12 @@ export const projects: Project[] = [
     description: 'A mood-driven food recommendation agent powered by AI',
     images: [
       {
-        src: '/projects/image.png',
+        src: 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/moodbite/image.png',
         alt: 'MoodBite application interface showing mood-driven food recommendations',
         caption: 'Main interface with mood input and food recommendations'
       },
       {
-        src: '/projects/image2.png',
+        src: 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/moodbite/image2.png',
         alt: 'MoodBite form filled with example inputs',
         caption: 'Example form with filled inputs showing time, energy level, and dietary preferences'
       }

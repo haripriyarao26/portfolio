@@ -1,13 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import { Code2, Github, Globe, ArrowRight, FileText } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 import { projects } from '@/data/projects';
+import CaseStudyModal from './CaseStudyModal';
 
 export default function Projects() {
   const { ref, isVisible } = useScrollAnimation();
   const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   
   return (
     <section id="projects" className="py-20 px-4 bg-slate-900/50">
@@ -35,7 +38,7 @@ export default function Projects() {
                   : 'opacity-0 translate-y-10 scale-95'
               }`}
               style={{ transitionDelay: `${index * 200}ms` }}
-              onClick={() => window.location.href = `/case-study?id=${project.id}`}
+              onClick={() => setSelectedProjectId(project.id)}
             >
               {/* Project Image */}
               {project.images && project.images[0] && (
@@ -107,20 +110,28 @@ export default function Projects() {
                 </div>
 
                 {/* Case Study CTA */}
-                <a
-                  href={`/case-study?id=${project.id}`}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedProjectId(project.id);
+                  }}
                   className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg font-semibold transition-all duration-300 group"
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <FileText size={18} />
                   <span>View Case Study</span>
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </a>
+                </button>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Case Study Modal */}
+      <CaseStudyModal 
+        projectId={selectedProjectId} 
+        onClose={() => setSelectedProjectId(null)} 
+      />
     </section>
   );
 }
