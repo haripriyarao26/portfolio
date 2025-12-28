@@ -2,9 +2,11 @@
 
 import { User, Target, Rocket, Sparkles } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 
 export default function About() {
   const { ref, isVisible } = useScrollAnimation();
+  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(100);
   
   return (
     <section id="about" className="py-20 px-4">
@@ -14,7 +16,12 @@ export default function About() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+          <div 
+            ref={getItemRef(0)}
+            className={`bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 transition-all duration-700 ${
+              isCardVisible(0) ? 'opacity-100 translate-x-0 rotate-0' : 'opacity-0 -translate-x-10 rotate-3'
+            }`}
+          >
             <div className="bg-gradient-to-br from-blue-600 to-cyan-600 p-3 rounded-lg w-fit mb-4">
               <User className="text-white" size={24} />
             </div>
@@ -24,7 +31,13 @@ export default function About() {
             </p>
           </div>
 
-          <div className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+          <div 
+            ref={getItemRef(1)}
+            className={`bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 transition-all duration-700 ${
+              isCardVisible(1) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-90'
+            }`}
+            style={{ transitionDelay: '100ms' }}
+          >
             <div className="bg-gradient-to-br from-purple-600 to-pink-600 p-3 rounded-lg w-fit mb-4">
               <Rocket className="text-white" size={24} />
             </div>
@@ -34,7 +47,13 @@ export default function About() {
             </p>
           </div>
 
-          <div className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+          <div 
+            ref={getItemRef(2)}
+            className={`bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 transition-all duration-700 ${
+              isCardVisible(2) ? 'opacity-100 translate-x-0 rotate-0' : 'opacity-0 translate-x-10 -rotate-3'
+            }`}
+            style={{ transitionDelay: '200ms' }}
+          >
             <div className="bg-gradient-to-br from-green-600 to-emerald-600 p-3 rounded-lg w-fit mb-4">
               <Sparkles className="text-white" size={24} />
             </div>
@@ -44,7 +63,13 @@ export default function About() {
             </p>
           </div>
 
-          <div className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700">
+          <div 
+            ref={getItemRef(3)}
+            className={`bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 transition-all duration-700 ${
+              isCardVisible(3) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-90'
+            }`}
+            style={{ transitionDelay: '300ms' }}
+          >
             <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-3 rounded-lg w-fit mb-4">
               <Target className="text-white" size={24} />
             </div>

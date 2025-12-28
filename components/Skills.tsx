@@ -3,9 +3,12 @@
 import { resumeData } from '@/data/resume';
 import { Code, Database, Layers, Wrench } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 
 export default function Skills() {
   const { ref, isVisible } = useScrollAnimation();
+  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(150);
+  
   const skillCategories = [
     {
       icon: Code,
@@ -43,24 +46,51 @@ export default function Skills() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {skillCategories.map((category, index) => {
             const Icon = category.icon;
+            const cardVisible = isCardVisible(index);
+            
             return (
               <div
                 key={index}
-                className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700"
+                ref={getItemRef(index)}
+                className={`bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 transition-all duration-700 ${
+                  cardVisible
+                    ? 'opacity-100 translate-y-0 scale-100'
+                    : 'opacity-0 translate-y-20 scale-95'
+                }`}
+                style={{
+                  transitionDelay: `${index * 150}ms`,
+                }}
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <Icon className={category.color} size={24} />
+                  <div
+                    className={`transition-all duration-700 ${
+                      cardVisible ? 'rotate-0 scale-100' : 'rotate-12 scale-0'
+                    }`}
+                    style={{ transitionDelay: `${index * 150 + 200}ms` }}
+                  >
+                    <Icon className={category.color} size={24} />
+                  </div>
                   <h3 className="text-xl font-semibold text-white">{category.title}</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-slate-700 text-slate-300 rounded-full text-sm hover:bg-indigo-600 hover:text-white transition-colors"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                  {category.skills.map((skill, idx) => {
+                    const skillKey = `${index}-${idx}`;
+                    return (
+                      <span
+                        key={idx}
+                        className={`px-3 py-1 bg-slate-700 text-slate-300 rounded-full text-sm hover:bg-indigo-600 hover:text-white transition-all duration-500 ${
+                          cardVisible
+                            ? 'opacity-100 translate-y-0'
+                            : 'opacity-0 translate-y-5'
+                        }`}
+                        style={{
+                          transitionDelay: `${index * 150 + 300 + idx * 50}ms`,
+                        }}
+                      >
+                        {skill}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             );

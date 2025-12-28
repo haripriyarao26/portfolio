@@ -3,9 +3,11 @@
 import { resumeData } from '@/data/resume';
 import { GraduationCap, Calendar, MapPin } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 
 export default function Education() {
   const { ref, isVisible } = useScrollAnimation();
+  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
   
   return (
     <section id="education" className="py-20 px-4">
@@ -18,7 +20,15 @@ export default function Education() {
           {resumeData.education.map((edu, index) => (
             <div
               key={index}
-              className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700"
+              ref={getItemRef(index)}
+              className={`bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 transition-all duration-700 ${
+                isCardVisible(index) 
+                  ? 'opacity-100 translate-x-0 scale-100' 
+                  : index % 2 === 0 
+                    ? 'opacity-0 -translate-x-10 scale-95' 
+                    : 'opacity-0 translate-x-10 scale-95'
+              }`}
+              style={{ transitionDelay: `${index * 200}ms` }}
             >
               <div className="flex items-start gap-4">
                 <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-3 rounded-lg">
