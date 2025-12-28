@@ -89,12 +89,7 @@ export default function Hero() {
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
             <span className="gradient-text">{resumeData.name}</span>
           </h1>
-          <h2 className="text-2xl md:text-3xl text-slate-300 mb-2">
-            <span className="block md:inline">I'm a Problem Solver</span>
-          </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-2">
-            You've stumbled upon my little heaven on the web; Welcome and feel at home!
-          </p>
+         
           <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto mb-8 mt-4">
             Building scalable platforms, AI-powered solutions, and engineering systems
             that drive business growth. Passionate about full-stack development
