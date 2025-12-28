@@ -1,7 +1,7 @@
 'use client';
 
 import { resumeData } from '@/data/resume';
-import { Linkedin, MapPin, Mail, Download } from 'lucide-react';
+import { Linkedin, MapPin, Mail } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function Contact() {
@@ -21,7 +21,7 @@ export default function Contact() {
             I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology!
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <a
               href={`https://${resumeData.linkedin}`}
               target="_blank"
@@ -53,19 +53,6 @@ export default function Contact() {
               <span className="text-white font-semibold mb-2">Location</span>
               <span className="text-slate-400 text-sm text-center">{resumeData.location}</span>
             </div>
-
-            <a
-              href="/resume.pdf"
-              download
-              className="flex flex-col items-center p-6 bg-slate-700 rounded-lg hover:bg-indigo-600 transition-all duration-300 group card-hover"
-              aria-label="Download resume"
-            >
-              <Download className="text-indigo-400 group-hover:text-white mb-3 transition-colors" size={32} />
-              <span className="text-white font-semibold mb-2">Resume</span>
-              <span className="text-slate-400 text-sm text-center group-hover:text-white transition-colors">
-                Download PDF
-              </span>
-            </a>
           </div>
         </div>
       </div>

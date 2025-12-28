@@ -9,7 +9,7 @@ export default function CaseStudyPage() {
   return (
     <main className="min-h-screen">
       <Navigation />
-      <MoodBiteCaseStudy />
+      <MoodBiteCaseStudy projectId="moodbite" />
       <SectionSeparator />
       <Contact />
       

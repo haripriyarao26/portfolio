@@ -1,51 +1,64 @@
 'use client';
 
-import { Code2, Github, Globe } from 'lucide-react';
+import { Code2, Github, Globe, ArrowRight, FileText } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-
-const projects = [
-  {
-    title: 'MoodBite',
-    description: 'Ever wondered what to eat based on how you\'re feeling? MoodBite is your personal food companion that understands your mood, time of day, and energy level to suggest the perfect meal. Whether you\'re homesick and need comfort food or energized and ready for something adventurous, MoodBite has got you covered!',
-    tech: ['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'],
-    highlight: 'AI-powered recommendations',
-    image: '/projects/image.png',
-    github: 'https://github.com/haripriyarao26/MoodBite',
-    demo: 'https://haripriyarao26.github.io/MoodBite/',
-    features: ['Mood Analysis', 'Time-Aware', 'Energy Level', 'Dietary Preferences', 'Memory'],
-  },
-];
+import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
+import { projects } from '@/data/projects';
 
 export default function Projects() {
   const { ref, isVisible } = useScrollAnimation();
+  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
   
   return (
     <section id="projects" className="py-20 px-4 bg-slate-900/50">
       <div ref={ref} className={`max-w-6xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <h2 className="text-4xl font-bold mb-12 text-center">
-          <span className="gradient-text">Featured Projects</span>
-        </h2>
+        <div className="section-header">
+          <h2 className="text-4xl font-bold text-center">
+            <span className="gradient-text">Featured Projects</span>
+          </h2>
+        </div>
 
-        <div className="grid grid-cols-1 gap-6 justify-center">
+        <div className={`grid gap-6 ${
+          projects.length === 1 
+            ? 'grid-cols-1 max-w-4xl mx-auto' 
+            : projects.length === 2 
+              ? 'grid-cols-1 md:grid-cols-2' 
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+        }`}>
           {projects.map((project, index) => (
             <div
-              key={index}
-              className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 flex flex-col overflow-hidden max-w-2xl mx-auto"
+              key={project.id}
+              ref={getItemRef(index)}
+              className={`bg-slate-800 rounded-xl overflow-hidden border border-slate-700 flex flex-col card-hover transition-all duration-700 cursor-pointer ${
+                isCardVisible(index) 
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-10 scale-95'
+              }`}
+              style={{ transitionDelay: `${index * 200}ms` }}
+              onClick={() => window.location.href = `/case-study?id=${project.id}`}
             >
-              {project.image && (
-                <div className="relative w-full h-80 mb-4 rounded-lg overflow-hidden -mx-6 -mt-6 bg-slate-700">
+              {/* Project Image */}
+              {project.images && project.images[0] && (
+                <div className="relative w-full h-48 overflow-hidden bg-slate-700">
                   <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-contain"
-                    loading="eager"
+                    src={project.images[0].src}
+                    alt={project.images[0].alt}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                  <div className="absolute top-4 right-4">
+                    <span className="text-xs px-2 py-1 bg-indigo-600/80 text-white rounded-full backdrop-blur-sm">
+                      {project.images.length} {project.images.length === 1 ? 'image' : 'images'}
+                    </span>
+                  </div>
                 </div>
               )}
-              <div className="flex items-start justify-between mb-4">
-                <Code2 className="text-indigo-400" size={24} />
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2">
+
+              {/* Project Content */}
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex items-start justify-between mb-3">
+                  <Code2 className="text-indigo-400" size={24} />
+                  <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                     {project.github && (
                       <a
                         href={project.github}
@@ -69,37 +82,40 @@ export default function Projects() {
                       </a>
                     )}
                   </div>
-                  <span className="text-xs px-2 py-1 bg-indigo-600/20 text-indigo-400 rounded-full">
-                    {project.highlight}
-                  </span>
                 </div>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-3">{project.title}</h3>
-              <p className="text-slate-400 text-sm mb-4 flex-grow">{project.description}</p>
-              {project.features && (
-                <div className="mb-4">
-                  <p className="text-xs text-slate-500 mb-2">Features:</p>
-                  <div className="flex flex-wrap gap-1">
-                    {project.features.map((feature, idx) => (
-                      <span
-                        key={idx}
-                        className="text-xs px-2 py-1 bg-slate-700/50 text-slate-400 rounded"
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
+
+                <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
+                <p className="text-slate-400 text-sm mb-4 flex-grow line-clamp-3">
+                  {project.description}
+                </p>
+
+                {/* Tech Stack Preview */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tech.slice(0, 3).map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="text-xs px-2 py-1 bg-slate-700 text-slate-300 rounded"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {project.tech.length > 3 && (
+                    <span className="text-xs px-2 py-1 bg-slate-700 text-slate-300 rounded">
+                      +{project.tech.length - 3}
+                    </span>
+                  )}
                 </div>
-              )}
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="text-xs px-2 py-1 bg-slate-700 text-slate-300 rounded"
-                  >
-                    {tech}
-                  </span>
-                ))}
+
+                {/* Case Study CTA */}
+                <a
+                  href={`/case-study?id=${project.id}`}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg font-semibold transition-all duration-300 group"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <FileText size={18} />
+                  <span>View Case Study</span>
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </a>
               </div>
             </div>
           ))}

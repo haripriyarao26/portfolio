@@ -1,12 +1,30 @@
 'use client';
 
-import { Github, Globe, Code2, Lightbulb, Target, CheckCircle, TrendingUp } from 'lucide-react';
+import { Github, Globe, Code2, Lightbulb, Target, CheckCircle, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
+import { useState } from 'react';
+import { getProjectById } from '@/data/projects';
 
-export default function MoodBiteCaseStudy() {
+interface MoodBiteCaseStudyProps {
+  projectId?: string;
+}
+
+export default function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
   const { ref, isVisible } = useScrollAnimation();
   const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
+  const project = getProjectById(projectId);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  if (!project) return null;
+
+  const nextImage = () => {
+    setSelectedImageIndex((prev) => (prev + 1) % project.images.length);
+  };
+
+  const prevImage = () => {
+    setSelectedImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length);
+  };
 
   return (
     <section id="projects" className="py-20 px-4 bg-slate-900/50">
@@ -18,50 +36,112 @@ export default function MoodBiteCaseStudy() {
             <span className="text-indigo-400 text-sm font-medium">Case Study</span>
           </div>
           <h2 className="text-5xl font-bold mb-4">
-            <span className="gradient-text">MoodBite</span>
+            <span className="gradient-text">{project.title}</span>
           </h2>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            A mood-driven food recommendation agent powered by AI
+            {project.description}
           </p>
           <div className="flex items-center justify-center gap-4 mt-6">
-            <a
-              href="https://github.com/haripriyarao26/MoodBite"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors"
-            >
-              <Github size={18} />
-              <span>View Code</span>
-            </a>
-            <a
-              href="https://haripriyarao26.github.io/MoodBite/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
-            >
-              <Globe size={18} />
-              <span>Live Demo</span>
-            </a>
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors"
+              >
+                <Github size={18} />
+                <span>View Code</span>
+              </a>
+            )}
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
+              >
+                <Globe size={18} />
+                <span>Live Demo</span>
+              </a>
+            )}
           </div>
         </div>
 
-        {/* Project Image with Animation */}
-        <div 
-          ref={getItemRef(0)}
-          className={`mb-16 rounded-xl overflow-hidden border border-slate-700 transition-all duration-1000 ${
-            isCardVisible(0) 
-              ? 'opacity-100 scale-100 rotate-0' 
-              : 'opacity-0 scale-95 rotate-2'
-          }`}
-        >
-          <div className="relative group">
-            <img
-              src="/projects/image.png"
-              alt="MoodBite application interface showing mood-driven food recommendations"
-              className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Project Images Gallery */}
+        <div className="mb-16">
+          {/* Main Image Display */}
+          <div 
+            ref={getItemRef(0)}
+            className={`mb-6 rounded-xl overflow-hidden border border-slate-700 transition-all duration-1000 ${
+              isCardVisible(0) 
+                ? 'opacity-100 scale-100 rotate-0' 
+                : 'opacity-0 scale-95 rotate-2'
+            }`}
+          >
+            <div className="relative group">
+              {project.images.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-slate-900/80 hover:bg-slate-800 rounded-full transition-all opacity-0 group-hover:opacity-100"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft className="text-white" size={24} />
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-slate-900/80 hover:bg-slate-800 rounded-full transition-all opacity-0 group-hover:opacity-100"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="text-white" size={24} />
+                  </button>
+                </>
+              )}
+              <img
+                src={project.images[selectedImageIndex].src}
+                alt={project.images[selectedImageIndex].alt}
+                className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+              />
+              {project.images[selectedImageIndex].caption && (
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 to-transparent p-6">
+                  <p className="text-white text-sm font-medium">{project.images[selectedImageIndex].caption}</p>
+                </div>
+              )}
+              {project.images.length > 1 && (
+                <div className="absolute top-4 right-4 bg-slate-900/80 px-3 py-1 rounded-full">
+                  <span className="text-white text-sm">
+                    {selectedImageIndex + 1} / {project.images.length}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Thumbnail Gallery */}
+          {project.images.length > 1 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {project.images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImageIndex(index)}
+                  className={`relative rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    selectedImageIndex === index
+                      ? 'border-indigo-500 scale-105'
+                      : 'border-slate-700 hover:border-slate-600'
+                  }`}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-32 object-cover"
+                  />
+                  {selectedImageIndex === index && (
+                    <div className="absolute inset-0 bg-indigo-500/20"></div>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Problem */}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, Download } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { name: 'Home', href: '#home', group: 'main' },
@@ -111,14 +111,6 @@ export default function Navigation() {
               >
                 Contact
               </a>
-              <a
-                href="/resume.pdf"
-                download
-                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors text-white font-medium"
-              >
-                <Download size={16} />
-                <span>Resume</span>
-              </a>
             </div>
           </div>
 
@@ -175,15 +167,6 @@ export default function Navigation() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Contact
-            </a>
-            <a
-              href="/resume.pdf"
-              download
-              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors text-white font-medium"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Download size={16} />
-              <span>Resume</span>
             </a>
           </div>
         )}
