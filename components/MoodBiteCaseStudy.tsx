@@ -27,7 +27,7 @@ export default function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCa
   };
 
   return (
-    <section id="projects" className="py-20 px-4">
+    <section id="projects" className="py-20 px-4 bg-slate-900/50">
       <div ref={ref} className={`max-w-5xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         {/* Header */}
         <div className="text-center mb-16">
