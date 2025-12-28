@@ -136,6 +136,7 @@ export default function Timeline({ items }: TimelineProps) {
         {items.map((item, index) => {
           const isLeft = index % 2 === 0;
           const isActive = activeIndex === index;
+          const isExpanded = expandedIndex === index;
 
           return (
             <div
@@ -165,11 +166,18 @@ export default function Timeline({ items }: TimelineProps) {
                 className={`w-5/12 ${isLeft ? 'pr-8' : 'pl-8'}`}
               >
                 <div
-                  className={`bg-slate-800 rounded-xl p-6 border transition-all duration-500 card-hover ${
+                  onClick={() => toggleCard(index)}
+                  className={`bg-slate-800 rounded-xl p-6 border transition-all duration-500 card-hover cursor-pointer ${
                     isActive
                       ? 'border-indigo-500 shadow-lg shadow-indigo-500/30'
                       : 'border-slate-700'
                   }`}
+                  onMouseEnter={() => {
+                    setExpandedIndex(index);
+                  }}
+                  onMouseLeave={() => {
+                    setExpandedIndex(null);
+                  }}
                 >
                   <div className="mb-4">
                     <h3 className="text-2xl font-bold text-white mb-2">{item.position}</h3>
@@ -189,20 +197,29 @@ export default function Timeline({ items }: TimelineProps) {
                     </div>
                   </div>
 
-                  <ul className="space-y-3">
-                    {item.achievements.map((achievement, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span
-                          className={`mt-1.5 transition-colors duration-500 ${
-                            isActive ? 'text-indigo-500' : 'text-slate-500'
-                          }`}
-                        >
-                          ▹
-                        </span>
-                        <span className="text-slate-300 leading-relaxed">{achievement}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div
+                    className="overflow-hidden transition-all duration-500"
+                    style={{
+                      maxHeight: isExpanded ? '1000px' : '0px',
+                      opacity: isExpanded ? 1 : 0,
+                    }}
+                  >
+                    <ul className="space-y-3">
+                      {item.achievements.map((achievement, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <span
+                            className={`mt-1.5 transition-colors duration-500 ${
+                              isActive ? 'text-indigo-500' : 'text-slate-500'
+                            }`}
+                          >
+                            ▹
+                          </span>
+                          <span className="text-slate-300 leading-relaxed">{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
                 </div>
               </div>
             </div>
