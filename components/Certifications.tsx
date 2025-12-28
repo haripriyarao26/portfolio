@@ -3,9 +3,11 @@
 import { resumeData } from '@/data/resume';
 import { Award } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 
 export default function Certifications() {
   const { ref, isVisible } = useScrollAnimation();
+  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(150);
   
   if (!resumeData.certifications || resumeData.certifications.length === 0) {
     return null;
@@ -24,7 +26,13 @@ export default function Certifications() {
           {resumeData.certifications.map((cert, index) => (
             <div
               key={index}
-              className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700"
+              ref={getItemRef(index)}
+              className={`bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 transition-all duration-700 ${
+                isCardVisible(index) 
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-10 scale-95'
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="flex items-start gap-4">
                 <div className="bg-gradient-to-br from-blue-500 to-cyan-500 p-3 rounded-lg">

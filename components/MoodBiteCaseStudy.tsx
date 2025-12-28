@@ -2,9 +2,11 @@
 
 import { Github, Globe, Code2, Lightbulb, Target, CheckCircle, TrendingUp } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 
 export default function MoodBiteCaseStudy() {
   const { ref, isVisible } = useScrollAnimation();
+  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
 
   return (
     <section id="projects" className="py-20 px-4 bg-slate-900/50">
@@ -43,24 +45,40 @@ export default function MoodBiteCaseStudy() {
           </div>
         </div>
 
-        {/* Project Image */}
-        <div className="mb-16 rounded-xl overflow-hidden border border-slate-700">
-          <img
-            src="/projects/image.png"
-            alt="MoodBite application interface showing mood-driven food recommendations"
-            className="w-full h-auto"
-          />
+        {/* Project Image with Animation */}
+        <div 
+          ref={getItemRef(0)}
+          className={`mb-16 rounded-xl overflow-hidden border border-slate-700 transition-all duration-1000 ${
+            isCardVisible(0) 
+              ? 'opacity-100 scale-100 rotate-0' 
+              : 'opacity-0 scale-95 rotate-2'
+          }`}
+        >
+          <div className="relative group">
+            <img
+              src="/projects/image.png"
+              alt="MoodBite application interface showing mood-driven food recommendations"
+              className="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
         </div>
 
         {/* Problem */}
-        <div className="mb-16">
+        <div 
+          ref={getItemRef(1)}
+          className={`mb-16 transition-all duration-700 ${
+            isCardVisible(1) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+          }`}
+          style={{ transitionDelay: '200ms' }}
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-red-500/20 rounded-lg">
               <Lightbulb className="text-red-400" size={24} />
             </div>
             <h3 className="text-3xl font-bold text-white">The Problem</h3>
           </div>
-          <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
+          <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700 card-hover">
             <p className="text-slate-300 text-lg leading-relaxed mb-4">
               Choosing what to eat can be overwhelming, especially when you're tired, stressed, or just not in the mood to decide. 
               Traditional food apps require you to know what you want, but sometimes you just need a recommendation based on how you're feeling.
@@ -72,7 +90,13 @@ export default function MoodBiteCaseStudy() {
         </div>
 
         {/* Process */}
-        <div className="mb-16">
+        <div 
+          ref={getItemRef(2)}
+          className={`mb-16 transition-all duration-700 ${
+            isCardVisible(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+          style={{ transitionDelay: '400ms' }}
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-blue-500/20 rounded-lg">
               <Target className="text-blue-400" size={24} />
@@ -81,7 +105,13 @@ export default function MoodBiteCaseStudy() {
           </div>
           
           <div className="space-y-6">
-            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+            <div 
+              ref={getItemRef(3)}
+              className={`bg-slate-800/50 rounded-xl p-6 border border-slate-700 card-hover transition-all duration-700 ${
+                isCardVisible(3) ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-5 scale-95'
+              }`}
+              style={{ transitionDelay: '600ms' }}
+            >
               <h4 className="text-xl font-semibold text-white mb-3">1. Research & Planning</h4>
               <p className="text-slate-300">
                 Researched free AI models available through Hugging Face Inference API. Explored mood analysis techniques and food recommendation algorithms. 
@@ -89,7 +119,13 @@ export default function MoodBiteCaseStudy() {
               </p>
             </div>
 
-            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+            <div 
+              ref={getItemRef(4)}
+              className={`bg-slate-800/50 rounded-xl p-6 border border-slate-700 card-hover transition-all duration-700 ${
+                isCardVisible(4) ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-5 scale-95'
+              }`}
+              style={{ transitionDelay: '800ms' }}
+            >
               <h4 className="text-xl font-semibold text-white mb-3">2. Design & Prototyping</h4>
               <p className="text-slate-300 mb-3">
                 Created a clean, intuitive interface using Ant Design components. Focused on simplicity—users describe their mood in natural language, 
@@ -106,7 +142,13 @@ export default function MoodBiteCaseStudy() {
               </div>
             </div>
 
-            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+            <div 
+              ref={getItemRef(5)}
+              className={`bg-slate-800/50 rounded-xl p-6 border border-slate-700 card-hover transition-all duration-700 ${
+                isCardVisible(5) ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-5 scale-95'
+              }`}
+              style={{ transitionDelay: '1000ms' }}
+            >
               <h4 className="text-xl font-semibold text-white mb-3">3. Development</h4>
               <p className="text-slate-300 mb-3">
                 Built with Next.js 14 and TypeScript for type safety. Integrated Hugging Face Inference API for AI-powered recommendations. 
@@ -124,14 +166,20 @@ export default function MoodBiteCaseStudy() {
         </div>
 
         {/* Solution */}
-        <div className="mb-16">
+        <div 
+          ref={getItemRef(6)}
+          className={`mb-16 transition-all duration-700 ${
+            isCardVisible(6) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+          style={{ transitionDelay: '1200ms' }}
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-green-500/20 rounded-lg">
               <CheckCircle className="text-green-400" size={24} />
             </div>
             <h3 className="text-3xl font-bold text-white">The Solution</h3>
           </div>
-          <div className="bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-xl p-8 border border-indigo-500/30">
+          <div className="bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-xl p-8 border border-indigo-500/30 card-hover">
             <p className="text-slate-300 text-lg leading-relaxed mb-6">
               MoodBite is a fully functional web application that provides personalized food recommendations based on:
             </p>
@@ -154,9 +202,15 @@ export default function MoodBiteCaseStudy() {
         </div>
 
         {/* My Role & Contributions */}
-        <div className="mb-16">
+        <div 
+          ref={getItemRef(7)}
+          className={`mb-16 transition-all duration-700 ${
+            isCardVisible(7) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+          }`}
+          style={{ transitionDelay: '1400ms' }}
+        >
           <h3 className="text-3xl font-bold text-white mb-6">My Role & Contributions</h3>
-          <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
+          <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700 card-hover">
             <div className="space-y-4">
               <div>
                 <h4 className="text-xl font-semibold text-white mb-2">Full-Stack Development</h4>
@@ -191,7 +245,13 @@ export default function MoodBiteCaseStudy() {
         </div>
 
         {/* Outcomes */}
-        <div className="mb-16">
+        <div 
+          ref={getItemRef(8)}
+          className={`mb-16 transition-all duration-700 ${
+            isCardVisible(8) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+          style={{ transitionDelay: '1600ms' }}
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-purple-500/20 rounded-lg">
               <TrendingUp className="text-purple-400" size={24} />
@@ -199,17 +259,17 @@ export default function MoodBiteCaseStudy() {
             <h3 className="text-3xl font-bold text-white">Outcomes</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center card-hover">
               <div className="text-3xl font-bold text-indigo-400 mb-2">100%</div>
               <p className="text-slate-300">Free to Use</p>
               <p className="text-sm text-slate-500 mt-1">No API keys or paid services required</p>
             </div>
-            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center card-hover">
               <div className="text-3xl font-bold text-indigo-400 mb-2">5</div>
               <p className="text-slate-300">Key Features</p>
               <p className="text-sm text-slate-500 mt-1">Mood, time, energy, preferences, memory</p>
             </div>
-            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+            <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center card-hover">
               <div className="text-3xl font-bold text-indigo-400 mb-2">0</div>
               <p className="text-slate-300">Setup Time</p>
               <p className="text-sm text-slate-500 mt-1">Works immediately, no configuration needed</p>
@@ -218,7 +278,13 @@ export default function MoodBiteCaseStudy() {
         </div>
 
         {/* Tech Stack */}
-        <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
+        <div 
+          ref={getItemRef(9)}
+          className={`bg-slate-800/50 rounded-xl p-8 border border-slate-700 card-hover transition-all duration-700 ${
+            isCardVisible(9) ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+          }`}
+          style={{ transitionDelay: '1800ms' }}
+        >
           <h3 className="text-2xl font-bold text-white mb-6">Technology Stack</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[

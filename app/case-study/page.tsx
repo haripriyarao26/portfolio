@@ -1,33 +1,15 @@
 'use client';
 
 import Navigation from '@/components/Navigation';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
+import MoodBiteCaseStudy from '@/components/MoodBiteCaseStudy';
 import SectionSeparator from '@/components/SectionSeparator';
-import Experience from '@/components/Experience';
-import Skills from '@/components/Skills';
-import Education from '@/components/Education';
-import Certifications from '@/components/Certifications';
-import Awards from '@/components/Awards';
 import Contact from '@/components/Contact';
 
-export default function Home() {
+export default function CaseStudyPage() {
   return (
     <main className="min-h-screen">
       <Navigation />
-      <Hero />
-      <SectionSeparator />
-      <About />
-      <SectionSeparator />
-      <Experience />
-      <SectionSeparator />
-      <Skills />
-      <SectionSeparator />
-      <Education />
-      <SectionSeparator />
-      <Certifications />
-      <SectionSeparator />
-      <Awards />
+      <MoodBiteCaseStudy />
       <SectionSeparator />
       <Contact />
       

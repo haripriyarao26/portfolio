@@ -3,9 +3,11 @@
 import { resumeData } from '@/data/resume';
 import { Award } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 
 export default function Awards() {
   const { ref, isVisible } = useScrollAnimation();
+  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(150);
   
   return (
     <section id="awards" className="py-20 px-4 bg-slate-900/50">
@@ -20,7 +22,13 @@ export default function Awards() {
           {resumeData.honors.map((honor, index) => (
             <div
               key={index}
-              className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700"
+              ref={getItemRef(index)}
+              className={`bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 transition-all duration-700 ${
+                isCardVisible(index) 
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-10 scale-95'
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="flex items-start gap-4">
                 <div className="bg-gradient-to-br from-yellow-500 to-orange-500 p-3 rounded-lg">

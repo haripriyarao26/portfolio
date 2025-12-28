@@ -172,12 +172,6 @@ export default function Timeline({ items }: TimelineProps) {
                       ? 'border-indigo-500 shadow-lg shadow-indigo-500/30'
                       : 'border-slate-700'
                   }`}
-                  onMouseEnter={() => {
-                    setExpandedIndex(index);
-                  }}
-                  onMouseLeave={() => {
-                    setExpandedIndex(null);
-                  }}
                 >
                   <div className="mb-4">
                     <h3 className="text-2xl font-bold text-white mb-2">{item.position}</h3>

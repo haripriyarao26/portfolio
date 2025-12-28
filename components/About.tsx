@@ -100,7 +100,12 @@ export default function About() {
 
           {/* Story & Philosophy */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-xl p-8 border border-indigo-500/30">
+            <div 
+              ref={getItemRef(4)}
+              className={`bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-xl p-8 border border-indigo-500/30 transition-all duration-700 ${
+                isCardVisible(4) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
+              }`}
+            >
               <h3 className="text-2xl font-bold text-white mb-4">My Story</h3>
               <p className="text-slate-300 text-lg leading-relaxed mb-4">
                 As a <strong className="text-white">Software Engineer 2/Technical Lead</strong> at Onetera, I've had the privilege of building products from 0 to 1, 
@@ -115,7 +120,13 @@ export default function About() {
               </p>
             </div>
 
-            <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
+            <div 
+              ref={getItemRef(5)}
+              className={`bg-slate-800/50 rounded-xl p-8 border border-slate-700 transition-all duration-700 ${
+                isCardVisible(5) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
+              }`}
+              style={{ transitionDelay: '100ms' }}
+            >
               <h3 className="text-2xl font-bold text-white mb-4">My Philosophy</h3>
               <p className="text-slate-300 text-lg leading-relaxed mb-4">
                 <strong className="text-white">Build, don't just code.</strong> I believe the best engineers are those who understand 
@@ -129,31 +140,6 @@ export default function About() {
               </p>
             </div>
 
-            <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
-              <h3 className="text-2xl font-bold text-white mb-4">What I'm Looking For</h3>
-              <p className="text-slate-300 text-lg leading-relaxed">
-                I'm seeking opportunities as a <strong className="text-white">Senior Software Engineer</strong> or 
-                <strong className="text-white"> Technical Lead</strong> where I can:
-              </p>
-              <ul className="mt-4 space-y-2 text-slate-300">
-                <li className="flex items-start gap-3">
-                  <span className="text-indigo-400 mt-1">▹</span>
-                  <span>Build AI-powered products that solve complex problems</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-indigo-400 mt-1">▹</span>
-                  <span>Lead technical initiatives and mentor engineers</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-indigo-400 mt-1">▹</span>
-                  <span>Work with cross-functional teams to ship impactful features</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-indigo-400 mt-1">▹</span>
-                  <span>Contribute to product strategy and technical architecture decisions</span>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
