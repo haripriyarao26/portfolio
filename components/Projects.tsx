@@ -1,15 +1,16 @@
 'use client';
 
-import { ExternalLink, Code2 } from 'lucide-react';
+import { ExternalLink, Code2, Github, Globe } from 'lucide-react';
 
 const projects = [
   {
     title: 'MoodBite',
-    description: 'Mood-Driven Food Agent that provides personalized food recommendations based on your mood, time, and energy level. Uses free Hugging Face AI models with no API keys required.',
+    description: 'Ever wondered what to eat based on how you\'re feeling? MoodBite is your personal food companion that understands your mood, time of day, and energy level to suggest the perfect meal. Whether you\'re homesick and need comfort food or energized and ready for something adventurous, MoodBite has got you covered!',
     tech: ['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'],
     highlight: 'AI-powered recommendations',
     image: '/projects/image.png',
     github: 'https://github.com/haripriyarao26/MoodBite',
+    demo: 'https://haripriyarao26.github.io/MoodBite/',
     features: ['Mood Analysis', 'Time-Aware', 'Energy Level', 'Dietary Preferences', 'Memory'],
   },
 ];
@@ -39,18 +40,33 @@ export default function Projects() {
               )}
               <div className="flex items-start justify-between mb-4">
                 <Code2 className="text-indigo-400" size={24} />
-                <div className="flex items-center gap-2">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-slate-400 hover:text-indigo-400 transition-colors"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <ExternalLink size={18} />
-                    </a>
-                  )}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-400 hover:text-white transition-colors"
+                        title="View on GitHub"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Github size={18} />
+                      </a>
+                    )}
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-400 hover:text-indigo-400 transition-colors"
+                        title="View Live Demo"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Globe size={18} />
+                      </a>
+                    )}
+                  </div>
                   <span className="text-xs px-2 py-1 bg-indigo-600/20 text-indigo-400 rounded-full">
                     {project.highlight}
                   </span>
