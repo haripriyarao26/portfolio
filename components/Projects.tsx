@@ -1,6 +1,6 @@
 'use client';
 
-import { ExternalLink, Code2, Github, Globe } from 'lucide-react';
+import { Code2, Github, Globe } from 'lucide-react';
 
 const projects = [
   {
@@ -23,18 +23,19 @@ export default function Projects() {
           <span className="gradient-text">Featured Projects</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
+        <div className="grid grid-cols-1 gap-6 justify-center">
           {projects.map((project, index) => (
             <div
               key={index}
               className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 flex flex-col overflow-hidden max-w-2xl mx-auto"
             >
               {project.image && (
-                <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden -mx-6 -mt-6">
+                <div className="relative w-full h-80 mb-4 rounded-lg overflow-hidden -mx-6 -mt-6 bg-slate-700">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
+                    loading="eager"
                   />
                 </div>
               )}
@@ -49,7 +50,6 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         className="text-slate-400 hover:text-white transition-colors"
                         title="View on GitHub"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         <Github size={18} />
                       </a>
@@ -61,7 +61,6 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         className="text-slate-400 hover:text-indigo-400 transition-colors"
                         title="View Live Demo"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         <Globe size={18} />
                       </a>
@@ -106,4 +105,3 @@ export default function Projects() {
     </section>
   );
 }
-
