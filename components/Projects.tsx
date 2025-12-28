@@ -1,8 +1,18 @@
 'use client';
 
 import { ExternalLink, Code2 } from 'lucide-react';
+import Image from 'next/image';
 
 const projects = [
+  {
+    title: 'MoodBite',
+    description: 'Mood-Driven Food Agent that provides personalized food recommendations based on your mood, time, and energy level. Uses free Hugging Face AI models with no API keys required.',
+    tech: ['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'],
+    highlight: 'AI-powered recommendations',
+    image: '/projects/moodbite.png',
+    github: 'https://github.com/haripriyarao26/MoodBite',
+    features: ['Mood Analysis', 'Time-Aware', 'Energy Level', 'Dietary Preferences', 'Memory'],
+  },
   {
     title: 'Spatial Analysis Tool for City of San Jose',
     description: 'AI-powered tool that processes site plans to auto-generate compliance reports with zoning validations, reducing manual review time significantly.',
@@ -53,17 +63,55 @@ export default function Projects() {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 flex flex-col"
+              className="bg-slate-800 rounded-xl p-6 card-hover border border-slate-700 flex flex-col overflow-hidden"
             >
+              {project.image && (
+                <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden -mx-6 -mt-6">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
               <div className="flex items-start justify-between mb-4">
                 <Code2 className="text-indigo-400" size={24} />
-                <span className="text-xs px-2 py-1 bg-indigo-600/20 text-indigo-400 rounded-full">
-                  {project.highlight}
-                </span>
+                <div className="flex items-center gap-2">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-slate-400 hover:text-indigo-400 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <ExternalLink size={18} />
+                    </a>
+                  )}
+                  <span className="text-xs px-2 py-1 bg-indigo-600/20 text-indigo-400 rounded-full">
+                    {project.highlight}
+                  </span>
+                </div>
               </div>
               <h3 className="text-xl font-semibold text-white mb-3">{project.title}</h3>
               <p className="text-slate-400 text-sm mb-4 flex-grow">{project.description}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
+              {project.features && (
+                <div className="mb-4">
+                  <p className="text-xs text-slate-500 mb-2">Features:</p>
+                  <div className="flex flex-wrap gap-1">
+                    {project.features.map((feature, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs px-2 py-1 bg-slate-700/50 text-slate-400 rounded"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div className="flex flex-wrap gap-2">
                 {project.tech.map((tech, idx) => (
                   <span
                     key={idx}

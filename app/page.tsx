@@ -5,7 +5,7 @@ import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Experience from '@/components/Experience';
 import Skills from '@/components/Skills';
-// import Projects from '@/components/Projects';
+import Projects from '@/components/Projects';
 import Education from '@/components/Education';
 import Certifications from '@/components/Certifications';
 import Awards from '@/components/Awards';
@@ -19,7 +19,7 @@ export default function Home() {
       <About />
       <Experience />
       <Skills />
-      {/* <Projects /> */}
+      <Projects />
       <Education />
       <Certifications />
       <Awards />

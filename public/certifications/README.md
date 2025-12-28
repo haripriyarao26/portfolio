@@ -14,3 +14,4 @@ Place your LinkedIn certification screenshots here.
 2. Update the `imageUrl` in `data/resume.ts` to point to the image:
    - Example: `imageUrl: "/certifications/agentic-ai-developers.png"`
 
+
