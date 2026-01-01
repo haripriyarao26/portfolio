@@ -115,7 +115,7 @@ export const resumeData: ResumeData = {
       ]
     },
     {
-      company: "Deloitte",
+      company: "Hashedin by Deloitte",
       position: "Software Engineer 1",
       location: "Bengaluru, India",
       period: "Jun 2021 - Jul 2022",
@@ -129,7 +129,7 @@ export const resumeData: ResumeData = {
   honors: [
     {
       title: "Excellency Award",
-      organization: "Deloitte",
+      organization: "Hashedin by Deloitte",
       location: "Bengaluru, India",
       year: "2022",
       description: "Recognized for predictive analytics innovation in recruitment software"
