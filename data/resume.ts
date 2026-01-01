@@ -77,7 +77,7 @@ export const resumeData: ResumeData = {
   experience: [
     {
       company: "Onetera Technologies",
-      position: "Lead / Software Engineer 2",
+      position: "Software Engineer 2",
       location: "Los Angeles, CA",
       period: "Sep 2024 - Present",
       achievements: [
@@ -92,7 +92,7 @@ export const resumeData: ResumeData = {
     },
     {
       company: "Onetera Technologies",
-      position: "Founding Software Engineer",
+      position: "Software Engineer 1 (Founding)",
       location: "Los Angeles, CA",
       period: "Jan 2024 - Aug 2024",
       achievements: [
@@ -115,7 +115,7 @@ export const resumeData: ResumeData = {
       ]
     },
     {
-      company: "Hashedin by Deloitte",
+      company: "Hashedin by Deloitte (Deloitte USI)",
       position: "Software Engineer 1",
       location: "Bengaluru, India",
       period: "Jun 2021 - Jul 2022",
@@ -129,7 +129,7 @@ export const resumeData: ResumeData = {
   honors: [
     {
       title: "Excellency Award",
-      organization: "Hashedin by Deloitte",
+      organization: "Hashedin by Deloitte (Deloitte USI)",
       location: "Bengaluru, India",
       year: "2022",
       description: "Recognized for predictive analytics innovation in recruitment software"
