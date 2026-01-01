@@ -3,6 +3,7 @@
 import { X } from 'lucide-react';
 import { useEffect, memo } from 'react';
 import MoodBiteCaseStudy from './MoodBiteCaseStudy';
+import GeminiCaseStudy from './GeminiCaseStudy';
 
 interface CaseStudyModalProps {
   projectId: string | null;
@@ -66,7 +67,11 @@ function CaseStudyModal({ projectId, onClose }: CaseStudyModalProps) {
 
         {/* Case Study Content */}
         <div className="px-4 pb-8">
-          <MoodBiteCaseStudy projectId={projectId} />
+          {projectId === 'gemini-cookbook' ? (
+            <GeminiCaseStudy projectId={projectId} />
+          ) : (
+            <MoodBiteCaseStudy projectId={projectId} />
+          )}
         </div>
       </div>
     </div>

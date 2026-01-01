@@ -17,6 +17,21 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'gemini-cookbook',
+    title: 'Google Gemini Cookbook: Cost & Health Monitoring Utility',
+    description: 'Contributed to the official Google Gemini repository by developing a reusable LLM Observability utility with real-time USD cost tracking and API health monitoring for Gemini 2.0/3.0 models.',
+    images: [],
+    github: 'https://github.com/google-gemini/cookbook/pull/1088',
+    tech: ['Python', 'Google Gemini API', 'LLM Observability', 'Type Hints', 'CI/CD'],
+    features: [
+      'Real-time USD Cost Tracking',
+      'API Health Monitoring',
+      'Rate Limit Error Handling (429 Resource Exhausted)',
+      'Token-to-Cost Normalization',
+      'Google Engineering Standards Compliance'
+    ]
+  },
+  {
     id: 'moodbite',
     title: 'MoodBite',
     description: 'A mood-driven food recommendation agent powered by AI',
