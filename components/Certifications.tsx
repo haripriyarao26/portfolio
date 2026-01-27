@@ -50,6 +50,17 @@ export default function Certifications() {
                       </>
                     )}
                   </div>
+                  {cert.credentialUrl && (
+                    <a
+                      href={cert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
+                      aria-label={`View credential for ${cert.title}`}
+                    >
+                      View credential
+                    </a>
+                  )}
                   {cert.skills && cert.skills.length > 0 && (
                     <div className="mt-3">
                       <p className="text-sm font-semibold text-slate-300 mb-2">Skills:</p>

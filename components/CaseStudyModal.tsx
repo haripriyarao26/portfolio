@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 import { useEffect, memo } from 'react';
 import MoodBiteCaseStudy from './MoodBiteCaseStudy';
 import GeminiCaseStudy from './GeminiCaseStudy';
+import AutoUnitAgentCaseStudy from './AutoUnitAgentCaseStudy';
 
 interface CaseStudyModalProps {
   projectId: string | null;
@@ -69,9 +70,11 @@ function CaseStudyModal({ projectId, onClose }: CaseStudyModalProps) {
         <div className="px-4 pb-8">
           {projectId === 'gemini-cookbook' ? (
             <GeminiCaseStudy projectId={projectId} />
-          ) : (
+          ) : projectId === 'auto-unit-agent' ? (
+            <AutoUnitAgentCaseStudy projectId={projectId} />
+          ) : projectId === 'moodbite' ? (
             <MoodBiteCaseStudy projectId={projectId} />
-          )}
+          ) : null}
         </div>
       </div>
     </div>

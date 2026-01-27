@@ -15,6 +15,7 @@ export interface Certification {
   issuer: string;
   issueDate: string;
   credentialId?: string;
+  credentialUrl?: string;
   imageUrl?: string;
   skills?: string[];
 }
@@ -72,7 +73,7 @@ export const resumeData: ResumeData = {
     languages: ["Python", "JavaScript", "TypeScript", "C", "Java", "SQL", "HTML", "CSS", "GraphQL"],
     frameworks: ["Next.js", "Flask", "Django", "Node.js", "Express", "CircleCI", "Vercel", "Render", "AWS", "Supabase", "LangGraph"],
     libraries: ["React", "Chakra UI", "Bootstrap", "Scikit-Learn", "NLTK"],
-    databases: ["PostgreSQL", "MongoDB", "Supabase", "ClickHouse"]
+    databases: ["PostgreSQL", "MongoDB", "ClickHouse", "Redis"]
   },
   experience: [
     {
@@ -144,6 +145,13 @@ export const resumeData: ResumeData = {
   ],
   certifications: [
     {
+      title: "AWS Certified AI Practitioner",
+      issuer: "Amazon Web Services (AWS)",
+      issueDate: "2026",
+      credentialUrl: "https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url",
+      skills: ["AWS", "AI/ML Fundamentals", "Generative AI", "Responsible AI"]
+    },
+    {
       title: "Agentic AI for Developers: Concepts and Application for Enterprises",
       issuer: "LinkedIn",
       issueDate: "Nov 2025",
@@ -165,19 +173,14 @@ export const resumeData: ResumeData = {
       imageUrl: "/certifications/generative-ai-llm.png"
     },
     {
-      title: "What Is Generative AI?",
-      issuer: "LinkedIn",
-      issueDate: "Feb 2024",
-      skills: ["Artificial Intelligence for Business", "Generative AI"],
-      imageUrl: "/certifications/what-is-generative-ai.png"
-    },
-    {
-      title: "Microsoft Certified - Python",
+      title: "MTA: Introduction to Programming Using Python",
       issuer: "Microsoft",
-      issueDate: "2019"
+      issueDate: "2020",
+      credentialUrl: "https://www.credly.com/badges/d28688c2-34ed-4801-b134-e8b67846c77b/public_url",
+      skills: ["Python", "Programming Fundamentals"]
     },
     {
-      title: "Microsoft Certified - JavaScript",
+      title: "Microsoft Certified: JavaScript",
       issuer: "Microsoft",
       issueDate: "2019"
     }

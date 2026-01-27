@@ -32,6 +32,19 @@ export const projects: Project[] = [
     ]
   },
   {
+    id: 'auto-unit-agent',
+    title: 'Auto-Unit-Agent: Autonomous Jest Test Generation',
+    description: 'Built an automated unit-test generation agent for TypeScript that synthesizes Jest tests from source code, executes them, and iteratively debugs failures to converge on passing suites.',
+    images: [],
+    github: 'https://github.com/haripriyarao26/auto-unit-agent',
+    tech: ['TypeScript', 'Jest', 'LangGraph', 'Node.js', 'Sandboxing'],
+    features: [
+      'LangGraph workflow: generate → execute → debug → retry',
+      'Sandboxed test execution in isolated temp directories',
+      'Guardrails for model outputs (parsing + validation)'
+    ]
+  },
+  {
     id: 'moodbite',
     title: 'MoodBite',
     description: 'A mood-driven food recommendation agent powered by AI',
