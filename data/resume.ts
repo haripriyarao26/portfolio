@@ -182,7 +182,9 @@ export const resumeData: ResumeData = {
     {
       title: "Microsoft Certified: JavaScript",
       issuer: "Microsoft",
-      issueDate: "2019"
+      issueDate: "2019",
+      credentialUrl: "https://www.credly.com/badges/31d429f2-4bd7-4516-b585-2148c5c11fe7/public_url",
+      skills: ["JavaScript"]
     }
   ]
 };
