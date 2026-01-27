@@ -9,14 +9,14 @@
    * CSS Variables - Keep in sync with constants/colors.ts
    * To update colors, edit constants/colors.ts first, then update these values
    */
-  --primary: #f59e0b;
-  --primary-dark: #d97706;
-  --secondary: #94a3b8;
-  --accent: #f59e0b;
-  --bg-dark: #0f172a;
-  --bg-card: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
+  --primary: #1a1a1a;
+  --primary-dark: #000000;
+  --secondary: #525252;
+  --accent: #1a1a1a;
+  --bg-dark: #fcfcf9;
+  --bg-card: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #525252;
 }
 
 * {
@@ -49,12 +49,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
+  background: var(--secondary);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
+  background: var(--primary);
 }
 
 /* Smooth animations */
@@ -122,8 +122,8 @@ body {
 
 .card-hover:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 50px rgba(245, 158, 11, 0.3);
-  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 25px 50px rgba(26, 26, 26, 0.1);
+  border-color: rgba(26, 26, 26, 0.3);
 }
 
 /* Friendly bounce animation */

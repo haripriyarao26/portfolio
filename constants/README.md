@@ -28,10 +28,12 @@ import { colors, colorClasses, gradients } from '@/constants/colors';
 
 ### Color Palette
 
-- **Background**: `#0f172a` (Slate Navy)
-- **Primary**: `#f59e0b` (Amber/Safety Orange)
-- **Secondary**: `#94a3b8` (Muted Steel)
-- **Text**: `#f8fafc` (Light)
+- **Background**: `#fcfcf9` (Soft Bone/Paper)
+- **Primary**: `#1a1a1a` (Jet Black)
+- **Secondary**: `#525252` (Neutral Grey)
+- **Text**: `#111827` (Dark)
+
+**Recruiter Perception**: "This is a senior-level professional who doesn't need flashy effects to prove their value."
 
 ### Updating Colors
 

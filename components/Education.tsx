@@ -23,7 +23,7 @@ export default function Education() {
             <div
               key={index}
               ref={getItemRef(index)}
-              className={`bg-[#1e293b] rounded-xl p-6 card-hover border border-[#334155] transition-all duration-700 ${
+              className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${
                 isCardVisible(index) 
                   ? 'opacity-100 translate-x-0 scale-100' 
                   : index % 2 === 0 
@@ -33,13 +33,13 @@ export default function Education() {
               style={{ transitionDelay: `${index * 200}ms` }}
             >
               <div className="flex items-start gap-4">
-                <div className="bg-gradient-to-br from-[#f59e0b] to-[#d97706] p-3 rounded-lg">
-                  <GraduationCap className="text-[#f8fafc]" size={24} />
+                <div className="bg-gradient-to-br from-[#1a1a1a] to-black p-3 rounded-lg">
+                  <GraduationCap className="text-white" size={24} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-[#f8fafc] mb-2">{edu.degree}</h3>
-                  <p className="text-[#f59e0b] font-semibold mb-3">{edu.institution}</p>
-                  <div className="space-y-2 text-sm text-[#94a3b8]">
+                  <h3 className="text-xl font-semibold text-[#111827] mb-2">{edu.degree}</h3>
+                  <p className="text-[#1a1a1a] font-semibold mb-3">{edu.institution}</p>
+                  <div className="space-y-2 text-sm text-[#525252]">
                     <div className="flex items-center gap-2">
                       <MapPin size={16} />
                       <span>{edu.location}</span>

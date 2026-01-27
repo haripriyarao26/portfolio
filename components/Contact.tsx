@@ -16,8 +16,8 @@ export default function Contact() {
           </h2>
         </div>
 
-        <div className="bg-[#1e293b] rounded-xl p-8 border border-[#334155]">
-          <p className="text-[#94a3b8] text-center mb-8 text-lg">
+        <div className="bg-white rounded-xl p-8 border border-[#e5e5e5]">
+          <p className="text-[#525252] text-center mb-8 text-lg">
             I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology!
           </p>
 
@@ -26,20 +26,20 @@ export default function Contact() {
               href={`https://${resumeData.linkedin}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center p-6 bg-[#334155] rounded-lg hover:bg-[#f59e0b] transition-all duration-300 group card-hover"
+              className="flex flex-col items-center p-6 bg-[#f5f5f3] rounded-lg hover:bg-[#1a1a1a] transition-all duration-300 group card-hover"
               aria-label="Connect on LinkedIn"
             >
-              <Linkedin className="text-[#f59e0b] group-hover:text-[#f8fafc] mb-3 transition-colors" size={32} />
-              <span className="text-[#f8fafc] font-semibold mb-2">LinkedIn</span>
-              <span className="text-[#94a3b8] text-sm text-center group-hover:text-[#f8fafc] transition-colors">
+              <Linkedin className="text-[#1a1a1a] group-hover:text-white mb-3 transition-colors" size={32} />
+              <span className="text-[#111827] group-hover:text-white font-semibold mb-2 transition-colors">LinkedIn</span>
+              <span className="text-[#525252] text-sm text-center group-hover:text-white transition-colors">
                 Connect with me
               </span>
             </a>
 
-            <div className="flex flex-col items-center p-6 bg-[#334155] rounded-lg">
-              <MapPin className="text-[#f59e0b] mb-3" size={32} />
-              <span className="text-[#f8fafc] font-semibold mb-2">Location</span>
-              <span className="text-[#94a3b8] text-sm text-center">{resumeData.location}</span>
+            <div className="flex flex-col items-center p-6 bg-[#f5f5f3] rounded-lg">
+              <MapPin className="text-[#1a1a1a] mb-3" size={32} />
+              <span className="text-[#111827] font-semibold mb-2">Location</span>
+              <span className="text-[#525252] text-sm text-center">{resumeData.location}</span>
             </div>
           </div>
         </div>

@@ -56,11 +56,11 @@ function CaseStudyModal({ projectId, onClose }: CaseStudyModalProps) {
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto bg-[#0f172a] rounded-xl border border-[#334155] shadow-2xl">
+      <div className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto bg-[#fcfcf9] rounded-xl border border-[#e5e5e5] shadow-2xl">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="sticky top-4 right-4 z-10 ml-auto mr-4 mt-4 p-2 bg-[#1e293b] hover:bg-[#334155] rounded-full transition-colors text-[#94a3b8] hover:text-[#f8fafc]"
+          className="sticky top-4 right-4 z-10 ml-auto mr-4 mt-4 p-2 bg-white hover:bg-[#f5f5f3] rounded-full transition-colors text-[#525252] hover:text-[#111827]"
           aria-label="Close modal"
         >
           <X size={24} />

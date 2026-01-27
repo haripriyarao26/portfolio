@@ -28,18 +28,18 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
   };
 
   return (
-    <section id="projects" className="py-20 px-4 bg-[#0f172a]/50">
+    <section id="projects" className="py-20 px-4 bg-[#fcfcf9]/50">
       <div ref={ref} className={`max-w-5xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f59e0b]/20 rounded-full mb-6">
-            <Code2 className="text-[#f59e0b]" size={18} />
-            <span className="text-[#f59e0b] text-sm font-medium">Case Study</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a]/20 rounded-full mb-6">
+            <Code2 className="text-[#1a1a1a]" size={18} />
+            <span className="text-[#1a1a1a] text-sm font-medium">Case Study</span>
           </div>
           <h2 className="text-5xl font-bold mb-4">
             <span className="gradient-text">{project.title}</span>
           </h2>
-          <p className="text-xl text-[#94a3b8] max-w-2xl mx-auto mb-2">
+          <p className="text-xl text-[#525252] max-w-2xl mx-auto mb-2">
             {project.description}
           </p>
         
@@ -49,7 +49,7 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 bg-[#1e293b] hover:bg-[#334155] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#f5f5f3] rounded-lg transition-colors"
               >
                 <Github size={18} />
                 <span>View Pull Request</span>
@@ -64,7 +64,7 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
             {/* Main Image Display */}
             <div 
               ref={getItemRef(0)}
-              className={`mb-6 rounded-xl overflow-hidden border border-[#334155] transition-all duration-1000 ${
+              className={`mb-6 rounded-xl overflow-hidden border border-[#e5e5e5] transition-all duration-1000 ${
                 isCardVisible(0) 
                   ? 'opacity-100 scale-100 rotate-0' 
                   : 'opacity-0 scale-95 rotate-2'
@@ -75,17 +75,17 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#0f172a]/80 hover:bg-[#1e293b] rounded-full transition-all opacity-0 group-hover:opacity-100"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#fcfcf9]/80 hover:bg-white rounded-full transition-all opacity-0 group-hover:opacity-100"
                       aria-label="Previous image"
                     >
-                      <ChevronLeft className="text-[#f8fafc]" size={24} />
+                      <ChevronLeft className="text-[#111827]" size={24} />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#0f172a]/80 hover:bg-[#1e293b] rounded-full transition-all opacity-0 group-hover:opacity-100"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#fcfcf9]/80 hover:bg-white rounded-full transition-all opacity-0 group-hover:opacity-100"
                       aria-label="Next image"
                     >
-                      <ChevronRight className="text-[#f8fafc]" size={24} />
+                      <ChevronRight className="text-[#111827]" size={24} />
                     </button>
                   </>
                 )}
@@ -96,13 +96,13 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
                   priority={selectedImageIndex === 0}
                 />
                 {project.images[selectedImageIndex].caption && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0f172a]/90 to-transparent p-6">
-                    <p className="text-[#f8fafc] text-sm font-medium">{project.images[selectedImageIndex].caption}</p>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#fcfcf9]/90 to-transparent p-6">
+                    <p className="text-[#111827] text-sm font-medium">{project.images[selectedImageIndex].caption}</p>
                   </div>
                 )}
                 {project.images.length > 1 && (
-                  <div className="absolute top-4 right-4 bg-[#0f172a]/80 px-3 py-1 rounded-full">
-                    <span className="text-[#f8fafc] text-sm">
+                  <div className="absolute top-4 right-4 bg-[#fcfcf9]/80 px-3 py-1 rounded-full">
+                    <span className="text-[#111827] text-sm">
                       {selectedImageIndex + 1} / {project.images.length}
                     </span>
                   </div>
@@ -119,8 +119,8 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
                     onClick={() => setSelectedImageIndex(index)}
                     className={`relative rounded-lg overflow-hidden border-2 transition-all duration-300 ${
                       selectedImageIndex === index
-                        ? 'border-[#f59e0b] scale-105'
-                        : 'border-[#334155] hover:border-[#475569]'
+                        ? 'border-[#1a1a1a] scale-105'
+                        : 'border-[#e5e5e5] hover:border-[#d4d4d4]'
                     }`}
                   >
                     <LazyImage
@@ -129,7 +129,7 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
                       className="w-full h-32 object-cover"
                     />
                     {selectedImageIndex === index && (
-                      <div className="absolute inset-0 bg-[#f59e0b]/20"></div>
+                      <div className="absolute inset-0 bg-[#1a1a1a]/20"></div>
                     )}
                   </button>
                 ))}
@@ -147,16 +147,16 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
           style={{ transitionDelay: '200ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <Lightbulb className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <Lightbulb className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">The Challenge</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">The Challenge</h3>
           </div>
-          <div className="bg-[#1e293b]/50 rounded-xl p-8 border border-[#334155] card-hover">
-            <p className="text-[#94a3b8] text-lg leading-relaxed mb-4">
+          <div className="bg-white/50 rounded-xl p-8 border border-[#e5e5e5] card-hover">
+            <p className="text-[#525252] text-lg leading-relaxed mb-4">
               As LLM applications scale, monitoring costs and API health becomes critical. The Google Gemini Cookbook needed a reusable utility to track real-time USD costs and monitor API health for Gemini 2.0/3.0 models, with robust error handling for rate limits and automated token-to-cost normalization.
             </p>
-            <p className="text-[#94a3b8] text-lg leading-relaxed">
+            <p className="text-[#525252] text-lg leading-relaxed">
               The challenge was to build a production-ready observability tool that adheres to Google's strict engineering standards while providing developers with actionable insights into their LLM usage.
             </p>
           </div>
@@ -171,13 +171,13 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
           style={{ transitionDelay: '200ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <Zap className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <Zap className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">Technical Impact</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">Technical Impact</h3>
           </div>
-          <div className="bg-gradient-to-br from-[#f59e0b]/20 to-[#d97706]/20 rounded-xl p-8 border border-[#f59e0b]/30 card-hover">
-            <p className="text-[#94a3b8] text-lg leading-relaxed mb-6">
+          <div className="bg-gradient-to-br from-[#1a1a1a]/20 to-black/20 rounded-xl p-8 border border-[#1a1a1a]/30 card-hover">
+            <p className="text-[#525252] text-lg leading-relaxed mb-6">
               Implemented real-time USD cost tracking and API health monitoring for Gemini 2.0/3.0 models, enabling developers to:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -188,8 +188,8 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
                 'Token-to-Cost Normalization - Automated conversion for accurate cost calculations'
               ].map((feature, idx) => (
                 <div key={idx} className="flex items-start gap-3">
-                  <CheckCircle className="text-[#f59e0b] mt-1 flex-shrink-0" size={18} />
-                  <span className="text-[#94a3b8]">{feature}</span>
+                  <CheckCircle className="text-[#1a1a1a] mt-1 flex-shrink-0" size={18} />
+                  <span className="text-[#525252]">{feature}</span>
                 </div>
               ))}
             </div>
@@ -205,25 +205,25 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
           style={{ transitionDelay: '400ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <Shield className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <Shield className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">Reliability & Resilience</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">Reliability & Resilience</h3>
           </div>
-          <div className="bg-[#1e293b]/50 rounded-xl p-8 border border-[#334155] card-hover">
-            <p className="text-[#94a3b8] text-lg leading-relaxed mb-4">
+          <div className="bg-white/50 rounded-xl p-8 border border-[#e5e5e5] card-hover">
+            <p className="text-[#525252] text-lg leading-relaxed mb-4">
               Built resilient error handling specifically for "429 Resource Exhausted" rate limits, ensuring the utility gracefully handles API throttling scenarios. Implemented automated token-to-cost normalization to provide accurate cost calculations across different Gemini model versions.
             </p>
             <div className="mt-6 space-y-4">
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">Error Handling</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">Error Handling</h4>
+                <p className="text-[#525252]">
                   Comprehensive exception handling for rate limit scenarios, with automatic retry logic and clear error messaging for developers.
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">Cost Normalization</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">Cost Normalization</h4>
+                <p className="text-[#525252]">
                   Automated conversion system that normalizes token usage to USD costs, accounting for different pricing tiers across Gemini 2.0 and 3.0 models.
                 </p>
               </div>
@@ -240,35 +240,35 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
           style={{ transitionDelay: '600ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <Award className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <Award className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">Quality & Engineering Standards</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">Quality & Engineering Standards</h3>
           </div>
-          <div className="bg-[#1e293b]/50 rounded-xl p-8 border border-[#334155] card-hover">
-            <p className="text-[#94a3b8] text-lg leading-relaxed mb-6">
+          <div className="bg-white/50 rounded-xl p-8 border border-[#e5e5e5] card-hover">
+            <p className="text-[#525252] text-lg leading-relaxed mb-6">
               Adhered to strict Google engineering standards throughout the development process:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center p-6 bg-[#0f172a]/50 rounded-lg">
-                <div className="text-2xl font-bold text-[#f59e0b] mb-2">Python</div>
-                <p className="text-[#94a3b8] text-sm">Type-hinting throughout</p>
-                <p className="text-[#94a3b8] text-xs mt-1">Full type annotations</p>
+              <div className="text-center p-6 bg-[#fcfcf9]/50 rounded-lg">
+                <div className="text-2xl font-bold text-[#1a1a1a] mb-2">Python</div>
+                <p className="text-[#525252] text-sm">Type-hinting throughout</p>
+                <p className="text-[#525252] text-xs mt-1">Full type annotations</p>
               </div>
-              <div className="text-center p-6 bg-[#0f172a]/50 rounded-lg">
-                <div className="text-2xl font-bold text-[#f59e0b] mb-2">Exceptions</div>
-                <p className="text-[#94a3b8] text-sm">Specific handling</p>
-                <p className="text-[#94a3b8] text-xs mt-1">Targeted error management</p>
+              <div className="text-center p-6 bg-[#fcfcf9]/50 rounded-lg">
+                <div className="text-2xl font-bold text-[#1a1a1a] mb-2">Exceptions</div>
+                <p className="text-[#525252] text-sm">Specific handling</p>
+                <p className="text-[#525252] text-xs mt-1">Targeted error management</p>
               </div>
-              <div className="text-center p-6 bg-[#0f172a]/50 rounded-lg">
-                <div className="text-2xl font-bold text-[#f59e0b] mb-2">CI/CD</div>
-                <p className="text-[#94a3b8] text-sm">Validation pipeline</p>
-                <p className="text-[#94a3b8] text-xs mt-1">Automated testing</p>
+              <div className="text-center p-6 bg-[#fcfcf9]/50 rounded-lg">
+                <div className="text-2xl font-bold text-[#1a1a1a] mb-2">CI/CD</div>
+                <p className="text-[#525252] text-sm">Validation pipeline</p>
+                <p className="text-[#525252] text-xs mt-1">Automated testing</p>
               </div>
             </div>
-            <div className="mt-6 p-4 bg-[#f59e0b]/10 rounded-lg border border-[#f59e0b]/30">
-              <p className="text-[#94a3b8] text-sm">
-                <strong className="text-[#f59e0b]">Code Quality:</strong> All code follows Google's Python style guide with comprehensive type hints, specific exception handling for different error scenarios, and full CI/CD validation to ensure reliability and maintainability.
+            <div className="mt-6 p-4 bg-[#1a1a1a]/10 rounded-lg border border-[#1a1a1a]/30">
+              <p className="text-[#525252] text-sm">
+                <strong className="text-[#1a1a1a]">Code Quality:</strong> All code follows Google's Python style guide with comprehensive type hints, specific exception handling for different error scenarios, and full CI/CD validation to ensure reliability and maintainability.
               </p>
             </div>
           </div>
@@ -282,33 +282,33 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
           }`}
           style={{ transitionDelay: '800ms' }}
         >
-          <h3 className="text-3xl font-bold text-[#f8fafc] mb-6">My Role & Contributions</h3>
-          <div className="bg-[#1e293b]/50 rounded-xl p-8 border border-[#334155] card-hover">
+          <h3 className="text-3xl font-bold text-[#111827] mb-6">My Role & Contributions</h3>
+          <div className="bg-white/50 rounded-xl p-8 border border-[#e5e5e5] card-hover">
             <div className="space-y-4">
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">LLM Observability Development</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">LLM Observability Development</h4>
+                <p className="text-[#525252]">
                   Designed and implemented a reusable observability utility for the Google Gemini Cookbook repository. 
                   Created real-time cost tracking and health monitoring capabilities that integrate seamlessly with Gemini 2.0/3.0 models.
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">Error Handling & Resilience</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">Error Handling & Resilience</h4>
+                <p className="text-[#525252]">
                   Built comprehensive error handling for rate limit scenarios (429 Resource Exhausted), implementing retry logic 
                   and graceful degradation to ensure the utility remains functional under high-load conditions.
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">Cost Normalization System</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">Cost Normalization System</h4>
+                <p className="text-[#525252]">
                   Developed automated token-to-cost normalization algorithms that accurately convert token usage to USD costs, 
                   accounting for different pricing models across Gemini versions.
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">Code Quality & Standards</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">Code Quality & Standards</h4>
+                <p className="text-[#525252]">
                   Ensured all code adheres to Google's engineering standards, including comprehensive Python type-hinting, 
                   specific exception handling, and full CI/CD validation. The pull request was accepted into the official repository.
                 </p>
@@ -326,26 +326,26 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
           style={{ transitionDelay: '1000ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <TrendingUp className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <TrendingUp className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">Impact & Outcomes</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">Impact & Outcomes</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] text-center card-hover">
-              <div className="text-3xl font-bold text-[#f59e0b] mb-2">Official</div>
-              <p className="text-[#94a3b8]">Google Repository</p>
-              <p className="text-sm text-[#94a3b8] mt-1">Accepted into cookbook</p>
+            <div className="bg-white/50 rounded-xl p-6 border border-[#e5e5e5] text-center card-hover">
+              <div className="text-3xl font-bold text-[#1a1a1a] mb-2">Official</div>
+              <p className="text-[#525252]">Google Repository</p>
+              <p className="text-sm text-[#525252] mt-1">Accepted into cookbook</p>
             </div>
-            <div className="bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] text-center card-hover">
-              <div className="text-3xl font-bold text-[#f59e0b] mb-2">Real-time</div>
-              <p className="text-[#94a3b8]">Cost Tracking</p>
-              <p className="text-sm text-[#94a3b8] mt-1">USD monitoring for Gemini</p>
+            <div className="bg-white/50 rounded-xl p-6 border border-[#e5e5e5] text-center card-hover">
+              <div className="text-3xl font-bold text-[#1a1a1a] mb-2">Real-time</div>
+              <p className="text-[#525252]">Cost Tracking</p>
+              <p className="text-sm text-[#525252] mt-1">USD monitoring for Gemini</p>
             </div>
-            <div className="bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] text-center card-hover">
-              <div className="text-3xl font-bold text-[#f59e0b] mb-2">Production</div>
-              <p className="text-[#94a3b8]">Ready Utility</p>
-              <p className="text-sm text-[#94a3b8] mt-1">Reusable observability tool</p>
+            <div className="bg-white/50 rounded-xl p-6 border border-[#e5e5e5] text-center card-hover">
+              <div className="text-3xl font-bold text-[#1a1a1a] mb-2">Production</div>
+              <p className="text-[#525252]">Ready Utility</p>
+              <p className="text-sm text-[#525252] mt-1">Reusable observability tool</p>
             </div>
           </div>
         </div>
@@ -353,12 +353,12 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
         {/* Tech Stack */}
         <div 
           ref={getItemRef(6)}
-          className={`bg-[#1e293b]/50 rounded-xl p-8 border border-[#334155] card-hover transition-all duration-700 ${
+          className={`bg-white/50 rounded-xl p-8 border border-[#e5e5e5] card-hover transition-all duration-700 ${
             isCardVisible(6) ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
           }`}
           style={{ transitionDelay: '1200ms' }}
         >
-          <h3 className="text-2xl font-bold text-[#f8fafc] mb-6">Technology Stack</h3>
+          <h3 className="text-2xl font-bold text-[#111827] mb-6">Technology Stack</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { name: 'Python', category: 'Language' },
@@ -370,9 +370,9 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
               { name: 'API Monitoring', category: 'Health Checks' },
               { name: 'Git/GitHub', category: 'Version Control' }
             ].map((tech) => (
-              <div key={tech.name} className="text-center p-4 bg-[#0f172a]/50 rounded-lg">
-                <div className="font-semibold text-[#f8fafc] mb-1">{tech.name}</div>
-                <div className="text-xs text-[#94a3b8]">{tech.category}</div>
+              <div key={tech.name} className="text-center p-4 bg-[#fcfcf9]/50 rounded-lg">
+                <div className="font-semibold text-[#111827] mb-1">{tech.name}</div>
+                <div className="text-xs text-[#525252]">{tech.category}</div>
               </div>
             ))}
           </div>
