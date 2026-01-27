@@ -79,10 +79,9 @@ export default function Timeline({ items }: TimelineProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Color transitions from blue (200) to purple (320) as you scroll
-  const hue = 200 + progress * 120;
-  const lineColor = `hsl(${hue}, 75%, 55%)`;
-  const lineColorLight = `hsl(${hue}, 75%, 65%)`;
+  // Color transitions using amber palette
+  const lineColor = `#f59e0b`;
+  const lineColorLight = `#d97706`;
 
   // Handle card expand/collapse
   const toggleCard = (index: number) => {
@@ -153,10 +152,10 @@ export default function Timeline({ items }: TimelineProps) {
                 }`}
               >
                 <div
-                  className={`w-4 h-4 rounded-full border-4 border-slate-900 transition-all duration-500 ${
+                  className={`w-4 h-4 rounded-full border-4 border-[#0f172a] transition-all duration-500 ${
                     isActive
-                      ? 'bg-gradient-to-br from-indigo-500 to-purple-500 shadow-lg shadow-indigo-500/50'
-                      : 'bg-slate-700'
+                      ? 'bg-gradient-to-br from-[#f59e0b] to-[#d97706] shadow-lg shadow-[#f59e0b]/50'
+                      : 'bg-[#334155]'
                   }`}
                 />
               </div>
@@ -167,19 +166,19 @@ export default function Timeline({ items }: TimelineProps) {
               >
                 <div
                   onClick={() => toggleCard(index)}
-                  className={`bg-slate-800 rounded-xl p-6 border transition-all duration-500 card-hover cursor-pointer ${
+                  className={`bg-[#1e293b] rounded-xl p-6 border transition-all duration-500 card-hover cursor-pointer ${
                     isActive
-                      ? 'border-indigo-500 shadow-lg shadow-indigo-500/30'
-                      : 'border-slate-700'
+                      ? 'border-[#f59e0b] shadow-lg shadow-[#f59e0b]/30'
+                      : 'border-[#334155]'
                   }`}
                 >
                   <div className="mb-4">
-                    <h3 className="text-2xl font-bold text-white mb-2">{item.position}</h3>
-                    <div className="flex items-center gap-2 text-indigo-400 font-semibold mb-3">
+                    <h3 className="text-2xl font-bold text-[#f8fafc] mb-2">{item.position}</h3>
+                    <div className="flex items-center gap-2 text-[#f59e0b] font-semibold mb-3">
                       <Briefcase size={18} />
                       <span>{item.company}</span>
                     </div>
-                    <div className="flex flex-wrap items-center gap-4 text-slate-400 text-sm">
+                    <div className="flex flex-wrap items-center gap-4 text-[#94a3b8] text-sm">
                       <div className="flex items-center gap-2">
                         <Calendar size={16} />
                         <span>{item.period}</span>
@@ -203,12 +202,12 @@ export default function Timeline({ items }: TimelineProps) {
                         <li key={idx} className="flex items-start gap-3">
                           <span
                             className={`mt-1.5 transition-colors duration-500 ${
-                              isActive ? 'text-indigo-500' : 'text-slate-500'
+                              isActive ? 'text-[#f59e0b]' : 'text-[#94a3b8]'
                             }`}
                           >
                             ▹
                           </span>
-                          <span className="text-slate-300 leading-relaxed">{achievement}</span>
+                          <span className="text-[#94a3b8] leading-relaxed">{achievement}</span>
                         </li>
                       ))}
                     </ul>
@@ -232,10 +231,10 @@ export default function Timeline({ items }: TimelineProps) {
             >
               <div
                 onClick={() => toggleCard(index)}
-                className={`bg-slate-800 rounded-xl p-4 border transition-all duration-300 cursor-pointer relative ${
+                className={`bg-[#1e293b] rounded-xl p-4 border transition-all duration-300 cursor-pointer relative ${
                   isExpanded
-                    ? 'border-indigo-500 shadow-lg shadow-indigo-500/30'
-                    : 'border-slate-700'
+                    ? 'border-[#f59e0b] shadow-lg shadow-[#f59e0b]/30'
+                    : 'border-[#334155]'
                 }`}
                 style={{
                   maxHeight: isExpanded ? 'none' : '200px',
@@ -243,12 +242,12 @@ export default function Timeline({ items }: TimelineProps) {
                 }}
               >
                 <div className="mb-4">
-                  <h3 className="text-xl font-bold text-white mb-2">{item.position}</h3>
-                  <div className="flex items-center gap-2 text-indigo-400 font-semibold mb-2">
+                  <h3 className="text-xl font-bold text-[#f8fafc] mb-2">{item.position}</h3>
+                  <div className="flex items-center gap-2 text-[#f59e0b] font-semibold mb-2">
                     <Briefcase size={16} />
                     <span className="text-sm">{item.company}</span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-3 text-slate-400 text-xs">
+                  <div className="flex flex-wrap items-center gap-3 text-[#94a3b8] text-xs">
                     <div className="flex items-center gap-1">
                       <Calendar size={14} />
                       <span>{item.period}</span>
@@ -265,18 +264,18 @@ export default function Timeline({ items }: TimelineProps) {
                     <li key={idx} className="flex items-start gap-2">
                       <span
                         className={`mt-1 transition-colors duration-300 text-xs ${
-                          isExpanded ? 'text-indigo-500' : 'text-slate-500'
+                          isExpanded ? 'text-[#f59e0b]' : 'text-[#94a3b8]'
                         }`}
                       >
                         ▹
                       </span>
-                      <span className="text-slate-300 text-sm leading-relaxed">{achievement}</span>
+                      <span className="text-[#94a3b8] text-sm leading-relaxed">{achievement}</span>
                     </li>
                   ))}
                 </ul>
 
                 {!isExpanded && (
-                  <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-slate-800 to-transparent rounded-b-xl pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#1e293b] to-transparent rounded-b-xl pointer-events-none" />
                 )}
               </div>
             </div>

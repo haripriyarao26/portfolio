@@ -44,9 +44,9 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         message.role === 'user' ? 'bg-[#19c37d]' : 'bg-[#5436da]'
       }`}>
         {message.role === 'user' ? (
-          <User size={18} className="text-white" />
+          <User size={18} className="text-[#f8fafc]" />
         ) : (
-          <Bot size={18} className="text-white" />
+          <Bot size={18} className="text-[#f8fafc]" />
         )}
       </div>
       <div className="flex-1 min-w-0">

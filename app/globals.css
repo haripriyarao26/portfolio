@@ -5,14 +5,18 @@
 @tailwind utilities;
 
 :root {
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --secondary: #8b5cf6;
-  --accent: #ec4899;
-  --bg-dark: #0d1117;
-  --bg-card: #161b22;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
+  /* 
+   * CSS Variables - Keep in sync with constants/colors.ts
+   * To update colors, edit constants/colors.ts first, then update these values
+   */
+  --primary: #f59e0b;
+  --primary-dark: #d97706;
+  --secondary: #94a3b8;
+  --accent: #f59e0b;
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
 }
 
 * {
@@ -105,7 +109,7 @@ body {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -118,8 +122,8 @@ body {
 
 .card-hover:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 50px rgba(99, 102, 241, 0.3);
-  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 25px 50px rgba(245, 158, 11, 0.3);
+  border-color: rgba(245, 158, 11, 0.5);
 }
 
 /* Friendly bounce animation */

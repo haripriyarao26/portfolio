@@ -33,7 +33,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
           placeholder="Ask me anything about Haripriya..."
-          className="flex-1 resize-none bg-[#40414f] text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#19c37d] max-h-32 overflow-y-auto"
+          className="flex-1 resize-none bg-[#40414f] text-[#f8fafc] placeholder-gray-400 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#19c37d] max-h-32 overflow-y-auto"
           rows={1}
           disabled={disabled}
           style={{
@@ -47,7 +47,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
           className="p-3 bg-[#19c37d] hover:bg-[#16a570] disabled:bg-gray-600 disabled:cursor-not-allowed rounded-lg transition-colors"
           aria-label="Send message"
         >
-          <Send size={20} className="text-white" />
+          <Send size={20} className="text-[#f8fafc]" />
         </button>
       </div>
     </div>

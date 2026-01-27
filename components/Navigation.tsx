@@ -46,7 +46,7 @@ function Navigation() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#0d1117]/95 backdrop-blur-md shadow-lg border-b border-[#21262d]'
+          ? 'bg-[#0f172a]/95 backdrop-blur-md shadow-lg border-b border-[#1e293b]'
           : 'bg-transparent'
       }`}
     >
@@ -58,11 +58,11 @@ function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <div className="flex items-center space-x-4 border-r border-slate-700 pr-6">
+            <div className="flex items-center space-x-4 border-r border-[#334155] pr-6">
               <a
                 href="#home"
                 className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'home' ? 'text-white' : 'text-slate-300 hover:text-white'
+                  activeSection === 'home' ? 'text-[#f8fafc]' : 'text-[#94a3b8] hover:text-[#f8fafc]'
                 }`}
               >
                 Home
@@ -70,17 +70,17 @@ function Navigation() {
               <a
                 href="#about"
                 className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'about' ? 'text-white' : 'text-slate-300 hover:text-white'
+                  activeSection === 'about' ? 'text-[#f8fafc]' : 'text-[#94a3b8] hover:text-[#f8fafc]'
                 }`}
               >
                 About
               </a>
             </div>
-            <div className="flex items-center space-x-4 border-r border-slate-700 pr-6">
+            <div className="flex items-center space-x-4 border-r border-[#334155] pr-6">
               <a
                 href="#experience"
                 className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'experience' ? 'text-white' : 'text-slate-300 hover:text-white'
+                  activeSection === 'experience' ? 'text-[#f8fafc]' : 'text-[#94a3b8] hover:text-[#f8fafc]'
                 }`}
               >
                 Experience
@@ -88,7 +88,7 @@ function Navigation() {
               <a
                 href="#skills"
                 className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'skills' ? 'text-white' : 'text-slate-300 hover:text-white'
+                  activeSection === 'skills' ? 'text-[#f8fafc]' : 'text-[#94a3b8] hover:text-[#f8fafc]'
                 }`}
               >
                 Skills
@@ -96,7 +96,7 @@ function Navigation() {
               <a
                 href="#projects"
                 className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'projects' ? 'text-white' : 'text-slate-300 hover:text-white'
+                  activeSection === 'projects' ? 'text-[#f8fafc]' : 'text-[#94a3b8] hover:text-[#f8fafc]'
                 }`}
               >
                 Projects
@@ -106,7 +106,7 @@ function Navigation() {
               <a
                 href="#contact"
                 className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'contact' ? 'text-white' : 'text-slate-300 hover:text-white'
+                  activeSection === 'contact' ? 'text-[#f8fafc]' : 'text-[#94a3b8] hover:text-[#f8fafc]'
                 }`}
               >
                 Contact
@@ -116,7 +116,7 @@ function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-slate-300 hover:text-white"
+            className="md:hidden text-[#94a3b8] hover:text-[#f8fafc]"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -128,42 +128,42 @@ function Navigation() {
           <div className="md:hidden pb-4 space-y-2">
             <a
               href="#home"
-              className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="block px-4 py-2 text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#1e293b] rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home
             </a>
             <a
               href="#about"
-              className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="block px-4 py-2 text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#1e293b] rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
             </a>
             <a
               href="#experience"
-              className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="block px-4 py-2 text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#1e293b] rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Experience
             </a>
             <a
               href="#skills"
-              className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="block px-4 py-2 text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#1e293b] rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Skills
             </a>
             <a
               href="#projects"
-              className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="block px-4 py-2 text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#1e293b] rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Projects
             </a>
             <a
               href="#contact"
-              className="block px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="block px-4 py-2 text-[#94a3b8] hover:text-[#f8fafc] hover:bg-[#1e293b] rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Contact

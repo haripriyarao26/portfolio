@@ -3,6 +3,7 @@
 import { resumeData } from '@/data/resume';
 import { Linkedin, MapPin, Code, Github } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import { colorClasses, gradients } from '@/constants/colors';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,14 +30,14 @@ export default function Hero() {
   }, []);
 
   const techCards = [
-    { name: 'Next.js', color: 'from-black to-gray-800', delay: '0s' },
-    { name: 'TypeScript', color: 'from-blue-600 to-blue-800', delay: '0.2s' },
-    { name: 'React', color: 'from-cyan-500 to-blue-600', delay: '0.4s' },
-    { name: 'Python', color: 'from-yellow-500 to-yellow-600', delay: '0.6s' },
-    { name: 'AI/ML', color: 'from-purple-600 to-pink-600', delay: '0.8s' },
-    { name: 'AWS', color: 'from-orange-500 to-orange-600', delay: '1s' },
-    { name: 'Node.js', color: 'from-green-600 to-green-700', delay: '1.2s' },
-    { name: 'PostgreSQL', color: 'from-blue-700 to-blue-800', delay: '1.4s' },
+    { name: 'Next.js', color: gradients.background, delay: '0s' },
+    { name: 'TypeScript', color: 'from-[#f59e0b]/30 to-[#d97706]/30', delay: '0.2s' },
+    { name: 'React', color: gradients.primaryLight, delay: '0.4s' },
+    { name: 'Python', color: 'from-[#f59e0b]/25 to-[#d97706]/25', delay: '0.6s' },
+    { name: 'AI/ML', color: 'from-[#f59e0b]/30 to-[#d97706]/30', delay: '0.8s' },
+    { name: 'AWS', color: 'from-[#f59e0b]/25 to-[#d97706]/25', delay: '1s' },
+    { name: 'Node.js', color: gradients.primaryLight, delay: '1.2s' },
+    { name: 'PostgreSQL', color: 'from-[#f59e0b]/30 to-[#d97706]/30', delay: '1.4s' },
   ];
 
   return (
@@ -46,7 +47,7 @@ export default function Hero() {
         {techCards.map((card, index) => (
           <div
             key={index}
-            className={`floating-card absolute bg-gradient-to-br ${card.color} rounded-xl p-4 opacity-20 blur-sm border border-white/10`}
+            className={`floating-card absolute bg-gradient-to-br ${card.color} rounded-xl p-4 opacity-20 blur-sm border border-[#94a3b8]/10`}
             style={{
               top: `${15 + (index * 12)}%`,
               left: `${10 + (index * 11)}%`,
@@ -57,7 +58,7 @@ export default function Hero() {
               transform: 'translateZ(0)',
             }}
           >
-            <div className="text-white text-xs font-semibold text-center flex items-center justify-center h-full">
+            <div className="text-[#f8fafc] text-xs font-semibold text-center flex items-center justify-center h-full">
               {card.name}
             </div>
           </div>
@@ -67,7 +68,7 @@ export default function Hero() {
         {[...Array(5)].map((_, i) => (
           <div
             key={`extra-${i}`}
-            className="absolute bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-full blur-xl"
+            className="absolute bg-gradient-to-br from-[#f59e0b]/10 to-[#d97706]/10 rounded-full blur-xl"
             style={{
               width: `${200 + i * 50}px`,
               height: `${200 + i * 50}px`,
@@ -90,33 +91,33 @@ export default function Hero() {
             <span className="gradient-text">{resumeData.name}</span>
           </h1>
          
-          <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto mb-8 mt-4">
+          <p className="text-base md:text-lg text-[#94a3b8] max-w-2xl mx-auto mb-8 mt-4">
             Software Engineer specialized in distributed AI infrastructure and high-performance full-stack systems. 
             Currently architecting agentic workflows and observability suites at scale.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-slate-300">
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-[#94a3b8]">
           <a
             href={`https://${resumeData.linkedin}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-indigo-400 transition-all duration-300 hover:scale-110 group"
+            className="flex items-center gap-2 hover:text-[#f59e0b] transition-all duration-300 hover:scale-110 group"
           >
             <Linkedin size={18} className="group-hover:scale-125 transition-transform" />
             <span>LinkedIn</span>
           </a>
-          <span className="hidden sm:inline text-slate-600">•</span>
+          <span className="hidden sm:inline text-[#94a3b8]">•</span>
           <a
             href="https://github.com/haripriyarao26"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-white transition-all duration-300 hover:scale-110 group"
+            className="flex items-center gap-2 hover:text-[#f59e0b] transition-all duration-300 hover:scale-110 group"
           >
             <Github size={18} className="group-hover:scale-125 transition-transform" />
             <span>GitHub</span>
           </a>
-          <span className="hidden sm:inline text-slate-600">•</span>
+          <span className="hidden sm:inline text-[#94a3b8]">•</span>
           <div className="flex items-center gap-2">
             <MapPin size={18} />
             <span>{resumeData.location}</span>
@@ -126,19 +127,19 @@ export default function Hero() {
         <div className="flex flex-wrap gap-4 justify-center">
           <a
             href="#experience"
-            className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 hover:scale-105 transform"
+            className="px-6 py-3 bg-[#f59e0b] text-[#f8fafc] rounded-lg font-semibold hover:shadow-lg hover:shadow-[#f59e0b]/50 hover:bg-[#d97706] transition-all duration-300 hover:scale-105 transform"
           >
             View Experience
           </a>
           <a
             href="#projects"
-            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 transform"
+            className="px-6 py-3 bg-[#f59e0b] text-[#f8fafc] rounded-lg font-semibold hover:shadow-lg hover:shadow-[#f59e0b]/50 hover:bg-[#d97706] transition-all duration-300 hover:scale-105 transform"
           >
             View Projects
           </a>
           <a
             href="#contact"
-            className="px-6 py-3 border-2 border-indigo-600 text-indigo-400 rounded-lg font-semibold hover:bg-indigo-600 hover:text-white transition-all duration-300 hover:scale-105 transform"
+            className="px-6 py-3 border-2 border-[#f59e0b] text-[#f59e0b] rounded-lg font-semibold hover:bg-[#f59e0b] hover:text-[#f8fafc] transition-all duration-300 hover:scale-105 transform"
           >
             Get In Touch
           </a>
@@ -147,8 +148,8 @@ export default function Hero() {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-slate-600 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-slate-400 rounded-full mt-2 animate-pulse"></div>
+        <div className="w-6 h-10 border-2 border-[#94a3b8] rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-[#94a3b8] rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
     </section>
