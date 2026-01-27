@@ -82,7 +82,7 @@ export const resumeData: ResumeData = {
       location: "Los Angeles, CA",
       period: "Sep 2024 - Present",
       achievements: [
-        "Built and optimized Onetera, improving reliability and performance, which directly contributed to attracting investor confidence and securing a $3M seed raise.",
+        "Architected the core system architecture that passed investor technical due diligence and supported platform scaling post-seed funding.",
         "Architected a zero-downtime CI/CD pipeline with CircleCI, Vercel, and Render; reduced deployment time from 20 to 10 minutes and eliminated prior 10-minute downtime.",
         "Designed AI Agent workflows for general task planning and multi-language translation, reducing municipal one-time operational costs by 60-70% and freeing resources for high-impact services.",
         "Monitored ClickHouse pipelines and integrated BetterStack alerts, reducing incident resolution by 40%.",

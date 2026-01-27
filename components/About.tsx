@@ -108,12 +108,11 @@ export default function About() {
             >
               <h3 className="text-2xl font-bold text-[#111827] mb-4">My Story</h3>
               <p className="text-[#525252] text-lg leading-relaxed mb-4">
-                As a <strong className="text-[#111827]">Software Engineer 2</strong> at Onetera, I architect distributed AI infrastructure and 
-                high-performance systems that handle production-scale workloads. My focus is on building reliable, observable systems 
-                using technologies like <strong className="text-[#111827]">LangGraph, ClickHouse, and Redis</strong> to solve complex engineering challenges.
+                My journey from a Computer Science student in India to a technical leader in Los Angeles has taught me the value of building systems that aren't just functional, but resilient and observable at scale.
               </p>
               <p className="text-[#525252] text-lg leading-relaxed">
-                I hold a <strong className="text-[#111827]">Master of Science in Computer Science</strong> from the University of Southern California, 
+                As a <strong className="text-[#111827]">Software Engineer 2</strong> at Onetera, I architect distributed AI infrastructure and 
+                high-performance systems that handle production-scale workloads. I hold a <strong className="text-[#111827]">Master of Science in Computer Science</strong> from the University of Southern California, 
                 where I specialized in AI/ML and distributed systems. My approach emphasizes <strong className="text-[#111827]">performance, reliability, and scalability</strong>— 
                 I build systems that work at scale, not just in demos.
               </p>
