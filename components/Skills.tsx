@@ -11,28 +11,22 @@ export default function Skills() {
   
   const skillCategories = [
     {
+      icon: Database,
+      title: 'Infrastructure',
+      skills: ['AWS', 'CircleCI', 'Vercel', 'Render', 'Supabase', 'ClickHouse', 'Redis', 'PostgreSQL', 'MongoDB'],
+      color: 'text-green-400',
+    },
+    {
       icon: Code,
-      title: 'Languages',
-      skills: resumeData.skills.languages,
+      title: 'Core Engine',
+      skills: ['Python', 'TypeScript', 'JavaScript', 'Node.js', 'LangGraph', 'Flask', 'Django', 'Express'],
       color: 'text-blue-400',
     },
     {
       icon: Layers,
-      title: 'Frameworks & Tools',
-      skills: resumeData.skills.frameworks,
+      title: 'Frontend Systems',
+      skills: ['Next.js', 'React', 'Chakra UI', 'Bootstrap', 'HTML', 'CSS', 'GraphQL'],
       color: 'text-purple-400',
-    },
-    {
-      icon: Wrench,
-      title: 'Libraries',
-      skills: resumeData.skills.libraries,
-      color: 'text-pink-400',
-    },
-    {
-      icon: Database,
-      title: 'Databases',
-      skills: resumeData.skills.databases,
-      color: 'text-green-400',
     },
   ];
 
@@ -45,7 +39,7 @@ export default function Skills() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {skillCategories.map((category, index) => {
             const Icon = category.icon;
             const cardVisible = isCardVisible(index);

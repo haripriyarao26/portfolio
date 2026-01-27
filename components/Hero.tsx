@@ -91,9 +91,8 @@ export default function Hero() {
           </h1>
          
           <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto mb-8 mt-4">
-            Building scalable platforms, AI-powered solutions, and engineering systems
-            that drive business growth. Passionate about full-stack development
-            and leveraging AI to solve complex problems and create meaningful impact.
+            Software Engineer specialized in distributed AI infrastructure and high-performance full-stack systems. 
+            Currently architecting agentic workflows and observability suites at scale.
           </p>
         </div>
 
@@ -106,16 +105,6 @@ export default function Hero() {
           >
             <Linkedin size={18} className="group-hover:scale-125 transition-transform" />
             <span>LinkedIn</span>
-          </a>
-          <span className="hidden sm:inline text-slate-600">•</span>
-          <a
-            href="https://leetcode.com/u/haripriyarao/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-orange-400 transition-all duration-300 hover:scale-110 group"
-          >
-            <Code size={18} className="group-hover:scale-125 transition-transform" />
-            <span>LeetCode</span>
           </a>
           <span className="hidden sm:inline text-slate-600">•</span>
           <a

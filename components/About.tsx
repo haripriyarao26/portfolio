@@ -59,9 +59,9 @@ export default function About() {
             <div className="bg-gradient-to-br from-green-600 to-emerald-600 p-3 rounded-lg w-fit mb-4">
               <Sparkles className="text-white" size={24} />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-3">0 → 1 Builder</h3>
+            <h3 className="text-xl font-semibold text-white mb-3">Infrastructure</h3>
             <p className="text-slate-300">
-              Specialized in taking products from concept to launch, building foundational architecture and scalable systems from scratch.
+              Architecting distributed systems, observability pipelines, and high-performance infrastructure that scales with business needs.
             </p>
           </div>
 
@@ -108,15 +108,14 @@ export default function About() {
             >
               <h3 className="text-2xl font-bold text-white mb-4">My Story</h3>
               <p className="text-slate-300 text-lg leading-relaxed mb-4">
-                As a <strong className="text-white">Software Engineer 2/Technical Lead</strong> at Onetera, I've had the privilege of building products from 0 to 1, 
-                contributing to a $3M seed raise, and working directly with city stakeholders to solve real-world problems. 
-                My journey from a Computer Science student in India to a technical leader in Los Angeles has taught me the value of 
-                <strong className="text-white"> building with purpose</strong>.
+                As a <strong className="text-white">Software Engineer 2</strong> at Onetera, I architect distributed AI infrastructure and 
+                high-performance systems that handle production-scale workloads. My focus is on building reliable, observable systems 
+                using technologies like <strong className="text-white">LangGraph, ClickHouse, and Redis</strong> to solve complex engineering challenges.
               </p>
               <p className="text-slate-300 text-lg leading-relaxed">
                 I hold a <strong className="text-white">Master of Science in Computer Science</strong> from the University of Southern California, 
-                where I deepened my understanding of AI/ML and full-stack development. My approach combines technical excellence with 
-                product thinking—I don't just write code, I solve problems that matter.
+                where I specialized in AI/ML and distributed systems. My approach emphasizes <strong className="text-white">performance, reliability, and scalability</strong>— 
+                I build systems that work at scale, not just in demos.
               </p>
             </div>
 
@@ -129,14 +128,14 @@ export default function About() {
             >
               <h3 className="text-2xl font-bold text-white mb-4">My Philosophy</h3>
               <p className="text-slate-300 text-lg leading-relaxed mb-4">
-                <strong className="text-white">Build, don't just code.</strong> I believe the best engineers are those who understand 
-                the "why" behind the "what". Every line of code should serve a purpose, every feature should solve a real problem, 
-                and every system should be built to scale.
+                <strong className="text-white">Systems over features.</strong> I believe the best engineers understand how components 
+                interact at scale. Every architecture decision should consider performance implications, every system should be observable, 
+                and every deployment should be reliable.
               </p>
               <p className="text-slate-300 text-lg leading-relaxed">
-                I'm passionate about <strong className="text-white">AI-powered solutions</strong> that make people's lives easier, 
-                <strong className="text-white"> scalable architectures</strong> that grow with the business, and 
-                <strong className="text-white"> collaborative teams</strong> that ship impactful products.
+                I'm passionate about <strong className="text-white">distributed AI infrastructure</strong> that handles production workloads, 
+                <strong className="text-white"> observability systems</strong> that provide actionable insights, and 
+                <strong className="text-white"> high-performance engineering</strong> that delivers measurable impact.
               </p>
             </div>
 

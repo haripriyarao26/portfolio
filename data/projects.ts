@@ -19,13 +19,13 @@ export const projects: Project[] = [
   {
     id: 'gemini-cookbook',
     title: 'Google Gemini Cookbook: Cost & Health Monitoring Utility',
-    description: 'Contributed to the official Google Gemini repository by developing a reusable LLM Observability utility with real-time USD cost tracking and API health monitoring for Gemini 2.0/3.0 models.',
+    description: 'Architected a cost-tracking utility that handles sub-second API health heartbeats for Gemini 2.0/3.0 models. Contributed to the official Google Gemini repository with production-ready observability tooling.',
     images: [],
     github: 'https://github.com/google-gemini/cookbook/pull/1088',
     tech: ['Python', 'Google Gemini API', 'LLM Observability', 'Type Hints', 'CI/CD'],
     features: [
+      'Sub-second API health monitoring',
       'Real-time USD Cost Tracking',
-      'API Health Monitoring',
       'Rate Limit Error Handling (429 Resource Exhausted)',
       'Token-to-Cost Normalization',
       'Google Engineering Standards Compliance'
@@ -34,13 +34,13 @@ export const projects: Project[] = [
   {
     id: 'auto-unit-agent',
     title: 'Auto-Unit-Agent: Autonomous Jest Test Generation',
-    description: 'Built an automated unit-test generation agent for TypeScript that synthesizes Jest tests from source code, executes them, and iteratively debugs failures to converge on passing suites.',
+    description: 'Engineered a self-healing agentic framework that generates Jest tests using OS-level sandboxing and child process isolation for secure code validation. Implements LangGraph state machines with conditional routing.',
     images: [],
     github: 'https://github.com/haripriyarao26/auto-unit-agent',
-    tech: ['TypeScript', 'Jest', 'LangGraph', 'Node.js', 'Sandboxing'],
+    tech: ['TypeScript', 'Jest', 'LangGraph', 'Node.js', 'OS-level Sandboxing'],
     features: [
+      'OS-level sandboxing with child process isolation',
       'LangGraph workflow: generate → execute → debug → retry',
-      'Sandboxed test execution in isolated temp directories',
       'Guardrails for model outputs (parsing + validation)'
     ]
   },
@@ -48,18 +48,7 @@ export const projects: Project[] = [
     id: 'moodbite',
     title: 'MoodBite',
     description: 'A mood-driven food recommendation agent powered by AI',
-    images: [
-      {
-        src: 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/moodbite/image.png',
-        alt: 'MoodBite application interface showing mood-driven food recommendations',
-        caption: 'Main interface with mood input and food recommendations'
-      },
-      {
-        src: 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/moodbite/image2.png',
-        alt: 'MoodBite form filled with example inputs',
-        caption: 'Example form with filled inputs showing time, energy level, and dietary preferences'
-      }
-    ],
+    images: [],
     github: 'https://github.com/haripriyarao26/MoodBite',
     demo: 'https://haripriyarao26.github.io/MoodBite/',
     tech: ['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'],

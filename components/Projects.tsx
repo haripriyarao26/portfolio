@@ -119,7 +119,7 @@ function Projects() {
                   )}
                 </div>
 
-                {/* Case Study CTA */}
+                {/* Technical Deep Dive CTA */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -128,7 +128,7 @@ function Projects() {
                   className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg font-semibold transition-all duration-300 group"
                 >
                   <FileText size={18} />
-                  <span>View Case Study</span>
+                  <span>Technical Deep Dive</span>
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>

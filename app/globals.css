@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,8 +9,8 @@
   --primary-dark: #4f46e5;
   --secondary: #8b5cf6;
   --accent: #ec4899;
-  --bg-dark: #0f172a;
-  --bg-card: #1e293b;
+  --bg-dark: #0d1117;
+  --bg-card: #161b22;
   --text-primary: #f1f5f9;
   --text-secondary: #cbd5e1;
 }
@@ -26,7 +28,7 @@ html {
 body {
   color: var(--text-primary);
   background: var(--bg-dark);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
