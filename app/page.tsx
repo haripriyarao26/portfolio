@@ -104,8 +104,8 @@ export default function Home() {
       </Suspense>
       
       {/* Footer */}
-      <footer className="bg-[#0f172a] border-t border-[#1e293b] py-8 px-4">
-        <div className="max-w-6xl mx-auto text-center text-slate-400">
+      <footer className="bg-[#fcfcf9] border-t border-[#e5e5e5] py-8 px-4">
+        <div className="max-w-6xl mx-auto text-center text-[#525252]">
           <p>© {new Date().getFullYear()} Haripriya Rao. All rights reserved.</p>
           <p className="mt-2 text-sm">Built with Next.js, TypeScript, and Tailwind CSS</p>
         </div>

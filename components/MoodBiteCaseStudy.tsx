@@ -28,18 +28,18 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
   };
 
   return (
-    <section id="projects" className="py-20 px-4 bg-[#0f172a]/50">
+    <section id="projects" className="py-20 px-4 bg-[#fcfcf9]/50">
       <div ref={ref} className={`max-w-5xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f59e0b]/20 rounded-full mb-6">
-            <Code2 className="text-[#f59e0b]" size={18} />
-            <span className="text-[#f59e0b] text-sm font-medium">Case Study</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a]/20 rounded-full mb-6">
+            <Code2 className="text-[#1a1a1a]" size={18} />
+            <span className="text-[#1a1a1a] text-sm font-medium">Case Study</span>
           </div>
           <h2 className="text-5xl font-bold mb-4">
             <span className="gradient-text">{project.title}</span>
           </h2>
-          <p className="text-xl text-[#94a3b8] max-w-2xl mx-auto">
+          <p className="text-xl text-[#525252] max-w-2xl mx-auto">
             {project.description}
           </p>
           <div className="flex items-center justify-center gap-4 mt-6">
@@ -48,7 +48,7 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 bg-[#1e293b] hover:bg-[#334155] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#f5f5f3] rounded-lg transition-colors"
               >
                 <Github size={18} />
                 <span>View Code</span>
@@ -59,7 +59,7 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 bg-[#f59e0b] hover:bg-[#d97706] rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] hover:bg-black rounded-lg transition-colors"
               >
                 <Globe size={18} />
                 <span>Live Demo</span>
@@ -73,7 +73,7 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
           {/* Main Image Display */}
           <div 
             ref={getItemRef(0)}
-            className={`mb-6 rounded-xl overflow-hidden border border-[#334155] transition-all duration-1000 ${
+            className={`mb-6 rounded-xl overflow-hidden border border-[#e5e5e5] transition-all duration-1000 ${
               isCardVisible(0) 
                 ? 'opacity-100 scale-100 rotate-0' 
                 : 'opacity-0 scale-95 rotate-2'
@@ -84,17 +84,17 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#0f172a]/80 hover:bg-[#1e293b] rounded-full transition-all opacity-0 group-hover:opacity-100"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#fcfcf9]/80 hover:bg-white rounded-full transition-all opacity-0 group-hover:opacity-100"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft className="text-[#f8fafc]" size={24} />
+                    <ChevronLeft className="text-[#111827]" size={24} />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#0f172a]/80 hover:bg-[#1e293b] rounded-full transition-all opacity-0 group-hover:opacity-100"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-[#fcfcf9]/80 hover:bg-white rounded-full transition-all opacity-0 group-hover:opacity-100"
                     aria-label="Next image"
                   >
-                    <ChevronRight className="text-[#f8fafc]" size={24} />
+                    <ChevronRight className="text-[#111827]" size={24} />
                   </button>
                 </>
               )}
@@ -105,13 +105,13 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
                 priority={selectedImageIndex === 0}
               />
               {project.images[selectedImageIndex].caption && (
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0f172a]/90 to-transparent p-6">
-                  <p className="text-[#f8fafc] text-sm font-medium">{project.images[selectedImageIndex].caption}</p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#fcfcf9]/90 to-transparent p-6">
+                  <p className="text-[#111827] text-sm font-medium">{project.images[selectedImageIndex].caption}</p>
                 </div>
               )}
               {project.images.length > 1 && (
-                <div className="absolute top-4 right-4 bg-[#0f172a]/80 px-3 py-1 rounded-full">
-                  <span className="text-[#f8fafc] text-sm">
+                <div className="absolute top-4 right-4 bg-[#fcfcf9]/80 px-3 py-1 rounded-full">
+                  <span className="text-[#111827] text-sm">
                     {selectedImageIndex + 1} / {project.images.length}
                   </span>
                 </div>
@@ -128,8 +128,8 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
                   onClick={() => setSelectedImageIndex(index)}
                   className={`relative rounded-lg overflow-hidden border-2 transition-all duration-300 ${
                     selectedImageIndex === index
-                      ? 'border-[#f59e0b] scale-105'
-                        : 'border-[#334155] hover:border-[#475569]'
+                      ? 'border-[#1a1a1a] scale-105'
+                        : 'border-[#e5e5e5] hover:border-[#d4d4d4]'
                   }`}
                 >
                   <LazyImage
@@ -138,7 +138,7 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
                     className="w-full h-32 object-cover"
                   />
                   {selectedImageIndex === index && (
-                    <div className="absolute inset-0 bg-[#f59e0b]/20"></div>
+                    <div className="absolute inset-0 bg-[#1a1a1a]/20"></div>
                   )}
                 </button>
               ))}
@@ -155,17 +155,17 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
           style={{ transitionDelay: '200ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <Lightbulb className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <Lightbulb className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">The Problem</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">The Problem</h3>
           </div>
-          <div className="bg-[#1e293b]/50 rounded-xl p-8 border border-[#334155] card-hover">
-            <p className="text-[#94a3b8] text-lg leading-relaxed mb-4">
+          <div className="bg-white/50 rounded-xl p-8 border border-[#e5e5e5] card-hover">
+            <p className="text-[#525252] text-lg leading-relaxed mb-4">
               Choosing what to eat can be overwhelming, especially when you're tired, stressed, or just not in the mood to decide. 
               Traditional food apps require you to know what you want, but sometimes you just need a recommendation based on how you're feeling.
             </p>
-            <p className="text-[#94a3b8] text-lg leading-relaxed">
+            <p className="text-[#525252] text-lg leading-relaxed">
               The challenge was to create an intelligent system that understands context—mood, time of day, energy level, and dietary preferences—to provide personalized food recommendations without requiring API keys or paid services.
             </p>
           </div>
@@ -180,22 +180,22 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
           style={{ transitionDelay: '400ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <Target className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <Target className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">My Process</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">My Process</h3>
           </div>
           
           <div className="space-y-6">
             <div 
               ref={getItemRef(3)}
-              className={`bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] card-hover transition-all duration-700 ${
+              className={`bg-white/50 rounded-xl p-6 border border-[#e5e5e5] card-hover transition-all duration-700 ${
                 isCardVisible(3) ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-5 scale-95'
               }`}
               style={{ transitionDelay: '600ms' }}
             >
-              <h4 className="text-xl font-semibold text-[#f8fafc] mb-3">1. Research & Planning</h4>
-              <p className="text-[#94a3b8]">
+              <h4 className="text-xl font-semibold text-[#111827] mb-3">1. Research & Planning</h4>
+              <p className="text-[#525252]">
                 Researched free AI models available through Hugging Face Inference API. Explored mood analysis techniques and food recommendation algorithms. 
                 Designed the user flow to capture mood, time, energy level, and dietary preferences.
               </p>
@@ -203,19 +203,19 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
 
             <div 
               ref={getItemRef(4)}
-              className={`bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] card-hover transition-all duration-700 ${
+              className={`bg-white/50 rounded-xl p-6 border border-[#e5e5e5] card-hover transition-all duration-700 ${
                 isCardVisible(4) ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-5 scale-95'
               }`}
               style={{ transitionDelay: '800ms' }}
             >
-              <h4 className="text-xl font-semibold text-[#f8fafc] mb-3">2. Design & Prototyping</h4>
-              <p className="text-[#94a3b8] mb-3">
+              <h4 className="text-xl font-semibold text-[#111827] mb-3">2. Design & Prototyping</h4>
+              <p className="text-[#525252] mb-3">
                 Created a clean, intuitive interface using Ant Design components. Focused on simplicity—users describe their mood in natural language, 
                 and the system handles the rest. Designed for mobile-first experience with responsive layouts.
               </p>
-              <div className="mt-4 p-4 bg-[#0f172a]/50 rounded-lg">
-                <p className="text-sm text-[#94a3b8] mb-2">Design Principles:</p>
-                <ul className="list-disc list-inside space-y-1 text-[#94a3b8] text-sm">
+              <div className="mt-4 p-4 bg-[#fcfcf9]/50 rounded-lg">
+                <p className="text-sm text-[#525252] mb-2">Design Principles:</p>
+                <ul className="list-disc list-inside space-y-1 text-[#525252] text-sm">
                   <li>Minimal cognitive load - simple form inputs</li>
                   <li>Natural language input for mood description</li>
                   <li>Visual feedback for recommendations</li>
@@ -226,19 +226,19 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
 
             <div 
               ref={getItemRef(5)}
-              className={`bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] card-hover transition-all duration-700 ${
+              className={`bg-white/50 rounded-xl p-6 border border-[#e5e5e5] card-hover transition-all duration-700 ${
                 isCardVisible(5) ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-5 scale-95'
               }`}
               style={{ transitionDelay: '1000ms' }}
             >
-              <h4 className="text-xl font-semibold text-[#f8fafc] mb-3">3. Development</h4>
-              <p className="text-[#94a3b8] mb-3">
+              <h4 className="text-xl font-semibold text-[#111827] mb-3">3. Development</h4>
+              <p className="text-[#525252] mb-3">
                 Built with Next.js 14 and TypeScript for type safety. Integrated Hugging Face Inference API for AI-powered recommendations. 
                 Implemented preference memory using localStorage for personalized experiences.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
                 {['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'].map((tech) => (
-                  <span key={tech} className="px-3 py-1 bg-[#f59e0b]/20 text-[#f59e0b] rounded-full text-sm">
+                  <span key={tech} className="px-3 py-1 bg-[#1a1a1a]/20 text-[#1a1a1a] rounded-full text-sm">
                     {tech}
                   </span>
                 ))}
@@ -256,13 +256,13 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
           style={{ transitionDelay: '1200ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <CheckCircle className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <CheckCircle className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">The Solution</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">The Solution</h3>
           </div>
-          <div className="bg-gradient-to-br from-[#f59e0b]/20 to-[#d97706]/20 rounded-xl p-8 border border-[#f59e0b]/30 card-hover">
-            <p className="text-[#94a3b8] text-lg leading-relaxed mb-6">
+          <div className="bg-gradient-to-br from-[#1a1a1a]/20 to-black/20 rounded-xl p-8 border border-[#1a1a1a]/30 card-hover">
+            <p className="text-[#525252] text-lg leading-relaxed mb-6">
               MoodBite is a fully functional web application that provides personalized food recommendations based on:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -275,8 +275,8 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
                 'Zero API Costs - Uses free Hugging Face models, no API keys needed'
               ].map((feature, idx) => (
                 <div key={idx} className="flex items-start gap-3">
-                  <CheckCircle className="text-[#f59e0b] mt-1 flex-shrink-0" size={18} />
-                  <span className="text-[#94a3b8]">{feature}</span>
+                  <CheckCircle className="text-[#1a1a1a] mt-1 flex-shrink-0" size={18} />
+                  <span className="text-[#525252]">{feature}</span>
                 </div>
               ))}
             </div>
@@ -291,33 +291,33 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
           }`}
           style={{ transitionDelay: '1400ms' }}
         >
-          <h3 className="text-3xl font-bold text-[#f8fafc] mb-6">My Role & Contributions</h3>
-          <div className="bg-[#1e293b]/50 rounded-xl p-8 border border-[#334155] card-hover">
+          <h3 className="text-3xl font-bold text-[#111827] mb-6">My Role & Contributions</h3>
+          <div className="bg-white/50 rounded-xl p-8 border border-[#e5e5e5] card-hover">
             <div className="space-y-4">
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">Full-Stack Development</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">Full-Stack Development</h4>
+                <p className="text-[#525252]">
                   Designed and implemented the entire application from frontend UI to AI integration. 
                   Created a seamless user experience with intuitive form inputs and real-time recommendations.
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">AI Integration</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">AI Integration</h4>
+                <p className="text-[#525252]">
                   Researched and integrated Hugging Face Inference API, implementing prompt engineering techniques 
                   to generate contextual food recommendations based on multiple input factors.
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">UX/UI Design</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">UX/UI Design</h4>
+                <p className="text-[#525252]">
                   Designed a clean, accessible interface using Ant Design. Focused on reducing friction—users can 
                   describe their mood naturally without complex forms or multiple steps.
                 </p>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-[#f8fafc] mb-2">Deployment & Optimization</h4>
-                <p className="text-[#94a3b8]">
+                <h4 className="text-xl font-semibold text-[#111827] mb-2">Deployment & Optimization</h4>
+                <p className="text-[#525252]">
                   Deployed to GitHub Pages with optimized build configuration. Ensured fast load times and 
                   responsive design across all devices.
                 </p>
@@ -335,26 +335,26 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
           style={{ transitionDelay: '1600ms' }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#f59e0b]/20 rounded-lg">
-              <TrendingUp className="text-[#f59e0b]" size={24} />
+            <div className="p-2 bg-[#1a1a1a]/20 rounded-lg">
+              <TrendingUp className="text-[#1a1a1a]" size={24} />
             </div>
-            <h3 className="text-3xl font-bold text-[#f8fafc]">Outcomes</h3>
+            <h3 className="text-3xl font-bold text-[#111827]">Outcomes</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] text-center card-hover">
-              <div className="text-3xl font-bold text-[#f59e0b] mb-2">100%</div>
-              <p className="text-[#94a3b8]">Free to Use</p>
-              <p className="text-sm text-[#94a3b8] mt-1">No API keys or paid services required</p>
+            <div className="bg-white/50 rounded-xl p-6 border border-[#e5e5e5] text-center card-hover">
+              <div className="text-3xl font-bold text-[#1a1a1a] mb-2">100%</div>
+              <p className="text-[#525252]">Free to Use</p>
+              <p className="text-sm text-[#525252] mt-1">No API keys or paid services required</p>
             </div>
-            <div className="bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] text-center card-hover">
-              <div className="text-3xl font-bold text-[#f59e0b] mb-2">5</div>
-              <p className="text-[#94a3b8]">Key Features</p>
-              <p className="text-sm text-[#94a3b8] mt-1">Mood, time, energy, preferences, memory</p>
+            <div className="bg-white/50 rounded-xl p-6 border border-[#e5e5e5] text-center card-hover">
+              <div className="text-3xl font-bold text-[#1a1a1a] mb-2">5</div>
+              <p className="text-[#525252]">Key Features</p>
+              <p className="text-sm text-[#525252] mt-1">Mood, time, energy, preferences, memory</p>
             </div>
-            <div className="bg-[#1e293b]/50 rounded-xl p-6 border border-[#334155] text-center card-hover">
-              <div className="text-3xl font-bold text-[#f59e0b] mb-2">0</div>
-              <p className="text-[#94a3b8]">Setup Time</p>
-              <p className="text-sm text-[#94a3b8] mt-1">Works immediately, no configuration needed</p>
+            <div className="bg-white/50 rounded-xl p-6 border border-[#e5e5e5] text-center card-hover">
+              <div className="text-3xl font-bold text-[#1a1a1a] mb-2">0</div>
+              <p className="text-[#525252]">Setup Time</p>
+              <p className="text-sm text-[#525252] mt-1">Works immediately, no configuration needed</p>
             </div>
           </div>
         </div>
@@ -362,12 +362,12 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
         {/* Tech Stack */}
         <div 
           ref={getItemRef(9)}
-          className={`bg-[#1e293b]/50 rounded-xl p-8 border border-[#334155] card-hover transition-all duration-700 ${
+          className={`bg-white/50 rounded-xl p-8 border border-[#e5e5e5] card-hover transition-all duration-700 ${
             isCardVisible(9) ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
           }`}
           style={{ transitionDelay: '1800ms' }}
         >
-          <h3 className="text-2xl font-bold text-[#f8fafc] mb-6">Technology Stack</h3>
+          <h3 className="text-2xl font-bold text-[#111827] mb-6">Technology Stack</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { name: 'Next.js 14', category: 'Framework' },
@@ -379,9 +379,9 @@ function MoodBiteCaseStudy({ projectId = 'moodbite' }: MoodBiteCaseStudyProps) {
               { name: 'React Hooks', category: 'State' },
               { name: 'localStorage', category: 'Storage' }
             ].map((tech) => (
-              <div key={tech.name} className="text-center p-4 bg-[#0f172a]/50 rounded-lg">
-                <div className="font-semibold text-[#f8fafc] mb-1">{tech.name}</div>
-                <div className="text-xs text-[#94a3b8]">{tech.category}</div>
+              <div key={tech.name} className="text-center p-4 bg-[#fcfcf9]/50 rounded-lg">
+                <div className="font-semibold text-[#111827] mb-1">{tech.name}</div>
+                <div className="text-xs text-[#525252]">{tech.category}</div>
               </div>
             ))}
           </div>

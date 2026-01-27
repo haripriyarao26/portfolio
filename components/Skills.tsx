@@ -14,19 +14,19 @@ export default function Skills() {
       icon: Database,
       title: 'Infrastructure',
       skills: ['AWS', 'CircleCI', 'Vercel', 'Render', 'Supabase', 'ClickHouse', 'Redis', 'PostgreSQL', 'MongoDB'],
-      color: 'text-[#f59e0b]',
+      color: 'text-[#1a1a1a]',
     },
     {
       icon: Code,
       title: 'Core Engine',
       skills: ['Python', 'TypeScript', 'JavaScript', 'Node.js', 'LangGraph', 'Flask', 'Django', 'Express'],
-      color: 'text-[#f59e0b]',
+      color: 'text-[#1a1a1a]',
     },
     {
       icon: Layers,
       title: 'Frontend Systems',
       skills: ['Next.js', 'React', 'Chakra UI', 'Bootstrap', 'HTML', 'CSS', 'GraphQL'],
-      color: 'text-[#f59e0b]',
+      color: 'text-[#1a1a1a]',
     },
   ];
 
@@ -48,7 +48,7 @@ export default function Skills() {
               <div
                 key={index}
                 ref={getItemRef(index)}
-                className={`bg-[#1e293b] rounded-xl p-6 card-hover border border-[#334155] transition-all duration-700 ${
+                className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${
                   cardVisible
                     ? 'opacity-100 translate-y-0 scale-100'
                     : 'opacity-0 translate-y-20 scale-95'
@@ -66,7 +66,7 @@ export default function Skills() {
                   >
                     <Icon className={category.color} size={24} />
                   </div>
-                  <h3 className="text-xl font-semibold text-[#f8fafc]">{category.title}</h3>
+                  <h3 className="text-xl font-semibold text-[#111827]">{category.title}</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {category.skills.map((skill, idx) => {
@@ -74,7 +74,7 @@ export default function Skills() {
                     return (
                       <span
                         key={idx}
-                        className={`px-3 py-1 bg-[#334155] text-[#94a3b8] rounded-full text-sm hover:bg-[#f59e0b] hover:text-[#f8fafc] transition-all duration-500 ${
+                        className={`px-3 py-1 bg-[#f5f5f3] text-[#111827] rounded-full text-sm border border-[#e5e5e5] hover:bg-[#1a1a1a] hover:text-white transition-all duration-500 ${
                           cardVisible
                             ? 'opacity-100 translate-y-0'
                             : 'opacity-0 translate-y-5'

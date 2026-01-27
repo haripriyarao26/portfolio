@@ -10,7 +10,7 @@ export default function Awards() {
   const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(150);
   
   return (
-    <section id="awards" className="py-20 px-4 bg-[#0f172a]/50">
+    <section id="awards" className="py-20 px-4 bg-[#fcfcf9]/50">
       <div ref={ref} className={`max-w-6xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="section-header">
           <h2 className="text-4xl font-bold text-center">
@@ -23,7 +23,7 @@ export default function Awards() {
             <div
               key={index}
               ref={getItemRef(index)}
-              className={`bg-[#1e293b] rounded-xl p-6 card-hover border border-[#334155] transition-all duration-700 ${
+              className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${
                 isCardVisible(index) 
                   ? 'opacity-100 translate-y-0 scale-100' 
                   : 'opacity-0 translate-y-10 scale-95'
@@ -31,14 +31,14 @@ export default function Awards() {
               style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="flex items-start gap-4">
-                <div className="bg-gradient-to-br from-[#f59e0b] to-[#d97706] p-3 rounded-lg">
-                  <Award className="text-[#f8fafc]" size={24} />
+                <div className="bg-gradient-to-br from-[#1a1a1a] to-black p-3 rounded-lg">
+                  <Award className="text-white" size={24} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-[#f8fafc] mb-2">{honor.title}</h3>
-                  <p className="text-[#f59e0b] font-semibold mb-2">{honor.organization}</p>
-                  <p className="text-[#94a3b8] mb-2">{honor.description}</p>
-                  <div className="flex items-center gap-4 text-sm text-[#94a3b8]">
+                  <h3 className="text-xl font-semibold text-[#111827] mb-2">{honor.title}</h3>
+                  <p className="text-[#1a1a1a] font-semibold mb-2">{honor.organization}</p>
+                  <p className="text-[#525252] mb-2">{honor.description}</p>
+                  <div className="flex items-center gap-4 text-sm text-[#525252]">
                     <span>{honor.location}</span>
                     <span>•</span>
                     <span>{honor.year}</span>
