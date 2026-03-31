@@ -11,7 +11,7 @@ import { preloadImages } from '@/utils/imageCache';
 
 function Projects() {
   const { ref, isVisible } = useScrollAnimation();
-  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200, projects.length);
+  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
   // Preload first project image when component mounts
