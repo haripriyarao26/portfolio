@@ -34,3 +34,16 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# LaTeX (resume/)
+resume/haripriya-rao-ats.tex
+resume/*.aux
+resume/*.log
+resume/*.out
+resume/*.synctex.gz
+
+# Local Cursor resume/JD materials (not committed)
+.cursor/skills/
+.cursor/rules/
+data/ground.txt
+data/example.txt
+
