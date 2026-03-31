@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 interface CountUpMetricProps {
   value: number;
@@ -19,7 +19,20 @@ export default function CountUpMetric({
   const [hasStarted, setHasStarted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const fullLabel = `${value}${suffix} ${label}`.trim();
+
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplay(value);
+      setHasStarted(true);
+    }
+  }, [value]);
+
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
     if (!ref.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -35,6 +48,12 @@ export default function CountUpMetric({
   }, []);
 
   useEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
     if (!hasStarted) return;
 
     let startTime = 0;
@@ -56,10 +75,17 @@ export default function CountUpMetric({
   return (
     <div
       ref={ref}
-      className="glass-card rounded-xl px-4 py-3 border border-[#1a1a1a]/20 min-w-[140px]"
+      role="group"
+      aria-label={fullLabel}
+      data-metric-value={value}
+      data-metric-suffix={suffix}
+      className="glass-card rounded-xl px-4 py-3 border border-[#1a1a1a]/20 min-w-0 sm:min-w-[140px] flex-1 sm:flex-none max-w-[11rem] sm:max-w-none"
     >
-      <div className="text-2xl font-bold text-[#111827] font-mono">{display}{suffix}</div>
-      <div className="text-xs uppercase tracking-[0.12em] text-[#525252] font-mono mt-1">
+      <div className="text-2xl font-bold text-[#111827] font-mono tabular-nums" aria-hidden="true">
+        {display}
+        {suffix}
+      </div>
+      <div className="text-xs uppercase tracking-[0.12em] text-[#525252] font-mono mt-1" aria-hidden="true">
         {label}
       </div>
     </div>

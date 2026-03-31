@@ -9,7 +9,6 @@ const navItems = [
   { name: 'Experience', href: '#experience', group: 'work' },
   { name: 'Skills', href: '#skills', group: 'work' },
   { name: 'Projects', href: '#projects', group: 'work' },
-  { name: 'Open Source', href: '#open-source', group: 'work' },
   { name: 'Education', href: '#education', group: 'about' },
   { name: 'Certifications', href: '#certifications', group: 'about' },
   { name: 'Awards', href: '#awards', group: 'about' },
@@ -102,14 +101,6 @@ function Navigation() {
               >
                 Projects
               </a>
-              <a
-                href="#open-source"
-                className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'open-source' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
-                }`}
-              >
-                Open Source
-              </a>
             </div>
             <div className="flex items-center space-x-4">
               <a
@@ -169,13 +160,6 @@ function Navigation() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Projects
-            </a>
-            <a
-              href="#open-source"
-              className="block px-4 py-2 text-[#525252] hover:text-[#111827] hover:bg-white rounded-lg transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Open Source
             </a>
             <a
               href="#contact"

@@ -19,20 +19,7 @@ function GenericProjectCaseStudy({ projectId }: GenericProjectCaseStudyProps) {
   const isPullRequest = Boolean(project.github?.includes('/pull/'));
   const badgeLabel = isPullRequest ? 'Open Source Contribution' : 'Case Study';
   const linkLabel = isPullRequest ? 'View pull request on GitHub' : 'View on GitHub';
-  const shouldShowMermaidPreview = project.id === 'dev-log-architect';
-
-  const devLogMermaidChart = `
-flowchart LR
-  A[Git Diff + Module Context] --> B[Dev-Log Architect Extension]
-  B --> C[LLM Trade-off Analysis]
-  B --> D[Case Study Generator]
-  B --> E[Mermaid Diagram Synthesizer]
-  C --> F[Structured Markdown Output]
-  D --> F
-  E --> G[Architecture View]
-  F --> H[Portfolio / Interview Pack]
-  G --> H
-`;
+  const mermaidChart = project.mermaidDiagram?.trim();
 
   return (
     <section id="projects" className="py-12 px-4 bg-[#fcfcf9]/50">
@@ -113,9 +100,9 @@ flowchart LR
               </li>
             ))}
           </ul>
-          {shouldShowMermaidPreview && (
-            <MermaidPreview title="Dev-Log Mermaid Output" chart={devLogMermaidChart} />
-          )}
+          {mermaidChart ? (
+            <MermaidPreview title="Architecture (Mermaid)" chart={mermaidChart} />
+          ) : null}
         </div>
       </div>
     </section>

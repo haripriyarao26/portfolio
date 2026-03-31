@@ -5,6 +5,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 import { memo } from 'react';
 import { getProjectById } from '@/data/projects';
+import MermaidPreview from './MermaidPreview';
 
 interface AutoUnitAgentCaseStudyProps {
   projectId?: string;
@@ -188,6 +189,12 @@ function AutoUnitAgentCaseStudy({ projectId = 'auto-unit-agent' }: AutoUnitAgent
             ))}
           </div>
         </div>
+
+        {project.mermaidDiagram?.trim() && (
+          <div className="mt-10 px-1 sm:px-0">
+            <MermaidPreview title="Architecture (Mermaid)" chart={project.mermaidDiagram.trim()} />
+          </div>
+        )}
       </div>
     </section>
   );

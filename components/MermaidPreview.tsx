@@ -48,12 +48,17 @@ export default function MermaidPreview({ title = 'Architecture preview', chart }
   }, [chart]);
 
   return (
-    <div className="glass-card border border-[#1a1a1a]/20 rounded-xl p-4 mt-6">
-      <div className="mono-accent text-xs uppercase tracking-[0.14em] text-[#525252] mb-3">{title}</div>
+    <div className="glass-card border border-[#1a1a1a]/20 rounded-xl p-3 sm:p-4 mt-6 w-full min-w-0">
+      <div className="mono-accent text-[10px] sm:text-xs uppercase tracking-[0.14em] text-[#525252] mb-2 sm:mb-3">
+        {title}
+      </div>
       {hasError ? (
         <p className="text-sm text-[#525252]">Unable to render Mermaid preview.</p>
       ) : (
-        <div className="w-full overflow-x-auto mermaid-container" dangerouslySetInnerHTML={{ __html: svg }} />
+        <div
+          className="w-full min-h-[100px] overflow-x-auto overflow-y-hidden touch-pan-x mermaid-container -mx-1 px-1 sm:mx-0 sm:px-0"
+          dangerouslySetInnerHTML={{ __html: svg }}
+        />
       )}
     </div>
   );

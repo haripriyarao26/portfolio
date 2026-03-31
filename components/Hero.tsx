@@ -5,6 +5,7 @@ import { Linkedin, MapPin, Github } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { gradients } from '@/constants/colors';
 import CountUpMetric from './CountUpMetric';
+import HeroTerminal from './HeroTerminal';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -91,12 +92,20 @@ export default function Hero() {
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
             <span className="gradient-text">{resumeData.name}</span>
           </h1>
-         
-          <p className="text-base md:text-lg text-[#525252] max-w-2xl mx-auto mb-8 mt-4">
+
+          <HeroTerminal />
+
+          <p className="text-base md:text-lg text-[#525252] max-w-2xl mx-auto mb-4 mt-2">
             Software Engineer specialized in distributed AI infrastructure and high-performance full-stack systems.
             At Onetera through March 2026, I architected agentic workflows and observability suites at scale.
             I&apos;m actively looking for new opportunities in software engineering (SDE) and AI.
           </p>
+
+          <noscript>
+            <p className="text-sm text-[#525252] text-center max-w-lg mx-auto mb-4">
+              Key metrics: 96% token cost cut, 22-node orchestration graph, 40% orchestrator latency reduction.
+            </p>
+          </noscript>
 
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             <CountUpMetric value={96} suffix="%" label="Token Cost Cut" />

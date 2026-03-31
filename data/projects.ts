@@ -18,6 +18,8 @@ export interface Project {
   demo?: string;
   /** Extra outbound links (e.g. GitHub Releases); shown as labeled anchors in the grid and modal. */
   links?: ProjectLink[];
+  /** Mermaid source for Technical Deep Dive architecture preview (modal). */
+  mermaidDiagram?: string;
   tech: string[];
   features: string[];
 }
@@ -35,7 +37,12 @@ export const projects: Project[] = [
       'Reproduction script under examples/langchain_core documenting the issue',
       'Documents safe persistence when outputs are treated as inert data with an explicit message allowlist',
       'Local LangChain dev ergonomics: ignores for clone/virtualenv paths used in verification'
-    ]
+    ],
+    mermaidDiagram: `flowchart LR
+  O[Run outputs] --> D[Deserialize]
+  D --> A{Allowlisted messages?}
+  A -->|yes| S[Safe history]
+  A -->|no| R[Reject / inert data]`
   },
   {
     id: 'evolutionary-sde',
@@ -49,7 +56,12 @@ export const projects: Project[] = [
       'Evolutionary search strategies over continuous dynamics',
       'Reproducible experiments and clear repository layout',
       'Suited for extending with custom fitness landscapes and noise models'
-    ]
+    ],
+    mermaidDiagram: `flowchart LR
+  P[Population] --> E[Evolve]
+  E --> N[Noise / SDE step]
+  N --> F[Fitness]
+  F --> P`
   },
   {
     id: 'gemini-cookbook',
@@ -64,7 +76,12 @@ export const projects: Project[] = [
       'Rate Limit Error Handling (429 Resource Exhausted)',
       'Token-to-Cost Normalization',
       'Google Engineering Standards Compliance'
-    ]
+    ],
+    mermaidDiagram: `flowchart LR
+  G[Gemini API] --> H[Health heartbeat]
+  H --> C[Cost tracker]
+  C --> O[Observability / alerts]
+  R[Requests] --> G`
   },
   {
     id: 'auto-unit-agent',
@@ -77,7 +94,13 @@ export const projects: Project[] = [
       'OS-level sandboxing with child process isolation',
       'LangGraph workflow: generate → execute → debug → retry',
       'Guardrails for model outputs (parsing + validation)'
-    ]
+    ],
+    mermaidDiagram: `flowchart LR
+  SRC[Source] --> GEN[Generate tests]
+  GEN --> SBX[Sandbox run]
+  SBX -->|fail| DBG[Debug / fix]
+  DBG --> GEN
+  SBX -->|pass| OK[Jest output]`
   },
   {
     id: 'dev-log-architect',
@@ -105,7 +128,15 @@ export const projects: Project[] = [
       'End-to-end ownership for a pre–Marketplace release: OpenAI-compatible integrations and environment-based secrets (no credential storage in-extension)',
       'CI-friendly unit coverage for static-analysis code paths',
       'VSIX distribution via GitHub Releases for controlled beta and QA (vsce packaging)'
-    ]
+    ],
+    mermaidDiagram: `flowchart LR
+  A[Git diff + context] --> B[Dev-Log Architect]
+  B --> C[LLM trade-offs]
+  B --> D[Case study MD]
+  B --> E[Mermaid synth]
+  C --> F[Portfolio pack]
+  D --> F
+  E --> F`
   },
   {
     id: 'moodbite',
@@ -115,7 +146,11 @@ export const projects: Project[] = [
     github: 'https://github.com/haripriyarao26/MoodBite',
     demo: 'https://haripriyarao26.github.io/MoodBite/',
     tech: ['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'],
-    features: ['Mood Analysis', 'Time-Aware', 'Energy Level', 'Dietary Preferences', 'Memory']
+    features: ['Mood Analysis', 'Time-Aware', 'Energy Level', 'Dietary Preferences', 'Memory'],
+    mermaidDiagram: `flowchart LR
+  U[User + mood] --> M[HF model]
+  M --> R[Recommendations]
+  R --> UI[Next.js UI]`
   }
 ];
 

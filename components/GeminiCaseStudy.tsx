@@ -6,6 +6,7 @@ import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 import { useState, memo } from 'react';
 import { getProjectById } from '@/data/projects';
 import LazyImage from './LazyImage';
+import MermaidPreview from './MermaidPreview';
 
 interface GeminiCaseStudyProps {
   projectId?: string;
@@ -377,6 +378,12 @@ function GeminiCaseStudy({ projectId = 'gemini-cookbook' }: GeminiCaseStudyProps
             ))}
           </div>
         </div>
+
+        {project.mermaidDiagram?.trim() && (
+          <div className="mt-10 px-1 sm:px-0">
+            <MermaidPreview title="Architecture (Mermaid)" chart={project.mermaidDiagram.trim()} />
+          </div>
+        )}
       </div>
     </section>
   );
