@@ -63,6 +63,7 @@ export function generateResponse(userMessage: string): string {
       "**OpenAI Cookbook** (PR #2568, https://github.com/openai/openai-cookbook/pull/2568): LangChain RunnableWithMessageHistory deserialization repro and mitigation guidance",
       "**Evolutionary-SDE** (https://github.com/haripriyarao26/Evolutionary-SDE): Evolutionary methods with stochastic differential equation experiments",
       "**prod-ready-guardrail** (https://github.com/haripriyarao26/prod-ready-guardrail): Production-style guardrails for LLM and agent workflows",
+      "**Dev-Log Architect** — repo https://github.com/haripriyarao26/Dev-Log-Architect · VSIX releases https://github.com/haripriyarao26/Dev-Log-Architect/releases: VS Code/Cursor extension for case studies from git diffs + LLM/Mermaid",
       "**Spatial Analysis Tool for City of San Jose**: Processes site plans to auto-generate compliance reports with zoning validations",
       "**AI-powered Service & Permit Guide**: Uses GPT-4 to crawl municipal websites and generate structured documentation",
       "**Onetera Studio**: A no-code configuration platform that reduced engineering support requests by 60%",

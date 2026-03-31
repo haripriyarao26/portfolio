@@ -59,6 +59,18 @@ function GenericProjectCaseStudy({ projectId }: GenericProjectCaseStudyProps) {
                 <ExternalLink size={16} className="opacity-70" />
               </a>
             )}
+            {(project.links ?? []).map((extra) => (
+              <a
+                key={extra.href}
+                href={extra.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#f5f5f3] border border-[#e5e5e5] rounded-lg transition-colors text-[#111827]"
+              >
+                <span>{extra.label}</span>
+                <ExternalLink size={16} className="opacity-70" />
+              </a>
+            ))}
           </div>
         </div>
 

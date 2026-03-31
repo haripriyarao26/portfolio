@@ -119,6 +119,35 @@ function Projects() {
                   )}
                 </div>
 
+                {(project.links ?? []).length > 0 && (
+                  <div
+                    className="flex flex-col gap-2 mb-4"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-[#1a1a1a] hover:underline font-medium w-fit"
+                      >
+                        GitHub repository →
+                      </a>
+                    )}
+                    {(project.links ?? []).map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-[#1a1a1a] hover:underline font-medium w-fit"
+                      >
+                        {link.label} →
+                      </a>
+                    ))}
+                  </div>
+                )}
+
                 {/* Technical Deep Dive CTA */}
                 <button
                   onClick={(e) => {

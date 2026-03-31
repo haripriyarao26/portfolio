@@ -4,6 +4,11 @@ export interface ProjectImage {
   caption?: string;
 }
 
+export interface ProjectLink {
+  label: string;
+  href: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -11,6 +16,8 @@ export interface Project {
   images: ProjectImage[];
   github?: string;
   demo?: string;
+  /** Extra outbound links (e.g. GitHub Releases); shown as labeled anchors in the grid and modal. */
+  links?: ProjectLink[];
   tech: string[];
   features: string[];
 }
@@ -84,6 +91,34 @@ export const projects: Project[] = [
       'OS-level sandboxing with child process isolation',
       'LangGraph workflow: generate → execute → debug → retry',
       'Guardrails for model outputs (parsing + validation)'
+    ]
+  },
+  {
+    id: 'dev-log-architect',
+    title: 'Dev-Log Architect',
+    description:
+      'VS Code / Cursor extension (TypeScript) that automates engineering narrative extraction from git diffs and module-level context, producing structured case studies with LLM-authored trade-off analysis and Mermaid architecture views for portfolio- and interview-ready design-review quality.',
+    images: [],
+    github: 'https://github.com/haripriyarao26/Dev-Log-Architect',
+    links: [
+      {
+        label: 'GitHub Releases (VSIX)',
+        href: 'https://github.com/haripriyarao26/Dev-Log-Architect/releases'
+      }
+    ],
+    tech: [
+      'TypeScript',
+      'VS Code Extension API',
+      'Cursor',
+      'OpenAI-compatible APIs',
+      'vsce',
+      'LLMs',
+      'Mermaid'
+    ],
+    features: [
+      'End-to-end ownership for a pre–Marketplace release: OpenAI-compatible integrations and environment-based secrets (no credential storage in-extension)',
+      'CI-friendly unit coverage for static-analysis code paths',
+      'VSIX distribution via GitHub Releases for controlled beta and QA (vsce packaging)'
     ]
   },
   {
