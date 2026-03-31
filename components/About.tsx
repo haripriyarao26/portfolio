@@ -111,10 +111,10 @@ export default function About() {
                 My journey from a Computer Science student in India to a technical leader in Los Angeles has taught me the value of building systems that aren't just functional, but resilient and observable at scale.
               </p>
               <p className="text-[#525252] text-lg leading-relaxed">
-                As a <strong className="text-[#111827]">Software Engineer 2</strong> at Onetera, I architect distributed AI infrastructure and 
-                high-performance systems that handle production-scale workloads. I hold a <strong className="text-[#111827]">Master of Science in Computer Science</strong> from the University of Southern California, 
-                where I specialized in AI/ML and distributed systems. My approach emphasizes <strong className="text-[#111827]">performance, reliability, and scalability</strong>— 
-                I build systems that work at scale, not just in demos.
+                As a <strong className="text-[#111827]">Software Engineer 2</strong> at Onetera (through March 2026), I architected distributed AI infrastructure and
+                high-performance systems that handled production-scale workloads. I hold a <strong className="text-[#111827]">Master of Science in Computer Science</strong> from the University of Southern California,
+                where I specialized in AI/ML and distributed systems. My approach emphasizes <strong className="text-[#111827]">performance, reliability, and scalability</strong>—
+                I build systems that work at scale, not just in demos. I&apos;m actively looking for new roles in software engineering and AI.
               </p>
             </div>
 

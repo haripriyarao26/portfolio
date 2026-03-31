@@ -4,7 +4,7 @@ import ResourceHints from '@/components/ResourceHints'
 
 export const metadata: Metadata = {
   title: 'Haripriya Rao - Portfolio',
-  description: 'Interactive portfolio of Haripriya Rao - Lead Software Engineer',
+  description: 'Haripriya Rao — Software Engineer (distributed AI, full-stack). Open to SDE and AI opportunities.',
 }
 
 export default function RootLayout({

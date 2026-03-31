@@ -5,6 +5,7 @@ import { useEffect, memo } from 'react';
 import MoodBiteCaseStudy from './MoodBiteCaseStudy';
 import GeminiCaseStudy from './GeminiCaseStudy';
 import AutoUnitAgentCaseStudy from './AutoUnitAgentCaseStudy';
+import GenericProjectCaseStudy from './GenericProjectCaseStudy';
 
 interface CaseStudyModalProps {
   projectId: string | null;
@@ -74,7 +75,9 @@ function CaseStudyModal({ projectId, onClose }: CaseStudyModalProps) {
             <AutoUnitAgentCaseStudy projectId={projectId} />
           ) : projectId === 'moodbite' ? (
             <MoodBiteCaseStudy projectId={projectId} />
-          ) : null}
+          ) : (
+            <GenericProjectCaseStudy projectId={projectId} />
+          )}
         </div>
       </div>
     </div>

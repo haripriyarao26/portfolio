@@ -92,8 +92,9 @@ export default function Hero() {
           </h1>
          
           <p className="text-base md:text-lg text-[#525252] max-w-2xl mx-auto mb-8 mt-4">
-            Software Engineer specialized in distributed AI infrastructure and high-performance full-stack systems. 
-            Currently architecting agentic workflows and observability suites at scale.
+            Software Engineer specialized in distributed AI infrastructure and high-performance full-stack systems.
+            At Onetera through March 2026, I architected agentic workflows and observability suites at scale.
+            I&apos;m actively looking for new opportunities in software engineering (SDE) and AI.
           </p>
         </div>
 

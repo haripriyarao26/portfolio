@@ -18,7 +18,7 @@ export default function Contact() {
 
         <div className="bg-white rounded-xl p-8 border border-[#e5e5e5]">
           <p className="text-[#525252] text-center mb-8 text-lg">
-            I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology!
+            I&apos;m actively looking for new opportunities in software engineering and AI. Always happy to discuss roles, interesting projects, or a chat about technology.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

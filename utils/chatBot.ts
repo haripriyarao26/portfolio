@@ -31,11 +31,24 @@ export function generateResponse(userMessage: string): string {
     return `Here are my technical skills:\n\n**Languages:** ${skills.languages.join(', ')}\n\n**Frameworks/Tools:** ${skills.frameworks.join(', ')}\n\n**Libraries:** ${skills.libraries.join(', ')}\n\n**Databases:** ${skills.databases.join(', ')}`;
   }
 
+  // Job search / opportunities
+  if (
+    message.includes('opportunit') ||
+    message.includes('looking for') ||
+    message.includes('open to') ||
+    message.includes('hiring') ||
+    message.includes('available for work')
+  ) {
+    return `I'm **actively looking for new opportunities** in **software engineering (SDE)** and **AI**—roles where I can contribute to distributed systems, agentic workflows, and production-grade full-stack platforms.\n\nYou can reach me via **${resumeData.email}** or **${resumeData.linkedin}**.`;
+  }
+
   // Onetera queries
-  if (message.includes('onetera') || message.includes('current') || message.includes('present')) {
-    const oneteraExp = resumeData.experience.find(e => e.company === 'Onetera Technologies' && e.period.includes('Present'));
+  if (message.includes('onetera')) {
+    const oneteraExp = resumeData.experience.find(
+      (e) => e.company === 'Onetera Technologies' && e.position === 'Software Engineer 2'
+    );
     if (oneteraExp) {
-      return `I'm currently working as a **${oneteraExp.position}** at ${oneteraExp.company} (${oneteraExp.period}). Here's what I've been working on:\n\n${oneteraExp.achievements.map(a => `• ${a}`).join('\n\n')}`;
+      return `I most recently worked as a **${oneteraExp.position}** at ${oneteraExp.company} (${oneteraExp.period}). Highlights include:\n\n${oneteraExp.achievements.map((a) => `• ${a}`).join('\n\n')}`;
     }
   }
 
@@ -47,6 +60,9 @@ export function generateResponse(userMessage: string): string {
   // Projects queries
   if (message.includes('project') || message.includes('built') || message.includes('develop') || message.includes('create')) {
     const projects = [
+      "**OpenAI Cookbook** (PR #2568, https://github.com/openai/openai-cookbook/pull/2568): LangChain RunnableWithMessageHistory deserialization repro and mitigation guidance",
+      "**Evolutionary-SDE** (https://github.com/haripriyarao26/Evolutionary-SDE): Evolutionary methods with stochastic differential equation experiments",
+      "**prod-ready-guardrail** (https://github.com/haripriyarao26/prod-ready-guardrail): Production-style guardrails for LLM and agent workflows",
       "**Spatial Analysis Tool for City of San Jose**: Processes site plans to auto-generate compliance reports with zoning validations",
       "**AI-powered Service & Permit Guide**: Uses GPT-4 to crawl municipal websites and generate structured documentation",
       "**Onetera Studio**: A no-code configuration platform that reduced engineering support requests by 60%",
@@ -99,7 +115,7 @@ export function generateResponse(userMessage: string): string {
 
   // About / Who are you
   if (message.includes('who are you') || message.includes('about you') || message.includes('introduce') || message.includes('tell me about yourself')) {
-    return `Hi! I'm **${resumeData.name}**, a Lead Software Engineer at Onetera Technologies based in ${resumeData.location}.\n\nI'm passionate about building scalable platforms, working with AI technologies, and solving complex engineering challenges. I've helped scale Onetera from 0 to $3M ARR and have experience across the full stack - from frontend development with React and Next.js to backend systems, DevOps, and AI integration.\n\nI'd love to tell you more about my work, projects, or experience. What would you like to know?`;
+    return `Hi! I'm **${resumeData.name}**, a Software Engineer based in ${resumeData.location}. I specialize in distributed AI infrastructure and high-performance full-stack systems, most recently at **Onetera Technologies** (through Mar 2026), where I helped scale the platform and architect agentic workflows and observability.\n\nI'm **actively looking for new opportunities in SDE and AI**. Ask me about my experience, projects, or tech stack.`;
   }
 
   // Contact
@@ -108,6 +124,6 @@ export function generateResponse(userMessage: string): string {
   }
 
   // Default response
-  return `I'd be happy to help! I can tell you about:\n\n• My work experience and current role at Onetera Technologies\n• Projects I've built (AI tools, platforms, websites)\n• My technical skills and technologies I work with\n• My education background\n• Key achievements and impact\n• How I scaled Onetera to $3M ARR\n\nWhat would you like to know more about?`;
+  return `I'd be happy to help! I can tell you about:\n\n• My recent experience at Onetera Technologies (through Mar 2026)\n• That I'm actively looking for SDE/AI opportunities\n• Projects I've built (AI tools, platforms, websites)\n• My technical skills and technologies I work with\n• My education background\n• Key achievements and impact\n• How I scaled Onetera to $3M ARR\n\nWhat would you like to know more about?`;
 }
 

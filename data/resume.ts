@@ -80,7 +80,7 @@ export const resumeData: ResumeData = {
       company: "Onetera Technologies",
       position: "Software Engineer 2",
       location: "Los Angeles, CA",
-      period: "Sep 2024 - Present",
+      period: "Sep 2024 - Mar 2026",
       achievements: [
         "Architected the core system architecture that passed investor technical due diligence and supported platform scaling post-seed funding.",
         "Architected a zero-downtime CI/CD pipeline with CircleCI, Vercel, and Render; reduced deployment time from 20 to 10 minutes and eliminated prior 10-minute downtime.",
