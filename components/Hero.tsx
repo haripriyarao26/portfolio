@@ -5,7 +5,6 @@ import { Linkedin, MapPin, Github } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { gradients } from '@/constants/colors';
 import CountUpMetric from './CountUpMetric';
-import HeroTerminal from './HeroTerminal';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -92,8 +91,6 @@ export default function Hero() {
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
             <span className="gradient-text">{resumeData.name}</span>
           </h1>
-
-          <HeroTerminal />
 
           <p className="text-base md:text-lg text-[#525252] max-w-2xl mx-auto mb-4 mt-2">
             Software Engineer specialized in distributed AI infrastructure and high-performance full-stack systems.
