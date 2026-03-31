@@ -52,20 +52,6 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: 'prod-ready-guardrail',
-    title: 'prod-ready-guardrail',
-    description:
-      'Production-oriented guardrails and patterns for safer LLM and agent workflows—validation, policy checks, and defensive handling before responses reach users.',
-    images: [],
-    github: 'https://github.com/haripriyarao26/prod-ready-guardrail',
-    tech: ['Python', 'LLM safety', 'Guardrails', 'Production patterns'],
-    features: [
-      'Structured checks around model inputs and outputs',
-      'Templates for shipping guardrails in real services',
-      'Focused, dependency-light building blocks'
-    ]
-  },
-  {
     id: 'gemini-cookbook',
     title: 'Google Gemini Cookbook: Cost & Health Monitoring Utility',
     description: 'Architected a cost-tracking utility that handles sub-second API health heartbeats for Gemini 2.0/3.0 models. Contributed to the official Google Gemini repository with production-ready observability tooling.',

@@ -10,6 +10,7 @@ import SectionSeparator from '@/components/SectionSeparator';
 const Experience = lazy(() => import('@/components/Experience'));
 const Skills = lazy(() => import('@/components/Skills'));
 const Projects = lazy(() => import('@/components/Projects'));
+const OpenSourceImpact = lazy(() => import('@/components/OpenSourceImpact'));
 const Education = lazy(() => import('@/components/Education'));
 const Certifications = lazy(() => import('@/components/Certifications'));
 const Awards = lazy(() => import('@/components/Awards'));
@@ -85,6 +86,10 @@ export default function Home() {
       <SectionSeparator />
       <Suspense fallback={<SectionLoader />}>
         <Projects />
+      </Suspense>
+      <SectionSeparator />
+      <Suspense fallback={<SectionLoader />}>
+        <OpenSourceImpact />
       </Suspense>
       <SectionSeparator />
       <Suspense fallback={<SectionLoader />}>

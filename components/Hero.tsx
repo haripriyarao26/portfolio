@@ -1,9 +1,10 @@
 'use client';
 
 import { resumeData } from '@/data/resume';
-import { Linkedin, MapPin, Code, Github } from 'lucide-react';
+import { Linkedin, MapPin, Github } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import { colorClasses, gradients } from '@/constants/colors';
+import { gradients } from '@/constants/colors';
+import CountUpMetric from './CountUpMetric';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -85,7 +86,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-4xl mx-auto text-center animate-fade-in-up">
         <div className="mb-6">
           <div className="inline-block mb-4">
-            <span className="text-2xl md:text-3xl">Hey 👋, I'm</span>
+            <span className="text-2xl md:text-3xl mono-accent">Hey 👋, I&apos;m</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
             <span className="gradient-text">{resumeData.name}</span>
@@ -96,6 +97,12 @@ export default function Hero() {
             At Onetera through March 2026, I architected agentic workflows and observability suites at scale.
             I&apos;m actively looking for new opportunities in software engineering (SDE) and AI.
           </p>
+
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <CountUpMetric value={96} suffix="%" label="Token Cost Cut" />
+            <CountUpMetric value={22} label="State Nodes" />
+            <CountUpMetric value={40} suffix="%" label="Latency Reduction" />
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-[#525252]">

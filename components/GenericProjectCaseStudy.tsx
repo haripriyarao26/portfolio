@@ -4,6 +4,7 @@ import { Github, Code2, CheckCircle, ExternalLink } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { memo } from 'react';
 import { getProjectById } from '@/data/projects';
+import MermaidPreview from './MermaidPreview';
 
 interface GenericProjectCaseStudyProps {
   projectId: string;
@@ -18,6 +19,20 @@ function GenericProjectCaseStudy({ projectId }: GenericProjectCaseStudyProps) {
   const isPullRequest = Boolean(project.github?.includes('/pull/'));
   const badgeLabel = isPullRequest ? 'Open Source Contribution' : 'Case Study';
   const linkLabel = isPullRequest ? 'View pull request on GitHub' : 'View on GitHub';
+  const shouldShowMermaidPreview = project.id === 'dev-log-architect';
+
+  const devLogMermaidChart = `
+flowchart LR
+  A[Git Diff + Module Context] --> B[Dev-Log Architect Extension]
+  B --> C[LLM Trade-off Analysis]
+  B --> D[Case Study Generator]
+  B --> E[Mermaid Diagram Synthesizer]
+  C --> F[Structured Markdown Output]
+  D --> F
+  E --> G[Architecture View]
+  F --> H[Portfolio / Interview Pack]
+  G --> H
+`;
 
   return (
     <section id="projects" className="py-12 px-4 bg-[#fcfcf9]/50">
@@ -28,7 +43,7 @@ function GenericProjectCaseStudy({ projectId }: GenericProjectCaseStudyProps) {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a]/20 rounded-full mb-6">
             <Code2 className="text-[#1a1a1a]" size={18} />
-            <span className="text-[#1a1a1a] text-sm font-medium">{badgeLabel}</span>
+            <span className="text-[#1a1a1a] text-sm font-medium mono-accent">{badgeLabel}</span>
           </div>
           <h2 className="text-4xl font-bold mb-4">
             <span className="gradient-text">{project.title}</span>
@@ -80,7 +95,7 @@ function GenericProjectCaseStudy({ projectId }: GenericProjectCaseStudyProps) {
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="text-sm px-3 py-1 bg-[#f5f5f3] text-[#111827] rounded-full border border-[#e5e5e5]"
+                className="text-sm px-3 py-1 bg-[#f5f5f3] text-[#111827] rounded-full border border-[#e5e5e5] mono-accent"
               >
                 {t}
               </span>
@@ -89,7 +104,7 @@ function GenericProjectCaseStudy({ projectId }: GenericProjectCaseStudyProps) {
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold text-[#111827] mb-3">Highlights</h3>
+          <h3 className="text-xl font-semibold text-[#111827] mb-3 mono-accent">Highlights</h3>
           <ul className="space-y-3">
             {project.features.map((f) => (
               <li key={f} className="flex items-start gap-3 text-[#525252]">
@@ -98,6 +113,9 @@ function GenericProjectCaseStudy({ projectId }: GenericProjectCaseStudyProps) {
               </li>
             ))}
           </ul>
+          {shouldShowMermaidPreview && (
+            <MermaidPreview title="Dev-Log Mermaid Output" chart={devLogMermaidChart} />
+          )}
         </div>
       </div>
     </section>

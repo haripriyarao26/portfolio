@@ -41,7 +41,7 @@ function Projects() {
             <div
               key={project.id}
               ref={getItemRef(index)}
-              className={`bg-white rounded-xl overflow-hidden border border-[#e5e5e5] flex flex-col card-hover transition-all duration-700 cursor-pointer ${
+              className={`glass-card rounded-xl overflow-hidden border border-[#e5e5e5] flex flex-col card-hover transition-all duration-700 cursor-pointer ${
                 isCardVisible(index) 
                   ? 'opacity-100 translate-y-0 scale-100' 
                   : 'opacity-0 translate-y-10 scale-95'
@@ -107,16 +107,11 @@ function Projects() {
                   {project.tech.slice(0, 3).map((tech, idx) => (
                     <span
                       key={idx}
-                      className="text-xs px-2 py-1 bg-[#f5f5f3] text-[#111827] rounded border border-[#e5e5e5]"
+                      className="text-xs px-2 py-1 bg-[#f5f5f3] text-[#111827] rounded border border-[#e5e5e5] mono-accent"
                     >
                       {tech}
                     </span>
                   ))}
-                  {project.tech.length > 3 && (
-                    <span className="text-xs px-2 py-1 bg-[#f5f5f3] text-[#525252] rounded">
-                      +{project.tech.length - 3}
-                    </span>
-                  )}
                 </div>
 
                 {(project.links ?? []).length > 0 && (
