@@ -35,6 +35,8 @@ const skillGroups = [
   },
 ];
 
+const specialties = ['Agentic Orchestration', 'AST Manipulation', 'Production Observability'];
+
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const progressScale = useSpring(scrollYProgress, { stiffness: 130, damping: 24, mass: 0.22 });
@@ -301,6 +303,16 @@ export default function Home() {
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-semibold text-white sm:text-4xl">Technical Skills</h2>
           <div className="mx-auto mt-3 h-[2px] w-20 bg-gradient-to-r from-cyan-300 via-indigo-300 to-cyan-300" />
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            {specialties.map(item => (
+              <span
+                key={item}
+                className="rounded-full border border-cyan-300/35 bg-cyan-400/10 px-3 py-1 text-[11px] tracking-[0.12em] text-cyan-100 uppercase"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">

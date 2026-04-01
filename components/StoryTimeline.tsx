@@ -30,7 +30,7 @@ const roleMeta: Record<string, RoleMeta> = {
       'Prioritized no-code program controls (Onetera Studio) so non-engineers could ship updates safely without engineering bottlenecks.',
     stackGroups: [
       { label: 'Infra', values: ['ClickHouse', 'BetterStack', 'Vercel', 'Render'] },
-      { label: 'Logic', values: ['LangGraph', 'Agent Workflows', 'TypeScript'] },
+      { label: 'Logic', values: ['LangGraph', 'Agent Workflows', 'TypeScript', 'Cursor', '.cursorrules'] },
       { label: 'UX', values: ['Next.js', 'Operator Console', 'Self-Serve Flows'] },
     ],
   },
@@ -45,7 +45,7 @@ const roleMeta: Record<string, RoleMeta> = {
       'Moved from Neptune to Supabase to reduce cloud spend and simplify frontend state complexity while keeping enterprise reliability.',
     stackGroups: [
       { label: 'Infra', values: ['Supabase', 'CI/CD', 'Docker', 'PostgreSQL'] },
-      { label: 'Logic', values: ['LangGraph', 'Async State Machine', 'TypeScript', 'Python'] },
+      { label: 'Logic', values: ['LangGraph', 'Async State Machine', 'TypeScript', 'Python', 'Cursor', '.cursorrules'] },
       { label: 'UX', values: ['Next.js', 'Chakra UI', 'Figma-to-React DFS Engine'] },
     ],
   },
