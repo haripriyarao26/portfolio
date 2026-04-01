@@ -107,7 +107,7 @@ export default function StoryCanvasSequence({ name, tagline }: StoryCanvasSequen
   const layerOneY = useTransform(scrollYProgress, [0, 0.45, 1], ['0%', '-34%', '-48%']);
   const layerTwoY = useTransform(scrollYProgress, [0, 0.45, 1], ['0%', '-52%', '-72%']);
   const layerThreeY = useTransform(scrollYProgress, [0, 0.45, 1], ['0%', '-70%', '-90%']);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.08, 0.25], [1, 0.95, 0]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.65, 1], [1, 0.94, 0.88]);
   const titleRotateX = useTransform(scrollYProgress, [0, 0.45, 1], [0, 14, 20]);
   const titleScale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 0.92, 0.85]);
   const chipsRotateX = useTransform(scrollYProgress, [0, 0.45, 1], [0, -10, -16]);

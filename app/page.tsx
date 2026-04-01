@@ -121,13 +121,18 @@ export default function Home() {
 
       <header className="fixed top-4 left-1/2 z-50 w-[min(92vw,960px)] -translate-x-1/2 rounded-full border border-white/20 bg-slate-950/60 px-6 py-3 backdrop-blur-xl">
         <nav className="flex items-center justify-between text-xs text-slate-200 sm:text-sm">
-          <span className="tracking-[0.2em] uppercase">{resumeData.name}</span>
+          <span className="tracking-[0.2em] uppercase">
+            {resumeData.name}
+            <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-cyan-200/80 sm:inline">
+              LA | Open to SF/NYC
+            </span>
+          </span>
           <div className="flex items-center gap-4">
             <a href="#impact" className="transition-colors hover:text-white">
               Impact
             </a>
             <a href="#timeline-momentum" className="transition-colors hover:text-white">
-              Exp
+              Experience
             </a>
             <a href="#projects" className="transition-colors hover:text-white">
               Projects
@@ -152,10 +157,11 @@ export default function Home() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
+          <p className="text-xs tracking-[0.26em] text-cyan-200 uppercase">Six-second recruiter signal</p>
           <h2 className="mt-4 max-w-4xl text-balance text-3xl font-semibold leading-tight text-white sm:text-5xl">
             Revenue-grade outcomes. Scalable architecture. Premium product craft.
           </h2>
-          <p className="mt-5 max-w-3xl text-slate-300">
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-200/90 sm:text-lg">
             I build production AI and full-stack platforms that ship quickly, stay reliable, and feel intuitive. Every
             decision ties engineering depth to business impact, so teams move faster and users trust the product.
           </p>
@@ -180,7 +186,7 @@ export default function Home() {
         </motion.div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
-          {topMetrics.map(metric => (
+          {topMetrics.map((metric, idx) => (
             <motion.article
               key={metric.label}
               initial={{ opacity: 0, y: 20 }}
@@ -188,19 +194,28 @@ export default function Home() {
               whileHover={{ y: -8, rotateX: 8, rotateY: -8, scale: 1.02 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45 }}
-              className="rounded-3xl border border-cyan-200/20 bg-white/5 p-6 shadow-[0_22px_60px_rgba(2,6,23,0.45)] [transform-style:preserve-3d] backdrop-blur-md"
+              className="group relative overflow-hidden rounded-3xl border border-cyan-200/20 bg-slate-900/70 p-6 shadow-[0_22px_60px_rgba(2,6,23,0.45)] [transform-style:preserve-3d] backdrop-blur-md"
               style={{ perspective: 1200 }}
             >
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(56,189,248,0.12),transparent_40%,rgba(99,102,241,0.14))]" />
+              <div className="pointer-events-none absolute right-4 top-4 h-10 w-10 rounded-full bg-cyan-300/20 blur-xl" />
               <p className="text-3xl font-semibold text-white">{metric.value}</p>
               <p className="mt-2 text-sm uppercase tracking-[0.2em] text-slate-300">{metric.label}</p>
+              <p className="mt-3 text-xs text-slate-400">
+                {idx === 0
+                  ? 'Directly tied to Onetera multi-agent workflow optimization.'
+                  : idx === 1
+                    ? 'State-machine architecture powering production orchestration.'
+                    : 'Measured in production after asynchronous execution redesign.'}
+              </p>
             </motion.article>
           ))}
         </div>
 
         <div className="mt-8 rounded-3xl border border-white/10 bg-slate-900/75 p-6 sm:p-8">
           <p className="text-sm text-slate-300">
-            Currently based in {resumeData.location}, open to Software Engineer and AI opportunities where trusted AI,
-            product momentum, and reliable delivery are mission-critical.
+            Currently based in {resumeData.location} and open to relocation (SF/NYC) for Software Engineer and AI
+            opportunities where trusted AI, product momentum, and reliable delivery are mission-critical.
           </p>
         </div>
       </section>
