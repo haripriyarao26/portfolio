@@ -91,6 +91,14 @@ const cardChild = {
   hidden: { opacity: 0, y: 16 },
   visible: { opacity: 1, y: 0, transition: spring },
 };
+const stackStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
+};
+const stackChip = {
+  hidden: { opacity: 0, scale: 0.85, y: 6 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: spring },
+};
 
 export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTimelineProps) {
   const timelineRef = useRef<HTMLElement | null>(null);
@@ -205,11 +213,29 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
                         </motion.li>
                         <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
                           <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Stack</span>
-                          <div className="mt-2 space-y-2">
+                          <div className="mt-2 space-y-2.5">
                             {meta.stackGroups.map(group => (
-                              <p key={`${roleKey}-${group.label}`} className="text-xs leading-relaxed text-slate-300">
-                                <span className="font-semibold text-cyan-100">{group.label}:</span> {group.values.join(', ')}
-                              </p>
+                              <div key={`${roleKey}-${group.label}`}>
+                                <span className="text-[10px] font-semibold tracking-[0.1em] text-cyan-100 uppercase">{group.label}</span>
+                                <motion.div
+                                  className="mt-1 flex flex-wrap gap-1.5"
+                                  variants={stackStagger}
+                                  initial="hidden"
+                                  whileInView="visible"
+                                  viewport={{ once: true }}
+                                >
+                                  {group.values.map(val => (
+                                    <motion.span
+                                      key={`${roleKey}-${group.label}-${val}`}
+                                      variants={stackChip}
+                                      whileHover={{ scale: 1.08, backgroundColor: 'rgba(34,211,238,0.12)' }}
+                                      className="rounded-full border border-white/12 bg-white/6 px-2 py-0.5 text-[11px] text-slate-300 transition-colors"
+                                    >
+                                      {val}
+                                    </motion.span>
+                                  ))}
+                                </motion.div>
+                              </div>
                             ))}
                           </div>
                         </motion.li>
