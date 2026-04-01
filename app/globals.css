@@ -9,14 +9,14 @@
    * CSS Variables - Keep in sync with constants/colors.ts
    * To update colors, edit constants/colors.ts first, then update these values
    */
-  --primary: #1a1a1a;
-  --primary-dark: #000000;
-  --secondary: #525252;
-  --accent: #1a1a1a;
-  --bg-dark: #fcfcf9;
-  --bg-card: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #525252;
+  --primary: #c7d2fe;
+  --primary-dark: #6366f1;
+  --secondary: #1e293b;
+  --accent: #22d3ee;
+  --bg-dark: #020617;
+  --bg-card: #0f172a;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
 }
 
 * {
@@ -31,7 +31,10 @@ html {
 
 body {
   color: var(--text-primary);
-  background: var(--bg-dark);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.25), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(34, 211, 238, 0.16), transparent 34%),
+    var(--bg-dark);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -46,10 +49,10 @@ body::before {
   pointer-events: none;
   z-index: -1;
   background-image:
-    linear-gradient(rgba(17, 24, 39, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17, 24, 39, 0.05) 1px, transparent 1px),
-    radial-gradient(circle at 20% 10%, rgba(26, 26, 26, 0.06), transparent 35%),
-    radial-gradient(circle at 85% 20%, rgba(26, 26, 26, 0.05), transparent 35%);
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 20% 10%, rgba(99, 102, 241, 0.14), transparent 35%),
+    radial-gradient(circle at 85% 20%, rgba(34, 211, 238, 0.1), transparent 35%);
   background-size: 28px 28px, 28px 28px, 100% 100%, 100% 100%;
 }
 
@@ -272,5 +275,159 @@ button:focus-visible {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+.depth-float {
+  transform-style: preserve-3d;
+  animation: depthFloat 7s ease-in-out infinite;
+}
+
+@keyframes depthFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotateX(2deg) rotateY(-2deg);
+  }
+}
+
+.space-beam {
+  border-radius: 9999px;
+  background: linear-gradient(
+    180deg,
+    rgba(125, 211, 252, 0.58) 0%,
+    rgba(99, 102, 241, 0.24) 45%,
+    rgba(15, 23, 42, 0) 100%
+  );
+  filter: blur(28px);
+}
+
+.star-dot {
+  width: 2px;
+  height: 2px;
+  border-radius: 9999px;
+  background: rgba(226, 232, 240, 0.9);
+  box-shadow: 0 0 14px rgba(226, 232, 240, 0.85);
+}
+
+.hero-aurora {
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 35%, rgba(129, 140, 248, 0.6) 0%, rgba(14, 165, 233, 0.14) 45%, transparent 75%);
+  filter: blur(22px);
+}
+
+.hero-aurora-cyan {
+  background: radial-gradient(circle at 55% 45%, rgba(34, 211, 238, 0.5) 0%, rgba(99, 102, 241, 0.18) 44%, transparent 72%);
+}
+
+.hero-light-beam {
+  border-radius: 9999px;
+  background: linear-gradient(
+    180deg,
+    rgba(186, 230, 253, 0.52) 0%,
+    rgba(129, 140, 248, 0.24) 45%,
+    rgba(15, 23, 42, 0) 100%
+  );
+  filter: blur(28px);
+}
+
+.hero-light-beam-alt {
+  background: linear-gradient(
+    180deg,
+    rgba(125, 211, 252, 0.44) 0%,
+    rgba(14, 165, 233, 0.18) 42%,
+    rgba(15, 23, 42, 0) 100%
+  );
+}
+
+.shooting-star {
+  position: absolute;
+  width: 220px;
+  height: 1.5px;
+  background: linear-gradient(90deg, rgba(186, 230, 253, 0), rgba(186, 230, 253, 0.95), rgba(186, 230, 253, 0));
+  opacity: 0;
+  transform: rotate(-25deg) translate3d(-80px, -30px, 0);
+  filter: drop-shadow(0 0 12px rgba(186, 230, 253, 0.9));
+  animation-name: shootingStar;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shootingStar {
+  0% {
+    opacity: 0;
+    transform: rotate(-25deg) translate3d(-120px, -40px, 0) scaleX(0.2);
+  }
+  12% {
+    opacity: 0.95;
+    transform: rotate(-25deg) translate3d(80px, 20px, 0) scaleX(1);
+  }
+  28% {
+    opacity: 0.2;
+    transform: rotate(-25deg) translate3d(230px, 75px, 0) scaleX(0.55);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(-25deg) translate3d(230px, 75px, 0) scaleX(0.55);
+  }
+}
+
+.card-3d-wrap {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.card-3d-surface {
+  transform-style: preserve-3d;
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+.translate-z-12 {
+  transform: translateZ(12px);
+}
+
+.translate-z-14 {
+  transform: translateZ(14px);
+}
+
+.translate-z-16 {
+  transform: translateZ(16px);
+}
+
+.translate-z-20 {
+  transform: translateZ(20px);
+}
+
+.translate-z-24 {
+  transform: translateZ(24px);
+}
+
+.translate-z-26 {
+  transform: translateZ(26px);
+}
+
+.orbital-ring {
+  transform-style: preserve-3d;
+  animation: ringOrbit 8s linear infinite;
+}
+
+.orbital-ring-delay {
+  animation-delay: -3.5s;
+}
+
+@keyframes ringOrbit {
+  0% {
+    transform: rotateX(66deg) rotateY(0deg) translateZ(8px);
+    opacity: 0.35;
+  }
+  50% {
+    transform: rotateX(66deg) rotateY(180deg) translateZ(16px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotateX(66deg) rotateY(360deg) translateZ(8px);
+    opacity: 0.35;
+  }
 }
 
