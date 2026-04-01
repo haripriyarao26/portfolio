@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import Section3D from '@/components/Section3D';
 import type { Experience } from '@/data/resume';
 
 type StoryTimelineProps = {
@@ -81,6 +82,16 @@ const roleMeta: Record<string, RoleMeta> = {
   },
 };
 
+const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
+const cardStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+const cardChild = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: spring },
+};
+
 export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTimelineProps) {
   const timelineRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -92,112 +103,133 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
   const glowOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
 
   return (
-    <section id={sectionId} ref={timelineRef} className="relative mx-auto max-w-7xl px-6 py-14 sm:py-20">
-      <div className="mb-8">
-        <p className="text-xs tracking-[0.26em] text-indigo-200 uppercase">Career momentum</p>
-        <h2 className="mt-3 text-2xl font-semibold text-white sm:text-4xl">
-          Timeline of impact as systems scale
-        </h2>
-      </div>
+    <Section3D id={sectionId} className="relative mx-auto max-w-7xl px-6 py-14 sm:py-20">
+      <section ref={timelineRef}>
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+        >
+          <p className="text-xs tracking-[0.26em] text-indigo-200 uppercase">Career momentum</p>
+          <h2 className="mt-3 text-2xl font-semibold text-white sm:text-4xl">
+            Timeline of impact as systems scale
+          </h2>
+        </motion.div>
 
-      <div className="relative">
-        <div className="absolute left-4 top-0 h-full w-[2px] overflow-hidden rounded-full bg-white/12 sm:left-1/2 sm:-translate-x-1/2">
-          <motion.div
-            style={{ scaleY: lineScale, opacity: glowOpacity }}
-            className="h-full w-full origin-top bg-gradient-to-b from-cyan-300 via-indigo-400 to-emerald-300 shadow-[0_0_24px_rgba(99,102,241,0.8)]"
-          />
-        </div>
+        <div className="relative">
+          <div className="absolute left-4 top-0 h-full w-[2px] overflow-hidden rounded-full bg-white/12 sm:left-1/2 sm:-translate-x-1/2">
+            <motion.div
+              style={{ scaleY: lineScale, opacity: glowOpacity }}
+              className="h-full w-full origin-top bg-gradient-to-b from-cyan-300 via-indigo-400 to-emerald-300 shadow-[0_0_24px_rgba(99,102,241,0.8)]"
+            />
+          </div>
 
-        <div className="space-y-8 sm:space-y-12">
-          {items.map((entry, idx) => {
-            const isRight = idx % 2 === 1;
-            const roleKey = `${entry.company}|${entry.position}`;
-            const meta = roleMeta[roleKey] ?? {
-              milestone: `${entry.company} Engineering Milestone`,
-              impactSummary: entry.achievements[0],
-              impactTags: ['Production Delivery'],
-              scope: entry.achievements[1] ?? 'Owned delivery across product and engineering milestones with measurable outcomes.',
-              productDecision: 'Balanced reliability and product velocity to keep user-facing systems stable while shipping quickly.',
-              stackGroups: [
-                { label: 'Infra', values: ['Cloud', 'CI/CD'] },
-                { label: 'Logic', values: ['TypeScript', 'Python'] },
-                { label: 'UX', values: ['React', 'System Design'] },
-              ],
-            };
+          <div className="space-y-8 sm:space-y-12">
+            {items.map((entry, idx) => {
+              const isRight = idx % 2 === 1;
+              const roleKey = `${entry.company}|${entry.position}`;
+              const meta = roleMeta[roleKey] ?? {
+                milestone: `${entry.company} Engineering Milestone`,
+                impactSummary: entry.achievements[0],
+                impactTags: ['Production Delivery'],
+                scope: entry.achievements[1] ?? 'Owned delivery across product and engineering milestones with measurable outcomes.',
+                productDecision: 'Balanced reliability and product velocity to keep user-facing systems stable while shipping quickly.',
+                stackGroups: [
+                  { label: 'Infra', values: ['Cloud', 'CI/CD'] },
+                  { label: 'Logic', values: ['TypeScript', 'Python'] },
+                  { label: 'UX', values: ['React', 'System Design'] },
+                ],
+              };
 
-            return (
-              <div key={`${entry.company}-${entry.period}`} className="relative">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{ duration: 0.5, delay: idx * 0.06 }}
-                  whileHover={{ y: -8, rotateX: 8, rotateY: isRight ? 6 : -6, scale: 1.01 }}
-                  className={`card-3d-surface ml-12 rounded-3xl border border-white/14 bg-slate-900/75 p-6 shadow-[0_28px_80px_rgba(2,6,23,0.5)] backdrop-blur-md [transform-style:preserve-3d] sm:ml-0 sm:w-[46%] ${
-                    isRight ? 'sm:ml-auto' : ''
-                  }`}
-                  style={{ perspective: 1400 }}
-                >
-                  <div className="pointer-events-none absolute inset-0 rounded-3xl bg-[linear-gradient(110deg,rgba(56,189,248,0.1),transparent_35%,rgba(99,102,241,0.12))]" />
-                  <div className="orbital-ring pointer-events-none absolute right-5 top-5 h-16 w-16 rounded-full border border-cyan-200/30" />
-                  <div className="orbital-ring orbital-ring-delay pointer-events-none absolute right-5 top-5 h-16 w-16 rounded-full border border-indigo-200/35" />
-                  <p className="translate-z-16 relative text-sm font-semibold tracking-[0.12em] text-cyan-100 uppercase">
-                    {entry.period}
-                  </p>
-                  <h3 className="translate-z-24 relative mt-2 text-xl font-semibold text-white sm:text-2xl">
-                    {meta.milestone}
-                  </h3>
-                  <p className="translate-z-14 relative mt-1 text-sm text-slate-400">
-                    {entry.position} - {entry.company}
-                  </p>
-                  <div className="translate-z-20 relative mt-3 flex flex-wrap gap-2">
-                    {meta.impactTags.map(tag => (
-                      <span
-                        key={`${roleKey}-${tag}`}
-                        className="rounded-full border border-emerald-300/35 bg-emerald-400/10 px-2.5 py-1 text-[11px] font-medium text-emerald-100"
-                      >
-                        [{tag}]
-                      </span>
-                    ))}
-                  </div>
-                  <ul className="translate-z-12 relative mt-4 space-y-3 text-sm text-slate-300">
-                    <li className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-                      <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Impact</span>
-                      <p className="mt-1 leading-relaxed">{meta.impactSummary}</p>
-                    </li>
-                    <li className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-                      <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Scope</span>
-                      <p className="mt-1 leading-relaxed">{meta.scope}</p>
-                    </li>
-                    <li className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-                      <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Product Decision</span>
-                      <p className="mt-1 leading-relaxed">{meta.productDecision}</p>
-                    </li>
-                    <li className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-                      <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Stack</span>
-                      <div className="mt-2 space-y-2">
-                        {meta.stackGroups.map(group => (
-                          <p key={`${roleKey}-${group.label}`} className="text-xs leading-relaxed text-slate-300">
-                            <span className="font-semibold text-cyan-100">{group.label}:</span> {group.values.join(', ')}
-                          </p>
+              return (
+                <div key={`${entry.company}-${entry.period}`} className="relative">
+                  <motion.div
+                    initial={{ opacity: 0, y: 40, scale: 0.92 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ ...spring, delay: idx * 0.06 }}
+                    whileHover={{
+                      y: -8,
+                      rotateX: 4,
+                      rotateY: isRight ? 3 : -3,
+                      scale: 1.01,
+                      boxShadow: '0 0 48px rgba(34,211,238,0.15)',
+                    }}
+                    className={`card-3d-surface ml-12 rounded-3xl border border-white/14 bg-slate-900/75 p-6 shadow-[0_28px_80px_rgba(2,6,23,0.5)] will-change-transform backdrop-blur-md [transform-style:preserve-3d] sm:ml-0 sm:w-[46%] ${
+                      isRight ? 'sm:ml-auto' : ''
+                    }`}
+                    style={{ perspective: 1400 }}
+                  >
+                    <div className="pointer-events-none absolute inset-0 rounded-3xl bg-[linear-gradient(110deg,rgba(56,189,248,0.1),transparent_35%,rgba(99,102,241,0.12))]" />
+                    <div className="orbital-ring pointer-events-none absolute right-5 top-5 h-16 w-16 rounded-full border border-cyan-200/30" />
+                    <div className="orbital-ring orbital-ring-delay pointer-events-none absolute right-5 top-5 h-16 w-16 rounded-full border border-indigo-200/35" />
+
+                    <motion.div variants={cardStagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                      <motion.p variants={cardChild} className="translate-z-16 relative text-sm font-semibold tracking-[0.12em] text-cyan-100 uppercase">
+                        {entry.period}
+                      </motion.p>
+                      <motion.h3 variants={cardChild} className="translate-z-24 relative mt-2 text-xl font-semibold text-white sm:text-2xl">
+                        {meta.milestone}
+                      </motion.h3>
+                      <motion.p variants={cardChild} className="translate-z-14 relative mt-1 text-sm text-slate-400">
+                        {entry.position} - {entry.company}
+                      </motion.p>
+
+                      <motion.div variants={cardChild} className="translate-z-20 relative mt-3 flex flex-wrap gap-2">
+                        {meta.impactTags.map((tag, tagIdx) => (
+                          <motion.span
+                            key={`${roleKey}-${tag}`}
+                            animate={{ y: [0, -3, 0] }}
+                            transition={{ duration: 2.8 + tagIdx * 0.3, repeat: Infinity, ease: 'easeInOut' }}
+                            className="float-pill rounded-full border border-emerald-300/35 bg-emerald-400/10 px-2.5 py-1 text-[11px] font-medium text-emerald-100"
+                          >
+                            [{tag}]
+                          </motion.span>
                         ))}
-                      </div>
-                    </li>
-                  </ul>
-                </motion.div>
+                      </motion.div>
 
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: idx * 0.07 }}
-                  className="absolute left-4 top-7 h-4 w-4 -translate-x-1/2 rounded-full border border-cyan-200/70 bg-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.9)] sm:left-1/2"
-                />
-              </div>
-            );
-          })}
+                      <ul className="translate-z-12 relative mt-4 space-y-3 text-sm text-slate-300">
+                        <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                          <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Impact</span>
+                          <p className="mt-1 leading-relaxed">{meta.impactSummary}</p>
+                        </motion.li>
+                        <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                          <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Scope</span>
+                          <p className="mt-1 leading-relaxed">{meta.scope}</p>
+                        </motion.li>
+                        <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                          <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Product Decision</span>
+                          <p className="mt-1 leading-relaxed">{meta.productDecision}</p>
+                        </motion.li>
+                        <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                          <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Stack</span>
+                          <div className="mt-2 space-y-2">
+                            {meta.stackGroups.map(group => (
+                              <p key={`${roleKey}-${group.label}`} className="text-xs leading-relaxed text-slate-300">
+                                <span className="font-semibold text-cyan-100">{group.label}:</span> {group.values.join(', ')}
+                              </p>
+                            ))}
+                          </div>
+                        </motion.li>
+                      </ul>
+                    </motion.div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ ...spring, delay: idx * 0.07 }}
+                    className="absolute left-4 top-7 h-4 w-4 -translate-x-1/2 rounded-full border border-cyan-200/70 bg-slate-950 shadow-[0_0_20px_rgba(34,211,238,0.9)] sm:left-1/2"
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </Section3D>
   );
 }

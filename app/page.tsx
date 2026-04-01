@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import Section3D from '@/components/Section3D';
+import MouseSpotlight from '@/components/MouseSpotlight';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
@@ -37,6 +39,16 @@ const skillGroups = [
 
 const specialties = ['Agentic Orchestration', 'AST Manipulation', 'Production Observability'];
 
+const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+const staggerItem = {
+  hidden: { opacity: 0, y: 22, scale: 0.96 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: spring },
+};
+
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const progressScale = useSpring(scrollYProgress, { stiffness: 130, damping: 24, mass: 0.22 });
@@ -49,14 +61,9 @@ export default function Home() {
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-          const target = entry.target as HTMLElement;
-          const id = target.id;
-          if (!id || seen.has(id)) {
-            return;
-          }
+          if (!entry.isIntersecting) return;
+          const id = (entry.target as HTMLElement).id;
+          if (!id || seen.has(id)) return;
           seen.add(id);
           setPulseToken(prev => prev + 1);
         });
@@ -65,10 +72,8 @@ export default function Home() {
     );
 
     sectionIds.forEach(id => {
-      const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
-      }
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
@@ -76,6 +81,8 @@ export default function Home() {
 
   return (
     <main className="bg-slate-950 text-slate-100">
+      <MouseSpotlight />
+
       <motion.div
         key={`lightning-${pulseToken}`}
         initial={{ opacity: 0 }}
@@ -102,16 +109,13 @@ export default function Home() {
           transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
           className="space-beam absolute -top-14 right-[-18%] h-[32rem] w-[28rem] -rotate-[18deg]"
         />
-        {Array.from({ length: 22 }).map((_, i) => (
+        {Array.from({ length: 12 }).map((_, i) => (
           <motion.span
             key={`star-${i}`}
             animate={{ opacity: [0.2, 1, 0.2], y: [0, -10, 0] }}
             transition={{ duration: 2.6 + (i % 4), repeat: Infinity, delay: i * 0.13 }}
             className="star-dot absolute"
-            style={{
-              left: `${8 + ((i * 17) % 84)}%`,
-              top: `${6 + ((i * 11) % 86)}%`,
-            }}
+            style={{ left: `${8 + ((i * 17) % 84)}%`, top: `${6 + ((i * 11) % 86)}%` }}
           />
         ))}
       </div>
@@ -121,7 +125,7 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-[60] h-1 origin-left bg-gradient-to-r from-indigo-400 via-cyan-300 to-emerald-300"
       />
 
-      <header className="fixed top-4 left-1/2 z-50 w-[min(92vw,960px)] -translate-x-1/2 rounded-full border border-white/20 bg-slate-950/60 px-6 py-3 backdrop-blur-xl">
+      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(92vw,960px)] -translate-x-1/2 rounded-full border border-white/20 bg-slate-950/60 px-6 py-3">
         <nav className="flex items-center justify-between text-xs text-slate-200 sm:text-sm">
           <span className="tracking-[0.2em] uppercase">
             {resumeData.name}
@@ -130,18 +134,10 @@ export default function Home() {
             </span>
           </span>
           <div className="flex items-center gap-4">
-            <a href="#impact" className="transition-colors hover:text-white">
-              Impact
-            </a>
-            <a href="#timeline-momentum" className="transition-colors hover:text-white">
-              Experience
-            </a>
-            <a href="#projects" className="transition-colors hover:text-white">
-              Projects
-            </a>
-            <a href="#contact" className="transition-colors hover:text-white">
-              Contact
-            </a>
+            <a href="#impact" className="nav-link transition-colors hover:text-white">Impact</a>
+            <a href="#timeline-momentum" className="nav-link transition-colors hover:text-white">Experience</a>
+            <a href="#projects" className="nav-link transition-colors hover:text-white">Projects</a>
+            <a href="#contact" className="nav-link transition-colors hover:text-white">Contact</a>
           </div>
         </nav>
       </header>
@@ -151,13 +147,13 @@ export default function Home() {
         tagline="Software Engineer building AI systems with product intuition, delivery speed, and trust-by-design."
       />
 
-      <section id="impact" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-28">
+      <Section3D id="impact" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-28">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(79,70,229,0.2),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(16,185,129,0.15),transparent_35%)]" />
         <motion.div
           initial={{ opacity: 0, y: 26 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6 }}
+          transition={spring}
         >
           <p className="text-xs tracking-[0.26em] text-cyan-200 uppercase">Six-second recruiter signal</p>
           <h2 className="mt-4 max-w-4xl text-balance text-3xl font-semibold leading-tight text-white sm:text-5xl">
@@ -172,7 +168,7 @@ export default function Home() {
               href={githubProfile}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-slate-300/35 bg-white/10 px-5 py-2.5 text-sm text-slate-100 transition hover:bg-white/20"
+              className="rounded-full border border-slate-300/35 bg-white/10 px-5 py-2.5 text-sm text-slate-100 transition hover:scale-105 hover:bg-white/20"
             >
               GitHub
             </Link>
@@ -180,28 +176,38 @@ export default function Home() {
               href={`https://${resumeData.linkedin}`}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-indigo-300/45 bg-indigo-500/15 px-5 py-2.5 text-sm text-indigo-100 transition hover:bg-indigo-500/25"
+              className="rounded-full border border-indigo-300/45 bg-indigo-500/15 px-5 py-2.5 text-sm text-indigo-100 transition hover:scale-105 hover:bg-indigo-500/25"
             >
               LinkedIn
             </Link>
           </div>
         </motion.div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+        <motion.div
+          className="mt-10 grid gap-4 sm:grid-cols-3"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+        >
           {topMetrics.map((metric, idx) => (
             <motion.article
               key={metric.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -8, rotateX: 8, rotateY: -8, scale: 1.02 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45 }}
-              className="group relative overflow-hidden rounded-3xl border border-cyan-200/20 bg-slate-900/70 p-6 shadow-[0_22px_60px_rgba(2,6,23,0.45)] [transform-style:preserve-3d] backdrop-blur-md"
+              variants={staggerItem}
+              whileHover={{ y: -8, rotateX: 8, rotateY: -8, scale: 1.03, boxShadow: '0 0 32px rgba(34,211,238,0.2)' }}
+              transition={spring}
+              className="group relative overflow-hidden rounded-3xl border border-cyan-200/20 bg-slate-900/70 p-6 shadow-[0_22px_60px_rgba(2,6,23,0.45)] will-change-transform [transform-style:preserve-3d] backdrop-blur-md"
               style={{ perspective: 1200 }}
             >
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(56,189,248,0.12),transparent_40%,rgba(99,102,241,0.14))]" />
               <div className="pointer-events-none absolute right-4 top-4 h-10 w-10 rounded-full bg-cyan-300/20 blur-xl" />
-              <p className="text-3xl font-semibold text-white">{metric.value}</p>
+              <motion.p
+                className="float-pill text-3xl font-semibold text-white"
+                animate={{ y: [0, -4, 0] }}
+                transition={{ duration: 3 + idx * 0.4, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                {metric.value}
+              </motion.p>
               <p className="mt-2 text-sm uppercase tracking-[0.2em] text-slate-300">{metric.label}</p>
               <p className="mt-3 text-xs text-slate-400">
                 {idx === 0
@@ -212,40 +218,55 @@ export default function Home() {
               </p>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="mt-8 rounded-3xl border border-white/10 bg-slate-900/75 p-6 sm:p-8">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+          className="mt-8 rounded-3xl border border-white/10 bg-slate-900/75 p-6 sm:p-8"
+        >
           <p className="text-sm text-slate-300">
             Based in {resumeData.location}, currently on H-1B, and open to relocation for Software Engineer and
             AI opportunities where trusted AI, product momentum, and reliable delivery are mission-critical.
           </p>
-        </div>
-      </section>
+        </motion.div>
+      </Section3D>
 
-      <section className="mx-auto max-w-7xl px-6 py-8 sm:py-12">
+      <Section3D className="mx-auto max-w-7xl px-6 py-8 sm:py-12">
         <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={spring}
             className="relative flex items-start justify-center"
           >
             <div className="relative h-44 w-44 rounded-full border-4 border-cyan-100/85 bg-slate-950/80 shadow-[0_16px_60px_rgba(34,211,238,0.25)]">
               <div className="flex h-full items-center justify-center text-5xl font-semibold text-white">HR</div>
             </div>
-            <div className="absolute right-3 bottom-5 rounded-full border border-yellow-300/35 bg-slate-900/90 px-3 py-2 shadow-lg">
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute right-3 bottom-5 rounded-full border border-yellow-300/35 bg-slate-900/90 px-3 py-2 shadow-lg"
+            >
               <span className="text-lg">👋</span>
-            </div>
+            </motion.div>
           </motion.div>
 
-          <div className="space-y-5">
+          <motion.div
+            className="space-y-5"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             <motion.article
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70 p-7 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur-md"
+              variants={staggerItem}
+              whileHover={{ y: -4, boxShadow: '0 0 40px rgba(34,211,238,0.12)' }}
+              transition={spring}
+              className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70 p-7 shadow-[0_20px_60px_rgba(2,6,23,0.45)] will-change-transform backdrop-blur-md"
             >
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,rgba(56,189,248,0.12),transparent_35%,rgba(129,140,248,0.12))]" />
               <h3 className="relative text-2xl font-semibold text-white">My Story</h3>
@@ -262,11 +283,10 @@ export default function Home() {
             </motion.article>
 
             <motion.article
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.05 }}
-              className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70 p-7 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur-md"
+              variants={staggerItem}
+              whileHover={{ y: -4, boxShadow: '0 0 40px rgba(99,102,241,0.12)' }}
+              transition={spring}
+              className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70 p-7 shadow-[0_20px_60px_rgba(2,6,23,0.45)] will-change-transform backdrop-blur-md"
             >
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(250deg,rgba(34,211,238,0.1),transparent_35%,rgba(99,102,241,0.1))]" />
               <h3 className="relative text-2xl font-semibold text-white">My Philosophy</h3>
@@ -279,14 +299,20 @@ export default function Home() {
                 <strong>high-performance engineering</strong> that creates measurable business outcomes.
               </p>
             </motion.article>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </Section3D>
 
       <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
 
-      <section id="projects" className="mx-auto max-w-7xl px-6 py-24 sm:py-28">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
+      <Section3D id="projects" className="mx-auto max-w-7xl px-6 py-24 sm:py-28">
+        <motion.div
+          className="mb-8 flex flex-wrap items-end justify-between gap-3"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+        >
           <div>
             <p className="text-xs tracking-[0.26em] text-cyan-200 uppercase">Build portfolio</p>
             <h2 className="mt-3 text-3xl font-semibold text-white sm:text-5xl">Selected systems and shipped work</h2>
@@ -295,59 +321,92 @@ export default function Home() {
             Modern AI engineering, secure architecture, and product-led execution across enterprise, civic tech, and
             developer tooling.
           </p>
-        </div>
+        </motion.div>
         <StoryProjectGrid projects={projects} />
-      </section>
+      </Section3D>
 
-      <section className="mx-auto max-w-7xl px-6 pb-20">
+      <Section3D className="mx-auto max-w-7xl px-6 pb-20">
         <div className="mb-8 text-center">
-          <h2 className="text-3xl font-semibold text-white sm:text-4xl">Technical Skills</h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={spring}
+            className="text-3xl font-semibold text-white sm:text-4xl"
+          >
+            Technical Skills
+          </motion.h2>
           <div className="mx-auto mt-3 h-[2px] w-20 bg-gradient-to-r from-cyan-300 via-indigo-300 to-cyan-300" />
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <motion.div
+            className="mt-4 flex flex-wrap items-center justify-center gap-2"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             {specialties.map(item => (
-              <span
+              <motion.span
                 key={item}
+                variants={staggerItem}
                 className="rounded-full border border-cyan-300/35 bg-cyan-400/10 px-3 py-1 text-[11px] tracking-[0.12em] text-cyan-100 uppercase"
               >
                 {item}
-              </span>
+              </motion.span>
             ))}
-          </div>
+          </motion.div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <motion.div
+          className="grid gap-6 md:grid-cols-3"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {skillGroups.map(group => (
             <motion.article
               key={group.title}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45 }}
-              whileHover={{ y: -6, rotateX: 6, rotateY: -6 }}
-              className="card-3d-surface rounded-3xl border border-white/12 bg-slate-900/80 p-6 shadow-[0_22px_60px_rgba(2,6,23,0.45)] backdrop-blur-md"
+              variants={staggerItem}
+              whileHover={{ y: -6, rotateX: 6, rotateY: -6, boxShadow: '0 0 36px rgba(34,211,238,0.14)' }}
+              transition={spring}
+              className="card-3d-surface rounded-3xl border border-white/12 bg-slate-900/80 p-6 shadow-[0_22px_60px_rgba(2,6,23,0.45)] will-change-transform backdrop-blur-md"
             >
               <h3 className="text-xl font-semibold text-white">
                 <span className="mr-2">{group.icon}</span>
                 {group.title}
               </h3>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <motion.div
+                className="mt-4 flex flex-wrap gap-2"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {group.items.map(skill => (
-                  <span
+                  <motion.span
                     key={`${group.title}-${skill}`}
-                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-slate-200"
+                    variants={staggerItem}
+                    whileHover={{ scale: 1.08 }}
+                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-slate-200 transition-colors hover:border-cyan-300/30 hover:bg-cyan-400/10"
                   >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
+              </motion.div>
             </motion.article>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </Section3D>
 
-      <section id="contact" className="relative overflow-hidden px-6 pt-6 pb-28">
+      <Section3D id="contact" className="relative overflow-hidden px-6 pt-6 pb-28">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,0.28),transparent_50%)]" />
-        <div className="mx-auto max-w-5xl rounded-[2rem] border border-white/15 bg-gradient-to-br from-indigo-500/20 via-slate-900 to-slate-950 p-8 text-center shadow-[0_30px_100px_rgba(0,0,0,0.45)] sm:p-14">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={spring}
+          className="mx-auto max-w-5xl rounded-[2rem] border border-white/15 bg-gradient-to-br from-indigo-500/20 via-slate-900 to-slate-950 p-8 text-center shadow-[0_30px_100px_rgba(0,0,0,0.45)] will-change-transform sm:p-14"
+        >
           <p className="text-xs tracking-[0.22em] text-indigo-100 uppercase">Let us build your next win</p>
           <h2 className="mt-4 text-balance text-3xl font-semibold text-white sm:text-5xl">
             Need an engineer who can design, ship, and scale AI products?
@@ -358,7 +417,7 @@ export default function Home() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
               href={`mailto:${resumeData.email}`}
-              className="rounded-full bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-100"
+              className="rounded-full bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:scale-105 hover:bg-slate-100"
             >
               {resumeData.email}
             </a>
@@ -366,13 +425,13 @@ export default function Home() {
               href={`https://${resumeData.linkedin}`}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm text-white transition hover:bg-white/20"
+              className="rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm text-white transition hover:scale-105 hover:bg-white/20"
             >
               LinkedIn
             </Link>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </Section3D>
     </main>
   );
 }

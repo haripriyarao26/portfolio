@@ -14,18 +14,45 @@ const gradients = [
   'from-amber-400/20 via-orange-500/5 to-rose-400/10',
 ];
 
+const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
+const staggerGrid = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07 } },
+};
+const gridItem = {
+  hidden: { opacity: 0, y: 30, scale: 0.92 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: spring },
+};
+const featureStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } },
+};
+const featureItem = {
+  hidden: { opacity: 0, x: -10 },
+  visible: { opacity: 1, x: 0, transition: spring },
+};
+
 export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+    <motion.div
+      className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+      variants={staggerGrid}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-60px' }}
+    >
       {projects.map((project, index) => (
-        <div key={project.id} className="card-3d-wrap">
+        <motion.div key={project.id} variants={gridItem} className="card-3d-wrap">
           <motion.article
-            initial={{ opacity: 0, y: 26 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.55, delay: index * 0.04 }}
-            whileHover={{ y: -10, rotateX: 8, rotateY: index % 2 === 0 ? -10 : 10, scale: 1.015 }}
-            className="card-3d-surface group relative h-full min-h-[560px] overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 p-6 shadow-[0_24px_80px_rgba(2,6,23,0.45)]"
+            whileHover={{
+              y: -10,
+              rotateX: 6,
+              rotateY: index % 2 === 0 ? -8 : 8,
+              scale: 1.02,
+              boxShadow: '0 0 44px rgba(34,211,238,0.15)',
+            }}
+            transition={spring}
+            className="card-3d-surface group relative h-full min-h-[560px] overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 p-6 shadow-[0_24px_80px_rgba(2,6,23,0.45)] will-change-transform"
           >
             <div
               className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${gradients[index % gradients.length]} opacity-70 transition-opacity duration-300 group-hover:opacity-100`}
@@ -42,26 +69,34 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
 
               <div className="translate-z-20 mt-4 flex flex-wrap gap-2">
                 {project.tech.slice(0, 5).map(tech => (
-                  <span
+                  <motion.span
                     key={`${project.id}-${tech}`}
-                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-slate-200"
+                    whileHover={{ scale: 1.1 }}
+                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-slate-200 transition-colors hover:border-cyan-300/30 hover:bg-cyan-400/10"
                   >
                     {tech}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
 
-              <ul className="translate-z-14 mt-5 min-h-[132px] space-y-2 text-sm text-slate-200/90">
+              <motion.ul
+                className="translate-z-14 mt-5 min-h-[132px] space-y-2 text-sm text-slate-200/90"
+                variants={featureStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {project.features.slice(0, 3).map(feature => (
-                  <li
+                  <motion.li
                     key={`${project.id}-${feature}`}
+                    variants={featureItem}
                     className="flex min-h-[40px] gap-2 overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]"
                   >
                     <span className="mt-1 h-1.5 w-1.5 rounded-full bg-indigo-300" />
                     <span>{feature}</span>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
 
               <div className="translate-z-26 mt-auto flex flex-wrap gap-3 pt-6 text-sm">
                 {project.github ? (
@@ -69,7 +104,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-indigo-300/40 bg-indigo-500/10 px-4 py-2 text-indigo-100 transition-colors hover:bg-indigo-500/20"
+                    className="rounded-full border border-indigo-300/40 bg-indigo-500/10 px-4 py-2 text-indigo-100 transition hover:scale-105 hover:bg-indigo-500/20"
                   >
                     GitHub
                   </a>
@@ -79,7 +114,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                     href={project.demo}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-cyan-300/40 bg-cyan-500/10 px-4 py-2 text-cyan-100 transition-colors hover:bg-cyan-500/20"
+                    className="rounded-full border border-cyan-300/40 bg-cyan-500/10 px-4 py-2 text-cyan-100 transition hover:scale-105 hover:bg-cyan-500/20"
                   >
                     Live Demo
                   </a>
@@ -87,8 +122,8 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               </div>
             </div>
           </motion.article>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
