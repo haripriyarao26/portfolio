@@ -124,7 +124,7 @@ export default function Home() {
           <span className="tracking-[0.2em] uppercase">
             {resumeData.name}
             <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-cyan-200/80 sm:inline">
-              LA | Open to SF/NYC
+              LA | Open to Relocation
             </span>
           </span>
           <div className="flex items-center gap-4">
@@ -214,8 +214,8 @@ export default function Home() {
 
         <div className="mt-8 rounded-3xl border border-white/10 bg-slate-900/75 p-6 sm:p-8">
           <p className="text-sm text-slate-300">
-            Currently based in {resumeData.location} and open to relocation (SF/NYC) for Software Engineer and AI
-            opportunities where trusted AI, product momentum, and reliable delivery are mission-critical.
+            Based in {resumeData.location}, currently on H-1B, and open to relocation for Software Engineer and
+            AI opportunities where trusted AI, product momentum, and reliable delivery are mission-critical.
           </p>
         </div>
       </section>
