@@ -8,6 +8,7 @@ import MouseSpotlight from '@/components/MouseSpotlight';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
+import Global3DScene from '@/components/Global3DScene';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
 
@@ -53,50 +54,11 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
   const progressScale = useSpring(scrollYProgress, { stiffness: 130, damping: 24, mass: 0.22 });
   const timelineExperience = resumeData.experience;
-  const [pulseToken, setPulseToken] = useState(0);
-
-  useEffect(() => {
-    const sectionIds = ['impact', 'timeline-momentum'];
-    const seen = new Set<string>();
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          const id = (entry.target as HTMLElement).id;
-          if (!id || seen.has(id)) return;
-          seen.add(id);
-          setPulseToken(prev => prev + 1);
-        });
-      },
-      { threshold: 0.42 }
-    );
-
-    sectionIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
-    <main className="bg-slate-950 text-slate-100">
+    <main className="bg-transparent text-slate-100">
+      <Global3DScene scrollYProgress={scrollYProgress} />
       <MouseSpotlight />
-
-      <motion.div
-        key={`lightning-${pulseToken}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 0.86, 0.18, 0.95, 0] }}
-        transition={{ duration: 0.48, ease: 'easeInOut' }}
-        className="pointer-events-none fixed inset-0 z-[55] bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.95)_0%,rgba(186,230,253,0.45)_16%,rgba(56,189,248,0.2)_36%,rgba(2,6,23,0)_65%)] mix-blend-screen"
-      />
-      <motion.div
-        key={`lightning-strike-${pulseToken}`}
-        initial={{ opacity: 0, scaleY: 0.65 }}
-        animate={{ opacity: [0, 1, 0.2, 0.72, 0], scaleY: [0.6, 1.08, 0.96, 1.02, 0.92] }}
-        transition={{ duration: 0.52, ease: 'easeOut' }}
-        className="pointer-events-none fixed left-1/2 top-0 z-[56] h-[68vh] w-[2px] -translate-x-1/2 bg-gradient-to-b from-white via-cyan-200 to-transparent blur-[0.6px]"
-      />
 
       <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <motion.div
@@ -159,7 +121,7 @@ export default function Home() {
           <h2 className="mt-4 max-w-4xl text-balance text-3xl font-semibold leading-tight text-white sm:text-5xl">
             Revenue-grade outcomes. Scalable architecture. Premium product craft.
           </h2>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-200/90 sm:text-lg">
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-50 sm:text-lg text-glow">
             I build production AI and full-stack platforms that ship quickly, stay reliable, and feel intuitive. Every
             decision ties engineering depth to business impact, so teams move faster and users trust the product.
           </p>
@@ -196,7 +158,7 @@ export default function Home() {
               variants={staggerItem}
               whileHover={{ y: -8, rotateX: 8, rotateY: -8, scale: 1.03, boxShadow: '0 0 32px rgba(34,211,238,0.2)' }}
               transition={spring}
-              className="group relative overflow-hidden rounded-3xl border border-cyan-200/20 bg-slate-900/70 p-6 shadow-[0_22px_60px_rgba(2,6,23,0.45)] will-change-transform [transform-style:preserve-3d] backdrop-blur-md"
+              className="group relative overflow-hidden rounded-3xl glass-premium p-6 will-change-transform [transform-style:preserve-3d]"
               style={{ perspective: 1200 }}
             >
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(56,189,248,0.12),transparent_40%,rgba(99,102,241,0.14))]" />
@@ -208,8 +170,8 @@ export default function Home() {
               >
                 {metric.value}
               </motion.p>
-              <p className="mt-2 text-sm uppercase tracking-[0.2em] text-slate-300">{metric.label}</p>
-              <p className="mt-3 text-xs text-slate-400">
+              <p className="mt-2 text-sm uppercase tracking-[0.2em] text-slate-100">{metric.label}</p>
+              <p className="mt-3 text-xs text-slate-200 drop-shadow-md">
                 {idx === 0
                   ? 'Directly tied to Onetera multi-agent workflow optimization.'
                   : idx === 1
@@ -225,9 +187,9 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={spring}
-          className="mt-8 rounded-3xl border border-white/10 bg-slate-900/75 p-6 sm:p-8"
+          className="mt-8 rounded-3xl glass-premium p-6 sm:p-8"
         >
-          <p className="text-sm text-slate-300">
+          <p className="text-sm text-slate-50 text-glow">
             Based in {resumeData.location}, currently on H-1B, and open to relocation for Software Engineer and
             AI opportunities where trusted AI, product momentum, and reliable delivery are mission-critical.
           </p>
@@ -266,11 +228,11 @@ export default function Home() {
               variants={staggerItem}
               whileHover={{ y: -4, boxShadow: '0 0 40px rgba(34,211,238,0.12)' }}
               transition={spring}
-              className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70 p-7 shadow-[0_20px_60px_rgba(2,6,23,0.45)] will-change-transform backdrop-blur-md"
+              className="relative overflow-hidden rounded-3xl glass-premium p-7 will-change-transform"
             >
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,rgba(56,189,248,0.12),transparent_35%,rgba(129,140,248,0.12))]" />
-              <h3 className="relative text-2xl font-semibold text-white">My Story</h3>
-              <p className="relative mt-4 text-lg leading-relaxed text-slate-200/95">
+              <h3 className="relative text-2xl font-semibold text-white text-glow">My Story</h3>
+              <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
                 My journey from a Computer Science student in India to a technical leader in Los Angeles has taught me
                 to build systems that are not only functional, but resilient and observable at scale.
               </p>
@@ -286,15 +248,15 @@ export default function Home() {
               variants={staggerItem}
               whileHover={{ y: -4, boxShadow: '0 0 40px rgba(99,102,241,0.12)' }}
               transition={spring}
-              className="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-900/70 p-7 shadow-[0_20px_60px_rgba(2,6,23,0.45)] will-change-transform backdrop-blur-md"
+              className="relative overflow-hidden rounded-3xl glass-premium p-7 will-change-transform"
             >
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(250deg,rgba(34,211,238,0.1),transparent_35%,rgba(99,102,241,0.1))]" />
-              <h3 className="relative text-2xl font-semibold text-white">My Philosophy</h3>
-              <p className="relative mt-4 text-lg leading-relaxed text-slate-200/95">
+              <h3 className="relative text-2xl font-semibold text-white text-glow">My Philosophy</h3>
+              <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
                 <strong>Systems over features.</strong> The best engineering decisions account for long-term performance,
                 observability, and reliability, not just immediate delivery.
               </p>
-              <p className="relative mt-4 text-lg leading-relaxed text-slate-200/95">
+              <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
                 I focus on <strong>distributed AI infrastructure</strong>, <strong>observability systems</strong>, and{' '}
                 <strong>high-performance engineering</strong> that creates measurable business outcomes.
               </p>
@@ -317,7 +279,7 @@ export default function Home() {
             <p className="text-xs tracking-[0.26em] text-cyan-200 uppercase">Build portfolio</p>
             <h2 className="mt-3 text-3xl font-semibold text-white sm:text-5xl">Selected systems and shipped work</h2>
           </div>
-          <p className="max-w-xl text-sm text-slate-300 sm:text-base">
+          <p className="max-w-xl text-sm text-slate-100 sm:text-base text-glow">
             Modern AI engineering, secure architecture, and product-led execution across enterprise, civic tech, and
             developer tooling.
           </p>
@@ -369,7 +331,7 @@ export default function Home() {
               variants={staggerItem}
               whileHover={{ y: -6, rotateX: 6, rotateY: -6, boxShadow: '0 0 36px rgba(34,211,238,0.14)' }}
               transition={spring}
-              className="card-3d-surface rounded-3xl border border-white/12 bg-slate-900/80 p-6 shadow-[0_22px_60px_rgba(2,6,23,0.45)] will-change-transform backdrop-blur-md"
+              className="card-3d-surface rounded-3xl glass-premium p-6 will-change-transform"
             >
               <h3 className="text-xl font-semibold text-white">
                 <span className="mr-2">{group.icon}</span>
@@ -387,7 +349,7 @@ export default function Home() {
                     key={`${group.title}-${skill}`}
                     variants={staggerItem}
                     whileHover={{ scale: 1.08 }}
-                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-slate-200 transition-colors hover:border-cyan-300/30 hover:bg-cyan-400/10"
+                    className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-50 transition-colors hover:border-cyan-300/40 hover:bg-cyan-400/20 drop-shadow-sm"
                   >
                     {skill}
                   </motion.span>
@@ -411,7 +373,7 @@ export default function Home() {
           <h2 className="mt-4 text-balance text-3xl font-semibold text-white sm:text-5xl">
             Need an engineer who can design, ship, and scale AI products?
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-slate-200/90">
+          <p className="mx-auto mt-5 max-w-2xl text-slate-50 text-glow">
             Reach out and I can walk you through architecture, delivery strategy, and product outcomes from day one.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

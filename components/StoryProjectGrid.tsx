@@ -45,14 +45,14 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
         <motion.div key={project.id} variants={gridItem} className="card-3d-wrap">
           <motion.article
             whileHover={{
-              y: -10,
-              rotateX: 6,
-              rotateY: index % 2 === 0 ? -8 : 8,
-              scale: 1.02,
-              boxShadow: '0 0 44px rgba(34,211,238,0.15)',
+              z: 40,
+              rotateX: 12,
+              rotateY: index % 2 === 0 ? -15 : 15,
+              scale: 1.05,
+              boxShadow: '0 30px 80px rgba(34,211,238,0.25)',
             }}
             transition={spring}
-            className="card-3d-surface group relative h-full min-h-[560px] overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 p-6 shadow-[0_24px_80px_rgba(2,6,23,0.45)] will-change-transform"
+            className="card-3d-surface glass-premium group relative h-full min-h-[560px] overflow-hidden rounded-3xl p-6 will-change-transform"
           >
             <div
               className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${gradients[index % gradients.length]} opacity-70 transition-opacity duration-300 group-hover:opacity-100`}
@@ -62,8 +62,8 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
             <div className="orbital-ring orbital-ring-delay pointer-events-none absolute right-5 top-6 h-20 w-20 rounded-full border border-indigo-200/35" />
 
             <div className="relative z-10 flex h-full flex-col">
-              <h3 className="translate-z-24 text-xl font-semibold text-slate-50">{project.title}</h3>
-              <p className="translate-z-16 mt-3 min-h-[88px] overflow-hidden text-sm leading-relaxed text-slate-300 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
+              <h3 className="translate-z-24 text-xl font-semibold text-slate-50 text-glow">{project.title}</h3>
+              <p className="translate-z-16 mt-3 min-h-[88px] overflow-hidden text-sm leading-relaxed text-slate-50 text-glow [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
                 {project.description}
               </p>
 
@@ -80,7 +80,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               </div>
 
               <motion.ul
-                className="translate-z-14 mt-5 min-h-[132px] space-y-2 text-sm text-slate-200/90"
+                className="translate-z-14 mt-5 min-h-[132px] space-y-2 text-sm text-slate-100 drop-shadow-md"
                 variants={featureStagger}
                 initial="hidden"
                 whileInView="visible"

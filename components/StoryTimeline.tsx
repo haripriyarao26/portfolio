@@ -178,10 +178,10 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
                       <motion.p variants={cardChild} className="translate-z-16 relative text-sm font-semibold tracking-[0.12em] text-cyan-100 uppercase">
                         {entry.period}
                       </motion.p>
-                      <motion.h3 variants={cardChild} className="translate-z-24 relative mt-2 text-xl font-semibold text-white sm:text-2xl">
+                      <motion.h3 variants={cardChild} className="translate-z-24 relative mt-2 text-xl font-semibold text-white text-glow sm:text-2xl">
                         {meta.milestone}
                       </motion.h3>
-                      <motion.p variants={cardChild} className="translate-z-14 relative mt-1 text-sm text-slate-400">
+                      <motion.p variants={cardChild} className="translate-z-14 relative mt-1 text-sm text-slate-100 text-glow">
                         {entry.position} - {entry.company}
                       </motion.p>
 
@@ -198,20 +198,20 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
                         ))}
                       </motion.div>
 
-                      <ul className="translate-z-12 relative mt-4 space-y-3 text-sm text-slate-300">
-                        <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                      <ul className="translate-z-12 relative mt-4 space-y-3 text-sm text-slate-50 drop-shadow-md">
+                        <motion.li variants={cardChild} className="rounded-xl border border-white/20 bg-white/10 px-3 py-2">
                           <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Impact</span>
                           <p className="mt-1 leading-relaxed">{meta.impactSummary}</p>
                         </motion.li>
-                        <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                        <motion.li variants={cardChild} className="rounded-xl border border-white/20 bg-white/10 px-3 py-2">
                           <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Scope</span>
                           <p className="mt-1 leading-relaxed">{meta.scope}</p>
                         </motion.li>
-                        <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                        <motion.li variants={cardChild} className="rounded-xl border border-white/20 bg-white/10 px-3 py-2">
                           <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Product Decision</span>
                           <p className="mt-1 leading-relaxed">{meta.productDecision}</p>
                         </motion.li>
-                        <motion.li variants={cardChild} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                        <motion.li variants={cardChild} className="rounded-xl border border-white/20 bg-white/10 px-3 py-2">
                           <span className="text-[11px] tracking-[0.16em] text-cyan-200 uppercase">Stack</span>
                           <div className="mt-2 space-y-2.5">
                             {meta.stackGroups.map(group => (
@@ -229,7 +229,7 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
                                       key={`${roleKey}-${group.label}-${val}`}
                                       variants={stackChip}
                                       whileHover={{ scale: 1.08, backgroundColor: 'rgba(34,211,238,0.12)' }}
-                                      className="rounded-full border border-white/12 bg-white/6 px-2 py-0.5 text-[11px] text-slate-300 transition-colors"
+                                      className="rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[11px] text-slate-50 transition-colors drop-shadow-sm"
                                     >
                                       {val}
                                     </motion.span>
