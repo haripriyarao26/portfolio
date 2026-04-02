@@ -2,21 +2,22 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import Section3D from '@/components/Section3D';
 import MouseSpotlight from '@/components/MouseSpotlight';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
-import Global3DScene from '@/components/Global3DScene';
+// import Global3DScene from '@/components/Global3DScene';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
 
-const topMetrics = [
-  { label: 'Token cost cut', value: '96%' },
-  { label: 'State nodes', value: '22' },
-  { label: 'Latency reduction', value: '40%' },
-];
+const Global3DScene = dynamic(() => import('@/components/Global3DScene'), { 
+  ssr: false,
+  loading: () => <div className="fixed inset-0 z-0 bg-[#020617]" /> 
+});
+
 
 const githubProfile = 'https://github.com/haripriyarao26';
 
@@ -146,40 +147,61 @@ export default function Home() {
         </motion.div>
 
         <motion.div
-          className="mt-10 grid gap-4 sm:grid-cols-3"
+          className="mt-12 grid gap-6 md:grid-cols-12"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
         >
-          {topMetrics.map((metric, idx) => (
+          {/* Main Hero Bento Block */}
+          <motion.article
+            variants={staggerItem}
+            whileHover={{ scale: 1.01, boxShadow: '0 0 40px rgba(34,211,238,0.2)' }}
+            transition={spring}
+            className="group relative md:col-span-8 overflow-hidden rounded-[2.5rem] glass-premium p-8 sm:p-12 will-change-transform"
+          >
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(56,189,248,0.12),transparent_40%,rgba(99,102,241,0.14))]" />
+            <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-cyan-300/20 blur-[40px]" />
+            
+            <p className="float-pill text-6xl md:text-8xl font-bold tracking-tight text-white mb-6">
+              96%
+            </p>
+            <h3 className="text-xl md:text-2xl uppercase tracking-[0.2em] font-semibold text-cyan-100">Token Cost Cut</h3>
+            <p className="mt-4 max-w-xl text-base text-slate-100 text-glow leading-relaxed">
+              Directly tied to Onetera multi-agent workflow optimization. Restructured orchestration layers to cache and route deeply nested state trees efficiently.
+            </p>
+          </motion.article>
+
+          {/* Secondary Blocks Column */}
+          <div className="md:col-span-4 flex flex-col gap-6">
             <motion.article
-              key={metric.label}
               variants={staggerItem}
-              whileHover={{ y: -8, rotateX: 8, rotateY: -8, scale: 1.03, boxShadow: '0 0 32px rgba(34,211,238,0.2)' }}
+              whileHover={{ x: -4, scale: 1.02, boxShadow: '0 0 32px rgba(99,102,241,0.2)' }}
               transition={spring}
-              className="group relative overflow-hidden rounded-3xl glass-premium p-6 will-change-transform [transform-style:preserve-3d]"
-              style={{ perspective: 1200 }}
+              className="group relative flex-1 overflow-hidden rounded-[2rem] glass-premium p-8 will-change-transform flex flex-col justify-center"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(56,189,248,0.12),transparent_40%,rgba(99,102,241,0.14))]" />
-              <div className="pointer-events-none absolute right-4 top-4 h-10 w-10 rounded-full bg-cyan-300/20 blur-xl" />
-              <motion.p
-                className="float-pill text-3xl font-semibold text-white"
-                animate={{ y: [0, -4, 0] }}
-                transition={{ duration: 3 + idx * 0.4, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                {metric.value}
-              </motion.p>
-              <p className="mt-2 text-sm uppercase tracking-[0.2em] text-slate-100">{metric.label}</p>
-              <p className="mt-3 text-xs text-slate-200 drop-shadow-md">
-                {idx === 0
-                  ? 'Directly tied to Onetera multi-agent workflow optimization.'
-                  : idx === 1
-                    ? 'State-machine architecture powering production orchestration.'
-                    : 'Measured in production after asynchronous execution redesign.'}
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(240deg,rgba(99,102,241,0.12),transparent_50%)]" />
+              <p className="text-4xl md:text-5xl font-bold text-white mb-3">22</p>
+              <h3 className="text-xs uppercase tracking-[0.16em] text-indigo-200">State Nodes</h3>
+              <p className="mt-3 text-sm text-slate-100 text-glow leading-relaxed">
+                State-machine architecture powering production orchestration.
               </p>
             </motion.article>
-          ))}
+
+            <motion.article
+              variants={staggerItem}
+              whileHover={{ x: -4, scale: 1.02, boxShadow: '0 0 32px rgba(16,185,129,0.2)' }}
+              transition={spring}
+              className="group relative flex-1 overflow-hidden rounded-[2rem] glass-premium p-8 will-change-transform flex flex-col justify-center"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(16,185,129,0.12),transparent_50%)]" />
+              <p className="text-4xl md:text-5xl font-bold text-white mb-3">40%</p>
+              <h3 className="text-xs uppercase tracking-[0.16em] text-emerald-200">Latency Reduction</h3>
+              <p className="mt-3 text-sm text-slate-100 text-glow leading-relaxed">
+                Measured in production after asynchronous execution redesign.
+              </p>
+            </motion.article>
+          </div>
         </motion.div>
 
         <motion.div

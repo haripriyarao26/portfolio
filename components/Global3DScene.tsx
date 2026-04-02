@@ -16,6 +16,8 @@ const materialProps = {
   ior: 1.2,
   chromaticAberration: 0.1,
   backside: true,
+  samples: 4, // Drastically reduces render cost
+  resolution: 512, // Lower res for transmission buffer
 };
 
 function CameraController({ scrollYProgress }: { scrollYProgress: any }) {
@@ -54,7 +56,7 @@ function FloatingShapes({ scrollYProgress }: { scrollYProgress: any }) {
     <group ref={group}>
       <Float speed={2} rotationIntensity={1.5} floatIntensity={2}>
         <mesh position={[-3, 1, -2]} scale={1.5}>
-          <torusGeometry args={[1, 0.3, 32, 64]} />
+          <torusGeometry args={[1, 0.3, 16, 32]} />
           <MeshTransmissionMaterial {...materialProps} color="#4f46e5" />
         </mesh>
       </Float>
@@ -69,7 +71,7 @@ function FloatingShapes({ scrollYProgress }: { scrollYProgress: any }) {
       <Float speed={1.5} rotationIntensity={1} floatIntensity={3}>
         {/* Scale reduced from 2 to 1.2 and pushed deeper to z: -6 to prevent blocking viewport */}
         <mesh position={[2, -4, -6]} scale={1.2}>
-          <sphereGeometry args={[1, 64, 64]} />
+          <sphereGeometry args={[1, 32, 32]} />
           <MeshTransmissionMaterial {...materialProps} color="#38bdf8" />
         </mesh>
       </Float>
@@ -85,7 +87,7 @@ function FloatingShapes({ scrollYProgress }: { scrollYProgress: any }) {
       <Float speed={2} rotationIntensity={1.8} floatIntensity={2}>
         {/* Pushed further down for Projects section */}
         <mesh position={[3, -10, -5]} scale={1.8}>
-          <torusGeometry args={[1.5, 0.4, 32, 64]} />
+          <torusGeometry args={[1.5, 0.4, 16, 32]} />
           <MeshTransmissionMaterial {...materialProps} color="#2dd4bf" />
         </mesh>
       </Float>
@@ -119,7 +121,11 @@ export default function Global3DScene({ scrollYProgress }: Props) {
   // We use dpr={[1, 1.5]} to prevent performance drops on super high DPI mobile displays, enforcing a crisp but performant canvas.
   return (
     <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
-      <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 10], fov: 45 }} gl={{ antialias: false }}>
+      <Canvas 
+        dpr={[1, 1.5]} 
+        camera={{ position: [0, 0, 10], fov: 45 }} 
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
+      >
          {/* Scene Components */}
          <color attach="background" args={['#020617']} />
          <ambientLight intensity={0.5} />
