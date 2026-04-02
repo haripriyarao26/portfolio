@@ -108,11 +108,11 @@ export const projects: Project[] = [
     description:
       'VS Code / Cursor extension (TypeScript) that automates engineering narrative extraction from git diffs and module-level context, producing structured case studies with LLM-authored trade-off analysis and Mermaid architecture views for portfolio- and interview-ready design-review quality.',
     images: [],
-    github: 'https://github.com/haripriyarao26/Dev-Log-Architect',
+    github: 'https://github.com/haripriyarao26/devlog-architect-extension',
     links: [
       {
         label: 'GitHub Releases (VSIX)',
-        href: 'https://github.com/haripriyarao26/Dev-Log-Architect/releases'
+        href: 'https://github.com/haripriyarao26/devlog-architect-extension/releases'
       }
     ],
     tech: [
