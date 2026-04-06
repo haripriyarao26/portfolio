@@ -93,7 +93,7 @@ export default function Home() {
           <span className="tracking-[0.2em] uppercase">
             {resumeData.name}
             <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-cyan-200/80 sm:inline">
-              LA | Open to Relocation
+              Los Angeles, CA
             </span>
           </span>
           <div className="flex items-center gap-4">
@@ -204,18 +204,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-          className="mt-8 rounded-3xl glass-premium p-6 sm:p-8"
-        >
-          <p className="text-sm text-slate-50 text-glow">
-            Based in {resumeData.location}, currently on H-1B, and open to relocation for Software Engineer and
-            AI opportunities where trusted AI, product momentum, and reliable delivery are mission-critical.
-          </p>
-        </motion.div>
+
       </Section3D>
 
       <Section3D className="mx-auto max-w-7xl px-6 py-8 sm:py-12">
@@ -275,8 +264,7 @@ export default function Home() {
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(250deg,rgba(34,211,238,0.1),transparent_35%,rgba(99,102,241,0.1))]" />
               <h3 className="relative text-2xl font-semibold text-white text-glow">My Philosophy</h3>
               <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
-                <strong>Systems over features.</strong> The best engineering decisions account for long-term performance,
-                observability, and reliability, not just immediate delivery.
+                I build systems that let teams <strong>ship faster</strong> — observable by default, reliable under load.
               </p>
               <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
                 I focus on <strong>distributed AI infrastructure</strong>, <strong>observability systems</strong>, and{' '}

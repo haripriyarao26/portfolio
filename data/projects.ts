@@ -45,25 +45,6 @@ export const projects: Project[] = [
   A -->|no| R[Reject / inert data]`
   },
   {
-    id: 'evolutionary-sde',
-    title: 'Evolutionary-SDE',
-    description:
-      'Explores evolutionary algorithms together with stochastic differential equation (SDE) formulations for simulation and optimization-style experiments.',
-    images: [],
-    github: 'https://github.com/haripriyarao26/Evolutionary-SDE',
-    tech: ['Python', 'Numerical methods', 'SDEs', 'Evolutionary computation'],
-    features: [
-      'Evolutionary search strategies over continuous dynamics',
-      'Reproducible experiments and clear repository layout',
-      'Suited for extending with custom fitness landscapes and noise models'
-    ],
-    mermaidDiagram: `flowchart LR
-  P[Population] --> E[Evolve]
-  E --> N[Noise / SDE step]
-  N --> F[Fitness]
-  F --> P`
-  },
-  {
     id: 'gemini-cookbook',
     title: 'Google Gemini Cookbook: Cost & Health Monitoring Utility',
     description: 'Architected a cost-tracking utility that handles sub-second API health heartbeats for Gemini 2.0/3.0 models. Contributed to the official Google Gemini repository with production-ready observability tooling.',
@@ -137,20 +118,6 @@ export const projects: Project[] = [
   C --> F[Portfolio pack]
   D --> F
   E --> F`
-  },
-  {
-    id: 'moodbite',
-    title: 'MoodBite',
-    description: 'A mood-driven food recommendation agent powered by AI',
-    images: [],
-    github: 'https://github.com/haripriyarao26/MoodBite',
-    demo: 'https://haripriyarao26.github.io/MoodBite/',
-    tech: ['Next.js 14', 'TypeScript', 'Ant Design', 'Hugging Face AI', 'GitHub Pages'],
-    features: ['Mood Analysis', 'Time-Aware', 'Energy Level', 'Dietary Preferences', 'Memory'],
-    mermaidDiagram: `flowchart LR
-  U[User + mood] --> M[HF model]
-  M --> R[Recommendations]
-  R --> UI[Next.js UI]`
   }
 ];
 
