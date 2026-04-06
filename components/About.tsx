@@ -7,7 +7,7 @@ import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
 export default function About() {
   const { ref, isVisible } = useScrollAnimation();
   const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(100);
-  
+
   return (
     <section id="about" className="py-20 px-4">
       <div ref={ref} className={`max-w-6xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -18,11 +18,10 @@ export default function About() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div 
+          <div
             ref={getItemRef(0)}
-            className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${
-              isCardVisible(0) ? 'opacity-100 translate-x-0 rotate-0' : 'opacity-0 -translate-x-10 rotate-3'
-            }`}
+            className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${isCardVisible(0) ? 'opacity-100 translate-x-0 rotate-0' : 'opacity-0 -translate-x-10 rotate-3'
+              }`}
           >
             <div className="bg-gradient-to-br from-[#1a1a1a] to-black p-3 rounded-lg w-fit mb-4">
               <User className="text-white" size={24} />
@@ -33,11 +32,10 @@ export default function About() {
             </p>
           </div>
 
-          <div 
+          <div
             ref={getItemRef(1)}
-            className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${
-              isCardVisible(1) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-90'
-            }`}
+            className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${isCardVisible(1) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-90'
+              }`}
             style={{ transitionDelay: '100ms' }}
           >
             <div className="bg-gradient-to-br from-[#1a1a1a] to-black p-3 rounded-lg w-fit mb-4">
@@ -49,11 +47,10 @@ export default function About() {
             </p>
           </div>
 
-          <div 
+          <div
             ref={getItemRef(2)}
-            className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${
-              isCardVisible(2) ? 'opacity-100 translate-x-0 rotate-0' : 'opacity-0 translate-x-10 -rotate-3'
-            }`}
+            className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${isCardVisible(2) ? 'opacity-100 translate-x-0 rotate-0' : 'opacity-0 translate-x-10 -rotate-3'
+              }`}
             style={{ transitionDelay: '200ms' }}
           >
             <div className="bg-gradient-to-br from-[#1a1a1a] to-black p-3 rounded-lg w-fit mb-4">
@@ -65,11 +62,10 @@ export default function About() {
             </p>
           </div>
 
-          <div 
+          <div
             ref={getItemRef(3)}
-            className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${
-              isCardVisible(3) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-90'
-            }`}
+            className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${isCardVisible(3) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-90'
+              }`}
             style={{ transitionDelay: '300ms' }}
           >
             <div className="bg-gradient-to-br from-[#1a1a1a] to-black p-3 rounded-lg w-fit mb-4">
@@ -100,40 +96,38 @@ export default function About() {
 
           {/* Story & Philosophy */}
           <div className="lg:col-span-2 space-y-6">
-            <div 
+            <div
               ref={getItemRef(4)}
-              className={`bg-gradient-to-r from-[#1a1a1a]/20 to-black/20 rounded-xl p-8 border border-[#1a1a1a]/30 transition-all duration-700 ${
-                isCardVisible(4) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
-              }`}
+              className={`bg-gradient-to-r from-[#1a1a1a]/20 to-black/20 rounded-xl p-8 border border-[#1a1a1a]/30 transition-all duration-700 ${isCardVisible(4) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
+                }`}
             >
               <h3 className="text-2xl font-bold text-[#111827] mb-4">My Story</h3>
               <p className="text-[#525252] text-lg leading-relaxed mb-4">
                 My journey from a Computer Science student in India to a technical leader in Los Angeles has taught me the value of building systems that aren't just functional, but resilient and observable at scale.
               </p>
               <p className="text-[#525252] text-lg leading-relaxed">
-                As a <strong className="text-[#111827]">Software Engineer 2</strong> at Onetera (through March 2026), I architected distributed AI infrastructure and
+                As a <strong className="text-[#111827]">Software Engineer 2</strong> at Onetera, I architected distributed AI infrastructure and
                 high-performance systems that handled production-scale workloads. I hold a <strong className="text-[#111827]">Master of Science in Computer Science</strong> from the University of Southern California,
                 where I specialized in AI/ML and distributed systems. My approach emphasizes <strong className="text-[#111827]">performance, reliability, and scalability</strong>—
                 I build systems that work at scale, not just in demos. I&apos;m actively looking for new roles in software engineering and AI.
               </p>
             </div>
 
-            <div 
+            <div
               ref={getItemRef(5)}
-              className={`bg-white/50 rounded-xl p-8 border border-[#e5e5e5] transition-all duration-700 ${
-                isCardVisible(5) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
-              }`}
+              className={`bg-white/50 rounded-xl p-8 border border-[#e5e5e5] transition-all duration-700 ${isCardVisible(5) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-95'
+                }`}
               style={{ transitionDelay: '100ms' }}
             >
               <h3 className="text-2xl font-bold text-[#111827] mb-4">My Philosophy</h3>
               <p className="text-[#525252] text-lg leading-relaxed mb-4">
-                <strong className="text-[#111827]">Systems over features.</strong> I believe the best engineers understand how components 
-                interact at scale. Every architecture decision should consider performance implications, every system should be observable, 
+                <strong className="text-[#111827]">Systems over features.</strong> I believe the best engineers understand how components
+                interact at scale. Every architecture decision should consider performance implications, every system should be observable,
                 and every deployment should be reliable.
               </p>
               <p className="text-[#525252] text-lg leading-relaxed">
-                I'm passionate about <strong className="text-[#111827]">distributed AI infrastructure</strong> that handles production workloads, 
-                <strong className="text-[#111827]"> observability systems</strong> that provide actionable insights, and 
+                I'm passionate about <strong className="text-[#111827]">distributed AI infrastructure</strong> that handles production workloads,
+                <strong className="text-[#111827]"> observability systems</strong> that provide actionable insights, and
                 <strong className="text-[#111827]"> high-performance engineering</strong> that delivers measurable impact.
               </p>
             </div>
