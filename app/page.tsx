@@ -13,9 +13,9 @@ import StoryTimeline from '@/components/StoryTimeline';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
 
-const Global3DScene = dynamic(() => import('@/components/Global3DScene'), { 
+const Global3DScene = dynamic(() => import('@/components/Global3DScene'), {
   ssr: false,
-  loading: () => <div className="fixed inset-0 z-0 bg-[#020617]" /> 
+  loading: () => <div className="fixed inset-0 z-0 bg-[#020617]" />
 });
 
 
@@ -93,7 +93,7 @@ export default function Home() {
           <span className="tracking-[0.2em] uppercase">
             {resumeData.name}
             <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-cyan-200/80 sm:inline">
-              Los Angeles, CA
+              California
             </span>
           </span>
           <div className="flex items-center gap-4">
@@ -162,7 +162,7 @@ export default function Home() {
           >
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(56,189,248,0.12),transparent_40%,rgba(99,102,241,0.14))]" />
             <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-cyan-300/20 blur-[40px]" />
-            
+
             <p className="float-pill text-6xl md:text-8xl font-bold tracking-tight text-white mb-6">
               96%
             </p>
@@ -248,7 +248,7 @@ export default function Home() {
                 to build systems that are not only functional, but resilient and observable at scale.
               </p>
               <p className="relative mt-4 text-lg leading-relaxed text-slate-200/95">
-                As a <strong>Software Engineer 2</strong> at Onetera (through March 2026), I architected distributed AI
+                As a <strong>Software Engineer 2</strong> at Onetera, I architected distributed AI
                 infrastructure and high-performance systems for production workloads. I hold a{' '}
                 <strong>Master of Science in Computer Science</strong> from the University of Southern California, where
                 I specialized in AI/ML and distributed systems.
