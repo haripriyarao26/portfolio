@@ -3,7 +3,7 @@ import './globals.css'
 import ResourceHints from '@/components/ResourceHints'
 
 export const metadata: Metadata = {
-  title: 'Haripriya Rao - Portfolio',
+  title: 'Haripriya Rao',
   description: 'Haripriya Rao — Software Engineer (distributed AI, full-stack). Open to SDE and AI opportunities.',
 }
 
