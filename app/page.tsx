@@ -64,15 +64,11 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left progress-bar"
       />
 
-      {/* ── Navigation ── */}
       <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(92vw,900px)] -translate-x-1/2 rounded-full px-6 py-3">
         <nav className="flex items-center justify-between text-xs text-[var(--text-muted)] sm:text-sm">
           <div>
             <span className="font-display font-semibold text-[var(--text-primary)] tracking-tight">
               {resumeData.name}
-            </span>
-            <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-[var(--text-muted)] sm:inline mono-accent">
-              AI &amp; Full-Stack Engineer
             </span>
           </div>
           <div className="flex items-center gap-5">
@@ -80,6 +76,9 @@ export default function Home() {
             <a href="#timeline-momentum" className="nav-link transition-colors">Experience</a>
             <a href="#projects"          className="nav-link transition-colors">Projects</a>
             <a href="#contact"           className="nav-link transition-colors">Contact</a>
+            <a href="#contact" className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#d8ff6e] transition-colors">
+              Hire me
+            </a>
           </div>
         </nav>
       </header>
@@ -99,15 +98,11 @@ export default function Home() {
           transition={spring}
           className="mb-12"
         >
-          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--text-muted)] uppercase mb-3">
-            Six-second recruiter signal
-          </p>
-          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl max-w-3xl">
-            Revenue-grade outcomes. Scalable architecture.
+          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
+            Outcomes at scale
           </h2>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--text-muted)]">
-            I build production AI and full-stack platforms that ship quickly, stay reliable, and feel intuitive. Every
-            decision ties engineering depth to business impact.
+          <p className="mt-5 max-w-[680px] text-base leading-relaxed text-[var(--text-muted)]">
+            Core systems and infrastructure built at Onetera, centering on <strong className="text-[var(--text-primary)]">Agentic Orchestration</strong>, <strong className="text-[var(--text-primary)]">AST Manipulation</strong>, and <strong className="text-[var(--text-primary)]">Production Observability</strong>.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
@@ -187,21 +182,8 @@ export default function Home() {
       </Section3D>
 
       {/* ── Story / About ── */}
-      <Section3D className="mx-auto max-w-6xl px-6 py-10 sm:py-14">
-        <div className="grid gap-6 lg:grid-cols-[180px_1fr]">
-          {/* Avatar */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={spring}
-            className="flex items-start justify-center"
-          >
-            <div className="h-36 w-36 rounded-full border border-[var(--border)] bg-[var(--bg-card)] flex items-center justify-center">
-              <span className="font-display text-4xl font-bold text-[var(--text-primary)]">HR</span>
-            </div>
-          </motion.div>
-
+      <Section3D className="mx-auto max-w-4xl px-6 py-10 sm:py-14">
+        <div className="max-w-[680px] mx-auto">
           {/* Story blocks */}
           <motion.div
             className="space-y-4"
@@ -215,7 +197,7 @@ export default function Home() {
               className="card p-7"
             >
               <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] mb-4">My Story</h3>
-              <p className="text-base leading-relaxed text-[var(--text-muted)]">
+              <p className="text-base leading-relaxed text-[var(--text-muted)] max-w-[680px]">
                 USC CS grad (distributed systems + AI/ML) turned production engineer. Most recently at Onetera, where I scaled civic AI infrastructure from seed-stage architecture to investor diligence-ready systems.
               </p>
             </motion.article>
@@ -225,7 +207,7 @@ export default function Home() {
               className="card p-7"
             >
               <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] mb-4">My Philosophy</h3>
-              <p className="text-base leading-relaxed text-[var(--text-muted)]">
+              <p className="text-base leading-relaxed text-[var(--text-muted)] max-w-[680px]">
                 I engineer systems that empower teams to ship faster—making observability the default and reliability under load a guarantee. My focus centers on distributed AI infrastructure, advanced backend patterns, and robust system observability. I believe elite engineering is measured by two things: systemic resilience and accelerated business velocity.
               </p>
             </motion.article>
@@ -248,10 +230,10 @@ export default function Home() {
           <div>
             <p className="mono-accent text-xs tracking-[0.22em] text-[var(--text-muted)] uppercase mb-3">Build portfolio</p>
             <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-              Selected systems and shipped work
+              Selected systems
             </h2>
           </div>
-          <p className="max-w-md text-sm text-[var(--text-muted)]">
+          <p className="max-w-[680px] text-sm text-[var(--text-muted)]">
             AI engineering, secure architecture, and product-led execution across enterprise, civic tech, and developer tooling.
           </p>
         </motion.div>
@@ -358,7 +340,7 @@ export default function Home() {
           className="mx-auto max-w-3xl card p-10 sm:p-14 text-center"
         >
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl mb-4">
-            I&apos;m available now.<br />Let&apos;s build something.
+            Let&apos;s build together
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <a

@@ -4,11 +4,7 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-const metrics = [
-  { value: '96%',      label: 'Token cost reduction' },
-  { value: '40%',      label: 'Latency cut' },
-  { value: '$1,800/mo', label: 'Cloud cost saved' },
-];
+const coreTech = ['LangGraph', 'TypeScript', 'Next.js', 'Python'];
 
 type Props = { name: string; tagline: string };
 
@@ -20,12 +16,12 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
     offset: ['start start', 'end 45%'],
   });
 
-  const layerOneY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
+  const layerOneY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%']);
   const titleOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <section ref={sectionRef} id="story" className="relative h-[110vh]">
-      <div className="sticky top-0 h-screen overflow-hidden">
+    <section ref={sectionRef} id="story" className="relative h-[95vh] flex items-center">
+      <div className="relative w-full overflow-hidden">
         <motion.div
           style={{ opacity: titleOpacity }}
           className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-center px-6 sm:px-10"
@@ -34,86 +30,74 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
             style={{ y: layerOneY }}
             className="will-change-transform pointer-events-auto"
           >
-            {/* Eyebrow — role only, no visa status */}
-            <p className="mono-accent text-xs tracking-[0.22em] text-[var(--text-muted)] uppercase mb-6">
-              AI &amp; Full-Stack Engineer&nbsp;·&nbsp;AI Systems&nbsp;·&nbsp;USC CS Graduate
-            </p>
-
-            {/* Name + Role headline */}
-            <h1 className="font-display font-bold leading-[1.05] text-[var(--text-primary)]">
-              <span className="block text-5xl sm:text-7xl lg:text-8xl">{name}</span>
-              <span className="mt-3 block text-3xl sm:text-4xl lg:text-5xl text-[var(--text-primary)]/80 font-semibold">
-                AI &amp; Full-Stack Engineer
+            {/* Status Badges */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              <span className="mono-accent rounded-full border border-[var(--accent)] bg-[var(--accent)]/10 px-3.5 py-1 text-[11px] font-bold text-[var(--accent)] tracking-wider uppercase">
+                H1-B Cap-Exempt
               </span>
+              <span className="mono-accent rounded-full border border-white/20 bg-white/5 px-3.5 py-1 text-[11px] font-medium text-[var(--text-primary)] tracking-wider uppercase">
+                Open to work
+              </span>
+            </div>
+
+            {/* Name + Title headline */}
+            <h1 className="font-display font-bold leading-[1.1] text-[var(--text-primary)] text-4xl sm:text-5xl lg:text-6xl max-w-3xl">
+              Haripriya Rao <br /> AI Systems &amp; Full-Stack Engineer
             </h1>
 
-            {/* One-liner tagline */}
-            <p className="mt-5 max-w-xl text-base sm:text-lg text-[var(--text-muted)] leading-relaxed">
-              I turn AI complexity into products teams can actually ship — fast.
+            {/* Value Tagline */}
+            <p className="mt-6 max-w-2xl text-base sm:text-lg text-[var(--text-muted)] leading-relaxed">
+              Built production civic AI at Onetera: <strong className="text-[var(--text-primary)]">96% token cost cut</strong>, <strong className="text-[var(--text-primary)]">40% latency drop</strong>, and <strong className="text-[var(--text-primary)]">99.98% uptime</strong>. Master&apos;s CS, USC. Based in Los Angeles.
             </p>
 
-            {/* Metrics row */}
-            <div className="mt-10 flex flex-wrap items-end gap-x-10 gap-y-6">
-              {metrics.map((m) => (
-                <div key={m.label}>
-                  <p className="font-display font-bold leading-none text-[var(--accent)] text-[3.5rem] sm:text-[5rem]">
-                    {m.value}
-                  </p>
-                  <p className="mono-accent mt-1.5 text-[11px] tracking-[0.15em] text-[var(--text-muted)] uppercase">
-                    {m.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Primary CTAs — visually prominent */}
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <a href="#projects" id="hero-cta-work" className="btn-primary">
+            {/* Primary CTAs */}
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a href="#projects" className="btn-primary">
                 View my work →
               </a>
-              <a href="#contact" id="hero-cta-contact" className="btn-secondary" style={{ borderColor: 'rgba(201,245,101,0.5)', color: 'var(--accent)' }}>
-                Let&apos;s talk →
+              <a href="/resume.pdf" download className="btn-secondary">
+                Download résumé
               </a>
             </div>
 
-            {/* Secondary links — de-prioritised */}
-            <div className="mt-5 flex flex-wrap items-center gap-4">
+            {/* Tech Stack Chips */}
+            <div className="mt-10 pt-6 border-t border-white/5 max-w-xl">
+              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Core Stack</p>
+              <div className="flex flex-wrap gap-2">
+                {coreTech.map((tech) => (
+                  <span
+                    key={tech}
+                    className="mono-accent rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[var(--text-muted)] font-medium"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Secondary Social Links */}
+            <div className="mt-6 flex flex-wrap items-center gap-4">
               <Link
                 href="https://github.com/haripriyarao26"
                 target="_blank"
                 rel="noreferrer"
-                className="btn-secondary"
-                style={{ padding: '0.5rem 1rem', fontSize: '0.75rem' }}
+                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors mono-accent"
               >
-                GitHub
+                GitHub →
               </Link>
               <Link
                 href="https://linkedin.com/in/haripriya-rao"
                 target="_blank"
                 rel="noreferrer"
-                className="btn-secondary"
-                style={{ padding: '0.5rem 1rem', fontSize: '0.75rem' }}
+                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors mono-accent"
               >
-                LinkedIn
+                LinkedIn →
               </Link>
             </div>
           </motion.div>
-
-          {/* Scroll chevron */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-            <svg
-              className="chevron-bob h-6 w-6 text-[var(--text-muted)]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
         </motion.div>
       </div>
     </section>
   );
 }
+

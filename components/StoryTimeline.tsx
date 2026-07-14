@@ -107,7 +107,7 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
             Career momentum
           </p>
           <h2 className="font-display text-2xl font-bold text-[var(--text-primary)] sm:text-4xl">
-            Timeline of impact as systems scale
+            Timeline of impact
           </h2>
         </motion.div>
 
