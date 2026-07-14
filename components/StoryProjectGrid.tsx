@@ -42,7 +42,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
       viewport={{ once: true, margin: '-60px' }}
     >
       {projects.map((project, index) => {
-        const isFeatured = project.id === 'openai-cookbook-langchain-rwmh';
+        const isFeatured = project.id === 'openai-cookbook-langchain-rwmh' || project.id === 'gemini-cookbook';
 
         return (
           <motion.div
