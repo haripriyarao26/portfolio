@@ -34,22 +34,27 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
             style={{ y: layerOneY }}
             className="will-change-transform pointer-events-auto"
           >
-            {/* Eyebrow */}
+            {/* Eyebrow — role only, no visa status */}
             <p className="mono-accent text-xs tracking-[0.22em] text-[var(--text-muted)] uppercase mb-6">
-              Software Engineer&nbsp;·&nbsp;AI Systems&nbsp;·&nbsp;H1-B Cap-Exempt
+              AI &amp; Full-Stack Engineer&nbsp;·&nbsp;AI Systems&nbsp;·&nbsp;USC CS Graduate
             </p>
 
-            {/* Name + Headline */}
-            <h1 className="font-display text-5xl font-bold leading-[1.05] text-[var(--text-primary)] sm:text-7xl lg:text-8xl">
-              {name}
-              <span className="mt-3 block text-[var(--text-primary)]/80 font-semibold text-4xl sm:text-5xl lg:text-6xl">
-                Ship products that feel inevitable.
+            {/* Name + Role headline */}
+            <h1 className="font-display font-bold leading-[1.05] text-[var(--text-primary)]">
+              <span className="block text-5xl sm:text-7xl lg:text-8xl">{name}</span>
+              <span className="mt-3 block text-3xl sm:text-4xl lg:text-5xl text-[var(--text-primary)]/80 font-semibold">
+                AI &amp; Full-Stack Engineer
               </span>
             </h1>
 
+            {/* One-liner tagline */}
+            <p className="mt-5 max-w-xl text-base sm:text-lg text-[var(--text-muted)] leading-relaxed">
+              I turn AI complexity into products teams can actually ship — fast.
+            </p>
+
             {/* Metrics row */}
             <div className="mt-10 flex flex-wrap items-end gap-x-10 gap-y-6">
-              {metrics.map((m, i) => (
+              {metrics.map((m) => (
                 <div key={m.label}>
                   <p className="font-display font-bold leading-none text-[var(--accent)] text-[3.5rem] sm:text-[5rem]">
                     {m.value}
@@ -61,13 +66,24 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
               ))}
             </div>
 
-            {/* CTA row */}
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            {/* Primary CTAs — visually prominent */}
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <a href="#projects" id="hero-cta-work" className="btn-primary">
+                View my work →
+              </a>
+              <a href="#contact" id="hero-cta-contact" className="btn-secondary" style={{ borderColor: 'rgba(201,245,101,0.5)', color: 'var(--accent)' }}>
+                Let&apos;s talk →
+              </a>
+            </div>
+
+            {/* Secondary links — de-prioritised */}
+            <div className="mt-5 flex flex-wrap items-center gap-4">
               <Link
                 href="https://github.com/haripriyarao26"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition-colors hover:border-white/20 hover:bg-white/10"
+                className="btn-secondary"
+                style={{ padding: '0.5rem 1rem', fontSize: '0.75rem' }}
               >
                 GitHub
               </Link>
@@ -75,16 +91,18 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
                 href="https://linkedin.com/in/haripriya-rao"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition-colors hover:border-white/20 hover:bg-white/10"
+                className="btn-secondary"
+                style={{ padding: '0.5rem 1rem', fontSize: '0.75rem' }}
               >
                 LinkedIn
               </Link>
               <a
                 href="/resume.pdf"
                 download
-                className="rounded-full border border-[var(--accent)]/40 bg-transparent px-5 py-2.5 text-sm text-[var(--accent)] transition-colors hover:bg-[var(--accent)]/10"
+                className="btn-secondary"
+                style={{ padding: '0.5rem 1rem', fontSize: '0.75rem' }}
               >
-                Download Resume
+                Resume PDF
               </a>
             </div>
           </motion.div>

@@ -18,21 +18,23 @@ const Global3DScene = dynamic(() => import('@/components/Global3DScene'), {
 
 const githubProfile = 'https://github.com/haripriyarao26';
 
+const coreStack = ['LangGraph', 'TypeScript', 'Next.js', 'Python', 'Supabase', 'ClickHouse'];
+
 const skillGroups = [
   {
     title: 'Infrastructure',
     icon: '🗄️',
-    items: ['AWS', 'CircleCI', 'Vercel', 'Render', 'Supabase', 'ClickHouse', 'Redis', 'PostgreSQL', 'MongoDB'],
+    items: ['AWS', 'CircleCI', 'Vercel', 'Render', 'Redis', 'PostgreSQL', 'MongoDB'],
   },
   {
     title: 'Core Engine',
     icon: '</>',
-    items: ['Python', 'TypeScript', 'JavaScript', 'Node.js', 'LangGraph', 'Flask', 'Django', 'Express'],
+    items: ['JavaScript', 'Node.js', 'Flask', 'Django', 'Express'],
   },
   {
     title: 'Frontend Systems',
     icon: '🧱',
-    items: ['Next.js', 'React', 'Chakra UI', 'Bootstrap', 'HTML', 'CSS', 'GraphQL'],
+    items: ['React', 'Chakra UI', 'Bootstrap', 'HTML', 'CSS', 'GraphQL'],
   },
 ];
 
@@ -72,7 +74,7 @@ export default function Home() {
               {resumeData.name}
             </span>
             <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-[var(--text-muted)] sm:inline mono-accent">
-              Software Engineer · H1-B Cap-Exempt
+              AI &amp; Full-Stack Engineer
             </span>
           </div>
           <div className="flex items-center gap-5">
@@ -281,38 +283,71 @@ export default function Home() {
           </div>
         </motion.div>
 
+        {/* Core Stack — 6 defining technologies */}
         <motion.div
-          className="grid gap-4 md:grid-cols-3"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={spring}
+          className="mb-8"
         >
-          {skillGroups.map(group => (
-            <motion.article
-              key={group.title}
-              variants={staggerItem}
-              whileHover={{ y: -4 }}
-              transition={spring}
-              className="card p-6 will-change-transform"
-            >
-              <h3 className="font-display text-lg font-semibold text-[var(--text-primary)]">
-                <span className="mr-2">{group.icon}</span>
-                {group.title}
-              </h3>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {group.items.map(skill => (
-                  <span
-                    key={`${group.title}-${skill}`}
-                    className="mono-accent rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[var(--text-muted)] hover:border-white/20 hover:text-[var(--text-primary)] transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.article>
-          ))}
+          <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-4 text-center">Core Stack</p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {coreStack.map(skill => (
+              <span
+                key={skill}
+                className="mono-accent rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/5 px-4 py-1.5 text-sm font-semibold text-[var(--accent)] tracking-wide"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
         </motion.div>
+
+        {/* Also proficient in — collapsible */}
+        <details className="group">
+          <summary className="flex items-center justify-center gap-2 text-[11px] tracking-[0.14em] text-[var(--text-muted)] uppercase cursor-pointer select-none hover:text-[var(--text-primary)] transition-colors mb-6">
+            <svg
+              className="h-3 w-3 transition-transform group-open:rotate-90"
+              fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+            Also proficient in…
+          </summary>
+          <motion.div
+            className="grid gap-4 md:grid-cols-3"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {skillGroups.map(group => (
+              <motion.article
+                key={group.title}
+                variants={staggerItem}
+                whileHover={{ y: -4 }}
+                transition={spring}
+                className="card p-6 will-change-transform"
+              >
+                <h3 className="font-display text-lg font-semibold text-[var(--text-primary)]">
+                  <span className="mr-2">{group.icon}</span>
+                  {group.title}
+                </h3>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {group.items.map(skill => (
+                    <span
+                      key={`${group.title}-${skill}`}
+                      className="mono-accent rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[var(--text-muted)] hover:border-white/20 hover:text-[var(--text-primary)] transition-colors"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+        </details>
       </Section3D>
 
       {/* ── Contact ── */}
@@ -327,32 +362,32 @@ export default function Home() {
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl mb-4">
             I&apos;m available now.<br />Let&apos;s build something.
           </h2>
-          <p className="text-[var(--text-muted)] text-base mb-8">
-            Actively seeking SDE and AI roles — H1-B cap-exempt.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <a
               href={`mailto:${resumeData.email}`}
-              className="rounded-full border border-[var(--accent)]/40 bg-transparent px-6 py-3 text-sm text-[var(--accent)] transition hover:bg-[var(--accent)]/10"
+              className="btn-primary"
             >
-              {resumeData.email}
+              Email me
             </a>
             <Link
               href={`https://${resumeData.linkedin}`}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-[var(--border)] px-6 py-3 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
+              className="btn-secondary"
             >
               LinkedIn
             </Link>
             <a
               href="/resume.pdf"
               download
-              className="rounded-full border border-[var(--border)] px-6 py-3 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
+              className="btn-secondary"
             >
               Resume PDF
             </a>
           </div>
+          <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--text-muted)] uppercase mt-2">
+            Open to SDE &amp; AI roles · H1-B cap-exempt
+          </p>
         </motion.div>
       </Section3D>
     </main>
