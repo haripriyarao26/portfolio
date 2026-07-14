@@ -38,11 +38,14 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
               <span className="mono-accent rounded-full border border-white/20 bg-white/5 px-3.5 py-1 text-[11px] font-medium text-[var(--text-primary)] tracking-wider uppercase">
                 Open to work
               </span>
+              <span className="mono-accent rounded-full border border-white/20 bg-white/5 px-3.5 py-1 text-[11px] font-medium text-[var(--text-primary)]/80 tracking-wider uppercase">
+                United States
+              </span>
             </div>
 
             {/* Name + Title headline */}
             <h1 className="font-display font-bold leading-[1.1] text-[var(--text-primary)] text-4xl sm:text-5xl lg:text-6xl max-w-3xl">
-              Haripriya Rao <br /> AI Systems &amp; Full-Stack Engineer
+              Haripriya Rao — AI Systems &amp; Full-Stack Engineer
             </h1>
 
             {/* Value Tagline */}
@@ -54,9 +57,6 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a href="#projects" className="btn-primary">
                 View my work →
-              </a>
-              <a href="/resume.pdf" download className="btn-secondary">
-                Download résumé
               </a>
             </div>
 

@@ -72,10 +72,10 @@ export default function Home() {
             </span>
           </div>
           <div className="flex items-center gap-5">
-            <a href="#impact"            className="nav-link transition-colors">Impact</a>
+            <a href="#impact" className="nav-link transition-colors">Impact</a>
             <a href="#timeline-momentum" className="nav-link transition-colors">Experience</a>
-            <a href="#projects"          className="nav-link transition-colors">Projects</a>
-            <a href="#contact"           className="nav-link transition-colors">Contact</a>
+            <a href="#projects" className="nav-link transition-colors">Projects</a>
+            <a href="#contact" className="nav-link transition-colors">Contact</a>
             <a href="#contact" className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#d8ff6e] transition-colors">
               Hire me
             </a>
@@ -101,9 +101,7 @@ export default function Home() {
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
             Outcomes at scale
           </h2>
-          <p className="mt-5 max-w-[680px] text-base leading-relaxed text-[var(--text-muted)]">
-            Core systems and infrastructure built at Onetera, centering on <strong className="text-[var(--text-primary)]">Agentic Orchestration</strong>, <strong className="text-[var(--text-primary)]">AST Manipulation</strong>, and <strong className="text-[var(--text-primary)]">Production Observability</strong>.
-          </p>
+
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               href={githubProfile}

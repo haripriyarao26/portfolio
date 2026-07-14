@@ -52,7 +52,7 @@ export interface Honor {
 
 export const resumeData: ResumeData = {
   name: "Haripriya Rao",
-  location: "Los Angeles, CA",
+  location: "United States",
   email: "haripriyaraov@gmail.com",
   linkedin: "linkedin.com/in/haripriya-rao",
   education: [
