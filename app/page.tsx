@@ -376,7 +376,7 @@ export default function Home() {
               LinkedIn
             </Link>
           </div>
-          <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--text-muted)] uppercase mt-2">
+          <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--text-primary)] uppercase mt-2">
             Open to SDE &amp; AI roles · H1-B cap-exempt
           </p>
         </motion.div>

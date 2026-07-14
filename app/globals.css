@@ -8,14 +8,14 @@
   /* Color palette — warm near-black base */
   --bg-dark:        #1A1917;
   --bg-card:        #2A2A28;
-  --text-primary:   #F2EDE4;
-  --text-muted:     #6B6B66;
-  --border:         rgba(255, 255, 255, 0.08);
+  --text-primary:   #F8F8F2;
+  --text-muted:     #DFD7C7;
+  --border:         rgba(255, 255, 255, 0.12);
   --accent:         #C9F565;   /* Electric chartreuse — 3 uses max */
 
   /* Legacy aliases (keep for backward compat with components) */
-  --primary:        #E8E2D9;
-  --primary-dark:   #6B6B66;
+  --primary:        #F8F8F2;
+  --primary-dark:   #DFD7C7;
   --secondary:      #2A2A28;
 
   /* Typography */
