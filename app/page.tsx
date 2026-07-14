@@ -211,8 +211,8 @@ export default function Home() {
               My Story
             </h3>
             <p className="text-base sm:text-lg leading-relaxed text-[var(--text-primary)]/90 font-light">
-              Originally from Bangalore, India, and now based in the United States, I am a USC CS Master&apos;s graduate specializing in high-performance distributed systems. 
-              At Onetera, I scaled civic AI infrastructure from a founding 0-to-1 prototype to investor diligence-ready production systems, cutting operational costs by 60% and latency by 40%. 
+              Originally from Bangalore, India, and now based in the United States, I am a USC CS Master&apos;s graduate specializing in high-performance distributed systems.
+              At Onetera, I scaled civic AI infrastructure from a founding 0-to-1 prototype to investor diligence-ready production systems, cutting operational costs by 60% and latency by 40%.
               I am now looking for my next challenge building resilient, high-throughput backends and production AI workflows.
             </p>
           </motion.article>
@@ -232,14 +232,11 @@ export default function Home() {
           transition={spring}
         >
           <div>
-            <p className="mono-accent text-xs tracking-[0.22em] text-[var(--text-muted)] uppercase mb-3">Build portfolio</p>
             <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-              Selected systems
+              Featured Production & Open Source Work
             </h2>
           </div>
-          <p className="max-w-[680px] text-sm text-[var(--text-muted)]">
-            AI engineering, secure architecture, and product-led execution across enterprise, civic tech, and developer tooling.
-          </p>
+
         </motion.div>
         <StoryProjectGrid projects={projects} />
       </Section3D>
@@ -305,7 +302,7 @@ export default function Home() {
             className="space-y-6"
           >
             <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-2">Also proficient in</p>
-            
+
             <div className="space-y-4">
               {skillGroups.map(group => (
                 <motion.article
