@@ -35,7 +35,7 @@ const featureItem = {
 export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
   return (
     <motion.div
-      className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+      className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 grid-flow-dense"
       variants={staggerGrid}
       initial="hidden"
       whileInView="visible"

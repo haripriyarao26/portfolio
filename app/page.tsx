@@ -225,18 +225,15 @@ export default function Home() {
       {/* ── Projects ── */}
       <Section3D id="projects" className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <motion.div
-          className="mb-10 flex flex-wrap items-end justify-between gap-4"
+          className="mb-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={spring}
         >
-          <div>
-            <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-              Featured Production & Open Source Work
-            </h2>
-          </div>
-
+          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
+            Featured Production &amp; Open Source Work
+          </h2>
         </motion.div>
         <StoryProjectGrid projects={projects} />
       </Section3D>
