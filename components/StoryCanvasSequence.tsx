@@ -96,14 +96,6 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
               >
                 LinkedIn
               </Link>
-              <a
-                href="/resume.pdf"
-                download
-                className="btn-secondary"
-                style={{ padding: '0.5rem 1rem', fontSize: '0.75rem' }}
-              >
-                Resume PDF
-              </a>
             </div>
           </motion.div>
 

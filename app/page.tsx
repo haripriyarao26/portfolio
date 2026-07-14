@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
+
 import { motion, useScroll, useSpring } from 'framer-motion';
 import Section3D from '@/components/Section3D';
 import MouseSpotlight from '@/components/MouseSpotlight';
@@ -11,10 +11,8 @@ import StoryTimeline from '@/components/StoryTimeline';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
 
-const Global3DScene = dynamic(() => import('@/components/Global3DScene'), {
-  ssr: false,
-  loading: () => <div className="fixed inset-0 z-0 bg-[#0F0E0D]" />,
-});
+import ParticleNetwork from '@/components/ParticleNetwork';
+
 
 const githubProfile = 'https://github.com/haripriyarao26';
 
@@ -57,7 +55,7 @@ export default function Home() {
 
   return (
     <main className="relative text-[var(--text-primary)]" style={{ background: 'var(--bg-dark)' }}>
-      <Global3DScene scrollYProgress={scrollYProgress} />
+      <ParticleNetwork />
       <MouseSpotlight />
 
       {/* Scroll progress — thin chartreuse (accent use #1) */}
@@ -377,13 +375,6 @@ export default function Home() {
             >
               LinkedIn
             </Link>
-            <a
-              href="/resume.pdf"
-              download
-              className="btn-secondary"
-            >
-              Resume PDF
-            </a>
           </div>
           <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--text-muted)] uppercase mt-2">
             Open to SDE &amp; AI roles · H1-B cap-exempt
