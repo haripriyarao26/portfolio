@@ -1,13 +1,13 @@
 'use client';
 
 import { useRef } from 'react';
+import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-const labels = [
-  { title: 'AI Systems', tone: 'from-cyan-300/30 to-indigo-300/10' },
-  { title: 'Product Velocity', tone: 'from-indigo-300/30 to-violet-300/10' },
-  { title: 'Human-centered UX', tone: 'from-sky-300/30 to-cyan-300/10' },
-  { title: 'Production Reliability', tone: 'from-emerald-300/25 to-cyan-300/10' },
+const metrics = [
+  { value: '96%',      label: 'Token cost reduction' },
+  { value: '40%',      label: 'Latency cut' },
+  { value: '$1,800/mo', label: 'Cloud cost saved' },
 ];
 
 type Props = { name: string; tagline: string };
@@ -20,66 +20,88 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
     offset: ['start start', 'end 45%'],
   });
 
-  const layerOneY = useTransform(scrollYProgress, [0, 0.45, 1], ['0%', '-34%', '-48%']);
-  const layerTwoY = useTransform(scrollYProgress, [0, 0.45, 1], ['0%', '-52%', '-72%']);
-  const layerThreeY = useTransform(scrollYProgress, [0, 0.45, 1], ['0%', '-70%', '-90%']);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.65, 1], [1, 0.94, 0.88]);
-  const titleRotateX = useTransform(scrollYProgress, [0, 0.45, 1], [0, 14, 20]);
-  const titleScale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 0.92, 0.85]);
-  const chipsRotateX = useTransform(scrollYProgress, [0, 0.45, 1], [0, -10, -16]);
-  const chipsScale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 0.92, 0.86]);
+  const layerOneY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <section ref={sectionRef} id="story" className="relative h-[108vh] sm:h-[112vh]">
+    <section ref={sectionRef} id="story" className="relative h-[110vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* We keep the transparent gradients to blend the hero title with the new Global3DScene underneath */}
-        <div className="pointer-events-none absolute inset-0 z-0">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_45%,rgba(2,6,23,0.72)_100%)]" />
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(2,6,23,0),rgba(2,6,23,0.16)_26%,rgba(2,6,23,0.75))]" />
-        </div>
-
-        <motion.div style={{ opacity: titleOpacity }} className="relative z-10 mx-auto flex h-full max-w-7xl flex-col px-6 pointer-events-none">
+        <motion.div
+          style={{ opacity: titleOpacity }}
+          className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-center px-6 sm:px-10"
+        >
           <motion.div
-            style={{ y: layerOneY, rotateX: titleRotateX, scale: titleScale }}
-            className="pt-28 will-change-transform [transform-style:preserve-3d] sm:pt-36 pointer-events-auto"
+            style={{ y: layerOneY }}
+            className="will-change-transform pointer-events-auto"
           >
-            <p className="tracking-[0.26em] text-indigo-200/80 uppercase text-xs sm:text-sm">
-              Design x Engineering Narrative
+            {/* Eyebrow */}
+            <p className="mono-accent text-xs tracking-[0.22em] text-[var(--text-muted)] uppercase mb-6">
+              Software Engineer&nbsp;·&nbsp;AI Systems&nbsp;·&nbsp;H1-B Cap-Exempt
             </p>
-            <h1 className="mt-4 max-w-4xl text-balance text-4xl font-semibold leading-tight text-white sm:text-6xl lg:text-7xl">
+
+            {/* Name + Headline */}
+            <h1 className="font-display text-5xl font-bold leading-[1.05] text-[var(--text-primary)] sm:text-7xl lg:text-8xl">
               {name}
-              <span className="mt-8 block text-white/85">Ship products that feel inevitable.</span>
+              <span className="mt-3 block text-[var(--text-primary)]/80 font-semibold text-4xl sm:text-5xl lg:text-6xl">
+                Ship products that feel inevitable.
+              </span>
             </h1>
-            <p className="mt-6 max-w-2xl text-pretty text-base text-slate-100/85 sm:text-lg">{tagline}</p>
-          </motion.div>
 
-          <motion.div
-            style={{ y: layerTwoY, rotateX: chipsRotateX, scale: chipsScale }}
-            className="relative mt-auto mb-16 grid grid-cols-2 gap-3 will-change-transform [transform-style:preserve-3d] sm:mb-20 sm:grid-cols-4 pointer-events-auto"
-          >
-            <div className="pointer-events-none absolute inset-x-8 -bottom-4 h-8 rounded-full bg-cyan-300/25 blur-2xl" />
-            {labels.map((label, index) => (
-              <motion.div
-                key={label.title}
-                whileHover={{ y: -6, rotateX: 8, rotateY: index % 2 === 0 ? -8 : 8, scale: 1.03 }}
-                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                className="glass-premium group relative overflow-hidden rounded-2xl px-4 py-3 text-center text-xs text-slate-100 [transform-style:preserve-3d] sm:text-sm"
-                style={{ perspective: 1200 }}
+            {/* Metrics row */}
+            <div className="mt-10 flex flex-wrap items-end gap-x-10 gap-y-6">
+              {metrics.map((m, i) => (
+                <div key={m.label}>
+                  <p className="font-display font-bold leading-none text-[var(--accent)] text-[3.5rem] sm:text-[5rem]">
+                    {m.value}
+                  </p>
+                  <p className="mono-accent mt-1.5 text-[11px] tracking-[0.15em] text-[var(--text-muted)] uppercase">
+                    {m.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA row */}
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link
+                href="https://github.com/haripriyarao26"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition-colors hover:border-white/20 hover:bg-white/10"
               >
-                <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${label.tone} opacity-30`} />
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-white/30" />
-                <div className="pointer-events-none absolute inset-0 translate-x-[-130%] bg-[linear-gradient(110deg,transparent_25%,rgba(255,255,255,0.28)_50%,transparent_75%)] transition-transform duration-700 group-hover:translate-x-[130%]" />
-                <span className="relative tracking-[0.08em]">{label.title}</span>
-              </motion.div>
-            ))}
+                GitHub
+              </Link>
+              <Link
+                href="https://linkedin.com/in/haripriya-rao"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition-colors hover:border-white/20 hover:bg-white/10"
+              >
+                LinkedIn
+              </Link>
+              <a
+                href="/resume.pdf"
+                download
+                className="rounded-full border border-[var(--accent)]/40 bg-transparent px-5 py-2.5 text-sm text-[var(--accent)] transition-colors hover:bg-[var(--accent)]/10"
+              >
+                Download Resume
+              </a>
+            </div>
           </motion.div>
 
-          <motion.p
-            style={{ y: layerThreeY }}
-            className="absolute right-6 bottom-8 text-xs tracking-[0.35em] text-white/70 uppercase sm:right-10 pointer-events-auto"
-          >
-            Scroll to enter the story
-          </motion.p>
+          {/* Scroll chevron */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+            <svg
+              className="chevron-bob h-6 w-6 text-[var(--text-muted)]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </motion.div>
       </div>
     </section>

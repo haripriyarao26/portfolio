@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { motion, useScroll, useSpring } from 'framer-motion';
@@ -9,15 +8,13 @@ import MouseSpotlight from '@/components/MouseSpotlight';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
-// import Global3DScene from '@/components/Global3DScene';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
 
 const Global3DScene = dynamic(() => import('@/components/Global3DScene'), {
   ssr: false,
-  loading: () => <div className="fixed inset-0 z-0 bg-[#020617]" />
+  loading: () => <div className="fixed inset-0 z-0 bg-[#0F0E0D]" />,
 });
-
 
 const githubProfile = 'https://github.com/haripriyarao26';
 
@@ -47,7 +44,7 @@ const staggerContainer = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 const staggerItem = {
-  hidden: { opacity: 0, y: 22, scale: 0.96 },
+  hidden: { opacity: 0, y: 18, scale: 0.97 },
   visible: { opacity: 1, y: 0, scale: 1, transition: spring },
 };
 
@@ -57,81 +54,67 @@ export default function Home() {
   const timelineExperience = resumeData.experience;
 
   return (
-    <main className="bg-transparent text-slate-100">
+    <main className="relative text-[var(--text-primary)]" style={{ background: 'var(--bg-dark)' }}>
       <Global3DScene scrollYProgress={scrollYProgress} />
       <MouseSpotlight />
 
-      <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <motion.div
-          animate={{ x: ['-10%', '8%', '-10%'], opacity: [0.15, 0.28, 0.15] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          className="space-beam absolute -top-28 left-[-20%] h-[42rem] w-[34rem] rotate-[24deg]"
-        />
-        <motion.div
-          animate={{ x: ['5%', '-12%', '5%'], opacity: [0.09, 0.2, 0.09] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          className="space-beam absolute -top-14 right-[-18%] h-[32rem] w-[28rem] -rotate-[18deg]"
-        />
-        {Array.from({ length: 12 }).map((_, i) => (
-          <motion.span
-            key={`star-${i}`}
-            animate={{ opacity: [0.2, 1, 0.2], y: [0, -10, 0] }}
-            transition={{ duration: 2.6 + (i % 4), repeat: Infinity, delay: i * 0.13 }}
-            className="star-dot absolute"
-            style={{ left: `${8 + ((i * 17) % 84)}%`, top: `${6 + ((i * 11) % 86)}%` }}
-          />
-        ))}
-      </div>
-
+      {/* Scroll progress — thin chartreuse (accent use #1) */}
       <motion.div
         style={{ scaleX: progressScale }}
-        className="fixed top-0 left-0 right-0 z-[60] h-1 origin-left bg-gradient-to-r from-indigo-400 via-cyan-300 to-emerald-300"
+        className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left progress-bar"
       />
 
-      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(92vw,960px)] -translate-x-1/2 rounded-full border border-white/20 bg-slate-950/60 px-6 py-3">
-        <nav className="flex items-center justify-between text-xs text-slate-200 sm:text-sm">
-          <span className="tracking-[0.2em] uppercase">
-            {resumeData.name}
-            <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-cyan-200/80 sm:inline">
-              United States
+      {/* ── Navigation ── */}
+      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(92vw,900px)] -translate-x-1/2 rounded-full px-6 py-3">
+        <nav className="flex items-center justify-between text-xs text-[var(--text-muted)] sm:text-sm">
+          <div>
+            <span className="font-display font-semibold text-[var(--text-primary)] tracking-tight">
+              {resumeData.name}
             </span>
-          </span>
-          <div className="flex items-center gap-4">
-            <a href="#impact" className="nav-link transition-colors hover:text-white">Impact</a>
-            <a href="#timeline-momentum" className="nav-link transition-colors hover:text-white">Experience</a>
-            <a href="#projects" className="nav-link transition-colors hover:text-white">Projects</a>
-            <a href="#contact" className="nav-link transition-colors hover:text-white">Contact</a>
+            <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-[var(--text-muted)] sm:inline mono-accent">
+              Software Engineer · H1-B Cap-Exempt
+            </span>
+          </div>
+          <div className="flex items-center gap-5">
+            <a href="#impact"            className="nav-link transition-colors">Impact</a>
+            <a href="#timeline-momentum" className="nav-link transition-colors">Experience</a>
+            <a href="#projects"          className="nav-link transition-colors">Projects</a>
+            <a href="#contact"           className="nav-link transition-colors">Contact</a>
           </div>
         </nav>
       </header>
 
+      {/* ── Hero ── */}
       <StoryCanvasSequence
         name={resumeData.name}
-        tagline="Software Engineer (H1-B Cap-Exempt) building AI systems with product intuition, delivery speed, and trust-by-design."
+        tagline="Software Engineer building AI systems with product intuition, delivery speed, and trust-by-design."
       />
 
-      <Section3D id="impact" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-28">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(79,70,229,0.2),transparent_30%),radial-gradient(circle_at_80%_20%,rgba(16,185,129,0.15),transparent_35%)]" />
+      {/* ── Impact ── */}
+      <Section3D id="impact" className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <motion.div
-          initial={{ opacity: 0, y: 26 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-80px' }}
           transition={spring}
+          className="mb-12"
         >
-          <p className="text-xs tracking-[0.26em] text-cyan-200 uppercase">Six-second recruiter signal</p>
-          <h2 className="mt-4 max-w-4xl text-balance text-3xl font-semibold leading-tight text-white sm:text-5xl">
-            Revenue-grade outcomes. Scalable architecture. Premium product craft.
+          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--text-muted)] uppercase mb-3">
+            Six-second recruiter signal
+          </p>
+          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl max-w-3xl">
+            Revenue-grade outcomes. Scalable architecture.
           </h2>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-50 sm:text-lg text-glow">
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--text-muted)]">
             I build production AI and full-stack platforms that ship quickly, stay reliable, and feel intuitive. Every
-            decision ties engineering depth to business impact, so teams move faster and users trust the product.
+            decision ties engineering depth to business impact.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               href={githubProfile}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-slate-300/35 bg-white/10 px-5 py-2.5 text-sm text-slate-100 transition hover:scale-105 hover:bg-white/20"
+              className="rounded-full border border-[var(--border)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
             >
               GitHub
             </Link>
@@ -139,97 +122,89 @@ export default function Home() {
               href={`https://${resumeData.linkedin}`}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-indigo-300/45 bg-indigo-500/15 px-5 py-2.5 text-sm text-indigo-100 transition hover:scale-105 hover:bg-indigo-500/25"
+              className="rounded-full border border-[var(--border)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
             >
               LinkedIn
             </Link>
           </div>
         </motion.div>
 
+        {/* Impact bento */}
         <motion.div
-          className="mt-12 grid gap-6 md:grid-cols-12"
+          className="grid gap-4 md:grid-cols-12"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
         >
-          {/* Main Hero Bento Block */}
+          {/* Large metric */}
           <motion.article
             variants={staggerItem}
-            whileHover={{ scale: 1.01, boxShadow: '0 0 40px rgba(34,211,238,0.2)' }}
+            whileHover={{ y: -4 }}
             transition={spring}
-            className="group relative md:col-span-8 overflow-hidden rounded-[2.5rem] glass-premium p-8 sm:p-12 will-change-transform"
+            className="card md:col-span-8 p-8 sm:p-12 will-change-transform"
           >
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(56,189,248,0.12),transparent_40%,rgba(99,102,241,0.14))]" />
-            <div className="pointer-events-none absolute right-4 top-4 h-32 w-32 rounded-full bg-cyan-300/20 blur-[40px]" />
-
-            <p className="float-pill text-6xl md:text-8xl font-bold tracking-tight text-white mb-6">
+            <p className="font-display font-bold leading-none text-[var(--accent)] text-7xl sm:text-9xl mb-4">
               96%
             </p>
-            <h3 className="text-xl md:text-2xl uppercase tracking-[0.2em] font-semibold text-cyan-100">Token Cost Cut</h3>
-            <p className="mt-4 max-w-xl text-base text-slate-100 text-glow leading-relaxed">
-              Directly tied to Onetera multi-agent workflow optimization. Restructured orchestration layers to cache and route deeply nested state trees efficiently.
+            <h3 className="font-display text-xl sm:text-2xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
+              Token Cost Cut
+            </h3>
+            <p className="mt-4 max-w-xl text-sm text-[var(--text-muted)] leading-relaxed">
+              Onetera multi-agent workflow optimization. Restructured orchestration layers to cache and route deeply nested state trees efficiently.
             </p>
           </motion.article>
 
-          {/* Secondary Blocks Column */}
-          <div className="md:col-span-4 flex flex-col gap-6">
+          {/* Side metrics */}
+          <div className="md:col-span-4 flex flex-col gap-4">
             <motion.article
               variants={staggerItem}
-              whileHover={{ x: -4, scale: 1.02, boxShadow: '0 0 32px rgba(99,102,241,0.2)' }}
+              whileHover={{ y: -4 }}
               transition={spring}
-              className="group relative flex-1 overflow-hidden rounded-[2rem] glass-premium p-8 will-change-transform flex flex-col justify-center"
+              className="card flex-1 p-8 will-change-transform flex flex-col justify-center"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(240deg,rgba(99,102,241,0.12),transparent_50%)]" />
-              <p className="text-4xl md:text-5xl font-bold text-white mb-3">22</p>
-              <h3 className="text-xs uppercase tracking-[0.16em] text-indigo-200">State Nodes</h3>
-              <p className="mt-3 text-sm text-slate-100 text-glow leading-relaxed">
+              <p className="font-display font-bold leading-none text-[var(--text-primary)] text-5xl mb-2">22</p>
+              <h3 className="mono-accent text-xs tracking-[0.16em] text-[var(--text-muted)] uppercase">State Nodes</h3>
+              <p className="mt-2 text-sm text-[var(--text-muted)] leading-relaxed">
                 State-machine architecture powering production orchestration.
               </p>
             </motion.article>
 
             <motion.article
               variants={staggerItem}
-              whileHover={{ x: -4, scale: 1.02, boxShadow: '0 0 32px rgba(16,185,129,0.2)' }}
+              whileHover={{ y: -4 }}
               transition={spring}
-              className="group relative flex-1 overflow-hidden rounded-[2rem] glass-premium p-8 will-change-transform flex flex-col justify-center"
+              className="card flex-1 p-8 will-change-transform flex flex-col justify-center"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(16,185,129,0.12),transparent_50%)]" />
-              <p className="text-4xl md:text-5xl font-bold text-white mb-3">40%</p>
-              <h3 className="text-xs uppercase tracking-[0.16em] text-emerald-200">Latency Reduction</h3>
-              <p className="mt-3 text-sm text-slate-100 text-glow leading-relaxed">
+              <p className="font-display font-bold leading-none text-[var(--text-primary)] text-5xl mb-2">40%</p>
+              <h3 className="mono-accent text-xs tracking-[0.16em] text-[var(--text-muted)] uppercase">Latency Reduction</h3>
+              <p className="mt-2 text-sm text-[var(--text-muted)] leading-relaxed">
                 Measured in production after asynchronous execution redesign.
               </p>
             </motion.article>
           </div>
         </motion.div>
-
-
       </Section3D>
 
-      <Section3D className="mx-auto max-w-7xl px-6 py-8 sm:py-12">
-        <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
+      {/* ── Story / About ── */}
+      <Section3D className="mx-auto max-w-6xl px-6 py-10 sm:py-14">
+        <div className="grid gap-6 lg:grid-cols-[180px_1fr]">
+          {/* Avatar */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={spring}
-            className="relative flex items-start justify-center"
+            className="flex items-start justify-center"
           >
-            <div className="relative h-44 w-44 rounded-full border-4 border-cyan-100/85 bg-slate-950/80 shadow-[0_16px_60px_rgba(34,211,238,0.25)]">
-              <div className="flex h-full items-center justify-center text-5xl font-semibold text-white">HR</div>
+            <div className="h-36 w-36 rounded-full border border-[var(--border)] bg-[var(--bg-card)] flex items-center justify-center">
+              <span className="font-display text-4xl font-bold text-[var(--text-primary)]">HR</span>
             </div>
-            <motion.div
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute right-3 bottom-5 rounded-full border border-yellow-300/35 bg-slate-900/90 px-3 py-2 shadow-lg"
-            >
-              <span className="text-lg">👋</span>
-            </motion.div>
           </motion.div>
 
+          {/* Story blocks */}
           <motion.div
-            className="space-y-5"
+            className="space-y-4"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -237,94 +212,77 @@ export default function Home() {
           >
             <motion.article
               variants={staggerItem}
-              whileHover={{ y: -4, boxShadow: '0 0 40px rgba(34,211,238,0.12)' }}
-              transition={spring}
-              className="relative overflow-hidden rounded-3xl glass-premium p-7 will-change-transform"
+              className="card p-7"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,rgba(56,189,248,0.12),transparent_35%,rgba(129,140,248,0.12))]" />
-              <h3 className="relative text-2xl font-semibold text-white text-glow">My Story</h3>
-              <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
-                My journey from a Computer Science student in India to an <strong>engineering leader</strong> in Los Angeles has shaped my core approach to software: systems must not only function, they must be resilient, highly observable, and explicitly built for scale.
-              </p>
-              <p className="relative mt-4 text-lg leading-relaxed text-slate-200/95">
-                Most recently, as a <strong>Software Engineer II</strong> at Onetera, I architected distributed AI infrastructure and high-performance backend systems for demanding production workloads. Holding a <strong>Master&apos;s in Computer Science</strong> from USC with a focus on distributed systems and AI/ML, I excel at transforming complex architectural concepts into production-grade reality. Following a recent company restructuring at Onetera, I am actively looking for my next challenge building high-throughput infrastructure (H1-B cap-exempt).
+              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] mb-4">My Story</h3>
+              <p className="text-base leading-relaxed text-[var(--text-muted)]">
+                USC CS grad (distributed systems + AI/ML) turned production engineer. Most recently at Onetera, where I scaled civic AI infrastructure from seed-stage architecture to investor diligence-ready systems.
               </p>
             </motion.article>
 
             <motion.article
               variants={staggerItem}
-              whileHover={{ y: -4, boxShadow: '0 0 40px rgba(99,102,241,0.12)' }}
-              transition={spring}
-              className="relative overflow-hidden rounded-3xl glass-premium p-7 will-change-transform"
+              className="card p-7"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(250deg,rgba(34,211,238,0.1),transparent_35%,rgba(99,102,241,0.1))]" />
-              <h3 className="relative text-2xl font-semibold text-white text-glow">My Philosophy</h3>
-              <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
-                I engineer systems that empower teams to <strong>ship faster</strong>—making observability the default and reliability under load a guarantee.
-              </p>
-              <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
-                My focus centers on <strong>distributed AI infrastructure</strong>, <strong>advanced backend patterns</strong>, and <strong>robust system observability</strong>. I believe elite engineering is measured by two things: systemic resilience and accelerated business velocity.
+              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] mb-4">My Philosophy</h3>
+              <p className="text-base leading-relaxed text-[var(--text-muted)]">
+                I engineer systems that empower teams to ship faster—making observability the default and reliability under load a guarantee. My focus centers on distributed AI infrastructure, advanced backend patterns, and robust system observability. I believe elite engineering is measured by two things: systemic resilience and accelerated business velocity.
               </p>
             </motion.article>
           </motion.div>
         </div>
       </Section3D>
 
+      {/* ── Timeline ── */}
       <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
 
-      <Section3D id="projects" className="mx-auto max-w-7xl px-6 py-24 sm:py-28">
+      {/* ── Projects ── */}
+      <Section3D id="projects" className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <motion.div
-          className="mb-8 flex flex-wrap items-end justify-between gap-3"
+          className="mb-10 flex flex-wrap items-end justify-between gap-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={spring}
         >
           <div>
-            <p className="text-xs tracking-[0.26em] text-cyan-200 uppercase">Build portfolio</p>
-            <h2 className="mt-3 text-3xl font-semibold text-white sm:text-5xl">Selected systems and shipped work</h2>
+            <p className="mono-accent text-xs tracking-[0.22em] text-[var(--text-muted)] uppercase mb-3">Build portfolio</p>
+            <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
+              Selected systems and shipped work
+            </h2>
           </div>
-          <p className="max-w-xl text-sm text-slate-100 sm:text-base text-glow">
-            Modern AI engineering, secure architecture, and product-led execution across enterprise, civic tech, and
-            developer tooling.
+          <p className="max-w-md text-sm text-[var(--text-muted)]">
+            AI engineering, secure architecture, and product-led execution across enterprise, civic tech, and developer tooling.
           </p>
         </motion.div>
         <StoryProjectGrid projects={projects} />
       </Section3D>
 
-      <Section3D className="mx-auto max-w-7xl px-6 pb-20">
-        <div className="mb-8 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={spring}
-            className="text-3xl font-semibold text-white sm:text-4xl"
-          >
-            Technical Skills
-          </motion.h2>
-          <div className="mx-auto mt-3 h-[2px] w-20 bg-gradient-to-r from-cyan-300 via-indigo-300 to-cyan-300" />
-          <motion.div
-            className="mt-4 flex flex-wrap items-center justify-center gap-2"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
+      {/* ── Skills ── */}
+      <Section3D className="mx-auto max-w-6xl px-6 pb-20">
+        <motion.div
+          className="mb-8 text-center"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+        >
+          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-4xl">Technical Skills</h2>
+          <div className="mx-auto mt-3 h-[1px] w-16 bg-[var(--border)]" />
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
             {specialties.map(item => (
-              <motion.span
+              <span
                 key={item}
-                variants={staggerItem}
-                className="rounded-full border border-cyan-300/35 bg-cyan-400/10 px-3 py-1 text-[11px] tracking-[0.12em] text-cyan-100 uppercase"
+                className="mono-accent rounded-full border border-[var(--border)] px-3 py-1 text-[11px] tracking-[0.12em] text-[var(--text-muted)] uppercase"
               >
                 {item}
-              </motion.span>
+              </span>
             ))}
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
         <motion.div
-          className="grid gap-6 md:grid-cols-3"
+          className="grid gap-4 md:grid-cols-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -334,57 +292,48 @@ export default function Home() {
             <motion.article
               key={group.title}
               variants={staggerItem}
-              whileHover={{ y: -6, rotateX: 6, rotateY: -6, boxShadow: '0 0 36px rgba(34,211,238,0.14)' }}
+              whileHover={{ y: -4 }}
               transition={spring}
-              className="card-3d-surface rounded-3xl glass-premium p-6 will-change-transform"
+              className="card p-6 will-change-transform"
             >
-              <h3 className="text-xl font-semibold text-white">
+              <h3 className="font-display text-lg font-semibold text-[var(--text-primary)]">
                 <span className="mr-2">{group.icon}</span>
                 {group.title}
               </h3>
-              <motion.div
-                className="mt-4 flex flex-wrap gap-2"
-                variants={staggerContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
+              <div className="mt-4 flex flex-wrap gap-2">
                 {group.items.map(skill => (
-                  <motion.span
+                  <span
                     key={`${group.title}-${skill}`}
-                    variants={staggerItem}
-                    whileHover={{ scale: 1.08 }}
-                    className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-50 transition-colors hover:border-cyan-300/40 hover:bg-cyan-400/20 drop-shadow-sm"
+                    className="mono-accent rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[var(--text-muted)] hover:border-white/20 hover:text-[var(--text-primary)] transition-colors"
                   >
                     {skill}
-                  </motion.span>
+                  </span>
                 ))}
-              </motion.div>
+              </div>
             </motion.article>
           ))}
         </motion.div>
       </Section3D>
 
+      {/* ── Contact ── */}
       <Section3D id="contact" className="relative overflow-hidden px-6 pt-6 pb-28">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,0.28),transparent_50%)]" />
         <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={spring}
-          className="mx-auto max-w-5xl rounded-[2rem] border border-white/15 bg-gradient-to-br from-indigo-500/20 via-slate-900 to-slate-950 p-8 text-center shadow-[0_30px_100px_rgba(0,0,0,0.45)] will-change-transform sm:p-14"
+          className="mx-auto max-w-3xl card p-10 sm:p-14 text-center"
         >
-          <p className="text-xs tracking-[0.22em] text-indigo-100 uppercase">Let us build your next win</p>
-          <h2 className="mt-4 text-balance text-3xl font-semibold text-white sm:text-5xl">
-            Need an engineer who can design, ship, and scale AI products?
+          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl mb-4">
+            I&apos;m available now.<br />Let&apos;s build something.
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-slate-50 text-glow">
-            Reach out and I can walk you through architecture, delivery strategy, and product outcomes from day one. I am actively looking for new opportunities in software engineering (SDE) and AI (H1-B cap-exempt).
+          <p className="text-[var(--text-muted)] text-base mb-8">
+            Actively seeking SDE and AI roles — H1-B cap-exempt.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <a
               href={`mailto:${resumeData.email}`}
-              className="rounded-full bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:scale-105 hover:bg-slate-100"
+              className="rounded-full border border-[var(--accent)]/40 bg-transparent px-6 py-3 text-sm text-[var(--accent)] transition hover:bg-[var(--accent)]/10"
             >
               {resumeData.email}
             </a>
@@ -392,10 +341,17 @@ export default function Home() {
               href={`https://${resumeData.linkedin}`}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm text-white transition hover:scale-105 hover:bg-white/20"
+              className="rounded-full border border-[var(--border)] px-6 py-3 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
             >
               LinkedIn
             </Link>
+            <a
+              href="/resume.pdf"
+              download
+              className="rounded-full border border-[var(--border)] px-6 py-3 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
+            >
+              Resume PDF
+            </a>
           </div>
         </motion.div>
       </Section3D>
