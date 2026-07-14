@@ -23,7 +23,7 @@ function Navigation() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-      
+
       // Update active section based on scroll position
       const sections = navItems.map(item => item.href.substring(1));
       const current = sections.find(section => {
@@ -36,7 +36,7 @@ function Navigation() {
       });
       if (current) setActiveSection(current);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
@@ -44,11 +44,10 @@ function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-[#fcfcf9]/95 backdrop-blur-md shadow-lg border-b border-[#e5e5e5]'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -61,17 +60,15 @@ function Navigation() {
             <div className="flex items-center space-x-4 border-r border-[#e5e5e5] pr-6">
               <a
                 href="#home"
-                className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'home' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
-                }`}
+                className={`transition-colors duration-200 font-medium ${activeSection === 'home' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
+                  }`}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'about' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
-                }`}
+                className={`transition-colors duration-200 font-medium ${activeSection === 'about' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
+                  }`}
               >
                 About
               </a>
@@ -79,25 +76,22 @@ function Navigation() {
             <div className="flex items-center space-x-4 border-r border-[#e5e5e5] pr-6">
               <a
                 href="#experience"
-                className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'experience' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
-                }`}
+                className={`transition-colors duration-200 font-medium ${activeSection === 'experience' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
+                  }`}
               >
                 Experience
               </a>
               <a
                 href="#skills"
-                className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'skills' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
-                }`}
+                className={`transition-colors duration-200 font-medium ${activeSection === 'skills' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
+                  }`}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'projects' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
-                }`}
+                className={`transition-colors duration-200 font-medium ${activeSection === 'projects' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
+                  }`}
               >
                 Projects
               </a>
@@ -105,9 +99,8 @@ function Navigation() {
             <div className="flex items-center space-x-4">
               <a
                 href="#contact"
-                className={`transition-colors duration-200 font-medium ${
-                  activeSection === 'contact' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
-                }`}
+                className={`transition-colors duration-200 font-medium ${activeSection === 'contact' ? 'text-[#111827]' : 'text-[#525252] hover:text-[#111827]'
+                  }`}
               >
                 Contact
               </a>

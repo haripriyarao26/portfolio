@@ -17,7 +17,7 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
   });
 
   const layerOneY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%']);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.35]);
 
   return (
     <section ref={sectionRef} id="story" className="relative h-[95vh] flex items-center">
@@ -30,6 +30,8 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
             style={{ y: layerOneY }}
             className="will-change-transform pointer-events-auto"
           >
+
+
             {/* Status Badges */}
             <div className="flex flex-wrap gap-2 mb-6">
               <span className="mono-accent rounded-full border border-[var(--accent)] bg-[var(--accent)]/10 px-3.5 py-1 text-[11px] font-bold text-[var(--accent)] tracking-wider uppercase animate-pulse">
@@ -40,17 +42,17 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
               </span>
             </div>
 
-            {/* Name + Title headline */}
-            <h1 className="font-display font-extrabold leading-[1.1] text-[var(--text-primary)] text-4xl sm:text-6xl lg:text-[64px] max-w-4xl tracking-tight">
-              AI Systems Engineer
-              <span className="block mt-2 text-2xl sm:text-3xl lg:text-4xl font-medium text-[var(--accent)]">
-                distributed backends, LangGraph, full-stack delivery
+            {/* Title headline */}
+            <h1 className="font-display font-extrabold leading-[1.1] text-[var(--text-primary)] text-5xl sm:text-7xl lg:text-[72px] max-w-4xl tracking-tight">
+              Software Engineer
+              <span className="block mt-3 text-2xl sm:text-3xl lg:text-4xl font-medium text-[var(--accent)]">
+                Ship products that feel inevitable.
               </span>
             </h1>
 
             {/* Value Tagline */}
-            <p className="mt-5 max-w-2xl text-base sm:text-lg text-[var(--text-muted)] leading-relaxed font-light">
-              Ship products that feel inevitable.
+            <p className="mt-6 max-w-3xl text-base sm:text-lg lg:text-[19px] text-[var(--text-muted)] leading-relaxed font-light">
+              Architecting distributed backends, deterministic agent workflows, and seamless full-stack user experiences from zero to one.
             </p>
 
             {/* First Viewport Metrics */}
@@ -72,47 +74,14 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
             {/* Primary CTAs */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a href="#contact" className="btn-primary">
-                Hire me →
+                Start a Conversation →
               </a>
               <a href="#projects" className="btn-secondary">
                 View projects
               </a>
             </div>
 
-            {/* Tech Stack Chips */}
-            <div className="mt-10 pt-6 border-t border-white/5 max-w-xl">
-              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Core Stack</p>
-              <div className="flex flex-wrap gap-2">
-                {coreTech.map((tech) => (
-                  <span
-                    key={tech}
-                    className="mono-accent rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[var(--text-muted)] font-medium hover:border-[var(--accent)]/40 hover:text-[var(--accent)] transition-colors duration-200"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Secondary Social Links */}
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <Link
-                href="https://github.com/haripriyarao26"
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors mono-accent"
-              >
-                GitHub →
-              </Link>
-              <Link
-                href="https://linkedin.com/in/haripriya-rao"
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors mono-accent"
-              >
-                LinkedIn →
-              </Link>
-            </div>
+            {/* Spacing decluttering */}
           </motion.div>
         </motion.div>
       </div>

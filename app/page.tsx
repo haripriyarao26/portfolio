@@ -67,7 +67,7 @@ export default function Home() {
       <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(92vw,900px)] -translate-x-1/2 rounded-full px-6 py-3">
         <nav className="flex items-center justify-between text-xs text-[var(--text-muted)] sm:text-sm">
           <div>
-            <span className="font-display font-semibold text-[var(--text-primary)] tracking-tight">
+            <span className="font-display font-bold text-sm sm:text-xl text-[var(--text-primary)] tracking-wider uppercase">
               {resumeData.name}
             </span>
           </div>
@@ -76,8 +76,8 @@ export default function Home() {
             <a href="#timeline-momentum" className="nav-link transition-colors">Experience</a>
             <a href="#projects" className="nav-link transition-colors">Projects</a>
             <a href="#contact" className="nav-link transition-colors">Contact</a>
-            <a href="#contact" className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#d8ff6e] transition-colors">
-              Hire me
+            <a href="#contact" className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#33FFEB] transition-colors">
+              Get in Touch
             </a>
           </div>
         </nav>
@@ -101,6 +101,9 @@ export default function Home() {
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
             Outcomes at scale
           </h2>
+          <p className="mt-4 max-w-3xl text-[15px] sm:text-base text-[var(--text-muted)] leading-relaxed">
+            I don’t build infrastructure in a vacuum; I own the complete lifecycle by working directly with our users. At Onetera, I collaborated closely with <strong>city officials</strong> to translate their operational needs into exact technical specs. I then developed and tested the distributed AI infrastructure from the ground up, personally running live product demos to gather raw, unfiltered feedback. By taking those insights straight back to the codebase and iterating rapidly, I ensured the high-performance systems I shipped didn't just scale beautifully on paper, but delivered real, everyday value to the cities relying on them.
+          </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
@@ -269,7 +272,7 @@ export default function Home() {
                 {specialties.map(item => (
                   <span
                     key={item}
-                    className="mono-accent rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs text-[var(--text-primary)] uppercase tracking-wider"
+                    className="mono-accent rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-[var(--text-primary)] uppercase tracking-wider"
                   >
                     {item}
                   </span>
@@ -284,7 +287,7 @@ export default function Home() {
                 {coreStack.map(skill => (
                   <span
                     key={skill}
-                    className="mono-accent rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/5 px-4.5 py-2 text-sm font-semibold text-[var(--accent)] tracking-wide hover:bg-[var(--accent)]/10 transition-colors"
+                    className="mono-accent rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/5 px-5 py-2 text-sm font-semibold text-[var(--accent)] tracking-wide hover:bg-[var(--accent)]/10 transition-colors"
                   >
                     {skill}
                   </span>
