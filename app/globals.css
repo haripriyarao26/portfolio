@@ -5,18 +5,18 @@
 
 /* ── Design Tokens ───────────────────── */
 :root {
-  /* Color palette — warm near-black base */
-  --bg-dark:        #1A1917;
-  --bg-card:        #2A2A28;
-  --text-primary:   #F8F8F2;
-  --text-muted:     #DFD7C7;
-  --border:         rgba(255, 255, 255, 0.12);
-  --accent:         #C9F565;   /* Electric chartreuse — 3 uses max */
+  /* Color palette — sleek dark obsidian base */
+  --bg-dark:        #0B0B0C;
+  --bg-card:        #131316;
+  --text-primary:   #FFFFFF;
+  --text-muted:     #9E9EA7;
+  --border:         rgba(255, 255, 255, 0.08);
+  --accent:         #00E5CC;   /* Vivid neon teal */
 
   /* Legacy aliases (keep for backward compat with components) */
-  --primary:        #F8F8F2;
-  --primary-dark:   #DFD7C7;
-  --secondary:      #2A2A28;
+  --primary:        #FFFFFF;
+  --primary-dark:   #9E9EA7;
+  --secondary:      #131316;
 
   /* Typography */
   --font-display:   var(--font-syne), system-ui, sans-serif;
@@ -41,6 +41,8 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   font-family: var(--font-body);
+  font-size: 15px; /* Base size at 15px for improved readability and hierarchy */
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100dvh;
@@ -142,8 +144,8 @@ h1, h2, h3,
 }
 .btn-primary:hover {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 0 24px rgba(201, 245, 101, 0.35), 0 4px 16px rgba(0,0,0,0.4);
-  background: #d8ff6e;
+  box-shadow: 0 0 24px rgba(0, 229, 204, 0.35), 0 4px 16px rgba(0,0,0,0.4);
+  background: #33FFEB;
 }
 .btn-primary:active { transform: scale(0.97); }
 

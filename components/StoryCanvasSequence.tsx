@@ -32,10 +32,7 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
           >
             {/* Status Badges */}
             <div className="flex flex-wrap gap-2 mb-6">
-              <span className="mono-accent rounded-full border border-[var(--accent)] bg-[var(--accent)]/10 px-3.5 py-1 text-[11px] font-bold text-[var(--accent)] tracking-wider uppercase">
-                H1-B Cap-Exempt
-              </span>
-              <span className="mono-accent rounded-full border border-white/20 bg-white/5 px-3.5 py-1 text-[11px] font-medium text-[var(--text-primary)] tracking-wider uppercase">
+              <span className="mono-accent rounded-full border border-[var(--accent)] bg-[var(--accent)]/10 px-3.5 py-1 text-[11px] font-bold text-[var(--accent)] tracking-wider uppercase animate-pulse">
                 Open to work
               </span>
               <span className="mono-accent rounded-full border border-white/20 bg-white/5 px-3.5 py-1 text-[11px] font-medium text-[var(--text-primary)]/80 tracking-wider uppercase">
@@ -44,19 +41,41 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
             </div>
 
             {/* Name + Title headline */}
-            <h1 className="font-display font-bold leading-[1.1] text-[var(--text-primary)] text-4xl sm:text-5xl lg:text-6xl max-w-3xl">
-              Haripriya Rao — AI Systems &amp; Full-Stack Engineer
+            <h1 className="font-display font-extrabold leading-[1.1] text-[var(--text-primary)] text-4xl sm:text-6xl lg:text-[64px] max-w-4xl tracking-tight">
+              AI Systems Engineer
+              <span className="block mt-2 text-2xl sm:text-3xl lg:text-4xl font-medium text-[var(--accent)]">
+                distributed backends, LangGraph, full-stack delivery
+              </span>
             </h1>
 
             {/* Value Tagline */}
-            <p className="mt-6 max-w-2xl text-base sm:text-lg text-[var(--text-muted)] leading-relaxed">
-              USC Master&apos;s CS graduate building production-grade distributed systems and AI infrastructure. Formerly at Onetera, where I engineered multi-agent state machines, automated code analysis pipelines, and scaled real-time observability suites.
+            <p className="mt-5 max-w-2xl text-base sm:text-lg text-[var(--text-muted)] leading-relaxed font-light">
+              Ship products that feel inevitable.
             </p>
 
+            {/* First Viewport Metrics */}
+            <div className="mt-8 grid grid-cols-3 gap-6 max-w-xl border-y border-white/10 py-6 my-2">
+              <div>
+                <p className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[var(--accent)]">96%</p>
+                <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[var(--text-muted)] mt-1 font-medium">Token Cost Cut</p>
+              </div>
+              <div>
+                <p className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[var(--accent)]">40%</p>
+                <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[var(--text-muted)] mt-1 font-medium">Latency Drop</p>
+              </div>
+              <div>
+                <p className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[var(--accent)]">22</p>
+                <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[var(--text-muted)] mt-1 font-medium">State Nodes</p>
+              </div>
+            </div>
+
             {/* Primary CTAs */}
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#projects" className="btn-primary">
-                View my work →
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <a href="#contact" className="btn-primary">
+                Hire me →
+              </a>
+              <a href="#projects" className="btn-secondary">
+                View projects
               </a>
             </div>
 
@@ -67,7 +86,7 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
                 {coreTech.map((tech) => (
                   <span
                     key={tech}
-                    className="mono-accent rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[var(--text-muted)] font-medium"
+                    className="mono-accent rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[var(--text-muted)] font-medium hover:border-[var(--accent)]/40 hover:text-[var(--accent)] transition-colors duration-200"
                   >
                     {tech}
                   </span>

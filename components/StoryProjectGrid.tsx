@@ -8,10 +8,10 @@ type StoryProjectGridProps = {
 };
 
 const gradients = [
-  'from-violet-500/10 via-indigo-500/5 to-cyan-400/5',
-  'from-emerald-500/10 via-lime-500/5 to-cyan-300/5',
-  'from-fuchsia-500/10 via-purple-500/5 to-blue-400/5',
-  'from-amber-400/10 via-orange-500/5 to-rose-400/5',
+  'from-cyan-500/5 via-transparent to-transparent',
+  'from-cyan-500/5 via-transparent to-transparent',
+  'from-cyan-500/5 via-transparent to-transparent',
+  'from-cyan-500/5 via-transparent to-transparent',
 ];
 
 const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
@@ -57,19 +57,19 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                 rotateY: index % 2 === 0 ? -12 : 12,
                 scale: 1.02,
                 boxShadow: isFeatured 
-                  ? '0 30px 80px rgba(201,245,101,0.12)' 
-                  : '0 30px 80px rgba(34,211,238,0.12)',
+                  ? '0 30px 80px rgba(0, 229, 204, 0.15)' 
+                  : '0 30px 80px rgba(0, 229, 204, 0.05)',
               }}
               transition={spring}
               className={`card-3d-surface glass-premium group relative h-full min-h-[500px] overflow-hidden rounded-3xl p-8 will-change-transform`}
               style={{
-                borderColor: isFeatured ? 'rgba(201, 245, 101, 0.35)' : 'var(--border)',
+                borderColor: isFeatured ? 'rgba(0, 229, 204, 0.35)' : 'var(--border)',
                 borderWidth: isFeatured ? '1.5px' : '0.5px',
               }}
             >
               {/* Featured Badge */}
               {isFeatured && (
-                <div className="absolute top-6 left-6 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent)] text-[#0F0E0D] text-[10px] font-bold tracking-wider uppercase shadow-[0_4px_12px_rgba(201,245,101,0.25)]">
+                <div className="absolute top-6 left-6 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent)] text-[#0F0E0D] text-[10px] font-bold tracking-wider uppercase shadow-[0_4px_12px_rgba(0, 229, 204, 0.25)]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#0F0E0D] animate-pulse" />
                   Featured Contribution
                 </div>

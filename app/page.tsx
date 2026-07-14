@@ -122,94 +122,97 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Impact bento */}
+        {/* Impact Row */}
         <motion.div
-          className="grid gap-4 md:grid-cols-12"
+          className="grid gap-6 md:grid-cols-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
         >
-          {/* Large metric */}
+          {/* Card 1 */}
           <motion.article
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card md:col-span-8 p-8 sm:p-12 will-change-transform"
+            className="card p-8 sm:p-10 will-change-transform flex flex-col justify-between"
           >
-            <p className="font-display font-bold leading-none text-[var(--accent)] text-7xl sm:text-9xl mb-4">
-              96%
-            </p>
-            <h3 className="font-display text-xl sm:text-2xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
-              Token Cost Cut
-            </h3>
-            <p className="mt-4 max-w-xl text-sm text-[var(--text-muted)] leading-relaxed">
-              Onetera multi-agent workflow optimization. Restructured orchestration layers to cache and route deeply nested state trees efficiently.
-            </p>
+            <div>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
+                96%
+              </p>
+              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
+                Token Cost Cut
+              </h3>
+              <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
+                Onetera multi-agent workflow optimization. Restructured orchestration layers to cache and route deeply nested state trees efficiently.
+              </p>
+            </div>
           </motion.article>
 
-          {/* Side metrics */}
-          <div className="md:col-span-4 flex flex-col gap-4">
-            <motion.article
-              variants={staggerItem}
-              whileHover={{ y: -4 }}
-              transition={spring}
-              className="card flex-1 p-8 will-change-transform flex flex-col justify-center"
-            >
-              <p className="font-display font-bold leading-none text-[var(--text-primary)] text-5xl mb-2">22</p>
-              <h3 className="mono-accent text-xs tracking-[0.16em] text-[var(--text-muted)] uppercase">State Nodes</h3>
-              <p className="mt-2 text-sm text-[var(--text-muted)] leading-relaxed">
-                State-machine architecture powering production orchestration.
+          {/* Card 2 */}
+          <motion.article
+            variants={staggerItem}
+            whileHover={{ y: -4 }}
+            transition={spring}
+            className="card p-8 sm:p-10 will-change-transform flex flex-col justify-between"
+          >
+            <div>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
+                22
               </p>
-            </motion.article>
+              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
+                State Nodes
+              </h3>
+              <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
+                State-machine architecture powering production orchestration and agentic workflow execution.
+              </p>
+            </div>
+          </motion.article>
 
-            <motion.article
-              variants={staggerItem}
-              whileHover={{ y: -4 }}
-              transition={spring}
-              className="card flex-1 p-8 will-change-transform flex flex-col justify-center"
-            >
-              <p className="font-display font-bold leading-none text-[var(--text-primary)] text-5xl mb-2">40%</p>
-              <h3 className="mono-accent text-xs tracking-[0.16em] text-[var(--text-muted)] uppercase">Latency Reduction</h3>
-              <p className="mt-2 text-sm text-[var(--text-muted)] leading-relaxed">
-                Measured in production after asynchronous execution redesign.
+          {/* Card 3 */}
+          <motion.article
+            variants={staggerItem}
+            whileHover={{ y: -4 }}
+            transition={spring}
+            className="card p-8 sm:p-10 will-change-transform flex flex-col justify-between"
+          >
+            <div>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
+                40%
               </p>
-            </motion.article>
-          </div>
+              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
+                Latency Drop
+              </h3>
+              <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
+                Measured in production after asynchronous execution redesign and model endpoint load-balancing.
+              </p>
+            </div>
+          </motion.article>
         </motion.div>
       </Section3D>
 
       {/* ── Story / About ── */}
       <Section3D className="mx-auto max-w-4xl px-6 py-10 sm:py-14">
-        <div className="max-w-[680px] mx-auto">
-          {/* Story blocks */}
-          <motion.div
-            className="space-y-4"
-            variants={staggerContainer}
+        <div className="max-w-[720px] mx-auto">
+          <motion.article
+            variants={staggerItem}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
+            className="card p-8 sm:p-10 border border-white/10 relative overflow-hidden"
           >
-            <motion.article
-              variants={staggerItem}
-              className="card p-7"
-            >
-              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] mb-4">My Story</h3>
-              <p className="text-base leading-relaxed text-[var(--text-muted)] max-w-[680px]">
-                USC CS grad (distributed systems + AI/ML) turned production engineer. Most recently at Onetera, where I scaled civic AI infrastructure from seed-stage architecture to investor diligence-ready systems.
-              </p>
-            </motion.article>
-
-            <motion.article
-              variants={staggerItem}
-              className="card p-7"
-            >
-              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] mb-4">My Philosophy</h3>
-              <p className="text-base leading-relaxed text-[var(--text-muted)] max-w-[680px]">
-                I engineer systems that empower teams to ship faster—making observability the default and reliability under load a guarantee. My focus centers on distributed AI infrastructure, advanced backend patterns, and robust system observability. I believe elite engineering is measured by two things: systemic resilience and accelerated business velocity.
-              </p>
-            </motion.article>
-          </motion.div>
+            <div className="absolute top-0 right-0 h-24 w-24 bg-[var(--accent)]/5 blur-2xl rounded-full" />
+            <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[var(--accent)] animate-pulse" />
+              My Story
+            </h3>
+            <p className="text-base sm:text-lg leading-relaxed text-[var(--text-primary)]/90 font-light">
+              Originally from Bangalore, India, and now based in the United States, I am a USC CS Master&apos;s graduate specializing in high-performance distributed systems. 
+              At Onetera, I scaled civic AI infrastructure from a founding 0-to-1 prototype to investor diligence-ready production systems, cutting operational costs by 60% and latency by 40%. 
+              I am now looking for my next challenge building resilient, high-throughput backends and production AI workflows.
+            </p>
+          </motion.article>
         </div>
       </Section3D>
 
@@ -240,92 +243,93 @@ export default function Home() {
 
       {/* ── Skills ── */}
       <Section3D className="mx-auto max-w-6xl px-6 pb-20">
-        <motion.div
-          className="mb-8 text-center"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-        >
-          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-4xl">Technical Skills</h2>
-          <div className="mx-auto mt-3 h-[1px] w-16 bg-[var(--border)]" />
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-            {specialties.map(item => (
-              <span
-                key={item}
-                className="mono-accent rounded-full border border-[var(--border)] px-3 py-1 text-[11px] tracking-[0.12em] text-[var(--text-muted)] uppercase"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Core Stack — 6 defining technologies */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-          className="mb-8"
-        >
-          <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-4 text-center">Core Stack</p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {coreStack.map(skill => (
-              <span
-                key={skill}
-                className="mono-accent rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/5 px-4 py-1.5 text-sm font-semibold text-[var(--accent)] tracking-wide"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Also proficient in — collapsible */}
-        <details className="group">
-          <summary className="flex items-center justify-center gap-2 text-[11px] tracking-[0.14em] text-[var(--text-muted)] uppercase cursor-pointer select-none hover:text-[var(--text-primary)] transition-colors mb-6">
-            <svg
-              className="h-3 w-3 transition-transform group-open:rotate-90"
-              fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-            Also proficient in…
-          </summary>
+        <div className="grid gap-12 lg:grid-cols-2">
+          {/* Left Column: Core Focus & Tech */}
           <motion.div
-            className="grid gap-4 md:grid-cols-3"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={spring}
+            className="space-y-8"
           >
-            {skillGroups.map(group => (
-              <motion.article
-                key={group.title}
-                variants={staggerItem}
-                whileHover={{ y: -4 }}
-                transition={spring}
-                className="card p-6 will-change-transform"
-              >
-                <h3 className="font-display text-lg font-semibold text-[var(--text-primary)]">
-                  <span className="mr-2">{group.icon}</span>
-                  {group.title}
-                </h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {group.items.map(skill => (
-                    <span
-                      key={`${group.title}-${skill}`}
-                      className="mono-accent rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[var(--text-muted)] hover:border-white/20 hover:text-[var(--text-primary)] transition-colors"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </motion.article>
-            ))}
+            <div>
+              <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Technical focus</p>
+              <h2 className="font-display text-3xl font-extrabold text-[var(--text-primary)] sm:text-5xl">
+                Engineering Stack
+              </h2>
+              <p className="mt-4 text-[15px] text-[var(--text-muted)] leading-relaxed max-w-md">
+                Specialized in building low-latency distributed systems, agentic AI architectures, and resilient developer infrastructure.
+              </p>
+            </div>
+
+            {/* Specialties */}
+            <div>
+              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Specialties</p>
+              <div className="flex flex-wrap gap-2">
+                {specialties.map(item => (
+                  <span
+                    key={item}
+                    className="mono-accent rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs text-[var(--text-primary)] uppercase tracking-wider"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Core Stack */}
+            <div>
+              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Core Stack</p>
+              <div className="flex flex-wrap gap-2.5">
+                {coreStack.map(skill => (
+                  <span
+                    key={skill}
+                    className="mono-accent rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/5 px-4.5 py-2 text-sm font-semibold text-[var(--accent)] tracking-wide hover:bg-[var(--accent)]/10 transition-colors"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
           </motion.div>
-        </details>
+
+          {/* Right Column: Skill Groups / Proficiencies */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={spring}
+            className="space-y-6"
+          >
+            <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-2">Also proficient in</p>
+            
+            <div className="space-y-4">
+              {skillGroups.map(group => (
+                <motion.article
+                  key={group.title}
+                  whileHover={{ x: 4 }}
+                  transition={spring}
+                  className="card p-5 border border-white/5 bg-[#131316] flex flex-col justify-center"
+                >
+                  <h3 className="font-display text-base font-semibold text-[var(--text-primary)] flex items-center gap-2">
+                    <span className="text-lg">{group.icon}</span>
+                    {group.title}
+                  </h3>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {group.items.map(skill => (
+                      <span
+                        key={`${group.title}-${skill}`}
+                        className="mono-accent rounded border border-white/5 bg-white/[0.02] px-2.5 py-1 text-xs text-[var(--text-muted)] hover:border-white/10 hover:text-[var(--text-primary)] transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </Section3D>
 
       {/* ── Contact ── */}
