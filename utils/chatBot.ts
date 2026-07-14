@@ -115,7 +115,7 @@ export function generateResponse(userMessage: string): string {
 
   // About / Who are you
   if (message.includes('who are you') || message.includes('about you') || message.includes('introduce') || message.includes('tell me about yourself')) {
-    return `Hi! I'm **${resumeData.name}**, a Software Engineer based in ${resumeData.location}. I specialize in distributed AI infrastructure and high-performance full-stack systems, most recently at **Onetera Technologies** (through Mar 2026), where I helped scale the platform and architect agentic workflows and observability.\n\nI'm **actively looking for new opportunities in SDE and AI**. Ask me about my experience, projects, or tech stack.`;
+    return `Hi! I'm **${resumeData.name}**, a Software Engineer based in ${resumeData.location}. I specialize in distributed AI infrastructure and high-performance full-stack systems, most recently at **Onetera Technologies** (through Apr 2026), where I helped scale the platform and architect agentic workflows and observability.\n\nI'm **actively looking for new opportunities in SDE and AI**. Ask me about my experience, projects, or tech stack.`;
   }
 
   // Contact
@@ -124,6 +124,6 @@ export function generateResponse(userMessage: string): string {
   }
 
   // Default response
-  return `I'd be happy to help! I can tell you about:\n\n• My recent experience at Onetera Technologies (through Mar 2026)\n• That I'm actively looking for SDE/AI opportunities\n• Projects I've built (AI tools, platforms, websites)\n• My technical skills and technologies I work with\n• My education background\n• Key achievements and impact\n• How I scaled Onetera to $3M ARR\n\nWhat would you like to know more about?`;
+  return `I'd be happy to help! I can tell you about:\n\n• My recent experience at Onetera Technologies (through Apr 2026)\n• That I'm actively looking for SDE/AI opportunities\n• Projects I've built (AI tools, platforms, websites)\n• My technical skills and technologies I work with\n• My education background\n• Key achievements and impact\n• How I scaled Onetera to $3M ARR\n\nWhat would you like to know more about?`;
 }
 

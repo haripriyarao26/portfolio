@@ -103,13 +103,10 @@ export default function About() {
             >
               <h3 className="text-2xl font-bold text-[#111827] mb-4">My Story</h3>
               <p className="text-[#525252] text-lg leading-relaxed mb-4">
-                My journey from a Computer Science student in India to a technical leader in Los Angeles has taught me the value of building systems that aren't just functional, but resilient and observable at scale.
+                My journey from a Computer Science student in India to an <strong className="text-[#111827]">engineering leader</strong> in Los Angeles has shaped my core approach to software: systems must not only function, they must be resilient, highly observable, and explicitly built for scale.
               </p>
               <p className="text-[#525252] text-lg leading-relaxed">
-                As a <strong className="text-[#111827]">Software Engineer 2</strong> at Onetera, I architected distributed AI infrastructure and
-                high-performance systems that handled production-scale workloads. I hold a <strong className="text-[#111827]">Master of Science in Computer Science</strong> from the University of Southern California,
-                where I specialized in AI/ML and distributed systems. My approach emphasizes <strong className="text-[#111827]">performance, reliability, and scalability</strong>—
-                I build systems that work at scale, not just in demos. I&apos;m actively looking for new roles in software engineering and AI.
+                Most recently, as a <strong className="text-[#111827]">Software Engineer II</strong> at Onetera, I architected distributed AI infrastructure and high-performance backend systems for demanding production workloads. Holding a <strong className="text-[#111827]">Master&apos;s in Computer Science</strong> from USC with a focus on distributed systems and AI/ML, I excel at transforming complex architectural concepts into production-grade reality. Following a recent company restructuring at Onetera, I am actively looking for my next challenge building high-throughput infrastructure.
               </p>
             </div>
 
@@ -121,14 +118,10 @@ export default function About() {
             >
               <h3 className="text-2xl font-bold text-[#111827] mb-4">My Philosophy</h3>
               <p className="text-[#525252] text-lg leading-relaxed mb-4">
-                <strong className="text-[#111827]">Systems over features.</strong> I believe the best engineers understand how components
-                interact at scale. Every architecture decision should consider performance implications, every system should be observable,
-                and every deployment should be reliable.
+                I engineer systems that empower teams to <strong className="text-[#111827]">ship faster</strong>—making observability the default and reliability under load a guarantee.
               </p>
               <p className="text-[#525252] text-lg leading-relaxed">
-                I'm passionate about <strong className="text-[#111827]">distributed AI infrastructure</strong> that handles production workloads,
-                <strong className="text-[#111827]"> observability systems</strong> that provide actionable insights, and
-                <strong className="text-[#111827]"> high-performance engineering</strong> that delivers measurable impact.
+                My focus centers on <strong className="text-[#111827]">distributed AI infrastructure</strong>, <strong className="text-[#111827]">advanced backend patterns</strong>, and <strong className="text-[#111827]">robust system observability</strong>. I believe elite engineering is measured by two things: systemic resilience and accelerated business velocity.
               </p>
             </div>
 

@@ -93,7 +93,7 @@ export default function Home() {
           <span className="tracking-[0.2em] uppercase">
             {resumeData.name}
             <span className="ml-2 hidden text-[10px] tracking-[0.14em] text-cyan-200/80 sm:inline">
-              California
+              United States
             </span>
           </span>
           <div className="flex items-center gap-4">
@@ -107,7 +107,7 @@ export default function Home() {
 
       <StoryCanvasSequence
         name={resumeData.name}
-        tagline="Software Engineer building AI systems with product intuition, delivery speed, and trust-by-design."
+        tagline="Software Engineer (H1-B Cap-Exempt) building AI systems with product intuition, delivery speed, and trust-by-design."
       />
 
       <Section3D id="impact" className="relative mx-auto max-w-7xl px-6 py-24 sm:py-28">
@@ -244,14 +244,10 @@ export default function Home() {
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,rgba(56,189,248,0.12),transparent_35%,rgba(129,140,248,0.12))]" />
               <h3 className="relative text-2xl font-semibold text-white text-glow">My Story</h3>
               <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
-                My journey from a Computer Science student in India to a technical leader in Los Angeles has taught me
-                to build systems that are not only functional, but resilient and observable at scale.
+                My journey from a Computer Science student in India to an <strong>engineering leader</strong> in Los Angeles has shaped my core approach to software: systems must not only function, they must be resilient, highly observable, and explicitly built for scale.
               </p>
               <p className="relative mt-4 text-lg leading-relaxed text-slate-200/95">
-                As a <strong>Software Engineer 2</strong> at Onetera, I architected distributed AI
-                infrastructure and high-performance systems for production workloads. I hold a{' '}
-                <strong>Master of Science in Computer Science</strong> from the University of Southern California, where
-                I specialized in AI/ML and distributed systems.
+                Most recently, as a <strong>Software Engineer II</strong> at Onetera, I architected distributed AI infrastructure and high-performance backend systems for demanding production workloads. Holding a <strong>Master&apos;s in Computer Science</strong> from USC with a focus on distributed systems and AI/ML, I excel at transforming complex architectural concepts into production-grade reality. Following a recent company restructuring at Onetera, I am actively looking for my next challenge building high-throughput infrastructure (H1-B cap-exempt).
               </p>
             </motion.article>
 
@@ -264,11 +260,10 @@ export default function Home() {
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(250deg,rgba(34,211,238,0.1),transparent_35%,rgba(99,102,241,0.1))]" />
               <h3 className="relative text-2xl font-semibold text-white text-glow">My Philosophy</h3>
               <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
-                I build systems that let teams <strong>ship faster</strong> — observable by default, reliable under load.
+                I engineer systems that empower teams to <strong>ship faster</strong>—making observability the default and reliability under load a guarantee.
               </p>
               <p className="relative mt-4 text-lg leading-relaxed text-slate-50 text-glow">
-                I focus on <strong>distributed AI infrastructure</strong>, <strong>observability systems</strong>, and{' '}
-                <strong>high-performance engineering</strong> that creates measurable business outcomes.
+                My focus centers on <strong>distributed AI infrastructure</strong>, <strong>advanced backend patterns</strong>, and <strong>robust system observability</strong>. I believe elite engineering is measured by two things: systemic resilience and accelerated business velocity.
               </p>
             </motion.article>
           </motion.div>
@@ -384,7 +379,7 @@ export default function Home() {
             Need an engineer who can design, ship, and scale AI products?
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-slate-50 text-glow">
-            Reach out and I can walk you through architecture, delivery strategy, and product outcomes from day one.
+            Reach out and I can walk you through architecture, delivery strategy, and product outcomes from day one. I am actively looking for new opportunities in software engineering (SDE) and AI (H1-B cap-exempt).
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
