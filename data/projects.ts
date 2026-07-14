@@ -26,6 +26,29 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'procure-loop',
+    title: 'Procure-Loop: Contract Intelligence & Revenue Protection Swarm',
+    description:
+      'An end-to-end multi-agent orchestration dashboard that automatically scans corporate document repositories to flag upcoming software renewal deadlines, audits real-time seat utilization, and drafts contextual opt-out notices to prevent corporate contract leakage.',
+    images: [],
+    github: 'https://github.com/haripriyarao26/Procure-Loop',
+    tech: ['Python', 'LangGraph', 'FastAPI', 'React', 'TypeScript', 'Vite', 'Vanilla CSS', 'SVG Graphics'],
+    features: [
+      'Designed a Stateful Agent Swarm: Built a cooperative multi-agent architecture using LangGraph (StateGraph) in Python to coordinate three specialized LLM agents (Ingestion, Scouter, and Drafting) through a directed workflow pipeline.',
+      'Implemented Real-Time State Visualization: Created a premium React dashboard featuring a custom interactive SVG-based state machine map that highlights active nodes as they execute, synced with a scrolling monospace developer terminal log.',
+      'Engineered Utilization Audits & Arbitrage Logic: Designed data connectors that audit active user counts (mocking Okta directory directories) against seat caps, calculating cost overhead leakage and looking up competitive market rates to suggest lower-cost alternatives.',
+      'Automated Renewal Intervention Alerts: Built a router condition that flags contracts within 90 days of renewal with utilization under 85%, initiating the Drafting Agent to auto-generate context-aware non-renewal or negotiation emails.',
+      'Developed Full-Stack Architecture: Exposed the LangGraph workspace using FastAPI and Uvicorn to handle CORS request streams, manage in-memory state transactions, and serve dynamic data updates to a modern, glassmorphic React + TypeScript + Vite UI.'
+    ],
+    mermaidDiagram: `flowchart TD
+  I[Ingestion Agent] -->|Parse Contracts & Metadata| S[Scouter Agent]
+  S -->|Audit Okta Seat Utilization| C{Intervention Needed?}
+  C -->|Renewal < 90d & Seat Use < 85%| D[Drafting Agent]
+  C -->|Healthy / High Use| H[Flag Safe / Monitor]
+  D -->|Auto-Generate Opt-out/Neg. Email| E[Drafts Inbox]
+  H --> M[System Observability Dashboard]`
+  },
+  {
     id: 'openai-cookbook-langchain-rwmh',
     title: 'OpenAI Cookbook: LangChain RunnableWithMessageHistory hardening',
     description:
