@@ -47,7 +47,7 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
 
             {/* Value Tagline */}
             <p className="mt-6 max-w-2xl text-base sm:text-lg text-[var(--text-muted)] leading-relaxed">
-              Built production civic AI at Onetera: <strong className="text-[var(--text-primary)]">96% token cost cut</strong>, <strong className="text-[var(--text-primary)]">40% latency drop</strong>, and <strong className="text-[var(--text-primary)]">99.98% uptime</strong>. Master&apos;s CS, USC. Based in Los Angeles.
+              USC Master&apos;s CS graduate building production-grade distributed systems and AI infrastructure. Formerly at Onetera, where I engineered multi-agent state machines, automated code analysis pipelines, and scaled real-time observability suites.
             </p>
 
             {/* Primary CTAs */}
