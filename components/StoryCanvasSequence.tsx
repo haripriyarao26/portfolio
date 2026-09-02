@@ -20,11 +20,11 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
   const titleOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.35]);
 
   return (
-    <section ref={sectionRef} id="story" className="relative h-[95vh] flex items-center">
+    <section ref={sectionRef} id="story" className="relative min-h-[100dvh] sm:h-[95vh] flex items-center pt-24 sm:pt-0">
       <div className="relative w-full overflow-hidden">
         <motion.div
           style={{ opacity: titleOpacity }}
-          className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-center px-6 sm:px-10"
+          className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-center px-4 sm:px-10"
         >
           <motion.div
             style={{ y: layerOneY }}
@@ -33,7 +33,7 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
 
 
             {/* Status Badges */}
-            <div className="flex flex-wrap items-center gap-2 mb-6">
+            <div className="flex flex-wrap items-center gap-2 mb-5">
               <span className="mono-accent rounded-full border border-[var(--accent)] bg-[var(--accent)]/10 px-3.5 py-1 text-[11px] font-bold text-[var(--accent)] tracking-wider uppercase animate-pulse">
                 Open to work
               </span>
@@ -59,20 +59,20 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
             </div>
 
             {/* Title headline */}
-            <h1 className="font-display font-extrabold leading-[1.1] text-[var(--text-primary)] text-5xl sm:text-7xl lg:text-[72px] max-w-4xl tracking-tight">
+            <h1 className="font-display font-extrabold leading-[1.05] text-[var(--text-primary)] text-4xl sm:text-6xl lg:text-[72px] max-w-4xl tracking-tight">
               Applied AI Product Engineer
-              <span className="block mt-3 text-2xl sm:text-3xl lg:text-4xl font-medium text-[var(--accent)]">
+              <span className="block mt-3 text-xl sm:text-3xl lg:text-4xl font-medium text-[var(--accent)]">
                 Ship agents that feel inevitable.
               </span>
             </h1>
 
             {/* Value Tagline */}
-            <p className="mt-6 max-w-3xl text-base sm:text-lg lg:text-[19px] text-[var(--text-muted)] leading-relaxed font-light">
+            <p className="mt-5 max-w-3xl text-sm sm:text-base lg:text-[18px] text-[var(--text-muted)] leading-relaxed font-light">
               Building production-grade agentic systems, retrieval pipelines, and full-stack AI interfaces — from orchestration logic to user-facing product — for enterprise financial and civic infrastructure.
             </p>
 
             {/* First Viewport Metrics */}
-            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl border-y border-white/10 py-6 my-2">
+            <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl border-y border-white/10 py-5 my-2">
               <div>
                 <p className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[var(--accent)]">96%</p>
                 <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[var(--text-muted)] mt-1 font-medium">Token Cost Cut</p>
@@ -86,13 +86,13 @@ export default function StoryCanvasSequence({ name, tagline }: Props) {
                 <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[var(--text-muted)] mt-1 font-medium">State Nodes</p>
               </div>
               <div>
-                <p className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[var(--accent)]">5,000+</p>
+                <p className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[var(--accent)]">5K+</p>
                 <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[var(--text-muted)] mt-1 font-medium">Concurrent Users</p>
               </div>
             </div>
 
             {/* Primary CTAs */}
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
               <a href="#contact" className="btn-primary">
                 Start a Conversation →
               </a>

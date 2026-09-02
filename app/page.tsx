@@ -64,21 +64,28 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left progress-bar"
       />
 
-      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(92vw,900px)] -translate-x-1/2 rounded-full px-6 py-3">
+      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(92vw,900px)] -translate-x-1/2 rounded-full px-4 sm:px-6 py-3">
         <nav className="flex items-center justify-between text-xs text-[var(--text-muted)] sm:text-sm">
-          <div>
+          <div className="shrink-0">
             <span className="font-display font-bold text-sm sm:text-xl text-[var(--text-primary)] tracking-wider uppercase">
               {resumeData.name}
             </span>
           </div>
-          <div className="flex items-center gap-5">
+          {/* Desktop nav */}
+          <div className="hidden sm:flex items-center gap-4">
+            <a href="#certifications" className="nav-link transition-colors">Certs</a>
             <a href="#impact" className="nav-link transition-colors">Impact</a>
             <a href="#timeline-momentum" className="nav-link transition-colors">Experience</a>
             <a href="#projects" className="nav-link transition-colors">Projects</a>
-            <a href="#certifications" className="nav-link transition-colors">Certifications</a>
             <a href="#contact" className="nav-link transition-colors">Contact</a>
-            <a href="#contact" className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#33FFEB] transition-colors">
+            <a href="#contact" className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#33FFEB] transition-colors whitespace-nowrap">
               Get in Touch
+            </a>
+          </div>
+          {/* Mobile nav — just CTA */}
+          <div className="flex sm:hidden items-center gap-2">
+            <a href="#contact" className="inline-flex items-center justify-center px-3 py-1.5 text-[11px] font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#33FFEB] transition-colors whitespace-nowrap">
+              Contact
             </a>
           </div>
         </nav>
@@ -90,20 +97,87 @@ export default function Home() {
         tagline="Building production-grade agentic systems, retrieval pipelines, and full-stack AI interfaces — from orchestration logic to user-facing product — for enterprise financial and civic infrastructure."
       />
 
+      {/* ── Certifications ── */}
+      <Section3D id="certifications" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+          className="mb-8"
+        >
+          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Credentials &amp; Badges</p>
+          <h2 className="font-display text-2xl font-bold text-[var(--text-primary)] sm:text-4xl">
+            Certifications
+          </h2>
+        </motion.div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {/* Card 1: CCA-F */}
+          <motion.div
+            variants={staggerItem}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="card p-5 sm:p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-row items-center justify-between gap-4"
+          >
+            <div className="min-w-0">
+              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Anthropic</span>
+              <h3 className="font-display text-sm sm:text-base font-bold text-[var(--text-primary)] mt-1 leading-tight">
+                Claude Certified Architect – Foundations (CCA-F)
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] mt-1">Agentic Workflows, Tool Use &amp; LLM Architecture</p>
+            </div>
+            <a
+              href="https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile"
+              target="_blank"
+              rel="noreferrer"
+              className="mono-accent shrink-0 rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 hover:bg-[var(--accent)]/20 px-3 py-1.5 text-[11px] font-bold text-[var(--accent)] tracking-wide transition-colors whitespace-nowrap"
+            >
+              CCA-F ↗
+            </a>
+          </motion.div>
+
+          {/* Card 2: AWS AI Practitioner */}
+          <motion.div
+            variants={staggerItem}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="card p-5 sm:p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-row items-center justify-between gap-4"
+          >
+            <div className="min-w-0">
+              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Amazon Web Services</span>
+              <h3 className="font-display text-sm sm:text-base font-bold text-[var(--text-primary)] mt-1 leading-tight">
+                AWS Certified AI Practitioner
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] mt-1">AI/ML Fundamentals &amp; Generative AI Systems</p>
+            </div>
+            <a
+              href="https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url"
+              target="_blank"
+              rel="noreferrer"
+              className="mono-accent shrink-0 rounded-full border border-white/20 bg-white/5 hover:border-[var(--accent)]/40 px-3 py-1.5 text-[11px] font-semibold text-[var(--text-primary)]/90 tracking-wide transition-colors whitespace-nowrap"
+            >
+              AWS ↗
+            </a>
+          </motion.div>
+        </div>
+      </Section3D>
+
       {/* ── Impact ── */}
-      <Section3D id="impact" className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <Section3D id="impact" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-24">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={spring}
-          className="mb-12"
+          className="mb-10"
         >
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
             Outcomes at scale
           </h2>
           <p className="mt-4 max-w-3xl text-[15px] sm:text-base text-[var(--text-muted)] leading-relaxed">
-            I don’t build infrastructure in a vacuum; I own the complete lifecycle by working directly with our users. At Onetera, I collaborated closely with <strong>city officials</strong> to translate their operational needs into exact technical specs. I then developed and tested the distributed AI infrastructure from the ground up, personally running live product demos to gather raw, unfiltered feedback. By taking those insights straight back to the codebase and iterating rapidly, I ensured the high-performance systems I shipped didn't just scale beautifully on paper, but delivered real, everyday value to the cities relying on them.
+            I don&apos;t build infrastructure in a vacuum; I own the complete lifecycle by working directly with our users. At Onetera, I collaborated closely with <strong>city officials</strong> to translate their operational needs into exact technical specs. I then developed and tested the distributed AI infrastructure from the ground up, personally running live product demos to gather raw, unfiltered feedback. By taking those insights straight back to the codebase and iterating rapidly, I ensured the high-performance systems I shipped didn't just scale beautifully on paper, but delivered real, everyday value to the cities relying on them.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -126,9 +200,9 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Impact Row */}
+        {/* Impact Row — 2-col on mobile, 4-col on desktop */}
         <motion.div
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid gap-4 grid-cols-2 lg:grid-cols-4"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -139,19 +213,17 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-8 sm:p-10 will-change-transform flex flex-col justify-between"
+            className="card p-5 sm:p-8 will-change-transform flex flex-col"
           >
-            <div>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
-                96%
-              </p>
-              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
-                Token Cost Cut
-              </h3>
-              <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
-                Onetera multi-agent workflow optimization. Restructured orchestration layers to cache and route deeply nested state trees efficiently.
-              </p>
-            </div>
+            <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-6xl mb-3">
+              96%
+            </p>
+            <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+              Token Cost Cut
+            </h3>
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
+              Multi-agent workflow optimization — restructured orchestration to cache and route nested state trees.
+            </p>
           </motion.article>
 
           {/* Card 2 */}
@@ -159,19 +231,17 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-8 sm:p-10 will-change-transform flex flex-col justify-between"
+            className="card p-5 sm:p-8 will-change-transform flex flex-col"
           >
-            <div>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
-                40%
-              </p>
-              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
-                Latency Drop
-              </h3>
-              <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
-                Measured in production after asynchronous execution redesign and model endpoint load-balancing.
-              </p>
-            </div>
+            <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-6xl mb-3">
+              40%
+            </p>
+            <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+              Latency Drop
+            </h3>
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
+              Measured in production after async execution redesign and model endpoint load-balancing.
+            </p>
           </motion.article>
 
           {/* Card 3 */}
@@ -179,19 +249,17 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-8 sm:p-10 will-change-transform flex flex-col justify-between"
+            className="card p-5 sm:p-8 will-change-transform flex flex-col"
           >
-            <div>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
-                22
-              </p>
-              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
-                State Nodes
-              </h3>
-              <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
-                State-machine architecture powering production orchestration and agentic workflow execution.
-              </p>
-            </div>
+            <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-6xl mb-3">
+              22
+            </p>
+            <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+              State Nodes
+            </h3>
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
+              State-machine architecture powering production orchestration and agentic workflow execution.
+            </p>
           </motion.article>
 
           {/* Card 4 */}
@@ -199,32 +267,30 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-8 sm:p-10 will-change-transform flex flex-col justify-between"
+            className="card p-5 sm:p-8 will-change-transform flex flex-col"
           >
-            <div>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
-                5,000+
-              </p>
-              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
-                Concurrent Users
-              </h3>
-              <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
-                Onetera agentic platform scale with real-time state synchronization under peak municipal traffic.
-              </p>
-            </div>
+            <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-6xl mb-3">
+              5K+
+            </p>
+            <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+              Concurrent Users
+            </h3>
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
+              Agentic platform scale with real-time state synchronization under peak municipal traffic.
+            </p>
           </motion.article>
         </motion.div>
       </Section3D>
 
       {/* ── Story / About ── */}
-      <Section3D className="mx-auto max-w-4xl px-6 py-10 sm:py-14">
+      <Section3D className="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-14">
         <div className="max-w-[720px] mx-auto">
           <motion.article
             variants={staggerItem}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="card p-8 sm:p-10 border border-white/10 relative overflow-hidden"
+            className="card p-6 sm:p-10 border border-white/10 relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 h-24 w-24 bg-[var(--accent)]/5 blur-2xl rounded-full" />
             <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
@@ -242,7 +308,7 @@ export default function Home() {
       <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
 
       {/* ── Projects ── */}
-      <Section3D id="projects" className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <Section3D id="projects" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-28">
         <motion.div
           className="mb-10"
           initial={{ opacity: 0, y: 20 }}
@@ -258,7 +324,7 @@ export default function Home() {
       </Section3D>
 
       {/* ── Skills ── */}
-      <Section3D className="mx-auto max-w-6xl px-6 pb-20">
+      <Section3D className="mx-auto max-w-6xl px-4 sm:px-6 pb-16 sm:pb-20">
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Left Column: Core Focus & Tech */}
           <motion.div
@@ -348,75 +414,8 @@ export default function Home() {
         </div>
       </Section3D>
 
-      {/* ── Certifications ── */}
-      <Section3D id="certifications" className="mx-auto max-w-6xl px-6 pb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-          className="mb-8"
-        >
-          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Credentials &amp; Badges</p>
-          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-            Certifications
-          </h2>
-        </motion.div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {/* Card 1: CCA-F */}
-          <motion.div
-            variants={staggerItem}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="card p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-          >
-            <div>
-              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Anthropic</span>
-              <h3 className="font-display text-lg font-bold text-[var(--text-primary)] mt-1">
-                Claude Certified Architect – Foundations (CCA-F)
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] mt-1">Specialization in Agentic Workflows, Tool Use &amp; LLM Architecture</p>
-            </div>
-            <a
-              href="https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile"
-              target="_blank"
-              rel="noreferrer"
-              className="mono-accent shrink-0 self-start sm:self-center rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 hover:bg-[var(--accent)]/20 px-3.5 py-1.5 text-xs font-bold text-[var(--accent)] tracking-wide transition-colors"
-            >
-              CCA-F · Anthropic ↗
-            </a>
-          </motion.div>
-
-          {/* Card 2: AWS AI Practitioner */}
-          <motion.div
-            variants={staggerItem}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="card p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-          >
-            <div>
-              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Amazon Web Services</span>
-              <h3 className="font-display text-lg font-bold text-[var(--text-primary)] mt-1">
-                AWS Certified AI Practitioner
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] mt-1">Enterprise AI/ML Fundamentals &amp; Generative AI Systems</p>
-            </div>
-            <a
-              href="https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url"
-              target="_blank"
-              rel="noreferrer"
-              className="mono-accent shrink-0 self-start sm:self-center rounded-full border border-white/20 bg-white/5 hover:border-[var(--accent)]/40 px-3.5 py-1.5 text-xs font-semibold text-[var(--text-primary)]/90 tracking-wide transition-colors"
-            >
-              AWS AI Practitioner ↗
-            </a>
-          </motion.div>
-        </div>
-      </Section3D>
-
       {/* ── Contact ── */}
-      <Section3D id="contact" className="relative overflow-hidden px-6 pt-6 pb-28">
+      <Section3D id="contact" className="relative overflow-hidden px-4 sm:px-6 pt-6 pb-28">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
