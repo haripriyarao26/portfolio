@@ -39,7 +39,17 @@ export function generateResponse(userMessage: string): string {
     message.includes('hiring') ||
     message.includes('available for work')
   ) {
-    return `I'm **actively looking for new opportunities** in **software engineering (SDE)** and **AI**—roles where I can contribute to distributed systems, agentic workflows, and production-grade full-stack platforms.\n\nYou can reach me via **${resumeData.email}** or **${resumeData.linkedin}**.`;
+    return `I'm **open to AI/ML and SWE opportunities**—roles where I can contribute to agentic workflows, retrieval pipelines, and production-grade full-stack AI systems.\n\nYou can reach me via **${resumeData.email}** or **${resumeData.linkedin}**.`;
+  }
+
+  // JPMorgan Chase queries
+  if (message.includes('jpmorgan') || message.includes('chase') || message.includes('think41') || message.includes('wealth')) {
+    const jpmExp = resumeData.experience.find(
+      (e) => e.company.includes('JPMorgan')
+    );
+    if (jpmExp) {
+      return `I am currently an **${jpmExp.position}** at ${jpmExp.company} (${jpmExp.period}):\n\n${jpmExp.achievements.map((a) => `• ${a}`).join('\n\n')}`;
+    }
   }
 
   // Onetera queries
@@ -48,7 +58,7 @@ export function generateResponse(userMessage: string): string {
       (e) => e.company === 'Onetera Technologies' && e.position === 'Software Engineer 2'
     );
     if (oneteraExp) {
-      return `I most recently worked as a **${oneteraExp.position}** at ${oneteraExp.company} (${oneteraExp.period}). Highlights include:\n\n${oneteraExp.achievements.map((a) => `• ${a}`).join('\n\n')}`;
+      return `At ${oneteraExp.company} (${oneteraExp.period}), I worked as **${oneteraExp.position}**. Highlights include:\n\n${oneteraExp.achievements.map((a) => `• ${a}`).join('\n\n')}`;
     }
   }
 
@@ -73,6 +83,14 @@ export function generateResponse(userMessage: string): string {
     return `Here are some key projects I've worked on:\n\n${projects.map(p => `• ${p}`).join('\n\n')}`;
   }
 
+  // Certifications queries
+  if (message.includes('certif') || message.includes('cca-f') || message.includes('anthropic') || message.includes('aws')) {
+    const certs = resumeData.certifications.map(c =>
+      `• **${c.title}** (${c.issuer}, ${c.issueDate})${c.badgeText ? ` [${c.badgeText}]` : ''}`
+    ).join('\n\n');
+    return `Here are my certifications:\n\n${certs}`;
+  }
+
   // Experience / Work history
   if (message.includes('experience') || message.includes('work') || message.includes('job') || message.includes('career')) {
     const expList = resumeData.experience.map(e => 
@@ -84,7 +102,9 @@ export function generateResponse(userMessage: string): string {
   // Achievements
   if (message.includes('achievement') || message.includes('accomplish') || message.includes('impact') || message.includes('result')) {
     const achievements = [
-      "Scaled Onetera to $3M ARR",
+      "Autonomous Agentic AI workflows at JPMorgan Chase (via Think41) for Wealth Management Trust & Estate compliance",
+      "Claude Certified Architect – Foundations (CCA-F) by Anthropic",
+      "Scaled Onetera to $3M ARR with 96% token cost cut and 40% latency drop",
       "Reduced deployment time from 20 to 10 minutes with zero downtime",
       "Reduced engineering support requests by 60% with Onetera Studio",
       "100% faster onboarding process through improved documentation",
@@ -101,8 +121,8 @@ export function generateResponse(userMessage: string): string {
   }
 
   // AI / GPT queries
-  if (message.includes('ai') || message.includes('gpt') || message.includes('llm') || message.includes('langgraph') || message.includes('machine learning')) {
-    return `I've worked extensively with AI technologies:\n\n• **AI-powered Service & Permit Guide**:** Built using GPT-4 to crawl municipal websites, parse content into MongoDB, and generate structured business and permit documentation\n\n• **ClickHouse Monitoring**: Implemented comprehensive monitoring for LangGraph nodes to track latency, token usage, and agent performance in real time\n\n• **GenAI Integration**: As a founding engineer, I coordinated with external vendors to integrate emerging GenAI technologies into Onetera's platform`;
+  if (message.includes('ai') || message.includes('gpt') || message.includes('llm') || message.includes('langgraph') || message.includes('agent')) {
+    return `I've worked extensively with AI technologies:\n\n• **Autonomous Agentic AI Workflows (JPMorgan Chase / Think41)**: Automated multi-tiered document analysis, entity verification, and fiduciary compliance\n\n• **Claude Certified Architect (CCA-F)**: Certified in agentic systems, tool use, and Claude architecture\n\n• **AI-powered Service & Permit Guide**: Built using GPT-4 to crawl municipal websites, parse content into MongoDB, and generate structured business and permit documentation\n\n• **ClickHouse Monitoring**: Implemented comprehensive monitoring for LangGraph nodes to track latency, token usage, and agent performance in real time`;
   }
 
   // Awards / Honors
@@ -115,7 +135,7 @@ export function generateResponse(userMessage: string): string {
 
   // About / Who are you
   if (message.includes('who are you') || message.includes('about you') || message.includes('introduce') || message.includes('tell me about yourself')) {
-    return `Hi! I'm **${resumeData.name}**, a Software Engineer based in ${resumeData.location}. I specialize in distributed AI infrastructure and high-performance full-stack systems, most recently at **Onetera Technologies** (through Apr 2026), where I helped scale the platform and architect agentic workflows and observability.\n\nI'm **actively looking for new opportunities in SDE and AI**. Ask me about my experience, projects, or tech stack.`;
+    return `Hi! I'm **${resumeData.name}**, an Applied AI Product Engineer based in ${resumeData.location}. I specialize in agentic workflows, RAG pipelines, and full-stack AI systems. I'm currently an AI Consultant at JPMorgan Chase (via Think41) and a Claude Certified Architect (CCA-F).\n\nI'm open to AI/ML and SWE opportunities. Ask me about my experience, projects, or tech stack!`;
   }
 
   // Contact
@@ -124,6 +144,6 @@ export function generateResponse(userMessage: string): string {
   }
 
   // Default response
-  return `I'd be happy to help! I can tell you about:\n\n• My recent experience at Onetera Technologies (through Apr 2026)\n• That I'm actively looking for SDE/AI opportunities\n• Projects I've built (AI tools, platforms, websites)\n• My technical skills and technologies I work with\n• My education background\n• Key achievements and impact\n• How I scaled Onetera to $3M ARR\n\nWhat would you like to know more about?`;
+  return `I'd be happy to help! I can tell you about:\n\n• My work as AI Consultant at JPMorgan Chase & Co. (via Think41)\n• My Claude Certified Architect (CCA-F) certification & AWS AI Practitioner\n• My previous experience at Onetera Technologies (Jan 2024 – Apr 2026)\n• Projects I've built (agentic workflows, AI tools, platforms)\n• My technical skills and technologies I work with\n• My education background\n• Key achievements and impact\n\nWhat would you like to know more about?`;
 }
 

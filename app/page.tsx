@@ -75,6 +75,7 @@ export default function Home() {
             <a href="#impact" className="nav-link transition-colors">Impact</a>
             <a href="#timeline-momentum" className="nav-link transition-colors">Experience</a>
             <a href="#projects" className="nav-link transition-colors">Projects</a>
+            <a href="#certifications" className="nav-link transition-colors">Certifications</a>
             <a href="#contact" className="nav-link transition-colors">Contact</a>
             <a href="#contact" className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#33FFEB] transition-colors">
               Get in Touch
@@ -86,7 +87,7 @@ export default function Home() {
       {/* ── Hero ── */}
       <StoryCanvasSequence
         name={resumeData.name}
-        tagline="Software Engineer building AI systems with product intuition, delivery speed, and trust-by-design."
+        tagline="Building production-grade agentic systems, retrieval pipelines, and full-stack AI interfaces — from orchestration logic to user-facing product — for enterprise financial and civic infrastructure."
       />
 
       {/* ── Impact ── */}
@@ -127,7 +128,7 @@ export default function Home() {
 
         {/* Impact Row */}
         <motion.div
-          className="grid gap-6 md:grid-cols-3"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -162,13 +163,13 @@ export default function Home() {
           >
             <div>
               <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
-                22
+                40%
               </p>
               <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
-                State Nodes
+                Latency Drop
               </h3>
               <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
-                State-machine architecture powering production orchestration and agentic workflow execution.
+                Measured in production after asynchronous execution redesign and model endpoint load-balancing.
               </p>
             </div>
           </motion.article>
@@ -182,13 +183,33 @@ export default function Home() {
           >
             <div>
               <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
-                40%
+                22
               </p>
               <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
-                Latency Drop
+                State Nodes
               </h3>
               <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
-                Measured in production after asynchronous execution redesign and model endpoint load-balancing.
+                State-machine architecture powering production orchestration and agentic workflow execution.
+              </p>
+            </div>
+          </motion.article>
+
+          {/* Card 4 */}
+          <motion.article
+            variants={staggerItem}
+            whileHover={{ y: -4 }}
+            transition={spring}
+            className="card p-8 sm:p-10 will-change-transform flex flex-col justify-between"
+          >
+            <div>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-6xl sm:text-7xl mb-4">
+                5,000+
+              </p>
+              <h3 className="font-display text-xl font-semibold text-[var(--text-primary)] uppercase tracking-wide">
+                Concurrent Users
+              </h3>
+              <p className="mt-4 text-sm text-[var(--text-muted)] leading-relaxed">
+                Onetera agentic platform scale with real-time state synchronization under peak municipal traffic.
               </p>
             </div>
           </motion.article>
@@ -211,9 +232,7 @@ export default function Home() {
               My Story
             </h3>
             <p className="text-base sm:text-lg leading-relaxed text-[var(--text-primary)]/90 font-light">
-              Originally from Bangalore, India, and now based in the United States, I am a USC CS Master&apos;s graduate specializing in high-performance distributed systems.
-              At Onetera, I scaled civic AI infrastructure from a founding 0-to-1 prototype to investor diligence-ready production systems, cutting operational costs by 60% and latency by 40%.
-              I am now looking for my next challenge building resilient, high-throughput backends and production AI workflows.
+              Originally from Bangalore, India and based in the United States. USC CS Master&apos;s graduate specializing in distributed AI systems and agentic infrastructure. At Onetera, I scaled civic AI from a 0-to-1 prototype to investor-ready production systems — cutting orchestration costs 96% and latency 40%. I&apos;m now an AI Consultant at JPMorgan Chase (via Think41), engineering autonomous Trust &amp; Estate document analysis workflows within the wealth management division. Claude Certified Architect (CCA-F).
             </p>
           </motion.article>
         </div>
@@ -329,6 +348,73 @@ export default function Home() {
         </div>
       </Section3D>
 
+      {/* ── Certifications ── */}
+      <Section3D id="certifications" className="mx-auto max-w-6xl px-6 pb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+          className="mb-8"
+        >
+          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Credentials &amp; Badges</p>
+          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
+            Certifications
+          </h2>
+        </motion.div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {/* Card 1: CCA-F */}
+          <motion.div
+            variants={staggerItem}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="card p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          >
+            <div>
+              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Anthropic</span>
+              <h3 className="font-display text-lg font-bold text-[var(--text-primary)] mt-1">
+                Claude Certified Architect – Foundations (CCA-F)
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] mt-1">Specialization in Agentic Workflows, Tool Use &amp; LLM Architecture</p>
+            </div>
+            <a
+              href="https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile"
+              target="_blank"
+              rel="noreferrer"
+              className="mono-accent shrink-0 self-start sm:self-center rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 hover:bg-[var(--accent)]/20 px-3.5 py-1.5 text-xs font-bold text-[var(--accent)] tracking-wide transition-colors"
+            >
+              CCA-F · Anthropic ↗
+            </a>
+          </motion.div>
+
+          {/* Card 2: AWS AI Practitioner */}
+          <motion.div
+            variants={staggerItem}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="card p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          >
+            <div>
+              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Amazon Web Services</span>
+              <h3 className="font-display text-lg font-bold text-[var(--text-primary)] mt-1">
+                AWS Certified AI Practitioner
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] mt-1">Enterprise AI/ML Fundamentals &amp; Generative AI Systems</p>
+            </div>
+            <a
+              href="https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url"
+              target="_blank"
+              rel="noreferrer"
+              className="mono-accent shrink-0 self-start sm:self-center rounded-full border border-white/20 bg-white/5 hover:border-[var(--accent)]/40 px-3.5 py-1.5 text-xs font-semibold text-[var(--text-primary)]/90 tracking-wide transition-colors"
+            >
+              AWS AI Practitioner ↗
+            </a>
+          </motion.div>
+        </div>
+      </Section3D>
+
       {/* ── Contact ── */}
       <Section3D id="contact" className="relative overflow-hidden px-6 pt-6 pb-28">
         <motion.div
@@ -358,7 +444,7 @@ export default function Home() {
             </Link>
           </div>
           <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--text-primary)] uppercase mt-2">
-            Open to SDE &amp; AI roles · H1-B cap-exempt
+            Open to AI/ML &amp; SWE roles · H1-B cap-exempt
           </p>
         </motion.div>
       </Section3D>

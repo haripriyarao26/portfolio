@@ -20,6 +20,21 @@ type RoleMeta = {
 };
 
 const roleMeta: Record<string, RoleMeta> = {
+  'JPMorgan Chase & Co. (via Think41)|AI Consultant — Trust & Estate, Wealth Management': {
+    milestone: 'Autonomous Wealth Workflows · Trust & Estate Compliance',
+    narrative:
+      'Engineering autonomous Agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance for complex Trust & Estate wealth structures within the wealth management division.',
+    impactTags: ['Agentic AI Workflows', 'Fiduciary Compliance', 'Document Analysis', 'Wealth Management'],
+    scope:
+      'Designing and deploying autonomous agent architectures for complex multi-tiered legal document extraction, entity verification, and automated fiduciary policy validation.',
+    productDecision:
+      'Implemented deterministic multi-agent verification loops to guarantee compliance accuracy and auditability across sensitive trust and estate portfolios.',
+    stackGroups: [
+      { label: 'Infra', values: ['Enterprise Cloud', 'Secure Workflows'] },
+      { label: 'Logic', values: ['Agentic Workflows', 'Claude / LLM Orchestration', 'Python', 'Compliance Engine'] },
+      { label: 'UX',    values: ['Document Intelligence', 'Review & Audit Console'] },
+    ],
+  },
   'Onetera Technologies|Software Engineer 2': {
     milestone: 'Post-Seed Scale-up · Civic AI Architecture',
     narrative:

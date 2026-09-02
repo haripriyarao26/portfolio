@@ -93,21 +93,20 @@ export default function Hero() {
           </h1>
 
           <p className="text-base md:text-lg text-[#525252] max-w-2xl mx-auto mb-4 mt-2">
-            Software Engineer specialized in distributed AI infrastructure and high-performance full-stack systems.
-            At Onetera through April 2026, I architected agentic workflows and observability suites at scale.
-            I&apos;m actively looking for new opportunities in software engineering (SDE) and AI (H1-B cap-exempt).
+            Applied AI Product Engineer building production-grade agentic systems, retrieval pipelines, and full-stack AI interfaces — from orchestration logic to user-facing product — for enterprise financial and civic infrastructure.
           </p>
 
           <noscript>
             <p className="text-sm text-[#525252] text-center max-w-lg mx-auto mb-4">
-              Key metrics: 96% token cost cut, 22-node orchestration graph, 40% orchestrator latency reduction.
+              Key metrics: 96% token cost cut, 40% orchestrator latency reduction, 22-node orchestration graph, 5,000+ concurrent users.
             </p>
           </noscript>
 
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             <CountUpMetric value={96} suffix="%" label="Token Cost Cut" />
-            <CountUpMetric value={22} label="State Nodes" />
             <CountUpMetric value={40} suffix="%" label="Latency Reduction" />
+            <CountUpMetric value={22} label="State Nodes" />
+            <CountUpMetric value={5000} suffix="+" label="Concurrent Users" />
           </div>
         </div>
 

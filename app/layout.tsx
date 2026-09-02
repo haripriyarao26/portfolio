@@ -23,8 +23,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Haripriya Rao — Software Engineer',
-  description: 'Haripriya Rao — Software Engineer (distributed AI, full-stack, H1-B cap-exempt). Open to SDE and AI opportunities.',
+  title: 'Haripriya Rao — Applied AI Engineer',
+  description: 'Haripriya Rao — Applied AI Product Engineer specializing in agentic workflows, RAG pipelines, and full-stack AI systems. Claude Certified Architect (CCA-F). Open to AI/ML and SWE opportunities.',
 }
 
 export default function RootLayout({

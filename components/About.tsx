@@ -102,11 +102,8 @@ export default function About() {
                 }`}
             >
               <h3 className="text-2xl font-bold text-[#111827] mb-4">My Story</h3>
-              <p className="text-[#525252] text-lg leading-relaxed mb-4">
-                My journey from a Computer Science student in India to an <strong className="text-[#111827]">engineering leader</strong> in Los Angeles has shaped my core approach to software: systems must not only function, they must be resilient, highly observable, and explicitly built for scale.
-              </p>
               <p className="text-[#525252] text-lg leading-relaxed">
-                Most recently, as a <strong className="text-[#111827]">Software Engineer II</strong> at Onetera, I architected distributed AI infrastructure and high-performance backend systems for demanding production workloads. Holding a <strong className="text-[#111827]">Master&apos;s in Computer Science</strong> from USC with a focus on distributed systems and AI/ML, I excel at transforming complex architectural concepts into production-grade reality. Following a recent company restructuring at Onetera, I am actively looking for my next challenge building high-throughput infrastructure.
+                Originally from Bangalore, India and based in the United States. USC CS Master&apos;s graduate specializing in distributed AI systems and agentic infrastructure. At Onetera, I scaled civic AI from a 0-to-1 prototype to investor-ready production systems — cutting orchestration costs 96% and latency 40%. I&apos;m now an AI Consultant at JPMorgan Chase (via Think41), engineering autonomous Trust &amp; Estate document analysis workflows within the wealth management division. Claude Certified Architect (CCA-F).
               </p>
             </div>
 

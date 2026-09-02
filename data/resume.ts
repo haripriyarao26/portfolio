@@ -14,6 +14,7 @@ export interface Certification {
   title: string;
   issuer: string;
   issueDate: string;
+  badgeText?: string;
   credentialId?: string;
   credentialUrl?: string;
   imageUrl?: string;
@@ -76,6 +77,15 @@ export const resumeData: ResumeData = {
     databases: ["PostgreSQL", "MongoDB", "ClickHouse", "Redis"]
   },
   experience: [
+    {
+      company: "JPMorgan Chase & Co. (via Think41)",
+      position: "AI Consultant — Trust & Estate, Wealth Management",
+      location: "Remote",
+      period: "Jul 2026 – Present",
+      achievements: [
+        "Engineering autonomous Agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance for complex Trust & Estate wealth structures within the wealth management division."
+      ]
+    },
     {
       company: "Onetera Technologies",
       position: "Software Engineer 2",
@@ -145,9 +155,18 @@ export const resumeData: ResumeData = {
   ],
   certifications: [
     {
+      title: "Claude Certified Architect – Foundations (CCA-F)",
+      issuer: "Anthropic",
+      issueDate: "2026",
+      badgeText: "CCA-F · Anthropic",
+      credentialUrl: "https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile",
+      skills: ["Claude", "Anthropic", "Agentic Systems", "Prompt Engineering", "LLM Architecture"]
+    },
+    {
       title: "AWS Certified AI Practitioner",
       issuer: "Amazon Web Services (AWS)",
       issueDate: "2026",
+      badgeText: "AWS AI Practitioner",
       credentialUrl: "https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url",
       skills: ["AWS", "AI/ML Fundamentals", "Generative AI", "Responsible AI"]
     },

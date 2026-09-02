@@ -39,7 +39,14 @@ export default function Certifications() {
                   <Award className="text-white" size={24} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-[#111827] mb-2">{cert.title}</h3>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h3 className="text-xl font-semibold text-[#111827]">{cert.title}</h3>
+                    {cert.badgeText && (
+                      <span className="mono-accent text-xs px-2.5 py-0.5 rounded-full bg-[#1a1a1a]/10 text-[#1a1a1a] font-semibold">
+                        {cert.badgeText}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-[#1a1a1a] font-semibold mb-2">{cert.issuer}</p>
                   <div className="flex items-center gap-4 text-sm text-[#525252] mb-3">
                     <span>Issued {cert.issueDate}</span>
