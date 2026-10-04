@@ -395,11 +395,6 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-
-              <div className="mt-6 pt-4 border-t border-white/5 text-[11px] font-mono text-[#F4A261] flex items-center justify-between">
-                <span>Production Grade</span>
-                <span>Verified</span>
-              </div>
             </motion.div>
           ))}
         </div>

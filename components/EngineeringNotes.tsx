@@ -84,9 +84,6 @@ export default function EngineeringNotes() {
                 {note.content}
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-white/5 text-[11px] font-mono text-[#8C857A]">
-              Architecture Heuristic &middot; 4.5+ Yrs Prod
-            </div>
           </motion.article>
         ))}
       </div>
