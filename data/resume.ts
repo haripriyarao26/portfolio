@@ -121,7 +121,8 @@ export const resumeData: ResumeData = {
       period: "Jul 2026 – Present",
       achievements: [
         "Accelerating LLM extraction latency by 52% (40.8s to 19.6s) at 95% field agreement by deploying GPT-5.5 and creating automated A/B golden-dataset regression comparison tooling.",
-        "Resolving 100% of thread misclassifications (8/8) across 5–6 level nested forwards with zero false positives via targeted prompt overrides and adversarial test suites."
+        "Resolving 100% of thread misclassifications (8/8) across 5–6 level nested forwards with zero false positives via targeted prompt overrides and adversarial test suites.",
+        "Engineering autonomous Agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance for regulated financial document workflows."
       ]
     },
     {
@@ -131,11 +132,13 @@ export const resumeData: ResumeData = {
       period: "Jan 2024 – Apr 2026",
       achievements: [
         "Delivered an end-to-end multi-tenant platform in 4 months with zero scope creep and 99.98% uptime, partnering with NVIDIA stakeholders and city officials across 6 roadmap phases.",
-        "Engineered a recursive DFS algorithm to extract 100+ React components from Figma design trees, decreasing manual UI scaffolding time by 90%.",
         "Slashed LLM inference costs by 96% (from 200KB to 8KB/call) by redesigning the transformation pipeline to scale horizontally to 255+ agentic steps.",
         "Cut per-turn orchestrator latency by 40% via a 22-node asynchronous state machine using asyncio.gather parallel scheduling to eliminate serial round-trips.",
+        "Engineered a recursive DFS algorithm to extract 100+ React components from Figma design trees, decreasing manual UI scaffolding time by 90%.",
         "Lifted relevant-result rate 20% and halved malformed responses (50%) using grounded citations and safe JSON parsing recovery.",
-        "Reduced MTTR by 40% and sustained 99.9% uptime by owning on-call incident response and instrumenting ClickHouse real-time telemetry dashboards."
+        "Engineered concurrent request-collapsing middleware and Redis distributed locks, eliminating 100% of double-charge race conditions.",
+        "Reduced MTTR by 40% and sustained 99.9% uptime by owning on-call incident response and instrumenting ClickHouse real-time telemetry dashboards.",
+        "Built autonomous self-healing Jest test generation agent using LLM feedback loops, reducing manual maintenance overhead by ~25%."
       ]
     },
     {
@@ -145,6 +148,7 @@ export const resumeData: ResumeData = {
       period: "May 2023 – Dec 2023",
       achievements: [
         "Maintained 98% CI/CD pass rate and lowered credit risk SaaS regression defects by 40% while achieving a 95% on-time release cadence across regulated credit-decision workflows.",
+        "Developed query optimization algorithms and incremental streaming evaluation for high-throughput credit decision workflows, improving response times by 50% under concurrent load.",
         "Validated platform reliability with automated test suites and collaborated with Quality Engineers to eliminate potential deployment regressions prior to release."
       ]
     },
@@ -155,7 +159,8 @@ export const resumeData: ResumeData = {
       period: "Jun 2021 – Jul 2022",
       achievements: [
         "Consolidated 15+ data sources into a GraphQL API for 4,000 users, dropping latency from 2s to 400ms.",
-        "Built executive analytics dashboards with ANT Design and PostgreSQL, optimizing hiring pipeline visibility and reducing data aggregation times by 80%."
+        "Built executive analytics dashboards with ANT Design and PostgreSQL, optimizing hiring pipeline visibility and reducing data aggregation times by 80%.",
+        "Implemented frontend performance optimizations in Angular (lazy-loaded modules, virtualized tables, memoized pipes), cutting dashboard load times by 50%."
       ]
     }
   ],
