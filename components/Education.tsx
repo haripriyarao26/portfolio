@@ -55,17 +55,21 @@ export default function Education() {
                 {edu.institution}
               </p>
             </div>
-            {edu.institution.includes('Southern California') && (
-              <div className="mt-4 pt-3 border-t border-white/5 flex flex-wrap gap-1.5">
-                <span className="mono-accent text-[10px] px-2.5 py-0.5 rounded bg-white/5 text-[var(--text-muted)] border border-white/5">
-                  Distributed Systems
-                </span>
-                <span className="mono-accent text-[10px] px-2.5 py-0.5 rounded bg-white/5 text-[var(--text-muted)] border border-white/5">
-                  Artificial Intelligence
-                </span>
-                <span className="mono-accent text-[10px] px-2.5 py-0.5 rounded bg-white/5 text-[var(--text-muted)] border border-white/5">
-                  Algorithms
-                </span>
+            {edu.coursework && edu.coursework.length > 0 && (
+              <div className="mt-5 pt-4 border-t border-white/5">
+                <p className="mono-accent text-[10px] uppercase tracking-wider text-[#A69F94] mb-2 font-medium">
+                  Key Coursework &amp; Subjects
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {edu.coursework.map(subject => (
+                    <span
+                      key={subject}
+                      className="mono-accent text-[11px] px-2.5 py-1 rounded-md bg-white/[0.03] text-[#A69F94] border border-white/10 hover:border-[#E07A5F]/40 hover:text-[#FAF6F0] transition-colors"
+                    >
+                      {subject}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
           </motion.div>

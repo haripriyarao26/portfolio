@@ -34,6 +34,7 @@ export interface Education {
   degree: string;
   location: string;
   period: string;
+  coursework?: string[];
 }
 
 export interface Experience {
@@ -65,13 +66,26 @@ export const resumeData: ResumeData = {
       institution: "University of Southern California",
       degree: "Master of Science in Computer Science",
       location: "Los Angeles, CA",
-      period: "Aug 2022 – May 2024"
+      period: "Aug 2022 – May 2024",
+      coursework: [
+        "Distributed Systems",
+        "Artificial Intelligence & Machine Learning",
+        "Analysis of Algorithms",
+        "Database Systems"
+      ]
     },
     {
       institution: "Visvesvaraya Technological University",
       degree: "Bachelor of Engineering in Computer Science",
       location: "Bengaluru, India",
-      period: "Aug 2017 – Aug 2021"
+      period: "Aug 2017 – Aug 2021",
+      coursework: [
+        "Artificial Intelligence & Expert Systems",
+        "Full-Stack Web Development & Technologies",
+        "Data Structures & Algorithms",
+        "Database Management Systems (DBMS)",
+        "Operating Systems & Computer Networks"
+      ]
     }
   ],
   skills: {
