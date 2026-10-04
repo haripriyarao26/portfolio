@@ -6,25 +6,25 @@
 /* ── Design Tokens ───────────────────── */
 :root {
   /* Color palette — sleek dark obsidian base */
-  --bg-dark:        #0B0B0C;
-  --bg-card:        #131316;
-  --text-primary:   #FFFFFF;
-  --text-muted:     #9E9EA7;
+  --bg-dark:        #090A0F;
+  --bg-card:        #11131A;
+  --text-primary:   #F9FAFB;
+  --text-muted:     #9CA3AF;
   --border:         rgba(255, 255, 255, 0.08);
-  --accent:         #00E5CC;   /* Vivid neon teal */
+  --accent:         #2DD4BF;   /* Refined modern teal */
 
-  /* Legacy aliases (keep for backward compat with components) */
-  --primary:        #FFFFFF;
-  --primary-dark:   #9E9EA7;
-  --secondary:      #131316;
+  /* Legacy aliases */
+  --primary:        #F9FAFB;
+  --primary-dark:   #9CA3AF;
+  --secondary:      #11131A;
 
-  /* Typography */
-  --font-display:   var(--font-syne), system-ui, sans-serif;
-  --font-body:      var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Typography — Clean Inter / Modern Sans */
+  --font-display:   var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body:      var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono:      var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Radius */
-  --radius-card:    12px;
+  --radius-card:    14px;
   --radius-pill:    9999px;
 }
 
@@ -41,14 +41,14 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   font-family: var(--font-body);
-  font-size: 15px; /* Base size at 15px for improved readability and hierarchy */
+  font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100dvh;
 }
 
-/* Subtle fixed grid texture — no gradients, just structure */
+/* Subtle fixed grid texture */
 body::before {
   content: '';
   position: fixed;
@@ -56,9 +56,10 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
+    radial-gradient(circle at 50% 0%, rgba(45, 212, 191, 0.08) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
 }
 
 /* ── Scrollbar ───────────────────────── */
@@ -67,12 +68,12 @@ body::before {
 ::-webkit-scrollbar-thumb    { background: var(--bg-card); border-radius: var(--radius-pill); }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-/* ── Typography — Display (Syne) ─────── */
+/* ── Typography ─────── */
 .font-display,
 h1, h2, h3,
 .metric-number {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .mono-accent {
@@ -81,30 +82,35 @@ h1, h2, h3,
 
 /* ── Cards ───────────────────────────── */
 .card {
-  background: var(--bg-card);
+  background: rgba(17, 19, 26, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-card);
-  border: 0.5px solid var(--border);
+  border: 1px solid var(--border);
 }
 
-/* Legacy glass-premium — simplified to card style */
 .glass-premium {
-  background: var(--bg-card);
+  background: rgba(17, 19, 26, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-card);
-  border: 0.5px solid var(--border);
-  box-shadow: none;
+  border: 1px solid var(--border);
 }
 
 .glass-card {
-  background: var(--bg-card);
+  background: rgba(17, 19, 26, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-card);
-  border: 0.5px solid var(--border);
+  border: 1px solid var(--border);
 }
 
 .glass-nav {
-  background: rgba(15, 14, 13, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 0.5px solid var(--border);
+  background: rgba(11, 12, 16, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Card hover — subtle 3D lift only ── */

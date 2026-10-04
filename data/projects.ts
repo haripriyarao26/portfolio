@@ -12,6 +12,8 @@ export interface ProjectLink {
 export interface Project {
   id: string;
   title: string;
+  category: string;
+  status: string;
   description: string;
   images: ProjectImage[];
   github?: string;
@@ -22,93 +24,105 @@ export interface Project {
   mermaidDiagram?: string;
   tech: string[];
   features: string[];
+  metrics?: string[];
 }
 
 export const projects: Project[] = [
   {
-    id: 'procure-loop',
-    title: 'Procure-Loop: Contract Intelligence & Revenue Protection Swarm',
-    description:
-      'An end-to-end multi-agent orchestration dashboard that automatically scans corporate document repositories to flag upcoming software renewal deadlines, audits real-time seat utilization, and drafts contextual opt-out notices to prevent corporate contract leakage.',
+    id: 'gemini-cookbook',
+    title: 'Google Gemini Cookbook: Production Health & Cost Observability',
+    category: 'Open Source Contribution',
+    status: 'PR #1088 · Merged / Contributed',
+    description: 'Integrated error-aware exponential backoff for 429 rate limits, real-time USD cost-tracking, and sub-second health heartbeats for Gemini 2.0/3.0 models into the official Google Gemini Cookbook repository.',
     images: [],
-    github: 'https://github.com/haripriyarao26/Procure-Loop',
-    tech: ['Python', 'LangGraph', 'FastAPI', 'React', 'TypeScript', 'Vite', 'Vanilla CSS', 'SVG Graphics'],
+    github: 'https://github.com/google-gemini/cookbook/pull/1088',
+    tech: ['Python', 'Google Gemini API', 'LLM Observability', 'Rate Limiting', 'CI/CD'],
     features: [
-      'Designed a Stateful Agent Swarm: Built a cooperative multi-agent architecture using LangGraph (StateGraph) in Python to coordinate three specialized LLM agents (Ingestion, Scouter, and Drafting) through a directed workflow pipeline.',
-      'Implemented Real-Time State Visualization: Created a premium React dashboard featuring a custom interactive SVG-based state machine map that highlights active nodes as they execute, synced with a scrolling monospace developer terminal log.',
-      'Engineered Utilization Audits & Arbitrage Logic: Designed data connectors that audit active user counts (mocking Okta directory directories) against seat caps, calculating cost overhead leakage and looking up competitive market rates to suggest lower-cost alternatives.',
-      'Automated Renewal Intervention Alerts: Built a router condition that flags contracts within 90 days of renewal with utilization under 85%, initiating the Drafting Agent to auto-generate context-aware non-renewal or negotiation emails.',
-      'Developed Full-Stack Architecture: Exposed the LangGraph workspace using FastAPI and Uvicorn to handle CORS request streams, manage in-memory state transactions, and serve dynamic data updates to a modern, glassmorphic React + TypeScript + Vite UI.'
+      'Sub-second API health heartbeats and real-time USD cost tracking for production deployments',
+      'Engineered error-aware exponential backoff (30s/60s/90s) handling 429 Resource Exhausted rate limits with graceful degradation',
+      'Token-to-cost normalization layer compliant with Google engineering standards and CI workflows'
     ],
-    mermaidDiagram: `flowchart TD
-  I[Ingestion Agent] -->|Parse Contracts & Metadata| S[Scouter Agent]
-  S -->|Audit Okta Seat Utilization| C{Intervention Needed?}
-  C -->|Renewal < 90d & Seat Use < 85%| D[Drafting Agent]
-  C -->|Healthy / High Use| H[Flag Safe / Monitor]
-  D -->|Auto-Generate Opt-out/Neg. Email| E[Drafts Inbox]
-  H --> M[System Observability Dashboard]`
+    metrics: ['PR #1088', 'Sub-second heartbeats', '429 Rate backoff'],
+    mermaidDiagram: `flowchart LR
+  G[Gemini API] --> H[Health Heartbeat]
+  H --> C[Cost Tracker & Token Normalizer]
+  C --> O[Observability & Alerts]
+  R[Requests] -->|429 Rate Limit| B[Exponential Backoff 30/60/90s]
+  B --> G`
   },
   {
     id: 'openai-cookbook-langchain-rwmh',
-    title: 'OpenAI Cookbook: LangChain RunnableWithMessageHistory hardening',
+    title: 'OpenAI Cookbook: LangChain Security Hardening',
+    category: 'Open Source Contribution',
+    status: 'PR #2568 · Contributed',
     description:
-      'Contributed a reproduction and in-cookbook mitigation for unsafe deserialization in RunnableWithMessageHistory: constructor-shaped run outputs were being revived into live messages and persisted to chat history (history poisoning), related to langchain-ai/langchain#36380.',
+      'Contributed reproduction and in-cookbook mitigation for unsafe deserialization in RunnableWithMessageHistory to prevent chat history poisoning (langchain-ai/langchain#36380), treating outputs as inert data with explicit allowlists.',
     images: [],
     github: 'https://github.com/openai/openai-cookbook/pull/2568',
-    tech: ['Python', 'LangChain', 'langchain-core', 'OpenAI Cookbook', 'Security'],
+    tech: ['Python', 'LangChain', 'langchain-core', 'OpenAI Cookbook', 'Security Hardening'],
     features: [
-      'Reproduction script under examples/langchain_core documenting the issue',
-      'Documents safe persistence when outputs are treated as inert data with an explicit message allowlist',
-      'Local LangChain dev ergonomics: ignores for clone/virtualenv paths used in verification'
+      'Engineered a reproduction script isolating the unsafe deserialization vulnerability in RunnableWithMessageHistory',
+      'Documented and proved safe persistence architecture by enforcing strict message allowlists and inert output handling',
+      'Built local virtualenv developer tooling and verification fixtures to standardize OSS contribution testing'
     ],
+    metrics: ['PR #2568', 'History Poisoning Fix', 'LangChain Core'],
     mermaidDiagram: `flowchart LR
-  O[Run outputs] --> D[Deserialize]
-  D --> A{Allowlisted messages?}
-  A -->|yes| S[Safe history]
-  A -->|no| R[Reject / inert data]`
+  O[Run Outputs] --> D[Deserialize Payload]
+  D --> A{Allowlisted Message?}
+  A -->|Valid| S[Safe History Storage]
+  A -->|Untrusted / Injected| R[Reject / Store as Inert Data]`
   },
   {
-    id: 'gemini-cookbook',
-    title: 'Google Gemini Cookbook: Cost & Health Monitoring Utility',
-    description: 'Architected a cost-tracking utility that handles sub-second API health heartbeats for Gemini 2.0/3.0 models. Contributed to the official Google Gemini repository with production-ready observability tooling.',
+    id: 'procure-loop',
+    title: 'Procure-Loop: Multi-Agent Contract Intelligence Swarm',
+    category: 'Interactive Prototype',
+    status: 'Architecture Prototype · Full-Stack Demo',
+    description:
+      'An end-to-end multi-agent orchestration prototype using LangGraph (StateGraph) in Python to coordinate 3 specialized agents (Ingestion, Scouter, Drafting) with real-time SVG state visualization, Okta seat utilization audits, and automated renewal intervention alerts.',
     images: [],
-    github: 'https://github.com/google-gemini/cookbook/pull/1088',
-    tech: ['Python', 'Google Gemini API', 'LLM Observability', 'Type Hints', 'CI/CD'],
+    github: 'https://github.com/haripriyarao26/Procure-Loop',
+    tech: ['Python', 'LangGraph', 'FastAPI', 'React', 'TypeScript', 'Vite', 'SVG State Machine'],
     features: [
-      'Sub-second API health monitoring',
-      'Real-time USD Cost Tracking',
-      'Rate Limit Error Handling (429 Resource Exhausted)',
-      'Token-to-Cost Normalization',
-      'Google Engineering Standards Compliance'
+      'Designed a 3-agent cooperative swarm (Ingestion, Scouter, Drafting) coordinated through a stateful LangGraph directed DAG',
+      'Created a live interactive SVG state machine UI highlighting active execution nodes with synchronized monospace telemetry stream',
+      'Built renewal intervention gating: triggers automated non-renewal drafting for contracts within 90 days of renewal with <85% seat utilization'
     ],
-    mermaidDiagram: `flowchart LR
-  G[Gemini API] --> H[Health heartbeat]
-  H --> C[Cost tracker]
-  C --> O[Observability / alerts]
-  R[Requests] --> G`
+    metrics: ['3-Agent Swarm', 'LangGraph DAG', 'Real-time SVG Map'],
+    mermaidDiagram: `flowchart TD
+  I[Ingestion Agent: Parse Contracts] --> S[Scouter Agent: Audit Seat Utilization]
+  S --> C{Intervention Needed?}
+  C -->|Renewal < 90d & Seat Use < 85%| D[Drafting Agent: Auto-Generate Notice]
+  C -->|Healthy / High Use| H[Flag Safe / Telemetry Log]
+  D --> E[Drafts Inbox & Approval Gate]
+  H --> M[System Observability Dashboard]`
   },
   {
     id: 'auto-unit-agent',
     title: 'Auto-Unit-Agent: Autonomous Jest Test Generation',
-    description: 'Engineered a self-healing agentic framework that generates Jest tests using OS-level sandboxing and child process isolation for secure code validation. Implements LangGraph state machines with conditional routing.',
+    category: 'Agentic Framework & CLI',
+    status: 'Open Source Agent',
+    description: 'Engineered an autonomous agent using LLM feedback loops to self-heal broken Jest test suites, with OS-level sandboxing and child process isolation for secure code validation, reducing manual maintenance overhead by ~25%.',
     images: [],
     github: 'https://github.com/haripriyarao26/auto-unit-agent',
     tech: ['TypeScript', 'Jest', 'LangGraph', 'Node.js', 'OS-level Sandboxing'],
     features: [
-      'OS-level sandboxing with child process isolation',
-      'LangGraph workflow: generate → execute → debug → retry',
-      'Guardrails for model outputs (parsing + validation)'
+      'OS-level sandboxing with child process isolation to execute and validate generated tests safely',
+      'Self-healing LangGraph state machine workflow: Generate → Execute → Parse Failures → Self-Repair',
+      'Deterministic output guardrails ensuring structured AST validation and preventing hallucinated test mocks'
     ],
+    metrics: ['25% Maintenance Saved', 'Child Process Isolation', 'Self-Healing Loop'],
     mermaidDiagram: `flowchart LR
-  SRC[Source] --> GEN[Generate tests]
-  GEN --> SBX[Sandbox run]
-  SBX -->|fail| DBG[Debug / fix]
+  SRC[Source Code] --> GEN[Generate Tests]
+  GEN --> SBX[Sandboxed Runner]
+  SBX -->|Test Failures| DBG[Self-Healing Debug Loop]
   DBG --> GEN
-  SBX -->|pass| OK[Jest output]`
+  SBX -->|All Passed| OK[Validated Jest Suite]`
   },
   {
     id: 'dev-log-architect',
-    title: 'Dev-Log Architect',
+    title: 'Dev-Log Architect: Engineering Case Study Extractor',
+    category: 'Developer Tooling & Extension',
+    status: 'VS Code & Cursor Extension · VSIX Releases',
     description:
       'VS Code / Cursor extension (TypeScript) that automates engineering narrative extraction from git diffs and module-level context, producing structured case studies with LLM-authored trade-off analysis and Mermaid architecture views for portfolio- and interview-ready design-review quality.',
     images: [],
@@ -124,23 +138,21 @@ export const projects: Project[] = [
       'VS Code Extension API',
       'Cursor',
       'OpenAI-compatible APIs',
-      'vsce',
-      'LLMs',
-      'Mermaid'
+      'Mermaid',
+      'vsce'
     ],
     features: [
-      'End-to-end ownership for a pre–Marketplace release: OpenAI-compatible integrations and environment-based secrets (no credential storage in-extension)',
-      'CI-friendly unit coverage for static-analysis code paths',
-      'VSIX distribution via GitHub Releases for controlled beta and QA (vsce packaging)'
+      'Automated PR-to-narrative pipeline extracting architecture trade-offs from AST diffs and module context',
+      'Zero-credential storage security design utilizing local environment secrets without persistence vulnerabilities',
+      'Packaged and distributed as installable VSIX extensions via automated GitHub Releases CI workflows'
     ],
+    metrics: ['VSIX Distribution', 'Mermaid Synthesis', 'Zero-Credential Storage'],
     mermaidDiagram: `flowchart LR
-  A[Git diff + context] --> B[Dev-Log Architect]
-  B --> C[LLM trade-offs]
-  B --> D[Case study MD]
-  B --> E[Mermaid synth]
-  C --> F[Portfolio pack]
-  D --> F
-  E --> F`
+  A[Git Diff + Context] --> B[Dev-Log Architect Engine]
+  B --> C[LLM Trade-Off Extractor]
+  B --> D[Structured Markdown Case Study]
+  B --> E[Mermaid Architecture Synthesizer]
+  C & D & E --> F[Interview-Ready Case Study Pack]`
   }
 ];
 

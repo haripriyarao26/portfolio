@@ -28,7 +28,7 @@ export function generateResponse(userMessage: string): string {
   // Skills queries
   if (message.includes('skill') || message.includes('technology') || message.includes('tech stack') || message.includes('programming language') || message.includes('framework')) {
     const skills = resumeData.skills;
-    return `Here are my technical skills:\n\n**Languages:** ${skills.languages.join(', ')}\n\n**Frameworks/Tools:** ${skills.frameworks.join(', ')}\n\n**Libraries:** ${skills.libraries.join(', ')}\n\n**Databases:** ${skills.databases.join(', ')}`;
+    return `Here are my technical skills:\n\n**Frontier AI & Orchestration:** ${skills.frontierAI.join(', ')}\n\n**Frontier Models & SDKs:** ${skills.modelsAndSDKs.join(', ')}\n\n**Languages & Full-Stack:** ${skills.languagesAndFullStack.join(', ')}\n\n**Data, Cloud & DevOps:** ${skills.dataAndCloud.join(', ')}`;
   }
 
   // Job search / opportunities

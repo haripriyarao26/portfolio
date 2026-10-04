@@ -1,10 +1,18 @@
 export interface ResumeData {
   name: string;
   location: string;
+  workAuth: string;
   email: string;
+  phone: string;
   linkedin: string;
+  github: string;
   education: Education[];
-  skills: Skills;
+  skills: {
+    frontierAI: string[];
+    modelsAndSDKs: string[];
+    languagesAndFullStack: string[];
+    dataAndCloud: string[];
+  };
   experience: Experience[];
   honors: Honor[];
   certifications: Certification[];
@@ -28,13 +36,6 @@ export interface Education {
   period: string;
 }
 
-export interface Skills {
-  languages: string[];
-  frameworks: string[];
-  libraries: string[];
-  databases: string[];
-}
-
 export interface Experience {
   company: string;
   position: string;
@@ -53,87 +54,108 @@ export interface Honor {
 
 export const resumeData: ResumeData = {
   name: "Haripriya Rao",
-  location: "United States",
+  location: "San Francisco Bay Area",
+  workAuth: "Cap-Exempt H-1B (Eligible for Immediate Transfer)",
   email: "haripriyaraov@gmail.com",
+  phone: "(503) 374-6531",
   linkedin: "linkedin.com/in/haripriya-rao",
+  github: "github.com/haripriyarao26",
   education: [
     {
       institution: "University of Southern California",
       degree: "Master of Science in Computer Science",
       location: "Los Angeles, CA",
-      period: "Aug 2022 - May 2024"
+      period: "Aug 2022 – May 2024"
     },
     {
       institution: "Visvesvaraya Technological University",
       degree: "Bachelor of Engineering in Computer Science",
       location: "Bengaluru, India",
-      period: "Aug 2017 - Aug 2021"
+      period: "Aug 2017 – Aug 2021"
     }
   ],
   skills: {
-    languages: ["Python", "JavaScript", "TypeScript", "C", "Java", "SQL", "HTML", "CSS", "GraphQL"],
-    frameworks: ["Next.js", "Flask", "Django", "Node.js", "Express", "CircleCI", "Vercel", "Render", "AWS", "Supabase", "LangGraph"],
-    libraries: ["React", "Chakra UI", "Bootstrap", "Scikit-Learn", "NLTK"],
-    databases: ["PostgreSQL", "MongoDB", "ClickHouse", "Redis"]
+    frontierAI: [
+      "AI Agents",
+      "Agentic Workflows",
+      "LangGraph",
+      "LangChain",
+      "Multi-Agent Systems",
+      "RAG Pipelines",
+      "Tool Use",
+      "Prompt Guardrails",
+      "AI Evaluation Frameworks"
+    ],
+    modelsAndSDKs: [
+      "Claude",
+      "GPT",
+      "Anthropic API",
+      "Model Context Protocol (MCP)"
+    ],
+    languagesAndFullStack: [
+      "Python",
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Flask"
+    ],
+    dataAndCloud: [
+      "PostgreSQL",
+      "Supabase",
+      "Redis",
+      "ClickHouse",
+      "AWS",
+      "Vercel",
+      "Render",
+      "Git",
+      "CI/CD"
+    ]
   },
   experience: [
     {
       company: "JPMorgan Chase & Co. (via Think41)",
-      position: "AI Consultant — Trust & Estate, Wealth Management",
+      position: "Senior AI Consultant",
       location: "Remote",
       period: "Jul 2026 – Present",
       achievements: [
-        "Engineering autonomous Agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance for complex Trust & Estate wealth structures within the wealth management division."
+        "Accelerating LLM extraction latency by 52% (40.8s to 19.6s) at 95% field agreement by deploying GPT-5.5 and creating automated A/B golden-dataset regression comparison tooling.",
+        "Resolving 100% of thread misclassifications (8/8) across 5–6 level nested forwards with zero false positives via targeted prompt overrides and adversarial test suites."
       ]
     },
     {
       company: "Onetera Technologies",
-      position: "Software Engineer 2",
+      position: "Software Engineer 2 / Founding Engineer",
       location: "Los Angeles, CA",
-      period: "Sep 2024 - Apr 2026",
+      period: "Jan 2024 – Apr 2026",
       achievements: [
-        "Architected the core system architecture that passed investor technical due diligence and supported platform scaling post-seed funding.",
-        "Architected a zero-downtime CI/CD pipeline with CircleCI, Vercel, and Render; reduced deployment time from 20 to 10 minutes and eliminated prior 10-minute downtime.",
-        "Designed AI Agent workflows for general task planning and multi-language translation, reducing municipal one-time operational costs by 60-70% and freeing resources for high-impact services.",
-        "Monitored ClickHouse pipelines and integrated BetterStack alerts, reducing incident resolution by 40%.",
-        "Launched Onetera Studio, a no-code configuration platform for program managers to manage logic, FAQs, and workflows independently, reducing engineering support requests by 60%.",
-        "Developed core components of Onetera's Agent Library, enabling cities to deploy pre-built AI agents for ADU permitting, business licensing, and rental programs. Cut service launch times from months to weeks and provided residents 24/7 self-service access.",
-        "Serving as a forward-deployed engineer, attending city meetings and demos to gather requirements directly from stakeholders; translated civic needs into technical features that accelerated partnership adoption across multiple cities."
-      ]
-    },
-    {
-      company: "Onetera Technologies",
-      position: "Software Engineer 1 (Founding)",
-      location: "Los Angeles, CA",
-      period: "Jan 2024 - Aug 2024",
-      achievements: [
-        "Laid the foundation of Onetera's core architecture as a founding engineer, ensuring seamless integration of design and functionality with UI/UX teams, and establishing a scalable infrastructure.",
-        "Partnered directly with the Founder/CEO to conceptualize system architecture, define product roadmap, and coordinate with external vendors to integrate emerging GenAI technologies.",
-        "Took the product from 0 to 1 by setting up the entire system architecture from scratch—including repository structure, Git workflows, deployment strategy, and CI/CD integration—laying the foundation for a scalable product ecosystem.",
-        "Overhauled documentation standards, improving internal annotations and external developer guides, resulting in a 100% faster onboarding process for new team members.",
-        "Developed and launched www.onetera.com, ensuring responsive, accessible and visually cohesive UI/UX using customized Chakra UI components."
+        "Delivered an end-to-end multi-tenant platform in 4 months with zero scope creep and 99.98% uptime, partnering with NVIDIA stakeholders and city officials across 6 roadmap phases.",
+        "Engineered a recursive DFS algorithm to extract 100+ React components from Figma design trees, decreasing manual UI scaffolding time by 90%.",
+        "Slashed LLM inference costs by 96% (from 200KB to 8KB/call) by redesigning the transformation pipeline to scale horizontally to 255+ agentic steps.",
+        "Cut per-turn orchestrator latency by 40% via a 22-node asynchronous state machine using asyncio.gather parallel scheduling to eliminate serial round-trips.",
+        "Lifted relevant-result rate 20% and halved malformed responses (50%) using grounded citations and safe JSON parsing recovery.",
+        "Reduced MTTR by 40% and sustained 99.9% uptime by owning on-call incident response and instrumenting ClickHouse real-time telemetry dashboards."
       ]
     },
     {
       company: "Provenir",
       position: "Full Stack Engineering Intern",
       location: "New Jersey, USA",
-      period: "May 2023 - Dec 2023",
+      period: "May 2023 – Dec 2023",
       achievements: [
-        "Developed and maintained an end-to-end credit risk decision-making SaaS platform using Angular and Spring Boot, covering the full SDLC and achieving a 95% on-time deployment rate.",
-        "Enhanced platform reliability by executing comprehensive code reviews and handling a large volume of test cases with a 98% success rate.",
-        "Collaborated with Quality Engineers to optimize internal review tools, resolving potential deployment issues by 100% before release."
+        "Maintained 98% CI/CD pass rate and lowered credit risk SaaS regression defects by 40% while achieving a 95% on-time release cadence across regulated credit-decision workflows.",
+        "Validated platform reliability with automated test suites and collaborated with Quality Engineers to eliminate potential deployment regressions prior to release."
       ]
     },
     {
-      company: "Hashedin by Deloitte (Deloitte USI)",
+      company: "Deloitte USI",
       position: "Software Engineer 1",
       location: "Bengaluru, India",
-      period: "Jun 2021 - Jul 2022",
+      period: "Jun 2021 – Jul 2022",
       achievements: [
-        "Collaborated with cross-functional teams to build an enterprise recruitment platform supporting 4K+ employees, improving hiring visibility and data workflows.",
-        "Developed two major system modules: a Hiring Flow for streamlined onboarding and a Candidate Portal, enhancing UI/UX with responsive front-end design.",
-        "Built an Analytics Dashboard with ANT Design, enabling executives to visualize hiring data through pie, line, and bar charts."
+        "Consolidated 15+ data sources into a GraphQL API for 4,000 users, dropping latency from 2s to 400ms.",
+        "Built executive analytics dashboards with ANT Design and PostgreSQL, optimizing hiring pipeline visibility and reducing data aggregation times by 80%."
       ]
     }
   ],
@@ -160,7 +182,7 @@ export const resumeData: ResumeData = {
       issueDate: "2026",
       badgeText: "CCA-F · Anthropic",
       credentialUrl: "https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile",
-      skills: ["Claude", "Anthropic", "Agentic Systems", "Prompt Engineering", "LLM Architecture"]
+      skills: ["Claude", "Anthropic API", "Agentic Systems", "Prompt Guardrails", "LLM Architecture"]
     },
     {
       title: "AWS Certified AI Practitioner",
@@ -169,41 +191,6 @@ export const resumeData: ResumeData = {
       badgeText: "AWS AI Practitioner",
       credentialUrl: "https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url",
       skills: ["AWS", "AI/ML Fundamentals", "Generative AI", "Responsible AI"]
-    },
-    {
-      title: "Agentic AI for Developers: Concepts and Application for Enterprises",
-      issuer: "LinkedIn",
-      issueDate: "Nov 2025",
-      skills: ["AI Software Development", "Generative AI", "Artificial Intelligence (AI)", "AI Agents"],
-      imageUrl: "/certifications/agentic-ai-developers.png"
-    },
-    {
-      title: "Hands-On Agentic AI: Building AI Agents with LlamaIndex",
-      issuer: "LinkedIn",
-      issueDate: "Nov 2025",
-      skills: ["LLaMA", "AI Agents"],
-      imageUrl: "/certifications/hands-on-agentic-ai.png"
-    },
-    {
-      title: "Generative AI: Introduction to Large Language Models",
-      issuer: "LinkedIn",
-      issueDate: "Mar 2024",
-      skills: ["Large Language Models (LLM)", "Generative AI"],
-      imageUrl: "/certifications/generative-ai-llm.png"
-    },
-    {
-      title: "MTA: Introduction to Programming Using Python",
-      issuer: "Microsoft",
-      issueDate: "2020",
-      credentialUrl: "https://www.credly.com/badges/d28688c2-34ed-4801-b134-e8b67846c77b/public_url",
-      skills: ["Python", "Programming Fundamentals"]
-    },
-    {
-      title: "Microsoft Certified: JavaScript",
-      issuer: "Microsoft",
-      issueDate: "2019",
-      credentialUrl: "https://www.credly.com/badges/31d429f2-4bd7-4516-b585-2148c5c11fe7/public_url",
-      skills: ["JavaScript"]
     }
   ]
 };

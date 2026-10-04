@@ -1,62 +1,76 @@
 'use client';
 
+import { motion } from 'framer-motion';
+import Section3D from '@/components/Section3D';
 import { resumeData } from '@/data/resume';
-import { GraduationCap, Calendar, MapPin } from 'lucide-react';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { useStaggeredAnimation } from '@/hooks/useStaggeredAnimation';
+
+const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 18, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: spring },
+};
 
 export default function Education() {
-  const { ref, isVisible } = useScrollAnimation();
-  const { getItemRef, isVisible: isCardVisible } = useStaggeredAnimation(200);
-  
   return (
-    <section id="education" className="py-20 px-4">
-      <div ref={ref} className={`max-w-6xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <div className="section-header">
-          <h2 className="text-4xl font-bold text-center">
-            <span className="gradient-text">Education</span>
-          </h2>
-        </div>
+    <Section3D id="education" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={spring}
+        className="mb-8"
+      >
+        <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">
+          Academic Foundation
+        </p>
+        <h2 className="font-display text-2xl font-bold text-[var(--text-primary)] sm:text-4xl">
+          Education
+        </h2>
+      </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {resumeData.education.map((edu, index) => (
-            <div
-              key={index}
-              ref={getItemRef(index)}
-              className={`bg-white rounded-xl p-6 card-hover border border-[#e5e5e5] transition-all duration-700 ${
-                isCardVisible(index) 
-                  ? 'opacity-100 translate-x-0 scale-100' 
-                  : index % 2 === 0 
-                    ? 'opacity-0 -translate-x-10 scale-95' 
-                    : 'opacity-0 translate-x-10 scale-95'
-              }`}
-              style={{ transitionDelay: `${index * 200}ms` }}
-            >
-              <div className="flex items-start gap-4">
-                <div className="bg-gradient-to-br from-[#1a1a1a] to-black p-3 rounded-lg">
-                  <GraduationCap className="text-white" size={24} />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-[#111827] mb-2">{edu.degree}</h3>
-                  <p className="text-[#1a1a1a] font-semibold mb-3">{edu.institution}</p>
-                  <div className="space-y-2 text-sm text-[#525252]">
-                    <div className="flex items-center gap-2">
-                      <MapPin size={16} />
-                      <span>{edu.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar size={16} />
-                      <span>{edu.period}</span>
-                    </div>
-                  </div>
-                </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {resumeData.education.map((edu, index) => (
+          <motion.div
+            key={edu.institution}
+            variants={staggerItem}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="card p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <span className="mono-accent text-[11px] tracking-[0.16em] text-[var(--accent)] uppercase font-semibold">
+                  {edu.period}
+                </span>
+                <span className="mono-accent text-[11px] text-[var(--text-muted)]">
+                  {edu.location}
+                </span>
               </div>
+              <h3 className="font-display text-lg font-bold text-[var(--text-primary)] leading-snug">
+                {edu.degree}
+              </h3>
+              <p className="text-sm font-medium text-[var(--text-muted)] mt-1">
+                {edu.institution}
+              </p>
             </div>
-          ))}
-        </div>
+            {edu.institution.includes('Southern California') && (
+              <div className="mt-4 pt-3 border-t border-white/5 flex flex-wrap gap-1.5">
+                <span className="mono-accent text-[10px] px-2.5 py-0.5 rounded bg-white/5 text-[var(--text-muted)] border border-white/5">
+                  Distributed Systems
+                </span>
+                <span className="mono-accent text-[10px] px-2.5 py-0.5 rounded bg-white/5 text-[var(--text-muted)] border border-white/5">
+                  Artificial Intelligence
+                </span>
+                <span className="mono-accent text-[10px] px-2.5 py-0.5 rounded bg-white/5 text-[var(--text-muted)] border border-white/5">
+                  Algorithms
+                </span>
+              </div>
+            )}
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </Section3D>
   );
 }
-
-

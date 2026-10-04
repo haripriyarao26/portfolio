@@ -2,14 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 
-const PARTICLE_COUNT   = 90;
-const CONNECTION_DIST  = 160;   // px — max distance to draw an edge
-const SPEED            = 0.35;  // base drift speed
-const MOUSE_RADIUS     = 120;   // px — influence radius around cursor
-const MOUSE_FORCE      = 0.018; // how strongly particles are pulled toward mouse
-const ACCENT_COLOR     = '#C9F565'; // chartreuse
-const NODE_COLOR       = 'rgba(242, 237, 228, 0.7)'; // --text-primary at 70%
-const LINE_COLOR_BASE  = 'rgba(242, 237, 228,'; // alpha appended per distance
+const PARTICLE_COUNT   = 55;
+const CONNECTION_DIST  = 130;   // px — max distance to draw an edge
+const SPEED            = 0.25;  // base drift speed
+const MOUSE_RADIUS     = 100;   // px — influence radius around cursor
+const MOUSE_FORCE      = 0.012; // how strongly particles are pulled toward mouse
+const ACCENT_COLOR     = '#2DD4BF'; // soft teal
+const NODE_COLOR       = 'rgba(156, 163, 175, 0.4)'; // subtle slate
+const LINE_COLOR_BASE  = 'rgba(156, 163, 175,'; // alpha appended per distance
 
 type Particle = {
   x: number;

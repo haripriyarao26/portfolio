@@ -20,79 +20,64 @@ type RoleMeta = {
 };
 
 const roleMeta: Record<string, RoleMeta> = {
-  'JPMorgan Chase & Co. (via Think41)|AI Consultant — Trust & Estate, Wealth Management': {
-    milestone: 'Autonomous Wealth Workflows · Trust & Estate Compliance',
+  'JPMorgan Chase & Co. (via Think41)|Senior AI Consultant': {
+    milestone: 'Regulated Financial AI Workflows · Golden Dataset Evals',
     narrative:
-      'Engineering autonomous Agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance for complex Trust & Estate wealth structures within the wealth management division.',
-    impactTags: ['Agentic AI Workflows', 'Fiduciary Compliance', 'Document Analysis', 'Wealth Management'],
+      'Accelerating LLM extraction latency by 52% (40.8s to 19.6s) at 95% field agreement by deploying GPT-5.5 and creating automated A/B golden-dataset regression comparison tooling.',
+    impactTags: ['52% Latency Drop (40.8s → 19.6s)', '95% Field Agreement', '100% Thread Resolution (8/8)', 'GPT-5.5'],
     scope:
-      'Designing and deploying autonomous agent architectures for complex multi-tiered legal document extraction, entity verification, and automated fiduciary policy validation.',
+      'Designing and deploying autonomous agent architectures for regulated financial document extraction, entity verification, and fiduciary compliance.',
     productDecision:
-      'Implemented deterministic multi-agent verification loops to guarantee compliance accuracy and auditability across sensitive trust and estate portfolios.',
+      'Resolved 100% of thread misclassifications (8/8) across 5–6 level nested forwards with zero false positives via targeted prompt overrides and adversarial test suites.',
     stackGroups: [
-      { label: 'Infra', values: ['Enterprise Cloud', 'Secure Workflows'] },
-      { label: 'Logic', values: ['Agentic Workflows', 'Claude / LLM Orchestration', 'Python', 'Compliance Engine'] },
-      { label: 'UX',    values: ['Document Intelligence', 'Review & Audit Console'] },
+      { label: 'Models', values: ['Claude', 'GPT-5.5', 'Anthropic API', 'MCP'] },
+      { label: 'Orch',   values: ['LangGraph', 'Agentic Workflows', 'Python', 'Eval Tooling'] },
+      { label: 'Infra',  values: ['Enterprise Cloud', 'Compliance Gateways', 'A/B Regression'] },
     ],
   },
-  'Onetera Technologies|Software Engineer 2': {
-    milestone: 'Post-Seed Scale-up · Civic AI Architecture',
+  'Onetera Technologies|Software Engineer 2 / Founding Engineer': {
+    milestone: '0-to-1 Foundation & Scale · Multi-Tenant Civic AI',
     narrative:
-      'Scaled civic AI platform from seed-stage prototype to investor diligence-ready production, cutting ops costs 60–70% and resolving incidents 40% faster.',
-    impactTags: ['60–70% Ops Cost Cut', '40% MTTR Reduction', 'Support Requests −60%'],
+      'Delivered an end-to-end multi-tenant platform in 4 months with zero scope creep and 99.98% uptime, partnering with NVIDIA stakeholders and city officials across 6 roadmap phases.',
+    impactTags: ['96% Token Cost Cut (200KB → 8KB)', '40% Latency Drop', '22-Node State Machine', '99.98% Uptime', 'NVIDIA & Cities'],
     scope:
-      'Owned reliability, deployment velocity, and production observability while partnering directly with city stakeholders and internal PM teams.',
+      'Engineered recursive DFS Figma-to-React engine (100+ components, -90% scaffolding time), slashed LLM inference costs 96% for 255+ steps, and sustained 99.9% uptime with ClickHouse telemetry.',
     productDecision:
-      'Prioritized no-code program controls (Onetera Studio) so non-engineers could ship updates safely without engineering bottlenecks.',
+      'Cut per-turn orchestrator latency by 40% via a 22-node asynchronous state machine using asyncio.gather parallel scheduling to eliminate serial round-trips.',
     stackGroups: [
-      { label: 'Infra', values: ['ClickHouse', 'BetterStack', 'Vercel', 'Render'] },
-      { label: 'Logic', values: ['LangGraph', 'Agent Workflows', 'TypeScript', '.cursorrules'] },
-      { label: 'UX',    values: ['Next.js', 'Operator Console', 'Self-Serve Flows'] },
-    ],
-  },
-  'Onetera Technologies|Software Engineer 1 (Founding)': {
-    milestone: '0-to-1 Foundation · Activation Engine',
-    narrative:
-      'Took platform from zero to production with a 22-node LangGraph state machine, $1,800/mo cloud savings, and 52% latency reduction — all as founding engineer.',
-    impactTags: ['$1,800/mo Saved', '52% Latency Drop', '22-node State Machine', '99.98% Uptime'],
-    scope:
-      'Built system abstractions, migration strategy, CI/CD, and developer workflows in close loop with founder, design, and early users.',
-    productDecision:
-      'Moved from Neptune to Supabase to reduce cloud spend and simplify frontend state complexity while keeping enterprise reliability.',
-    stackGroups: [
-      { label: 'Infra', values: ['Supabase', 'CI/CD', 'Docker', 'PostgreSQL'] },
-      { label: 'Logic', values: ['LangGraph', 'Async State Machine', 'TypeScript', 'Python'] },
-      { label: 'UX',    values: ['Next.js', 'Chakra UI', 'Figma-to-React DFS Engine'] },
+      { label: 'Infra',  values: ['ClickHouse', 'Supabase', 'Redis', 'BetterStack', 'AWS', 'CI/CD'] },
+      { label: 'Logic',  values: ['LangGraph', '22-Node State Machine', 'Python', 'TypeScript'] },
+      { label: 'UX',     values: ['Next.js', 'Figma DFS Engine (100+ Components)', 'Onetera Studio'] },
     ],
   },
   'Provenir|Full Stack Engineering Intern': {
-    milestone: 'Enterprise Credit Platform · Reliability',
+    milestone: 'Enterprise Credit Platform · Reliability & QA',
     narrative:
-      'Delivered full-stack credit decisioning modules with 95% on-time deployments and 98% test pass rate across regulated enterprise workflows.',
-    impactTags: ['95% On-time Deployments', '98% Test Pass Rate'],
+      'Maintained 98% CI/CD pass rate and lowered credit risk SaaS regression defects by 40% while achieving a 95% on-time release cadence across regulated credit-decision workflows.',
+    impactTags: ['98% CI/CD Pass Rate', '40% Defect Reduction', '95% On-Time Release'],
     scope:
-      'Worked across UI, backend, and QA loops to stabilize high-risk release paths and reduce deployment regressions.',
+      'Worked across UI, backend, and automated test suites to stabilize high-risk credit-decision release paths and eliminate pre-release regressions.',
     productDecision:
-      'Resolved UI race conditions via RxJS event control to prioritize deterministic outcomes in financial user journeys.',
+      'Executed comprehensive code reviews and handled large volumes of test cases, catching potential deployment issues prior to release.',
     stackGroups: [
-      { label: 'Infra',  values: ['CI Pipelines', 'Enterprise QA'] },
-      { label: 'Logic',  values: ['Spring Boot', 'Java', 'REST APIs'] },
-      { label: 'UX',     values: ['Angular', 'RxJS', 'Form Reliability'] },
+      { label: 'Infra',  values: ['CI/CD Pipelines', 'Automated Testing', 'Quality Engineering'] },
+      { label: 'Logic',  values: ['Spring Boot', 'Java', 'REST APIs', 'PostgreSQL'] },
+      { label: 'UX',     values: ['Angular', 'RxJS', 'Dynamic Forms'] },
     ],
   },
-  'Hashedin by Deloitte (Deloitte USI)|Software Engineer 1': {
+  'Deloitte USI|Software Engineer 1': {
     milestone: 'Unified Hiring Data Layer · 4K+ Users',
     narrative:
-      'Built hiring platform modules and analytics for 4,000+ internal users, cutting query latency from 2s to 400ms across 15+ data sources.',
-    impactTags: ['4,000+ Users', '15+ Data Sources', '2s → 400ms Latency'],
+      'Consolidated 15+ data sources into a GraphQL API for 4,000 users, dropping latency from 2s to 400ms.',
+    impactTags: ['4,000+ Users', '15+ Data Sources', '2s → 400ms Latency', 'Excellency Award'],
     scope:
-      'Owned cross-module delivery for hiring and candidate experiences, plus analytics used by leadership to improve hiring visibility.',
+      'Built hiring flow modules, candidate portals, and executive analytics dashboards with ANT Design and PostgreSQL.',
     productDecision:
-      'Invested in a unified API contract first so analytics, workflow automation, and candidate UI could ship in parallel.',
+      'Consolidated disparate legacy data pipelines into a single GraphQL contract, reducing latency by 80% and earning the 2022 Excellency Award.',
     stackGroups: [
-      { label: 'Infra',  values: ['PostgreSQL Indexing', 'Unified API Layer'] },
-      { label: 'Logic',  values: ['Data Aggregation', 'Recruitment Workflows'] },
-      { label: 'UX',     values: ['React', 'ANT Design', 'Analytics Dashboard'] },
+      { label: 'Infra',  values: ['PostgreSQL Indexing', 'GraphQL API Layer'] },
+      { label: 'Logic',  values: ['Data Aggregation', 'Recruitment Workflows', 'Node.js'] },
+      { label: 'UX',     values: ['React', 'ANT Design', 'Analytics Dashboards'] },
     ],
   },
 };

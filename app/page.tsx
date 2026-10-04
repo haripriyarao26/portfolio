@@ -1,42 +1,82 @@
 'use client';
 
 import Link from 'next/link';
-
 import { motion, useScroll, useSpring } from 'framer-motion';
 import Section3D from '@/components/Section3D';
 import MouseSpotlight from '@/components/MouseSpotlight';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
+import TokenOptimizationCaseStudy from '@/components/TokenOptimizationCaseStudy';
+import Education from '@/components/Education';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
-
 import ParticleNetwork from '@/components/ParticleNetwork';
 
+const githubProfile = `https://${resumeData.github}`;
 
-const githubProfile = 'https://github.com/haripriyarao26';
-
-const coreStack = ['LangGraph', 'TypeScript', 'Next.js', 'Python', 'Supabase', 'ClickHouse'];
+const coreStack = [
+  'LangGraph',
+  'Claude SDK / Anthropic API',
+  'Model Context Protocol (MCP)',
+  'Python',
+  'TypeScript',
+  'Next.js',
+  'ClickHouse',
+  'Supabase',
+  'PostgreSQL',
+  'Redis'
+];
 
 const skillGroups = [
   {
-    title: 'Infrastructure',
+    title: 'Frontier AI & Orchestration',
+    icon: '⚡',
+    items: [
+      'AI Agents',
+      'Agentic Workflows',
+      'LangGraph',
+      'LangChain',
+      'Multi-Agent Systems',
+      'RAG Pipelines',
+      'Tool Use',
+      'Prompt Guardrails',
+      'AI Evaluation Frameworks'
+    ],
+  },
+  {
+    title: 'Frontier Models & SDKs',
+    icon: '🧠',
+    items: [
+      'Claude 3.5 / 3.7',
+      'GPT-5.5 / GPT-4o',
+      'Anthropic API',
+      'Model Context Protocol (MCP)',
+      'Google Gemini API'
+    ],
+  },
+  {
+    title: 'Data, Cloud & Reliability',
     icon: '🗄️',
-    items: ['AWS', 'CircleCI', 'Vercel', 'Render', 'Redis', 'PostgreSQL', 'MongoDB'],
-  },
-  {
-    title: 'Core Engine',
-    icon: '</>',
-    items: ['JavaScript', 'Node.js', 'Flask', 'Django', 'Express'],
-  },
-  {
-    title: 'Frontend Systems',
-    icon: '🧱',
-    items: ['React', 'Chakra UI', 'Bootstrap', 'HTML', 'CSS', 'GraphQL'],
+    items: [
+      'PostgreSQL',
+      'Supabase',
+      'Redis Distributed Locks',
+      'ClickHouse Telemetry',
+      'AWS',
+      'Vercel',
+      'Render',
+      'CI/CD Canary Pipelines'
+    ],
   },
 ];
 
-const specialties = ['Agentic Orchestration', 'AST Manipulation', 'Production Observability'];
+const specialties = [
+  'Multi-Agent Orchestration',
+  'Token-Cost Optimization',
+  'AST Manipulation & Code Gen',
+  'Production Observability & Evals'
+];
 
 const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
 const staggerContainer = {
@@ -58,33 +98,62 @@ export default function Home() {
       <ParticleNetwork />
       <MouseSpotlight />
 
-      {/* Scroll progress — thin chartreuse (accent use #1) */}
+      {/* Scroll progress bar */}
       <motion.div
         style={{ scaleX: progressScale }}
         className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left progress-bar"
       />
 
-      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(92vw,900px)] -translate-x-1/2 rounded-full px-4 sm:px-6 py-3">
-        <nav className="flex items-center justify-between text-xs text-[var(--text-muted)] sm:text-sm">
-          <div className="shrink-0">
-            <span className="font-display font-bold text-sm sm:text-xl text-[var(--text-primary)] tracking-wider uppercase">
+      {/* Glass navigation */}
+      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(94vw,980px)] -translate-x-1/2 rounded-full px-5 py-2.5">
+        <nav className="flex items-center justify-between text-xs sm:text-sm">
+          <div className="shrink-0 flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-teal-400 shadow-[0_0_8px_rgba(45,212,191,0.8)]" />
+            <span className="font-bold text-sm sm:text-base text-white tracking-tight">
               {resumeData.name}
             </span>
           </div>
+
           {/* Desktop nav */}
-          <div className="hidden sm:flex items-center gap-4">
-            <a href="#certifications" className="nav-link transition-colors">Certs</a>
-            <a href="#impact" className="nav-link transition-colors">Impact</a>
-            <a href="#timeline-momentum" className="nav-link transition-colors">Experience</a>
-            <a href="#projects" className="nav-link transition-colors">Projects</a>
-            <a href="#contact" className="nav-link transition-colors">Contact</a>
-            <a href="#contact" className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#33FFEB] transition-colors whitespace-nowrap">
+          <div className="hidden md:flex items-center gap-5 text-zinc-300">
+            <a href="#case-study" className="nav-link transition-colors hover:text-white">Deep Dive</a>
+            <a href="#timeline-momentum" className="nav-link transition-colors hover:text-white">Experience</a>
+            <a href="#projects" className="nav-link transition-colors hover:text-white">Projects</a>
+            <a href="#education" className="nav-link transition-colors hover:text-white">Education</a>
+            <a href="#certifications" className="nav-link transition-colors hover:text-white">Certs</a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border border-white/15 bg-white/5 hover:border-teal-400/40 hover:text-teal-300 text-zinc-200 transition-all"
+            >
+              <svg className="w-3.5 h-3.5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Resume (PDF)
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-teal-400 text-zinc-950 hover:bg-teal-300 transition-all shadow-[0_0_16px_rgba(45,212,191,0.25)]"
+            >
               Get in Touch
             </a>
           </div>
-          {/* Mobile nav — just CTA */}
-          <div className="flex sm:hidden items-center gap-2">
-            <a href="#contact" className="inline-flex items-center justify-center px-3 py-1.5 text-[11px] font-bold rounded-full bg-[var(--accent)] text-[#0F0E0D] hover:bg-[#33FFEB] transition-colors whitespace-nowrap">
+
+          {/* Mobile nav */}
+          <div className="flex md:hidden items-center gap-2">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-full border border-white/20 bg-white/5 text-zinc-200"
+            >
+              Resume (PDF)
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center px-3 py-1 text-[11px] font-bold rounded-full bg-teal-400 text-zinc-950"
+            >
               Contact
             </a>
           </div>
@@ -94,77 +163,10 @@ export default function Home() {
       {/* ── Hero ── */}
       <StoryCanvasSequence
         name={resumeData.name}
-        tagline="Building production-grade agentic systems, retrieval pipelines, and full-stack AI interfaces — from orchestration logic to user-facing product — for enterprise financial and civic infrastructure."
+        tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
       />
 
-      {/* ── Certifications ── */}
-      <Section3D id="certifications" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-          className="mb-8"
-        >
-          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Credentials &amp; Badges</p>
-          <h2 className="font-display text-2xl font-bold text-[var(--text-primary)] sm:text-4xl">
-            Certifications
-          </h2>
-        </motion.div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {/* Card 1: CCA-F */}
-          <motion.div
-            variants={staggerItem}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="card p-5 sm:p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-row items-center justify-between gap-4"
-          >
-            <div className="min-w-0">
-              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Anthropic</span>
-              <h3 className="font-display text-sm sm:text-base font-bold text-[var(--text-primary)] mt-1 leading-tight">
-                Claude Certified Architect – Foundations (CCA-F)
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] mt-1">Agentic Workflows, Tool Use &amp; LLM Architecture</p>
-            </div>
-            <a
-              href="https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile"
-              target="_blank"
-              rel="noreferrer"
-              className="mono-accent shrink-0 rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 hover:bg-[var(--accent)]/20 px-3 py-1.5 text-[11px] font-bold text-[var(--accent)] tracking-wide transition-colors whitespace-nowrap"
-            >
-              CCA-F ↗
-            </a>
-          </motion.div>
-
-          {/* Card 2: AWS AI Practitioner */}
-          <motion.div
-            variants={staggerItem}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="card p-5 sm:p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-row items-center justify-between gap-4"
-          >
-            <div className="min-w-0">
-              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Amazon Web Services</span>
-              <h3 className="font-display text-sm sm:text-base font-bold text-[var(--text-primary)] mt-1 leading-tight">
-                AWS Certified AI Practitioner
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] mt-1">AI/ML Fundamentals &amp; Generative AI Systems</p>
-            </div>
-            <a
-              href="https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url"
-              target="_blank"
-              rel="noreferrer"
-              className="mono-accent shrink-0 rounded-full border border-white/20 bg-white/5 hover:border-[var(--accent)]/40 px-3 py-1.5 text-[11px] font-semibold text-[var(--text-primary)]/90 tracking-wide transition-colors whitespace-nowrap"
-            >
-              AWS ↗
-            </a>
-          </motion.div>
-        </div>
-      </Section3D>
-
-      {/* ── Impact ── */}
+      {/* ── Impact & Stakeholder Outcomes ── */}
       <Section3D id="impact" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-24">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -173,21 +175,30 @@ export default function Home() {
           transition={spring}
           className="mb-10"
         >
+          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Production Velocity</p>
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
             Outcomes at scale
           </h2>
           <p className="mt-4 max-w-3xl text-[15px] sm:text-base text-[var(--text-muted)] leading-relaxed">
-            I don&apos;t build infrastructure in a vacuum; I own the complete lifecycle by working directly with our users. At Onetera, I collaborated closely with <strong>city officials</strong> to translate their operational needs into exact technical specs. I then developed and tested the distributed AI infrastructure from the ground up, personally running live product demos to gather raw, unfiltered feedback. By taking those insights straight back to the codebase and iterating rapidly, I ensured the high-performance systems I shipped didn't just scale beautifully on paper, but delivered real, everyday value to the cities relying on them.
+            I partner directly with cross-functional stakeholders — from <strong>NVIDIA engineers</strong> to <strong>city officials across 6 roadmap phases</strong> — translating complex operational requirements into deterministic, high-throughput AI pipelines. By owning the complete lifecycle from multi-agent orchestration and AST parsers to real-time ClickHouse telemetry, I ensure systems maintain strict data consistency and sub-second execution under peak production load.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 px-5 py-2.5 text-sm font-semibold text-[var(--accent)] transition hover:bg-[var(--accent)]/20"
+            >
+              Download Resume (PDF)
+            </a>
             <Link
               href={githubProfile}
               target="_blank"
               rel="noreferrer"
               className="rounded-full border border-[var(--border)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
             >
-              GitHub
+              GitHub Profile
             </Link>
             <Link
               href={`https://${resumeData.linkedin}`}
@@ -195,12 +206,12 @@ export default function Home() {
               rel="noreferrer"
               className="rounded-full border border-[var(--border)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
             >
-              LinkedIn
+              LinkedIn Profile
             </Link>
           </div>
         </motion.div>
 
-        {/* Impact Row — 2-col on mobile, 4-col on desktop */}
+        {/* Impact Row */}
         <motion.div
           className="grid gap-4 grid-cols-2 lg:grid-cols-4"
           variants={staggerContainer}
@@ -213,17 +224,22 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-5 sm:p-8 will-change-transform flex flex-col"
+            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between"
           >
-            <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-6xl mb-3">
-              96%
-            </p>
-            <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
-              Token Cost Cut
-            </h3>
-            <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
-              Multi-agent workflow optimization — restructured orchestration to cache and route nested state trees.
-            </p>
+            <div>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl mb-3">
+                96%
+              </p>
+              <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+                Token Cost Cut
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
+                Slashed payload from 200KB to 8KB per call, unlocking 255+ agentic program steps.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[var(--accent)]">
+              200KB → 8KB / call
+            </div>
           </motion.article>
 
           {/* Card 2 */}
@@ -231,17 +247,22 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-5 sm:p-8 will-change-transform flex flex-col"
+            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between"
           >
-            <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-6xl mb-3">
-              40%
-            </p>
-            <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
-              Latency Drop
-            </h3>
-            <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
-              Measured in production after async execution redesign and model endpoint load-balancing.
-            </p>
+            <div>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl mb-3">
+                40%
+              </p>
+              <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+                Latency Drop
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
+                Measured in production via a 22-node asynchronous state machine with parallel scheduling.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[var(--accent)]">
+              22-node async DAG
+            </div>
           </motion.article>
 
           {/* Card 3 */}
@@ -249,17 +270,22 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-5 sm:p-8 will-change-transform flex flex-col"
+            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between"
           >
-            <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-6xl mb-3">
-              22
-            </p>
-            <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
-              State Nodes
-            </h3>
-            <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
-              State-machine architecture powering production orchestration and agentic workflow execution.
-            </p>
+            <div>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl mb-3">
+                52%
+              </p>
+              <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+                Extraction Speedup
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
+                Accelerated LLM extraction (40.8s to 19.6s) at 95% field agreement via golden dataset evals.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[var(--accent)]">
+              40.8s → 19.6s (95% agree)
+            </div>
           </motion.article>
 
           {/* Card 4 */}
@@ -267,47 +293,33 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-5 sm:p-8 will-change-transform flex flex-col"
+            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between"
           >
-            <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-6xl mb-3">
-              5K+
-            </p>
-            <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
-              Concurrent Users
-            </h3>
-            <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
-              Agentic platform scale with real-time state synchronization under peak municipal traffic.
-            </p>
+            <div>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl mb-3">
+                99.98%
+              </p>
+              <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
+                Platform Uptime
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
+                Delivered multi-tenant platform with zero scope creep across 6 roadmap phases.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[var(--accent)]">
+              ClickHouse telemetry
+            </div>
           </motion.article>
         </motion.div>
       </Section3D>
 
-      {/* ── Story / About ── */}
-      <Section3D className="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-14">
-        <div className="max-w-[720px] mx-auto">
-          <motion.article
-            variants={staggerItem}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="card p-6 sm:p-10 border border-white/10 relative overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 h-24 w-24 bg-[var(--accent)]/5 blur-2xl rounded-full" />
-            <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[var(--accent)] animate-pulse" />
-              My Story
-            </h3>
-            <p className="text-base sm:text-lg leading-relaxed text-[var(--text-primary)]/90 font-light">
-              Originally from Bangalore, India and based in the United States. USC CS Master&apos;s graduate specializing in distributed AI systems and agentic infrastructure. At Onetera, I scaled civic AI from a 0-to-1 prototype to investor-ready production systems — cutting orchestration costs 96% and latency 40%. I&apos;m now an AI Consultant at JPMorgan Chase (via Think41), engineering autonomous Trust &amp; Estate document analysis workflows within the wealth management division. Claude Certified Architect (CCA-F).
-            </p>
-          </motion.article>
-        </div>
-      </Section3D>
+      {/* ── Deep Dive Case Study ── */}
+      <TokenOptimizationCaseStudy />
 
-      {/* ── Timeline ── */}
+      {/* ── Career Timeline ── */}
       <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
 
-      {/* ── Projects ── */}
+      {/* ── Projects & Open Source ── */}
       <Section3D id="projects" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-28">
         <motion.div
           className="mb-10"
@@ -316,14 +328,18 @@ export default function Home() {
           viewport={{ once: true }}
           transition={spring}
         >
+          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Code &amp; Contributions</p>
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-            Featured Production &amp; Open Source Work
+            Projects &amp; Open Source Contributions
           </h2>
+          <p className="mt-3 text-base text-[var(--text-muted)] max-w-2xl">
+            Official contributions to frontier model cookbooks, LangChain security mitigations, and autonomous agent swarms.
+          </p>
         </motion.div>
         <StoryProjectGrid projects={projects} />
       </Section3D>
 
-      {/* ── Skills ── */}
+      {/* ── Skills & Frontier Stack ── */}
       <Section3D className="mx-auto max-w-6xl px-4 sm:px-6 pb-16 sm:pb-20">
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Left Column: Core Focus & Tech */}
@@ -340,13 +356,13 @@ export default function Home() {
                 Engineering Stack
               </h2>
               <p className="mt-4 text-[15px] text-[var(--text-muted)] leading-relaxed max-w-md">
-                Specialized in building low-latency distributed systems, agentic AI architectures, and resilient developer infrastructure.
+                Focused on low-latency multi-agent orchestration, evaluation harnesses, and deterministic production AI infrastructure.
               </p>
             </div>
 
             {/* Specialties */}
             <div>
-              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Specialties</p>
+              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Core Specialties</p>
               <div className="flex flex-wrap gap-2">
                 {specialties.map(item => (
                   <span
@@ -361,12 +377,12 @@ export default function Home() {
 
             {/* Core Stack */}
             <div>
-              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Core Stack</p>
+              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Primary Tech</p>
               <div className="flex flex-wrap gap-2.5">
                 {coreStack.map(skill => (
                   <span
                     key={skill}
-                    className="mono-accent rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/5 px-5 py-2 text-sm font-semibold text-[var(--accent)] tracking-wide hover:bg-[var(--accent)]/10 transition-colors"
+                    className="mono-accent rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/5 px-4 py-1.5 text-xs sm:text-sm font-semibold text-[var(--accent)] tracking-wide hover:bg-[var(--accent)]/10 transition-colors"
                   >
                     {skill}
                   </span>
@@ -375,7 +391,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Right Column: Skill Groups / Proficiencies */}
+          {/* Right Column: Frontier Skill Groups */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -383,7 +399,7 @@ export default function Home() {
             transition={spring}
             className="space-y-6"
           >
-            <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-2">Also proficient in</p>
+            <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-2">Domain Competencies</p>
 
             <div className="space-y-4">
               {skillGroups.map(group => (
@@ -391,7 +407,7 @@ export default function Home() {
                   key={group.title}
                   whileHover={{ x: 4 }}
                   transition={spring}
-                  className="card p-5 border border-white/5 bg-[#131316] flex flex-col justify-center"
+                  className="card p-5 border border-white/10 bg-[#131316] flex flex-col justify-center"
                 >
                   <h3 className="font-display text-base font-semibold text-[var(--text-primary)] flex items-center gap-2">
                     <span className="text-lg">{group.icon}</span>
@@ -401,7 +417,7 @@ export default function Home() {
                     {group.items.map(skill => (
                       <span
                         key={`${group.title}-${skill}`}
-                        className="mono-accent rounded border border-white/5 bg-white/[0.02] px-2.5 py-1 text-xs text-[var(--text-muted)] hover:border-white/10 hover:text-[var(--text-primary)] transition-colors"
+                        className="mono-accent rounded border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-[var(--text-muted)] hover:border-white/20 hover:text-[var(--text-primary)] transition-colors"
                       >
                         {skill}
                       </span>
@@ -414,6 +430,76 @@ export default function Home() {
         </div>
       </Section3D>
 
+      {/* ── Education ── */}
+      <Education />
+
+      {/* ── Certifications ── */}
+      <Section3D id="certifications" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+          className="mb-8"
+        >
+          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Verified Badges</p>
+          <h2 className="font-display text-2xl font-bold text-[var(--text-primary)] sm:text-4xl">
+            Certifications
+          </h2>
+        </motion.div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {/* Card 1: CCA-F */}
+          <motion.div
+            variants={staggerItem}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="card p-6 border border-[var(--accent)]/30 hover:border-[var(--accent)]/60 transition-colors flex flex-row items-center justify-between gap-4"
+          >
+            <div className="min-w-0">
+              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-bold">Anthropic</span>
+              <h3 className="font-display text-sm sm:text-base font-bold text-[var(--text-primary)] mt-1 leading-tight">
+                Claude Certified Architect – Foundations (CCA-F)
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] mt-1">Agentic Workflows, Tool Use, Prompt Guardrails &amp; LLM Architecture</p>
+            </div>
+            <a
+              href="https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile"
+              target="_blank"
+              rel="noreferrer"
+              className="mono-accent shrink-0 rounded-full border border-[var(--accent)]/50 bg-[var(--accent)]/15 hover:bg-[var(--accent)]/25 px-3 py-1.5 text-[11px] font-bold text-[var(--accent)] tracking-wide transition-colors whitespace-nowrap"
+            >
+              CCA-F ↗
+            </a>
+          </motion.div>
+
+          {/* Card 2: AWS AI Practitioner */}
+          <motion.div
+            variants={staggerItem}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="card p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-row items-center justify-between gap-4"
+          >
+            <div className="min-w-0">
+              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Amazon Web Services</span>
+              <h3 className="font-display text-sm sm:text-base font-bold text-[var(--text-primary)] mt-1 leading-tight">
+                AWS Certified AI Practitioner
+              </h3>
+              <p className="text-xs text-[var(--text-muted)] mt-1">AI/ML Fundamentals, Generative AI Systems &amp; Responsible AI</p>
+            </div>
+            <a
+              href="https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url"
+              target="_blank"
+              rel="noreferrer"
+              className="mono-accent shrink-0 rounded-full border border-white/20 bg-white/5 hover:border-[var(--accent)]/40 px-3 py-1.5 text-[11px] font-semibold text-[var(--text-primary)]/90 tracking-wide transition-colors whitespace-nowrap"
+            >
+              AWS ↗
+            </a>
+          </motion.div>
+        </div>
+      </Section3D>
+
       {/* ── Contact ── */}
       <Section3D id="contact" className="relative overflow-hidden px-4 sm:px-6 pt-6 pb-28">
         <motion.div
@@ -421,17 +507,32 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={spring}
-          className="mx-auto max-w-3xl card p-10 sm:p-14 text-center"
+          className="mx-auto max-w-3xl card p-10 sm:p-14 text-center border border-white/10"
         >
-          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl mb-4">
+          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl mb-3">
             Let&apos;s build together
           </h2>
+          <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-xl mx-auto mb-8">
+            Available for Senior AI Engineer, Founding Engineer, and Applied AI roles. Based in the San Francisco Bay Area.
+          </p>
+
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <a
               href={`mailto:${resumeData.email}`}
               className="btn-primary"
             >
-              Email me
+              Email ({resumeData.email})
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 px-5 py-2.5 text-sm font-semibold text-[var(--accent)] hover:bg-[var(--accent)]/20 transition-all"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download Resume (PDF)
             </a>
             <Link
               href={`https://${resumeData.linkedin}`}
@@ -439,12 +540,15 @@ export default function Home() {
               rel="noreferrer"
               className="btn-secondary"
             >
-              LinkedIn
+              LinkedIn Profile
             </Link>
           </div>
-          <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--text-primary)] uppercase mt-2">
-            Open to AI/ML &amp; SWE roles · H1-B cap-exempt
-          </p>
+
+          <div className="border-t border-white/10 pt-6">
+            <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--accent)] uppercase font-semibold">
+              San Francisco Bay Area &middot; Cap-Exempt H-1B (Eligible for Immediate Transfer)
+            </p>
+          </div>
         </motion.div>
       </Section3D>
     </main>

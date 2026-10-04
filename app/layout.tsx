@@ -23,8 +23,43 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Haripriya Rao — Applied AI Engineer',
-  description: 'Haripriya Rao — Applied AI Product Engineer specializing in agentic workflows, RAG pipelines, and full-stack AI systems. Claude Certified Architect (CCA-F). Open to AI/ML and SWE opportunities.',
+  metadataBase: new URL('https://haripriyarao26.github.io'),
+  title: 'Haripriya Rao — Applied AI & Founding Engineer',
+  description: 'Applied AI and Full-Stack Founding Engineer specializing in multi-agent orchestration (LangGraph, Claude SDK, Anthropic API, MCP), token optimization (96% cost cut), and production systems at 99.98% uptime.',
+  keywords: [
+    'Haripriya Rao',
+    'Applied AI Engineer',
+    'LangGraph',
+    'Multi-Agent Systems',
+    'Claude Certified Architect',
+    'CCA-F',
+    'Agentic AI',
+    'Founding Engineer',
+    'San Francisco Bay Area AI'
+  ],
+  authors: [{ name: 'Haripriya Rao', url: 'https://haripriyarao26.github.io/portfolio' }],
+  openGraph: {
+    title: 'Haripriya Rao — Applied AI & Founding Engineer',
+    description: 'I cut LLM inference costs 96% and orchestration latency 40% in production agent systems. Claude Certified Architect (CCA-F), AWS Certified AI Practitioner.',
+    url: 'https://haripriyarao26.github.io/portfolio',
+    siteName: 'Haripriya Rao Portfolio',
+    images: [
+      {
+        url: '/linkedin-banner.png',
+        width: 1200,
+        height: 630,
+        alt: 'Haripriya Rao — Applied AI Engineer',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Haripriya Rao — Applied AI & Founding Engineer',
+    description: 'Applied AI Engineer specializing in multi-agent orchestration, token optimization, and high-uptime production systems.',
+    images: ['/linkedin-banner.png'],
+  },
 }
 
 export default function RootLayout({
@@ -41,4 +76,3 @@ export default function RootLayout({
     </html>
   )
 }
-
