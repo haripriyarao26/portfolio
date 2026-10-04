@@ -8,10 +8,10 @@ type StoryProjectGridProps = {
 };
 
 const gradients = [
-  'from-cyan-500/10 via-transparent to-transparent',
-  'from-teal-500/10 via-transparent to-transparent',
-  'from-sky-500/10 via-transparent to-transparent',
-  'from-emerald-500/10 via-transparent to-transparent',
+  'from-amber-500/10 via-transparent to-transparent',
+  'from-[#E07A5F]/10 via-transparent to-transparent',
+  'from-orange-500/10 via-transparent to-transparent',
+  'from-amber-600/10 via-transparent to-transparent',
 ];
 
 const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
@@ -55,13 +55,13 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                 y: -6,
                 scale: 1.01,
                 boxShadow: isFeatured 
-                  ? '0 30px 80px rgba(0, 229, 204, 0.18)' 
-                  : '0 30px 80px rgba(0, 229, 204, 0.08)',
+                  ? '0 30px 80px rgba(224, 122, 95, 0.18)' 
+                  : '0 30px 80px rgba(224, 122, 95, 0.08)',
               }}
               transition={spring}
               className="card-3d-surface glass-premium group relative h-full min-h-[460px] overflow-hidden rounded-3xl p-7 sm:p-8 flex flex-col justify-between"
               style={{
-                borderColor: isFeatured ? 'rgba(0, 229, 204, 0.35)' : 'var(--border)',
+                borderColor: isFeatured ? 'rgba(224, 122, 95, 0.35)' : 'var(--border)',
                 borderWidth: isFeatured ? '1.5px' : '1px',
               }}
             >

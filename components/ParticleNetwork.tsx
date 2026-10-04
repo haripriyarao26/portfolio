@@ -7,9 +7,9 @@ const CONNECTION_DIST  = 130;   // px — max distance to draw an edge
 const SPEED            = 0.25;  // base drift speed
 const MOUSE_RADIUS     = 100;   // px — influence radius around cursor
 const MOUSE_FORCE      = 0.012; // how strongly particles are pulled toward mouse
-const ACCENT_COLOR     = '#2DD4BF'; // soft teal
-const NODE_COLOR       = 'rgba(156, 163, 175, 0.4)'; // subtle slate
-const LINE_COLOR_BASE  = 'rgba(156, 163, 175,'; // alpha appended per distance
+const ACCENT_COLOR     = '#E07A5F'; // warm terracotta coral
+const NODE_COLOR       = 'rgba(166, 159, 148, 0.35)'; // warm slate
+const LINE_COLOR_BASE  = 'rgba(166, 159, 148,'; // alpha appended per distance
 
 type Particle = {
   x: number;

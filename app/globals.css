@@ -5,18 +5,20 @@
 
 /* ── Design Tokens ───────────────────── */
 :root {
-  /* Color palette — sleek dark obsidian base */
-  --bg-dark:        #090A0F;
-  --bg-card:        #11131A;
-  --text-primary:   #F9FAFB;
-  --text-muted:     #9CA3AF;
-  --border:         rgba(255, 255, 255, 0.08);
-  --accent:         #2DD4BF;   /* Refined modern teal */
+  /* Color palette — Anthropic Warm Obsidian base */
+  --bg-dark:        #0E0D13;
+  --bg-card:        #181620;
+  --text-primary:   #F9F6F0;
+  --text-muted:     #A69F94;
+  --border:         rgba(249, 246, 240, 0.08);
+  --accent:         #E07A5F;   /* Anthropic signature warm terracotta coral */
+  --accent-light:   #F4A261;   /* Warm amber */
+  --accent-cream:   #F5EBE1;   /* Soft warm cream */
 
   /* Legacy aliases */
-  --primary:        #F9FAFB;
-  --primary-dark:   #9CA3AF;
-  --secondary:      #11131A;
+  --primary:        #F9F6F0;
+  --primary-dark:   #A69F94;
+  --secondary:      #181620;
 
   /* Typography — Clean Inter / Modern Sans */
   --font-display:   var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -48,7 +50,7 @@ body {
   min-height: 100dvh;
 }
 
-/* Subtle fixed grid texture */
+/* Subtle fixed warm grid texture */
 body::before {
   content: '';
   position: fixed;
@@ -56,10 +58,11 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(45, 212, 191, 0.08) 0%, transparent 50%),
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 100% 100%, 48px 48px, 48px 48px;
+    radial-gradient(circle at 50% 0%, rgba(224, 122, 95, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 85% 30%, rgba(244, 162, 97, 0.06) 0%, transparent 45%),
+    linear-gradient(rgba(249, 246, 240, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249, 246, 240, 0.018) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
 }
 
 /* ── Scrollbar ───────────────────────── */
@@ -82,7 +85,7 @@ h1, h2, h3,
 
 /* ── Cards ───────────────────────────── */
 .card {
-  background: rgba(17, 19, 26, 0.75);
+  background: rgba(24, 22, 32, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-card);
@@ -90,7 +93,7 @@ h1, h2, h3,
 }
 
 .glass-premium {
-  background: rgba(17, 19, 26, 0.75);
+  background: rgba(24, 22, 32, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-card);
@@ -98,7 +101,7 @@ h1, h2, h3,
 }
 
 .glass-card {
-  background: rgba(17, 19, 26, 0.75);
+  background: rgba(24, 22, 32, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-card);
@@ -106,12 +109,80 @@ h1, h2, h3,
 }
 
 .glass-nav {
-  background: rgba(11, 12, 16, 0.82);
+  background: rgba(14, 13, 19, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(249, 246, 240, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
+
+/* ── Card hover ── */
+.card-hover {
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.35s ease;
+  will-change: transform;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(224, 122, 95, 0.3);
+}
+
+/* ── Accent ─── */
+.accent-text  { color: var(--accent); }
+.accent-border { border-color: var(--accent); }
+
+/* ── Buttons ────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #121016;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.2s ease,
+              background 0.2s ease;
+  will-change: transform;
+  text-decoration: none;
+}
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 24px rgba(224, 122, 95, 0.4), 0 4px 16px rgba(0,0,0,0.4);
+  background: #E8886E;
+}
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: 1px solid rgba(249, 246, 240, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.2s ease,
+              background 0.2s ease;
+  will-change: transform;
+  text-decoration: none;
+}
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: rgba(224, 122, 95, 0.4);
+  background: rgba(224, 122, 95, 0.06);
+}
+.btn-secondary:active { transform: scale(0.98); }
 
 /* ── Card hover — subtle 3D lift only ── */
 .card-hover {

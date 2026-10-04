@@ -54,7 +54,7 @@ export default function TokenOptimizationCaseStudy() {
             onClick={() => setActiveTab(tab.id as any)}
             className={`mono-accent px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${
               activeTab === tab.id
-                ? 'bg-[var(--accent)] text-[#0F0E0D] shadow-[0_4px_16px_rgba(0,229,204,0.3)]'
+                ? 'bg-[#E07A5F] text-[#0E0D13] shadow-[0_4px_16px_rgba(224,122,95,0.35)]'
                 : 'border border-white/10 bg-white/5 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-white/20'
             }`}
           >
@@ -186,7 +186,7 @@ export default function TokenOptimizationCaseStudy() {
                   <span className="mono-accent text-xs text-[var(--accent)] font-semibold uppercase">After: TOON Compressed Array</span>
                   <span className="mono-accent text-xs text-[var(--accent)]">~8,000 bytes (-96%)</span>
                 </div>
-                <div className="rounded-xl border border-[var(--accent)]/30 bg-black/60 p-4 font-mono text-xs text-cyan-200/90 overflow-x-auto h-64">
+                <div className="rounded-xl border border-[var(--accent)]/30 bg-black/60 p-4 font-mono text-xs text-amber-200/90 overflow-x-auto h-64">
                   <pre>{`# TOON (Token-Optimized Object Notation)
 # ID | TYPE | CONDITION_RULE | TARGET_SECTION
 s01 | SELECT | age >= 18 -> show(s04, s05)

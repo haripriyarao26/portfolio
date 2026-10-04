@@ -108,33 +108,33 @@ export default function Home() {
       <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(94vw,980px)] -translate-x-1/2 rounded-full px-5 py-2.5">
         <nav className="flex items-center justify-between text-xs sm:text-sm">
           <div className="shrink-0 flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-teal-400 shadow-[0_0_8px_rgba(45,212,191,0.8)]" />
-            <span className="font-bold text-sm sm:text-base text-white tracking-tight">
+            <span className="h-2 w-2 rounded-full bg-[#E07A5F] shadow-[0_0_10px_rgba(224,122,95,0.8)]" />
+            <span className="font-bold text-sm sm:text-base text-[#FAF6F0] tracking-tight">
               {resumeData.name}
             </span>
           </div>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-5 text-zinc-300">
-            <a href="#case-study" className="nav-link transition-colors hover:text-white">Deep Dive</a>
-            <a href="#timeline-momentum" className="nav-link transition-colors hover:text-white">Experience</a>
-            <a href="#projects" className="nav-link transition-colors hover:text-white">Projects</a>
-            <a href="#education" className="nav-link transition-colors hover:text-white">Education</a>
-            <a href="#certifications" className="nav-link transition-colors hover:text-white">Certs</a>
+          <div className="hidden md:flex items-center gap-5 text-[#A69F94]">
+            <a href="#case-study" className="nav-link transition-colors hover:text-[#FAF6F0]">Deep Dive</a>
+            <a href="#timeline-momentum" className="nav-link transition-colors hover:text-[#FAF6F0]">Experience</a>
+            <a href="#projects" className="nav-link transition-colors hover:text-[#FAF6F0]">Projects</a>
+            <a href="#education" className="nav-link transition-colors hover:text-[#FAF6F0]">Education</a>
+            <a href="#certifications" className="nav-link transition-colors hover:text-[#FAF6F0]">Certs</a>
             <a
               href="/resume.pdf"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border border-white/15 bg-white/5 hover:border-teal-400/40 hover:text-teal-300 text-zinc-200 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border border-white/15 bg-white/5 hover:border-[#E07A5F]/40 hover:text-[#F4A261] text-[#FAF6F0] transition-all"
             >
-              <svg className="w-3.5 h-3.5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-3.5 h-3.5 text-[#E07A5F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               Resume (PDF)
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-teal-400 text-zinc-950 hover:bg-teal-300 transition-all shadow-[0_0_16px_rgba(45,212,191,0.25)]"
+              className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[#E07A5F] text-[#0E0D13] hover:bg-[#E8886E] transition-all shadow-[0_0_16px_rgba(224,122,95,0.3)]"
             >
               Get in Touch
             </a>
@@ -146,13 +146,13 @@ export default function Home() {
               href="/resume.pdf"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-full border border-white/20 bg-white/5 text-zinc-200"
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-full border border-white/20 bg-white/5 text-[#FAF6F0]"
             >
               Resume (PDF)
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center px-3 py-1 text-[11px] font-bold rounded-full bg-teal-400 text-zinc-950"
+              className="inline-flex items-center justify-center px-3 py-1 text-[11px] font-bold rounded-full bg-[#E07A5F] text-[#0E0D13]"
             >
               Contact
             </a>
