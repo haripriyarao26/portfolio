@@ -7,7 +7,8 @@ import MouseSpotlight from '@/components/MouseSpotlight';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
-import TokenOptimizationCaseStudy from '@/components/TokenOptimizationCaseStudy';
+import CaseStudiesSection from '@/components/CaseStudiesSection';
+import EngineeringNotes from '@/components/EngineeringNotes';
 import Education from '@/components/Education';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
@@ -15,67 +16,42 @@ import ParticleNetwork from '@/components/ParticleNetwork';
 
 const githubProfile = `https://${resumeData.github}`;
 
-const coreStack = [
-  'LangGraph',
-  'Claude SDK / Anthropic API',
-  'Model Context Protocol (MCP)',
-  'Python',
-  'TypeScript',
-  'Next.js',
-  'ClickHouse',
-  'Supabase',
-  'PostgreSQL',
-  'Redis'
-];
-
-const skillGroups = [
+const depthStack = [
   {
-    title: 'Frontier AI & Orchestration',
-    icon: '⚡',
-    items: [
-      'AI Agents',
-      'Agentic Workflows',
-      'LangGraph',
-      'LangChain',
-      'Multi-Agent Systems',
-      'RAG Pipelines',
-      'Tool Use',
-      'Prompt Guardrails',
-      'AI Evaluation Frameworks'
+    category: 'Multi-Agent Orchestration & Core Frameworks',
+    experience: '4.5+ yrs in production',
+    headline: 'Deterministic state-machine workflows, cyclic graph resolution, and tool routing.',
+    tech: [
+      { name: 'LangGraph', role: '22-node cyclic state machines, conditional routing, checkpoint persistence' },
+      { name: 'LangChain', role: 'Open-source security hardening (PR #2568), runnables, memory adapters' },
+      { name: 'Anthropic API / Claude SDK', role: 'Tool-use agents, structured JSON parsing, prompt guardrails' },
+      { name: 'Model Context Protocol (MCP)', role: 'Standardized server/client tool invocation protocols' },
+      { name: 'Google Gemini API', role: 'Multimodal analysis, Cookbooks contributor (PR #1088)' },
     ],
   },
   {
-    title: 'Frontier Models & SDKs',
-    icon: '🧠',
-    items: [
-      'Claude 3.5 / 3.7',
-      'GPT-5.5 / GPT-4o',
-      'Anthropic API',
-      'Model Context Protocol (MCP)',
-      'Google Gemini API'
+    category: 'Evaluation Harnesses & AI Reliability',
+    experience: '3+ yrs in production',
+    headline: 'Empirical regression testing, golden datasets, and latency optimization.',
+    tech: [
+      { name: 'Golden Dataset Evals', role: '100+ annotated ground-truth test suites for LLM extraction' },
+      { name: 'A/B Regression Gating', role: 'Statistical field-agreement scoring (>95% threshold)' },
+      { name: 'AST & Regex Parsers', role: 'Deterministic AST salvage layer for guaranteed JSON schema recovery' },
+      { name: 'Adversarial Test Fixtures', role: 'Stress-testing nested forward chains and circular references' },
     ],
   },
   {
-    title: 'Data, Cloud & Reliability',
-    icon: '🗄️',
-    items: [
-      'PostgreSQL',
-      'Supabase',
-      'Redis Distributed Locks',
-      'ClickHouse Telemetry',
-      'AWS',
-      'Vercel',
-      'Render',
-      'CI/CD Canary Pipelines'
+    category: 'Distributed Systems, Cloud & Observability',
+    experience: '4.5+ yrs in production',
+    headline: 'High-throughput telemetry, real-time sync, and distributed state coordination.',
+    tech: [
+      { name: 'ClickHouse', role: 'Sub-second real-time LLM telemetry and agent execution analytics' },
+      { name: 'Redis', role: 'Distributed locks, rate-limiting, and short-term state caching' },
+      { name: 'Supabase & PostgreSQL', role: 'Row-level security, pgvector semantic search, transactional storage' },
+      { name: 'Python & TypeScript', role: 'AsyncIO concurrency (asyncio.gather), Next.js App Router, Node.js' },
+      { name: 'AWS & CI/CD Pipelines', role: 'ECS, S3, IAM, GitHub Actions canary deployments (98% pass rate)' },
     ],
   },
-];
-
-const specialties = [
-  'Multi-Agent Orchestration',
-  'Token-Cost Optimization',
-  'AST Manipulation & Code Gen',
-  'Production Observability & Evals'
 ];
 
 const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
@@ -105,7 +81,7 @@ export default function Home() {
       />
 
       {/* Glass navigation */}
-      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(94vw,980px)] -translate-x-1/2 rounded-full px-5 py-2.5">
+      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(96vw,1040px)] -translate-x-1/2 rounded-full px-5 py-2.5">
         <nav className="flex items-center justify-between text-xs sm:text-sm">
           <div className="shrink-0 flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-[#E07A5F] shadow-[0_0_10px_rgba(224,122,95,0.8)]" />
@@ -115,14 +91,17 @@ export default function Home() {
           </div>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-5 text-[#A69F94]">
-            <a href="#case-study" className="nav-link transition-colors hover:text-[#FAF6F0]">Deep Dive</a>
+          <div className="hidden lg:flex items-center gap-4 text-[#A69F94]">
+            <a href="#case-studies" className="nav-link transition-colors hover:text-[#FAF6F0]">Case Studies</a>
             <a href="#timeline-momentum" className="nav-link transition-colors hover:text-[#FAF6F0]">Experience</a>
             <a href="#projects" className="nav-link transition-colors hover:text-[#FAF6F0]">Projects</a>
+            <a href="#notes" className="nav-link transition-colors hover:text-[#FAF6F0]">Notes</a>
+            <a href="#stack" className="nav-link transition-colors hover:text-[#FAF6F0]">Stack</a>
             <a href="#education" className="nav-link transition-colors hover:text-[#FAF6F0]">Education</a>
             <a href="#certifications" className="nav-link transition-colors hover:text-[#FAF6F0]">Certs</a>
             <a
-              href="/resume.pdf"
+              href="/Haripriya_Rao_Resume.pdf"
+              download="Haripriya_Rao_Resume.pdf"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border border-white/15 bg-white/5 hover:border-[#E07A5F]/40 hover:text-[#F4A261] text-[#FAF6F0] transition-all"
@@ -140,10 +119,11 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Mobile nav */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile / Tablet nav */}
+          <div className="flex lg:hidden items-center gap-2">
             <a
-              href="/resume.pdf"
+              href="/Haripriya_Rao_Resume.pdf"
+              download="Haripriya_Rao_Resume.pdf"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-full border border-white/20 bg-white/5 text-[#FAF6F0]"
@@ -166,7 +146,7 @@ export default function Home() {
         tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
       />
 
-      {/* ── Impact & Stakeholder Outcomes ── */}
+      {/* ── Aggregate Production Milestones ── */}
       <Section3D id="impact" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-24">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -175,9 +155,13 @@ export default function Home() {
           transition={spring}
           className="mb-10"
         >
-          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Production Velocity</p>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="mono-accent text-xs tracking-[0.22em] text-[#E07A5F] uppercase font-semibold">Aggregate Milestones</span>
+            <span className="text-white/20">&middot;</span>
+            <span className="mono-accent text-xs tracking-[0.16em] text-[#A69F94] uppercase">Across Production Deployments</span>
+          </div>
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-            Outcomes at scale
+            Empirical outcomes at scale
           </h2>
           <p className="mt-4 max-w-3xl text-[15px] sm:text-base text-[var(--text-muted)] leading-relaxed">
             I partner directly with cross-functional stakeholders — from <strong>NVIDIA engineers</strong> to <strong>city officials across 6 roadmap phases</strong> — translating complex operational requirements into deterministic, high-throughput AI pipelines. By owning the complete lifecycle from multi-agent orchestration and AST parsers to real-time ClickHouse telemetry, I ensure systems maintain strict data consistency and sub-second execution under peak production load.
@@ -185,7 +169,8 @@ export default function Home() {
 
           <div className="mt-6 flex flex-wrap gap-3">
             <a
-              href="/resume.pdf"
+              href="/Haripriya_Rao_Resume.pdf"
+              download="Haripriya_Rao_Resume.pdf"
               target="_blank"
               rel="noreferrer"
               className="rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 px-5 py-2.5 text-sm font-semibold text-[var(--accent)] transition hover:bg-[var(--accent)]/20"
@@ -211,7 +196,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Impact Row */}
+        {/* Flagship Aggregate Metrics Row */}
         <motion.div
           className="grid gap-4 grid-cols-2 lg:grid-cols-4"
           variants={staggerContainer}
@@ -224,10 +209,11 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between"
+            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between border border-[#E07A5F]/20 bg-gradient-to-b from-[#E07A5F]/[0.06] to-transparent"
           >
             <div>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl mb-3">
+              <span className="mono-accent text-[10px] tracking-[0.18em] text-[#E07A5F] uppercase font-bold">Onetera Inc</span>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl my-2">
                 96%
               </p>
               <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
@@ -247,10 +233,11 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between"
+            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between border border-white/10"
           >
             <div>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl mb-3">
+              <span className="mono-accent text-[10px] tracking-[0.18em] text-[#A69F94] uppercase font-semibold">Onetera Inc</span>
+              <p className="font-display font-bold leading-none text-[#F4A261] text-4xl sm:text-5xl my-2">
                 40%
               </p>
               <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
@@ -260,7 +247,7 @@ export default function Home() {
                 Measured in production via a 22-node asynchronous state machine with parallel scheduling.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[var(--accent)]">
+            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[#F4A261]">
               22-node async DAG
             </div>
           </motion.article>
@@ -270,10 +257,11 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between"
+            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between border border-[#E07A5F]/20 bg-gradient-to-b from-[#E07A5F]/[0.06] to-transparent"
           >
             <div>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl mb-3">
+              <span className="mono-accent text-[10px] tracking-[0.18em] text-[#E07A5F] uppercase font-bold">JPMorgan Chase (Think41)</span>
+              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl my-2">
                 52%
               </p>
               <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
@@ -293,10 +281,11 @@ export default function Home() {
             variants={staggerItem}
             whileHover={{ y: -4 }}
             transition={spring}
-            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between"
+            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between border border-white/10"
           >
             <div>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl mb-3">
+              <span className="mono-accent text-[10px] tracking-[0.18em] text-[#A69F94] uppercase font-semibold">City Partnerships</span>
+              <p className="font-display font-bold leading-none text-[#FAF6F0] text-4xl sm:text-5xl my-2">
                 99.98%
               </p>
               <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
@@ -306,20 +295,20 @@ export default function Home() {
                 Delivered multi-tenant platform with zero scope creep across 6 roadmap phases.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[var(--accent)]">
+            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[#FAF6F0]">
               ClickHouse telemetry
             </div>
           </motion.article>
         </motion.div>
       </Section3D>
 
-      {/* ── Deep Dive Case Study ── */}
-      <TokenOptimizationCaseStudy />
+      {/* ── 2 Flagship Case Studies (JPMorgan & Onetera) ── */}
+      <CaseStudiesSection />
 
       {/* ── Career Timeline ── */}
       <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
 
-      {/* ── Projects & Open Source ── */}
+      {/* ── Projects & Open Source (2-Tier Layout) ── */}
       <Section3D id="projects" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-28">
         <motion.div
           className="mb-10"
@@ -328,105 +317,91 @@ export default function Home() {
           viewport={{ once: true }}
           transition={spring}
         >
-          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Code &amp; Contributions</p>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="mono-accent text-xs tracking-[0.22em] text-[#E07A5F] uppercase font-semibold">Code &amp; Contributions</span>
+            <span className="text-white/20">&middot;</span>
+            <span className="mono-accent text-xs tracking-[0.16em] text-[#A69F94] uppercase">Tiered Portfolio</span>
+          </div>
           <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-            Projects &amp; Open Source Contributions
+            Open Source PRs &amp; Agent Prototypes
           </h2>
           <p className="mt-3 text-base text-[var(--text-muted)] max-w-2xl">
-            Official contributions to frontier model cookbooks, LangChain security mitigations, and autonomous agent swarms.
+            Merged contributions to official Google &amp; OpenAI ecosystem repositories, backed by autonomous developer agent swarms.
           </p>
         </motion.div>
         <StoryProjectGrid projects={projects} />
       </Section3D>
 
-      {/* ── Skills & Frontier Stack ── */}
-      <Section3D className="mx-auto max-w-6xl px-4 sm:px-6 pb-16 sm:pb-20">
-        <div className="grid gap-12 lg:grid-cols-2">
-          {/* Left Column: Core Focus & Tech */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={spring}
-            className="space-y-8"
-          >
-            <div>
-              <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Technical focus</p>
-              <h2 className="font-display text-3xl font-extrabold text-[var(--text-primary)] sm:text-5xl">
-                Engineering Stack
-              </h2>
-              <p className="mt-4 text-[15px] text-[var(--text-muted)] leading-relaxed max-w-md">
-                Focused on low-latency multi-agent orchestration, evaluation harnesses, and deterministic production AI infrastructure.
-              </p>
-            </div>
+      {/* ── Engineering Notes: How I Think About Systems ── */}
+      <EngineeringNotes />
 
-            {/* Specialties */}
-            <div>
-              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Core Specialties</p>
-              <div className="flex flex-wrap gap-2">
-                {specialties.map(item => (
-                  <span
-                    key={item}
-                    className="mono-accent rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-[var(--text-primary)] uppercase tracking-wider"
-                  >
-                    {item}
+      {/* ── Additive Engineering Stack & Production Depth ── */}
+      <Section3D id="stack" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+          className="mb-10"
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <span className="mono-accent text-xs tracking-[0.22em] text-[#E07A5F] uppercase font-semibold">Technical Mastery</span>
+            <span className="text-white/20">&middot;</span>
+            <span className="mono-accent text-xs tracking-[0.16em] text-[#A69F94] uppercase">Production Depth</span>
+          </div>
+          <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-[#FAF6F0] tracking-tight">
+            Engineering Stack &amp; Production Context
+          </h2>
+          <p className="mt-3 text-base text-[#A69F94] max-w-2xl">
+            A granular breakdown of architectural depth, years in production, and real-world system responsibilities for each core technology.
+          </p>
+        </motion.div>
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          {depthStack.map((category, idx) => (
+            <motion.div
+              key={category.category}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ ...spring, delay: idx * 0.1 }}
+              className="card p-6 sm:p-7 border border-white/10 bg-[#131217] flex flex-col justify-between hover:border-[#E07A5F]/40 transition-colors"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="mono-accent text-[11px] font-bold text-[#E07A5F] uppercase tracking-wider">
+                    {category.experience}
                   </span>
-                ))}
+                  <span className="mono-accent text-[10px] text-white/30 font-mono">0{idx + 1}</span>
+                </div>
+                <h3 className="font-display text-lg font-bold text-[#FAF6F0] mb-2 leading-snug">
+                  {category.category}
+                </h3>
+                <p className="text-xs text-[#A69F94] mb-6 leading-relaxed">
+                  {category.headline}
+                </p>
+
+                <div className="space-y-3.5 border-t border-white/5 pt-5">
+                  {category.tech.map(item => (
+                    <div key={item.name} className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#E07A5F]" />
+                        <span className="font-display text-xs font-bold text-[#FAF6F0]">{item.name}</span>
+                      </div>
+                      <p className="text-[11px] text-[#8C857A] pl-3.5 leading-normal">
+                        {item.role}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Core Stack */}
-            <div>
-              <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-3">Primary Tech</p>
-              <div className="flex flex-wrap gap-2.5">
-                {coreStack.map(skill => (
-                  <span
-                    key={skill}
-                    className="mono-accent rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/5 px-4 py-1.5 text-xs sm:text-sm font-semibold text-[var(--accent)] tracking-wide hover:bg-[var(--accent)]/10 transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
+              <div className="mt-6 pt-4 border-t border-white/5 text-[11px] font-mono text-[#F4A261] flex items-center justify-between">
+                <span>Production Grade</span>
+                <span>Verified</span>
               </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Frontier Skill Groups */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={spring}
-            className="space-y-6"
-          >
-            <p className="mono-accent text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase mb-2">Domain Competencies</p>
-
-            <div className="space-y-4">
-              {skillGroups.map(group => (
-                <motion.article
-                  key={group.title}
-                  whileHover={{ x: 4 }}
-                  transition={spring}
-                  className="card p-5 border border-white/10 bg-[#131316] flex flex-col justify-center"
-                >
-                  <h3 className="font-display text-base font-semibold text-[var(--text-primary)] flex items-center gap-2">
-                    <span className="text-lg">{group.icon}</span>
-                    {group.title}
-                  </h3>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {group.items.map(skill => (
-                      <span
-                        key={`${group.title}-${skill}`}
-                        className="mono-accent rounded border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-[var(--text-muted)] hover:border-white/20 hover:text-[var(--text-primary)] transition-colors"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </motion.article>
-              ))}
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
         </div>
       </Section3D>
 
@@ -524,7 +499,8 @@ export default function Home() {
               Email ({resumeData.email})
             </a>
             <a
-              href="/resume.pdf"
+              href="/Haripriya_Rao_Resume.pdf"
+              download="Haripriya_Rao_Resume.pdf"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 px-5 py-2.5 text-sm font-semibold text-[var(--accent)] hover:bg-[var(--accent)]/20 transition-all"

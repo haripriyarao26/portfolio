@@ -86,7 +86,8 @@ export default function StoryCanvasSequence({ name }: Props) {
             {/* Primary Action Buttons */}
             <div className="mt-8 flex flex-wrap items-center gap-3.5">
               <a
-                href="/resume.pdf"
+                href="/Haripriya_Rao_Resume.pdf"
+                download="Haripriya_Rao_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-[#E07A5F] hover:bg-[#E8886E] px-6 py-3 text-sm font-bold text-[#0E0D13] transition-all shadow-[0_0_24px_rgba(224,122,95,0.35)] hover:shadow-[0_0_32px_rgba(224,122,95,0.5)] hover:scale-[1.02] active:scale-[0.98]"
@@ -98,10 +99,10 @@ export default function StoryCanvasSequence({ name }: Props) {
               </a>
 
               <a
-                href="#case-study"
+                href="#case-studies"
                 className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 hover:border-[#E07A5F]/40 px-6 py-3 text-sm font-semibold text-[#FAF6F0] transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <span>96% Cost Cut Deep Dive</span>
+                <span>Flagship Case Studies</span>
                 <span className="text-[#F4A261]">→</span>
               </a>
 
