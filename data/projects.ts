@@ -29,56 +29,12 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'gemini-cookbook',
-    title: 'Google Gemini Cookbook: Production Health & Cost Observability',
-    category: 'Open Source Contribution',
-    status: 'PR #1088 · Merged / Contributed',
-    description: 'Integrated error-aware exponential backoff for 429 rate limits, real-time USD cost-tracking, and sub-second health heartbeats for Gemini 2.0/3.0 models into the official Google Gemini Cookbook repository.',
-    images: [],
-    github: 'https://github.com/google-gemini/cookbook/pull/1088',
-    tech: ['Python', 'Google Gemini API', 'LLM Observability', 'Rate Limiting', 'CI/CD'],
-    features: [
-      'Sub-second API health heartbeats and real-time USD cost tracking for production deployments',
-      'Engineered error-aware exponential backoff (30s/60s/90s) handling 429 Resource Exhausted rate limits with graceful degradation',
-      'Token-to-cost normalization layer compliant with Google engineering standards and CI workflows'
-    ],
-    metrics: ['PR #1088', 'Sub-second heartbeats', '429 Rate backoff'],
-    mermaidDiagram: `flowchart LR
-  G[Gemini API] --> H[Health Heartbeat]
-  H --> C[Cost Tracker & Token Normalizer]
-  C --> O[Observability & Alerts]
-  R[Requests] -->|429 Rate Limit| B[Exponential Backoff 30/60/90s]
-  B --> G`
-  },
-  {
-    id: 'openai-cookbook-langchain-rwmh',
-    title: 'OpenAI Cookbook: LangChain Security Hardening',
-    category: 'Open Source Contribution',
-    status: 'PR #2568 · Contributed',
-    description:
-      'Contributed reproduction and in-cookbook mitigation for unsafe deserialization in RunnableWithMessageHistory to prevent chat history poisoning (langchain-ai/langchain#36380), treating outputs as inert data with explicit allowlists.',
-    images: [],
-    github: 'https://github.com/openai/openai-cookbook/pull/2568',
-    tech: ['Python', 'LangChain', 'langchain-core', 'OpenAI Cookbook', 'Security Hardening'],
-    features: [
-      'Engineered a reproduction script isolating the unsafe deserialization vulnerability in RunnableWithMessageHistory',
-      'Documented and proved safe persistence architecture by enforcing strict message allowlists and inert output handling',
-      'Built local virtualenv developer tooling and verification fixtures to standardize OSS contribution testing'
-    ],
-    metrics: ['PR #2568', 'History Poisoning Fix', 'LangChain Core'],
-    mermaidDiagram: `flowchart LR
-  O[Run Outputs] --> D[Deserialize Payload]
-  D --> A{Allowlisted Message?}
-  A -->|Valid| S[Safe History Storage]
-  A -->|Untrusted / Injected| R[Reject / Store as Inert Data]`
-  },
-  {
     id: 'procure-loop',
-    title: 'Procure-Loop: Multi-Agent Contract Intelligence Swarm',
-    category: 'Interactive Prototype',
-    status: 'Architecture Prototype · Full-Stack Demo',
+    title: 'Procure-Loop: 3-Agent Contract Intelligence Swarm',
+    category: 'Agentic System & Live UI',
+    status: 'Flagship Architecture · Full-Stack Demo',
     description:
-      'An end-to-end multi-agent orchestration prototype using LangGraph (StateGraph) in Python to coordinate 3 specialized agents (Ingestion, Scouter, Drafting) with real-time SVG state visualization, Okta seat utilization audits, and automated renewal intervention alerts.',
+      'An end-to-end multi-agent orchestration system using LangGraph (StateGraph) in Python to coordinate 3 specialized agents (Ingestion, Scouter, Drafting) with real-time SVG state visualization, Okta seat utilization audits, and automated renewal intervention alerts.',
     images: [],
     github: 'https://github.com/haripriyarao26/Procure-Loop',
     tech: ['Python', 'LangGraph', 'FastAPI', 'React', 'TypeScript', 'Vite', 'SVG State Machine'],
@@ -95,6 +51,50 @@ export const projects: Project[] = [
   C -->|Healthy / High Use| H[Flag Safe / Telemetry Log]
   D --> E[Drafts Inbox & Approval Gate]
   H --> M[System Observability Dashboard]`
+  },
+  {
+    id: 'gemini-cookbook',
+    title: 'Google Gemini Cookbook: Production Health & Cost Observability',
+    category: 'Open Source Contribution',
+    status: 'PR #1088 · Merged by Google Maintainers',
+    description: 'Contributed error-aware exponential backoff for 429 rate limits, real-time USD cost-tracking, and sub-second health heartbeats for Gemini 2.0/3.0 models — merged into the official Google Gemini Cookbook repository.',
+    images: [],
+    github: 'https://github.com/google-gemini/cookbook/pull/1088',
+    tech: ['Python', 'Google Gemini API', 'LLM Observability', 'Rate Limiting', 'CI/CD'],
+    features: [
+      'Merged by Google Gemini maintainers: integrated sub-second API health heartbeats and real-time USD cost tracking',
+      'Engineered error-aware exponential backoff (30s/60s/90s) handling 429 Resource Exhausted rate limits with graceful degradation',
+      'Token-to-cost normalization layer compliant with Google engineering standards and CI workflows'
+    ],
+    metrics: ['Merged by Google', 'PR #1088', '429 Rate Backoff'],
+    mermaidDiagram: `flowchart LR
+  G[Gemini API] --> H[Health Heartbeat]
+  H --> C[Cost Tracker & Token Normalizer]
+  C --> O[Observability & Alerts]
+  R[Requests] -->|429 Rate Limit| B[Exponential Backoff 30/60/90s]
+  B --> G`
+  },
+  {
+    id: 'openai-cookbook-langchain-rwmh',
+    title: 'OpenAI Cookbook: LangChain Security Hardening',
+    category: 'Open Source Contribution',
+    status: 'PR #2568 · Contributed to OpenAI Cookbook',
+    description:
+      'Contributed reproduction and in-cookbook security mitigation for unsafe deserialization in RunnableWithMessageHistory to prevent chat history poisoning (langchain-ai/langchain#36380), enforcing strict message allowlists and inert output handling.',
+    images: [],
+    github: 'https://github.com/openai/openai-cookbook/pull/2568',
+    tech: ['Python', 'LangChain', 'langchain-core', 'OpenAI Cookbook', 'Security Hardening'],
+    features: [
+      'Engineered a reproduction script isolating the unsafe deserialization vulnerability in RunnableWithMessageHistory',
+      'Documented and proved safe persistence architecture by enforcing strict message allowlists and inert output handling',
+      'Built local virtualenv developer tooling and verification fixtures to standardize OSS contribution testing'
+    ],
+    metrics: ['PR #2568', 'History Poisoning Fix', 'OpenAI Cookbook'],
+    mermaidDiagram: `flowchart LR
+  O[Run Outputs] --> D[Deserialize Payload]
+  D --> A{Allowlisted Message?}
+  A -->|Valid| S[Safe History Storage]
+  A -->|Untrusted / Injected| R[Reject / Store as Inert Data]`
   },
   {
     id: 'auto-unit-agent',

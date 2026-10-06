@@ -33,22 +33,22 @@ export default function StoryCanvasSequence({ name }: Props) {
             <div className="flex items-center gap-2 mb-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#E07A5F]/30 bg-[#E07A5F]/10 text-xs font-medium text-[#F4A261] backdrop-blur-md shadow-[0_0_20px_rgba(224,122,95,0.15)]">
                 <span className="h-2 w-2 rounded-full bg-[#E07A5F] animate-pulse" />
-                <span>Available for Founding &amp; Staff AI Roles &middot; SF Bay Area &middot; Cap-Exempt H-1B</span>
+                <span>Available for Senior AI Engineer &amp; Founding Engineer (0-to-1) Roles &middot; SF Bay Area &middot; Cap-Exempt H-1B</span>
               </div>
             </div>
 
             {/* Clean, Commanding Main Headline */}
             <h1 className="font-display font-bold tracking-tight text-[#FAF6F0] text-4xl sm:text-6xl lg:text-[68px] leading-[1.12] max-w-4xl">
-              Architecting high-scale{' '}
+              Building high-throughput{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F4A261] via-[#E07A5F] to-[#FAF6F0]">
                 autonomous agents
               </span>{' '}
-              &amp; distributed AI systems.
+              &amp; production AI systems.
             </h1>
 
             {/* High-signal Subtitle */}
             <p className="mt-5 text-base sm:text-xl text-[#A69F94] max-w-3xl leading-relaxed font-normal">
-              Applied AI &amp; Founding Engineer with 4.5+ years building multi-agent orchestration, evaluation harnesses, and full-stack systems. Scaled workflows to <strong className="text-[#FAF6F0] font-semibold">255+ agentic steps</strong>, slashed inference costs <strong className="text-[#FAF6F0] font-semibold">96%</strong>, and cut per-turn latency <strong className="text-[#FAF6F0] font-semibold">40%</strong>.
+              Applied AI &amp; Founding Engineer with 4+ years building multi-agent orchestration, evaluation harnesses, and full-stack systems. Scaled workflows to <strong className="text-[#FAF6F0] font-semibold">255+ agentic steps</strong>, slashed inference costs <strong className="text-[#FAF6F0] font-semibold">96%</strong>, and cut per-turn latency <strong className="text-[#FAF6F0] font-semibold">40%</strong>.
             </p>
 
             {/* Verified Badges Row */}
@@ -78,7 +78,16 @@ export default function StoryCanvasSequence({ name }: Props) {
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 bg-white/5 hover:border-white/20 text-[#FAF6F0] font-medium transition-all"
               >
-                <span>Gemini Cookbook PR #1088</span>
+                <span>Gemini Cookbook PR #1088 (Merged)</span>
+                <span className="text-[#A69F94]">↗</span>
+              </a>
+              <a
+                href="https://github.com/openai/openai-cookbook/pull/2568"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 bg-white/5 hover:border-white/20 text-[#FAF6F0] font-medium transition-all"
+              >
+                <span>OpenAI Cookbook PR #2568</span>
                 <span className="text-[#A69F94]">↗</span>
               </a>
             </div>

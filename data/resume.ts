@@ -145,13 +145,13 @@ export const resumeData: ResumeData = {
       location: "Los Angeles, CA",
       period: "Jan 2024 – Apr 2026",
       achievements: [
-        "Delivered an end-to-end multi-tenant platform in 4 months with zero scope creep and 99.98% uptime, partnering with NVIDIA stakeholders and city officials across 6 roadmap phases.",
+        "Delivered an end-to-end multi-tenant platform on schedule across 6 roadmap phases with 99.98% platform uptime, partnering with NVIDIA stakeholders and city officials.",
         "Slashed LLM inference costs by 96% (from 200KB to 8KB/call) by redesigning the transformation pipeline to scale horizontally to 255+ agentic steps.",
         "Cut per-turn orchestrator latency by 40% via a 22-node asynchronous state machine using asyncio.gather parallel scheduling to eliminate serial round-trips.",
         "Engineered a recursive DFS algorithm to extract 100+ React components from Figma design trees, decreasing manual UI scaffolding time by 90%.",
         "Lifted relevant-result rate 20% and halved malformed responses (50%) using grounded citations and safe JSON parsing recovery.",
         "Engineered concurrent request-collapsing middleware and Redis distributed locks, eliminating 100% of double-charge race conditions.",
-        "Reduced MTTR by 40% and sustained 99.9% uptime by owning on-call incident response and instrumenting ClickHouse real-time telemetry dashboards.",
+        "Reduced MTTR by 40% and sustained 99.98% uptime by owning on-call incident response and instrumenting ClickHouse real-time telemetry dashboards.",
         "Built autonomous self-healing Jest test generation agent using LLM feedback loops, reducing manual maintenance overhead by ~25%."
       ]
     },
@@ -172,7 +172,7 @@ export const resumeData: ResumeData = {
       location: "Bengaluru, India",
       period: "Jun 2021 – Jul 2022",
       achievements: [
-        "Consolidated 15+ data sources into a GraphQL API for 4,000 users, dropping latency from 2s to 400ms.",
+        "Consolidated 15+ data sources into a unified GraphQL API for 4,000+ users, cutting data retrieval latency by 80% (2s to 400ms) and earning the 2022 Excellency Award.",
         "Built executive analytics dashboards with ANT Design and PostgreSQL, optimizing hiring pipeline visibility and reducing data aggregation times by 80%.",
         "Implemented frontend performance optimizations in Angular (lazy-loaded modules, virtualized tables, memoized pipes), cutting dashboard load times by 50%."
       ]

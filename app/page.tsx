@@ -19,7 +19,7 @@ const githubProfile = `https://${resumeData.github}`;
 const depthStack = [
   {
     category: 'Multi-Agent Orchestration & Core Frameworks',
-    experience: '4.5+ yrs in production',
+    experience: '4+ yrs in production',
     headline: 'Deterministic state-machine workflows, cyclic graph resolution, and tool routing.',
     tech: [
       { name: 'LangGraph', role: '22-node cyclic state machines, conditional routing, checkpoint persistence' },
@@ -42,7 +42,7 @@ const depthStack = [
   },
   {
     category: 'Distributed Systems, Cloud & Observability',
-    experience: '4.5+ yrs in production',
+    experience: '4+ yrs in production',
     headline: 'High-throughput telemetry, real-time sync, and distributed state coordination.',
     tech: [
       { name: 'ClickHouse', role: 'Sub-second real-time LLM telemetry and agent execution analytics' },
@@ -146,25 +146,25 @@ export default function Home() {
         tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
       />
 
-      {/* ── Aggregate Production Milestones ── */}
-      <Section3D id="impact" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-24">
+      {/* ── Executive Summary & Production Philosophy ── */}
+      <Section3D id="impact" className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-20">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={spring}
-          className="mb-10"
+          className="card p-8 sm:p-12 border border-white/10 bg-[#131217]"
         >
-          <div className="flex items-center gap-2 mb-2">
-            <span className="mono-accent text-xs tracking-[0.22em] text-[#E07A5F] uppercase font-semibold">Aggregate Milestones</span>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="mono-accent text-xs tracking-[0.22em] text-[#E07A5F] uppercase font-semibold">Executive Summary</span>
             <span className="text-white/20">&middot;</span>
-            <span className="mono-accent text-xs tracking-[0.16em] text-[#A69F94] uppercase">Across Production Deployments</span>
+            <span className="mono-accent text-xs tracking-[0.16em] text-[#A69F94] uppercase">Production Engineering</span>
           </div>
-          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-            Empirical outcomes at scale
+          <h2 className="font-display text-2xl sm:text-4xl font-bold text-[var(--text-primary)] leading-tight">
+            Bridging complex multi-agent orchestration with deterministic reliability.
           </h2>
           <p className="mt-4 max-w-3xl text-[15px] sm:text-base text-[var(--text-muted)] leading-relaxed">
-            I partner directly with cross-functional stakeholders — from <strong>NVIDIA engineers</strong> to <strong>city officials across 6 roadmap phases</strong> — translating complex operational requirements into deterministic, high-throughput AI pipelines. By owning the complete lifecycle from multi-agent orchestration and AST parsers to real-time ClickHouse telemetry, I ensure systems maintain strict data consistency and sub-second execution under peak production load.
+            I partner directly with cross-functional stakeholders — from <strong>NVIDIA engineers</strong> to <strong>city officials across 6 roadmap phases</strong> — translating high-stakes business requirements into deterministic, low-latency AI pipelines. By owning the complete lifecycle from multi-agent orchestration and AST parsers to real-time ClickHouse telemetry, I ensure systems maintain strict data consistency and sub-second execution under peak production load.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -194,111 +194,6 @@ export default function Home() {
               LinkedIn Profile
             </Link>
           </div>
-        </motion.div>
-
-        {/* Flagship Aggregate Metrics Row */}
-        <motion.div
-          className="grid gap-4 grid-cols-2 lg:grid-cols-4"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-        >
-          {/* Card 1 */}
-          <motion.article
-            variants={staggerItem}
-            whileHover={{ y: -4 }}
-            transition={spring}
-            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between border border-[#E07A5F]/20 bg-gradient-to-b from-[#E07A5F]/[0.06] to-transparent"
-          >
-            <div>
-              <span className="mono-accent text-[10px] tracking-[0.18em] text-[#E07A5F] uppercase font-bold">Onetera Inc</span>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl my-2">
-                96%
-              </p>
-              <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
-                Token Cost Cut
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
-                Slashed payload from 200KB to 8KB per call, unlocking 255+ agentic program steps.
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[var(--accent)]">
-              200KB → 8KB / call
-            </div>
-          </motion.article>
-
-          {/* Card 2 */}
-          <motion.article
-            variants={staggerItem}
-            whileHover={{ y: -4 }}
-            transition={spring}
-            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between border border-white/10"
-          >
-            <div>
-              <span className="mono-accent text-[10px] tracking-[0.18em] text-[#A69F94] uppercase font-semibold">Onetera Inc</span>
-              <p className="font-display font-bold leading-none text-[#F4A261] text-4xl sm:text-5xl my-2">
-                40%
-              </p>
-              <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
-                Latency Drop
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
-                Measured in production via a 22-node asynchronous state machine with parallel scheduling.
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[#F4A261]">
-              22-node async DAG
-            </div>
-          </motion.article>
-
-          {/* Card 3 */}
-          <motion.article
-            variants={staggerItem}
-            whileHover={{ y: -4 }}
-            transition={spring}
-            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between border border-[#E07A5F]/20 bg-gradient-to-b from-[#E07A5F]/[0.06] to-transparent"
-          >
-            <div>
-              <span className="mono-accent text-[10px] tracking-[0.18em] text-[#E07A5F] uppercase font-bold">JPMorgan Chase (Think41)</span>
-              <p className="font-display font-bold leading-none text-[var(--accent)] text-4xl sm:text-5xl my-2">
-                52%
-              </p>
-              <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
-                Extraction Speedup
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
-                Accelerated LLM extraction (40.8s to 19.6s) at 95% field agreement via golden dataset evals.
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[var(--accent)]">
-              40.8s → 19.6s (95% agree)
-            </div>
-          </motion.article>
-
-          {/* Card 4 */}
-          <motion.article
-            variants={staggerItem}
-            whileHover={{ y: -4 }}
-            transition={spring}
-            className="card p-5 sm:p-7 will-change-transform flex flex-col justify-between border border-white/10"
-          >
-            <div>
-              <span className="mono-accent text-[10px] tracking-[0.18em] text-[#A69F94] uppercase font-semibold">City Partnerships</span>
-              <p className="font-display font-bold leading-none text-[#FAF6F0] text-4xl sm:text-5xl my-2">
-                99.98%
-              </p>
-              <h3 className="font-display text-xs sm:text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide mb-2">
-                Platform Uptime
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed hidden sm:block">
-                Delivered multi-tenant platform with zero scope creep across 6 roadmap phases.
-              </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] font-mono text-[#FAF6F0]">
-              ClickHouse telemetry
-            </div>
-          </motion.article>
         </motion.div>
       </Section3D>
 
