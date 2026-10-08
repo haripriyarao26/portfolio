@@ -55,7 +55,7 @@ export interface Honor {
 
 export const resumeData: ResumeData = {
   name: "Haripriya Rao",
-  location: "San Francisco Bay Area",
+  location: "USA",
   workAuth: "Cap-Exempt H-1B (Eligible for Immediate Transfer)",
   email: "haripriyaraov@gmail.com",
   phone: "(503) 374-6531",

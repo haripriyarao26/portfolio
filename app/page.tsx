@@ -378,7 +378,7 @@ export default function Home() {
             Let&apos;s build together
           </h2>
           <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-xl mx-auto mb-8">
-            Available for Senior AI Engineer, Founding Engineer, and Applied AI roles. Based in the San Francisco Bay Area.
+            Available for Senior AI Engineer, Founding Engineer, and Applied AI roles. Based in the USA.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
@@ -412,7 +412,7 @@ export default function Home() {
 
           <div className="border-t border-white/10 pt-6">
             <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--accent)] uppercase font-semibold">
-              San Francisco Bay Area &middot; Cap-Exempt H-1B (Eligible for Immediate Transfer)
+              USA &middot; Cap-Exempt H-1B (Eligible for Immediate Transfer)
             </p>
           </div>
         </motion.div>

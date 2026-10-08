@@ -33,7 +33,7 @@ export default function StoryCanvasSequence({ name }: Props) {
             <div className="flex items-center gap-2 mb-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#E07A5F]/30 bg-[#E07A5F]/10 text-xs font-medium text-[#F4A261] backdrop-blur-md shadow-[0_0_20px_rgba(224,122,95,0.15)]">
                 <span className="h-2 w-2 rounded-full bg-[#E07A5F] animate-pulse" />
-                <span>Available for Senior AI Engineer &amp; Founding Engineer (0-to-1) Roles &middot; SF Bay Area &middot; Cap-Exempt H-1B</span>
+                <span>Available for Senior AI Engineer &amp; Founding Engineer (0-to-1) Roles &middot; USA &middot; Cap-Exempt H-1B</span>
               </div>
             </div>
 

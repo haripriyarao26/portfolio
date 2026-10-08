@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     'CCA-F',
     'Agentic AI',
     'Founding Engineer',
-    'San Francisco Bay Area AI'
+    'USA AI Engineer'
   ],
   authors: [{ name: 'Haripriya Rao', url: 'https://haripriyarao26.github.io/portfolio' }],
   openGraph: {
