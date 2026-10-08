@@ -19,7 +19,7 @@ const githubProfile = `https://${resumeData.github}`;
 const depthStack = [
   {
     category: 'Multi-Agent Orchestration & Core Frameworks',
-    experience: '4+ yrs in production',
+    badge: 'State Machines & Tool Use',
     headline: 'Deterministic state-machine workflows, cyclic graph resolution, and tool routing.',
     tech: [
       { name: 'LangGraph', role: '22-node cyclic state machines, conditional routing, checkpoint persistence' },
@@ -31,7 +31,7 @@ const depthStack = [
   },
   {
     category: 'Evaluation Harnesses & AI Reliability',
-    experience: '3+ yrs in production',
+    badge: 'Empirical Evals & Gating',
     headline: 'Empirical regression testing, golden datasets, and latency optimization.',
     tech: [
       { name: 'Golden Dataset Evals', role: '100+ annotated ground-truth test suites for LLM extraction' },
@@ -42,7 +42,7 @@ const depthStack = [
   },
   {
     category: 'Distributed Systems, Cloud & Observability',
-    experience: '4+ yrs in production',
+    badge: 'Telemetry & Distributed State',
     headline: 'High-throughput telemetry, real-time sync, and distributed state coordination.',
     tech: [
       { name: 'ClickHouse', role: 'Sub-second real-time LLM telemetry and agent execution analytics' },
@@ -248,7 +248,7 @@ export default function Home() {
             Engineering Stack &amp; Production Context
           </h2>
           <p className="mt-3 text-base text-[#A69F94] max-w-2xl">
-            A granular breakdown of architectural depth, years in production, and real-world system responsibilities for each core technology.
+            A granular breakdown of architectural depth, domain competencies, and real-world system responsibilities for each core technology.
           </p>
         </motion.div>
 
@@ -265,7 +265,7 @@ export default function Home() {
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <span className="mono-accent text-[11px] font-bold text-[#E07A5F] uppercase tracking-wider">
-                    {category.experience}
+                    {category.badge}
                   </span>
                   <span className="mono-accent text-[10px] text-white/30 font-mono">0{idx + 1}</span>
                 </div>
