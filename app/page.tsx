@@ -412,7 +412,7 @@ export default function Home() {
 
           <div className="border-t border-white/10 pt-6">
             <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--accent)] uppercase font-semibold">
-              USA &middot; Cap-Exempt H-1B (Eligible for Immediate Transfer)
+              USA &middot; Cap-Counted H-1B (Eligible for Immediate Transfer)
             </p>
           </div>
         </motion.div>
