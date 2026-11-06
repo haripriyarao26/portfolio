@@ -39,84 +39,45 @@ const TRUST_GRID = [
     name: 'JPMORGAN',
     delay: '1.25s',
     href: '#study-jpmc',
-    icon: (
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none">
-        <path d="M3 7.5c2.2-1.6 4.6-1.6 6.8 0s4.6 1.6 6.8 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <path d="M3 12.5c2.2-1.6 4.6-1.6 6.8 0s4.6 1.6 6.8 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
   },
   {
-    name: 'Onetera',
+    name: 'ONETERA',
     delay: '1.32s',
-    serif: true,
     href: '#study-onetera',
-    icon: null,
   },
   {
     name: 'NVIDIA PARTNERS',
     delay: '1.39s',
     href: '#study-onetera',
-    icon: (
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-        <rect x="3" y="8" width="3" height="9" rx="1" />
-        <rect x="8.5" y="3" width="3" height="14" rx="1" />
-        <rect x="14" y="6" width="3" height="11" rx="1" />
-      </svg>
-    ),
   },
   {
     name: 'DELOITTE',
     delay: '1.46s',
     href: '#timeline-momentum',
-    icon: (
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none">
-        <polygon points="10,3 17,16 3,16" stroke="currentColor" strokeWidth="1.8" />
-      </svg>
-    ),
   },
   {
     name: 'CCA-F ARCHITECT',
     delay: '1.42s',
-    boxed: true,
     href: 'https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile',
     external: true,
-    icon: null,
   },
   {
     name: 'GEMINI PR #1088',
     delay: '1.49s',
     href: 'https://github.com/google-gemini/cookbook/pull/1088',
     external: true,
-    icon: (
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none">
-        <path d="M5 4v12M15 4v12M5 10h10" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-      </svg>
-    ),
   },
   {
-    name: 'openai #2568',
+    name: 'OPENAI #2568',
     delay: '1.56s',
-    lowercase: true,
     href: 'https://github.com/openai/openai-cookbook/pull/2568',
     external: true,
-    icon: (
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="6.5" stroke="currentColor" strokeWidth="1.8" />
-        <circle cx="10" cy="10" r="2" fill="currentColor" />
-      </svg>
-    ),
   },
   {
     name: 'AWS AI CERT',
     delay: '1.63s',
     href: 'https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url',
     external: true,
-    icon: (
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-        <path d="M2 15 7.5 6l4 6.5 2.5-3.5L18 15H2Z" />
-      </svg>
-    ),
   },
 ];
 
@@ -310,7 +271,7 @@ export default function StoryCanvasSequence({ name }: Props) {
           </div>
         </div>
 
-        {/* Right 6 Columns: Exact Halden 4x2 Hairline Wordmark Grid (.logos with 1.25s..1.63s staggered delays) */}
+        {/* Right 6 Columns: Clean 4x2 Hairline Grid with Unified Typography (No mixed fonts, No icons) */}
         <div className="lg:col-span-6">
           <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-[#0b1d3a]/[0.06] lg:border-t-0">
             {TRUST_GRID.map((item, idx) => (
@@ -320,22 +281,11 @@ export default function StoryCanvasSequence({ name }: Props) {
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noreferrer' : undefined}
                 style={{ ['--d' as any]: item.delay }}
-                className={`fade-up group flex items-center justify-center gap-2 py-5 px-3 text-[#3e4d68] hover:text-[#0b1d3a] transition-colors border-l border-[#0b1d3a]/[0.08] ${
+                className={`fade-up group flex items-center justify-center py-5 px-3 text-[#3e4d68] hover:text-[#0b1d3a] transition-colors border-l border-[#0b1d3a]/[0.08] ${
                   idx >= 4 ? 'border-t border-t-[#0b1d3a]/[0.06]' : ''
                 }`}
               >
-                {item.icon}
-                <span
-                  className={
-                    item.serif
-                      ? 'font-serif italic font-bold text-[15px] tracking-[0.02em]'
-                      : item.boxed
-                      ? 'text-[11px] font-extrabold tracking-[-0.01em] border-2 border-current rounded px-1.5 py-0.5'
-                      : item.lowercase
-                      ? 'text-[14px] font-medium tracking-normal'
-                      : 'text-[11px] font-semibold tracking-[0.08em]'
-                  }
-                >
+                <span className="font-display text-[12px] font-semibold tracking-[0.06em] text-center">
                   {item.name}
                 </span>
               </a>
