@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import type { Project } from '@/data/projects';
+import { TiltCard3D } from '@/components/ReactBits3D';
 
 type StoryProjectGridProps = {
   projects: Project[];
@@ -14,129 +15,131 @@ const SWARM_NODES = [
   {
     id: 'ingestion',
     step: '01',
-    name: 'Ingestion Agent',
-    role: 'Contract PDF Parser & Clause Extractor',
-    metric: '142 contracts parsed',
-    log: '[INGESTION] Extracted renewal window: 64 days remaining | ACV: $148,000 | Auto-renew clause detected.',
+    name: '1. Read Contract',
+    role: 'Finds renewal dates & pricing',
+    metric: '64 days until renewal',
+    log: '[AGENT 1] Found $148,000 contract renewing in 64 days.',
   },
   {
     id: 'scouter',
     step: '02',
-    name: 'Scouter Agent',
-    role: 'Okta Seat Utilization Auditor',
-    metric: '64.2% seat utilization (<85%)',
-    log: '[SCOUTER] Audited 250 provisioned seats via Okta API -> 161 active / 89 dormant (64.2% < 85% threshold).',
+    name: '2. Check Seat Usage',
+    role: 'Checks how many licenses are unused',
+    metric: '89 unused seats found',
+    log: '[AGENT 2] Only 64% of paid seats are active (below 85% target).',
   },
   {
     id: 'drafting',
     step: '03',
-    name: 'Drafting Agent',
-    role: 'Intervention & Notice Generator',
-    metric: 'Non-renewal notice drafted',
-    log: '[DRAFTING] Renewal < 90d AND utilization < 85% -> Generated vendor downgrade & non-renewal legal notice.',
+    name: '3. Draft Cancellation',
+    role: 'Writes vendor savings notice',
+    metric: 'Notice ready for approval',
+    log: '[AGENT 3] Auto-drafted non-renewal notice to save unused seat costs.',
   },
 ];
 
-export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
-  const [activeNode, setActiveNode] = useState<string>('scouter');
-  const procureLoop = projects.find(p => p.id === 'procure-loop');
-  const ossProjects = projects.filter(
-    p => p.id === 'gemini-cookbook' || p.id === 'openai-cookbook-langchain-rwmh'
-  );
-  const toolProjects = projects.filter(
-    p => p.id === 'auto-unit-agent' || p.id === 'dev-log-architect'
-  );
+const SIMPLE_COPY: Record<string, { title: string; summary: string; badge: string }> = {
+  'procure-loop': {
+    title: 'Procure-Loop: AI Contract & License Savings Agent',
+    badge: 'Flagship 3-Agent App',
+    summary:
+      'A 3-agent system that reads company software contracts, checks Okta to see if employees actually use their licenses, and automatically writes cancellation notices before auto-renewal.',
+  },
+  'gemini-cookbook': {
+    title: 'Google Gemini Official Cookbook (Merged PR #1088)',
+    badge: 'Merged by Google',
+    summary:
+      'Reviewed and merged by Google engineers into the official Gemini repository. Adds automatic retry handling and real-time dollar cost tracking for production AI apps.',
+  },
+  'openai-cookbook-langchain-rwmh': {
+    title: 'OpenAI Official Cookbook (PR #2568)',
+    badge: 'OpenAI Ecosystem',
+    summary:
+      'Security and reliability contribution for production AI workflows, preventing malformed tool calls and hardening memory adapters.',
+  },
+  'auto-unit-agent': {
+    title: 'Auto-Unit Agent: Self-Healing Test Generator',
+    badge: 'Developer Tool',
+    summary:
+      'Automatically writes and fixes unit tests when code changes, cutting manual QA maintenance time by 25%.',
+  },
+  'dev-log-architect': {
+    title: 'Dev-Log Architect: Automated Release Notes',
+    badge: 'Developer Tool',
+    summary:
+      'Turns raw Git commits and pull requests into clean, human-readable changelogs and architecture summaries.',
+  },
+};
 
-  const selectedSwarmNode = SWARM_NODES.find(n => n.id === activeNode) || SWARM_NODES[1];
+export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
+  const [activeNodeIndex, setActiveNodeIndex] = useState<number>(0);
+  const [drawerProject, setDrawerProject] = useState<Project | null>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveNodeIndex(prev => (prev + 1) % SWARM_NODES.length);
+    }, 3200);
+    return () => clearInterval(interval);
+  }, []);
+
+  const procureLoop = projects.find(p => p.id === 'procure-loop');
+  const otherProjects = projects.filter(p => p.id !== 'procure-loop');
+  const selectedSwarmNode = SWARM_NODES[activeNodeIndex] || SWARM_NODES[0];
 
   return (
-    <div className="space-y-12">
-      {/* Tier 1: Flagship Swarm & Verified Open Source Contributions */}
-      <div className="space-y-6">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-[#E07A5F]" />
-          <h3 className="mono-accent text-xs font-semibold text-[#FAF6F0] uppercase tracking-wider">
-            Flagship Autonomous Swarm &amp; Verified OSS Contributions
-          </h3>
-        </div>
-
-        {/* Procure-Loop Hero Card with Interactive LangGraph State Preview */}
-        {procureLoop && (
-          <motion.article
-            key={procureLoop.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={spring}
-            className="rounded-3xl p-6 sm:p-10 border border-[#E07A5F]/40 bg-[#181818] flex flex-col justify-between transition-colors duration-300"
+    <div className="space-y-6">
+      {/* Flagship Project Card with Frosted Studio Glass */}
+      {procureLoop && (
+        <motion.article
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={spring}
+        >
+          <TiltCard3D
+            intensity={4}
+            glareColor="rgba(255, 255, 255, 0.75)"
+            className="spatial-glass rounded-3xl p-6 sm:p-8"
           >
             <div>
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                <div className="flex items-center gap-2">
-                  <span className="mono-accent text-xs font-semibold text-[#E07A5F] tracking-wider uppercase">
-                    {procureLoop.category}
-                  </span>
-                  <span className="text-white/20">&middot;</span>
-                  <span className="mono-accent text-xs text-[#F4A261] font-medium">
-                    LangGraph Directed State Machine
-                  </span>
-                </div>
-                <span className="mono-accent inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#E07A5F]/40 bg-[#1F1F1F] text-xs font-semibold text-[#F4A261]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#E07A5F] animate-pulse" />
-                  {procureLoop.status}
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <span className="mono-accent px-3 py-1 rounded-full bg-[#0F141C] text-[#FFFFFF] text-xs font-semibold">
+                  {SIMPLE_COPY['procure-loop'].badge}
+                </span>
+                <span className="mono-accent text-xs text-[#D97706] font-semibold">
+                  Python &middot; LangGraph &middot; React
                 </span>
               </div>
 
-              <h4 className="text-2xl sm:text-3xl font-semibold text-[#FAF6F0] mb-3">
-                {procureLoop.title}
-              </h4>
+              <h3 className="font-display text-2xl font-semibold text-[#0F141C] mb-2">
+                {SIMPLE_COPY['procure-loop'].title}
+              </h3>
 
-              <p className="text-sm sm:text-base text-[#B8B0A4] mb-6 max-w-4xl" style={{ textWrap: 'pretty' }}>
-                {procureLoop.description}
+              <p className="text-sm sm:text-base text-[#475569] max-w-3xl mb-6">
+                {SIMPLE_COPY['procure-loop'].summary}
               </p>
 
-              {/* Interactive Visual Architecture & Live State Machine Preview */}
-              <div className="mb-8 rounded-2xl border border-white/10 bg-[#000000] p-5 sm:p-6">
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="mono-accent text-xs font-semibold text-[#FAF6F0] uppercase tracking-wider">
-                      Interactive LangGraph State DAG (Click node to inspect state)
-                    </span>
-                  </div>
-                  <span className="mono-accent text-xs text-[#F4A261]">
-                    Rule: Renewal &lt; 90d &amp; Seat Use &lt; 85% &rarr; Auto-Draft Notice
-                  </span>
-                </div>
-
-                {/* 3-Node Visual Graph */}
-                <div className="grid gap-4 md:grid-cols-3 mb-4">
+              {/* Simple 3-Step Visual Flow */}
+              <div className="rounded-2xl border border-white/90 bg-white/65 p-4 mb-6 shadow-inner">
+                <div className="grid gap-3 md:grid-cols-3 mb-3">
                   {SWARM_NODES.map((node, index) => {
-                    const isSelected = node.id === activeNode;
+                    const isSelected = index === activeNodeIndex;
                     return (
                       <button
                         key={node.id}
                         type="button"
-                        onClick={() => setActiveNode(node.id)}
-                        className={`text-left rounded-xl p-4 border transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        onClick={() => setActiveNodeIndex(index)}
+                        className={`text-left rounded-xl p-3.5 border transition-all duration-300 ${
                           isSelected
-                            ? 'border-[#E07A5F] bg-[#1F1F1F] shadow-[0_0_20px_rgba(224,122,95,0.2)]'
-                            : 'border-white/10 bg-[#181818] hover:border-white/25'
+                            ? 'border-[#0F141C] bg-white shadow-sm'
+                            : 'border-slate-200/80 bg-white/50 hover:bg-white'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="mono-accent text-xs font-semibold text-[#E07A5F]">
-                            NODE {node.step}
-                          </span>
-                          <span className="text-xs font-mono text-[#B8B0A4]">
-                            {index < 2 ? '→ next' : '✓ terminal'}
-                          </span>
-                        </div>
-                        <div className="font-display text-base font-semibold text-[#FAF6F0]">
+                        <div className="font-display text-sm font-semibold text-[#0F141C]">
                           {node.name}
                         </div>
-                        <div className="text-xs text-[#B8B0A4] mt-1">{node.role}</div>
-                        <div className="mt-3 pt-2 border-t border-white/10 text-xs font-mono text-[#F4A261]">
+                        <div className="text-xs text-[#64748B] mt-0.5">{node.role}</div>
+                        <div className="mt-2 text-xs font-mono text-[#D97706] font-semibold">
                           {node.metric}
                         </div>
                       </button>
@@ -144,196 +147,179 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                   })}
                 </div>
 
-                {/* Synchronized Monospace Telemetry Stream */}
-                <div className="rounded-xl border border-white/10 bg-[#181818] px-4 py-3 font-mono text-xs text-emerald-300 flex items-center justify-between gap-4 overflow-x-auto">
+                <div className="rounded-xl bg-[#0F141C] px-4 py-2.5 font-mono text-xs text-emerald-300 flex items-center justify-between">
                   <span>{selectedSwarmNode.log}</span>
-                  <span className="shrink-0 text-[#B8B0A4]">status: 200 OK</span>
+                  <span className="text-slate-400 hidden sm:inline">Live Agent Flow</span>
                 </div>
-              </div>
-
-              {/* Tech Pills */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {procureLoop.tech.map(tech => (
-                  <span
-                    key={`${procureLoop.id}-${tech}`}
-                    className="inline-block rounded-full border border-white/15 bg-[#1F1F1F] px-3 py-1 text-xs text-[#FAF6F0] font-medium"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* Key Architecture Features */}
-              <div className="grid sm:grid-cols-3 gap-4 mb-6 pt-5 border-t border-white/10">
-                {procureLoop.features.map(feature => (
-                  <div key={feature} className="flex items-start gap-2.5">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#E07A5F] flex-shrink-0" />
-                    <span className="text-xs sm:text-sm text-[#B8B0A4]">{feature}</span>
-                  </div>
-                ))}
               </div>
             </div>
 
-            {/* Action Links */}
-            <div className="pt-5 border-t border-white/10 flex flex-wrap items-center gap-3">
-              {procureLoop.github && (
-                <a
-                  href={procureLoop.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#E07A5F] hover:bg-[#E8886E] px-5 py-2.5 text-sm font-semibold text-[#0E0D13] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.98]"
-                >
-                  <span>Inspect Procure-Loop Repository</span>
-                  <span>↗</span>
-                </a>
-              )}
-            </div>
-          </motion.article>
-        )}
-
-        {/* 2 Official OSS PRs */}
-        <div className="grid gap-6 md:grid-cols-2">
-          {ossProjects.map(project => (
-            <motion.article
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={spring}
-              className="rounded-3xl p-6 sm:p-8 border border-white/15 bg-[#181818] flex flex-col justify-between hover:border-[#E07A5F]/50 transition-colors duration-300"
-            >
-              <div>
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                  <span className="mono-accent text-xs font-semibold text-[#E07A5F] tracking-wider uppercase">
-                    {project.category}
-                  </span>
-                  <span className="mono-accent inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/15 bg-[#1F1F1F] text-xs font-semibold text-[#FAF6F0]">
-                    {project.status}
-                  </span>
-                </div>
-
-                <h4 className="text-xl sm:text-2xl font-semibold text-[#FAF6F0] mb-3">
-                  {project.title}
-                </h4>
-
-                <p className="text-sm text-[#B8B0A4] mb-5">
-                  {project.description}
-                </p>
-
-                {/* Tech Pills */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map(tech => (
-                    <span
-                      key={`${project.id}-${tech}`}
-                      className="inline-block rounded-full border border-white/10 bg-[#1F1F1F] px-3 py-1 text-xs text-[#FAF6F0]"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Key Points */}
-                <ul className="space-y-2.5 text-xs sm:text-sm text-[#B8B0A4] mb-6">
-                  {project.features.map(feature => (
-                    <li key={feature} className="flex items-start gap-2.5">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#E07A5F] flex-shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Action Links */}
-              <div className="pt-5 border-t border-white/10 flex flex-wrap items-center gap-3">
-                {project.github && (
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-black/5">
+              <div className="flex flex-wrap items-center gap-3">
+                {procureLoop.github && (
                   <a
-                    href={project.github}
+                    href={procureLoop.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-[#1F1F1F] px-4 py-2 text-xs font-semibold text-[#FAF6F0] hover:border-[#E07A5F]/50 hover:text-[#F4A261] transition-colors duration-300"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#0F141C] hover:bg-[#1E293B] px-4 py-2 text-xs font-semibold text-[#FFFFFF] transition-all"
                   >
-                    <span>View Pull Request on GitHub</span>
+                    <span>GitHub Repo</span>
                     <span>↗</span>
                   </a>
                 )}
+                <button
+                  type="button"
+                  onClick={() => setDrawerProject(procureLoop)}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-black/15 bg-white/80 hover:bg-white px-4 py-2 text-xs font-semibold text-[#0F141C] transition-all"
+                >
+                  <span>Technical specs</span>
+                  <span>→</span>
+                </button>
               </div>
-            </motion.article>
-          ))}
-        </div>
-      </div>
+            </div>
+          </TiltCard3D>
+        </motion.article>
+      )}
 
-      {/* Tier 2: Developer Tools & Extensions */}
-      <div className="pt-8 border-t border-white/10">
-        <div className="flex items-center gap-2 mb-6">
-          <span className="h-2 w-2 rounded-full bg-[#B8B0A4]" />
-          <h3 className="mono-accent text-xs font-semibold text-[#FAF6F0] uppercase tracking-wider">
-            Developer Tooling &amp; Agent Frameworks
-          </h3>
-        </div>
+      {/* Compact 3D Tilt Grid for Open Source PRs & Tools */}
+      <div className="grid gap-5 md:grid-cols-2">
+        {otherProjects.map(project => {
+          const simple = SIMPLE_COPY[project.id] || {
+            title: project.title,
+            badge: project.category,
+            summary: project.description,
+          };
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {toolProjects.map(project => (
+          return (
             <motion.article
               key={project.id}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={spring}
-              className="rounded-2xl p-6 sm:p-7 border border-white/10 bg-[#181818] hover:border-white/20 transition-colors duration-300 flex flex-col justify-between"
             >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="mono-accent text-xs text-[#B8B0A4] uppercase tracking-wider font-semibold">
-                    {project.category}
-                  </span>
-                </div>
-                <h4 className="font-display text-lg font-semibold text-[#FAF6F0] mb-2">
-                  {project.title}
-                </h4>
-                <p className="text-sm text-[#B8B0A4] mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map(tech => (
-                    <span
-                      key={`${project.id}-${tech}`}
-                      className="mono-accent rounded-md bg-[#1F1F1F] border border-white/10 px-2.5 py-1 text-xs text-[#B8B0A4]"
-                    >
-                      {tech}
+              <TiltCard3D
+                glareColor="rgba(255, 255, 255, 0.75)"
+                className="spatial-glass rounded-3xl p-6"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="mono-accent text-xs font-semibold text-[#D97706] uppercase">
+                      {simple.badge}
                     </span>
-                  ))}
+                    <span className="mono-accent text-xs text-[#64748B]">
+                      {project.tech.slice(0, 2).join(' · ')}
+                    </span>
+                  </div>
+
+                  <h4 className="font-display text-lg font-semibold text-[#0F141C] mb-2">
+                    {simple.title}
+                  </h4>
+
+                  <p className="text-sm text-[#475569] mb-5">
+                    {simple.summary}
+                  </p>
                 </div>
+
+                <div className="pt-4 border-t border-black/5 flex items-center justify-between gap-3">
+                  {project.github ? (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#0F141C] hover:text-[#D97706] transition-colors"
+                    >
+                      <span>View on GitHub</span>
+                      <span>↗</span>
+                    </a>
+                  ) : (
+                    <span />
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => setDrawerProject(project)}
+                    className="inline-flex items-center gap-1 rounded-full bg-white/80 border border-black/10 px-3 py-1 text-xs font-semibold text-[#0F141C] hover:bg-[#0F141C] hover:text-white transition-colors"
+                  >
+                    <span>Tech specs</span>
+                    <span>→</span>
+                  </button>
+                </div>
+              </TiltCard3D>
+            </motion.article>
+          );
+        })}
+      </div>
+
+      {/* Technical Details Drawer for Engineers */}
+      <AnimatePresence>
+        {drawerProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+            onClick={() => setDrawerProject(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              onClick={e => e.stopPropagation()}
+              className="w-full max-w-2xl rounded-3xl border border-white bg-[#F8FAFC] p-6 sm:p-8 shadow-2xl space-y-5 text-[#0F141C]"
+            >
+              <div className="flex items-start justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                  <span className="mono-accent text-xs font-semibold text-[#D97706] uppercase">
+                    Technical Architecture &amp; Specs
+                  </span>
+                  <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#0F141C] mt-1">
+                    {drawerProject.title}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setDrawerProject(null)}
+                  className="mono-accent rounded-full border border-slate-300 bg-white px-3.5 py-1 text-xs font-semibold text-[#0F141C] hover:bg-slate-100"
+                >
+                  Close ✕
+                </button>
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex flex-wrap gap-4">
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#FAF6F0] hover:text-[#F4A261] transition-colors duration-300"
+              <p className="text-sm text-[#475569]">
+                {drawerProject.description}
+              </p>
+
+              <div className="space-y-2">
+                <div className="mono-accent text-xs font-semibold text-[#D97706] uppercase">
+                  Engineering Highlights
+                </div>
+                <ul className="space-y-2 text-sm text-[#0F141C]">
+                  {drawerProject.features.map(f => (
+                    <li key={f} className="flex items-start gap-2.5">
+                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#D97706] shrink-0" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                {drawerProject.tech.map(t => (
+                  <span
+                    key={t}
+                    className="mono-accent rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-[#475569]"
                   >
-                    <span>GitHub Repository</span>
-                    <span>↗</span>
-                  </a>
-                )}
-                {project.links?.map(link => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#FAF6F0] hover:text-[#F4A261] transition-colors duration-300"
-                  >
-                    <span>{link.label}</span>
-                    <span>↗</span>
-                  </a>
+                    {t}
+                  </span>
                 ))}
               </div>
-            </motion.article>
-          ))}
-        </div>
-      </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

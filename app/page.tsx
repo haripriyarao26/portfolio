@@ -2,55 +2,58 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 import Section3D from '@/components/Section3D';
-import MouseSpotlight from '@/components/MouseSpotlight';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
 import CaseStudiesSection from '@/components/CaseStudiesSection';
 import EngineeringNotes from '@/components/EngineeringNotes';
 import Education from '@/components/Education';
+import { MagneticButton, TiltCard3D } from '@/components/ReactBits3D';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
-import ParticleNetwork from '@/components/ParticleNetwork';
+
+const Global3DScene = dynamic(() => import('@/components/Global3DScene'), {
+  ssr: false,
+});
 
 const githubProfile = `https://${resumeData.github}`;
 
 const depthStack = [
   {
-    category: 'Multi Agent Orchestration & Core Frameworks',
-    badge: 'State Machines & Tool Use',
-    headline: 'Deterministic state machine workflows, cyclic graph resolution, and tool routing.',
+    category: 'AI Agents & Models',
+    badge: 'Orchestration',
+    headline: 'Building multi-step AI assistants that use tools safely and reliably.',
+    pills: ['LangGraph', 'Anthropic Claude SDK', 'Google Gemini API', 'OpenAI API', 'MCP', 'LangChain'],
     tech: [
-      { name: 'LangGraph', role: '22 node cyclic state machines, conditional routing, checkpoint persistence' },
-      { name: 'LangChain', role: 'Open source security hardening (PR #2568), runnables, memory adapters' },
-      { name: 'Anthropic API / Claude SDK', role: 'Tool use agents, structured JSON parsing, prompt guardrails' },
-      { name: 'Model Context Protocol (MCP)', role: 'Standardized server and client tool invocation protocols' },
+      { name: 'LangGraph', role: '22-node cyclic state machines, conditional routing, checkpoint persistence' },
+      { name: 'Anthropic API / Claude SDK', role: 'Tool-use agents, structured JSON parsing, prompt guardrails' },
       { name: 'Google Gemini API', role: 'Multimodal analysis, official Cookbook contributor (PR #1088)' },
+      { name: 'Model Context Protocol (MCP)', role: 'Standardized server and client tool invocation protocols' },
     ],
   },
   {
-    category: 'Evaluation Harnesses & AI Reliability',
-    badge: 'Empirical Evals & Gating',
-    headline: 'Empirical regression testing, golden datasets, and latency optimization.',
+    category: 'AI Testing & Accuracy',
+    badge: 'Quality & Speed',
+    headline: 'Automated testing pipelines that guarantee 95%+ accuracy and fast responses.',
+    pills: ['Golden Dataset Evals', 'A/B Testing', 'Token Compression (-96%)', 'Schema Validation'],
     tech: [
-      { name: 'Golden Dataset Evals', role: '100+ annotated ground truth test suites for LLM extraction' },
-      { name: 'A/B Regression Gating', role: 'Statistical field agreement scoring (>95% threshold)' },
+      { name: 'Golden Dataset Evals', role: '100+ annotated ground-truth test suites for LLM extraction' },
+      { name: 'A/B Regression Gating', role: 'Statistical field-agreement scoring (>95% threshold)' },
       { name: 'AST & Regex Parsers', role: 'Deterministic AST salvage layer for guaranteed JSON schema recovery' },
-      { name: 'Adversarial Test Fixtures', role: 'Stress testing nested forward chains and circular references' },
     ],
   },
   {
-    category: 'Distributed Systems, Cloud & Observability',
-    badge: 'Telemetry & Distributed State',
-    headline: 'High throughput telemetry, real time sync, and distributed state coordination.',
+    category: 'Full-Stack & Cloud',
+    badge: 'Production Infra',
+    headline: 'Fast web apps, real-time dashboards, and cloud infrastructure at 99.98% uptime.',
+    pills: ['Python', 'TypeScript', 'React & Next.js', 'PostgreSQL', 'Redis', 'ClickHouse', 'AWS'],
     tech: [
-      { name: 'ClickHouse', role: 'Sub second real time LLM telemetry and agent execution analytics' },
-      { name: 'Redis', role: 'Distributed locks, rate limiting, and short term state caching' },
-      { name: 'Supabase & PostgreSQL', role: 'Row level security, pgvector semantic search, transactional storage' },
       { name: 'Python & TypeScript', role: 'AsyncIO concurrency (asyncio.gather), Next.js App Router, Node.js' },
-      { name: 'AWS & CI/CD Pipelines', role: 'ECS, S3, IAM, GitHub Actions canary deployments (98% pass rate)' },
+      { name: 'ClickHouse & Redis', role: 'Sub-second real-time telemetry, distributed locks, rate limiting' },
+      { name: 'Supabase, PostgreSQL & AWS', role: 'Row-level security, pgvector search, ECS, S3, CI/CD pipelines' },
     ],
   },
 ];
@@ -58,7 +61,7 @@ const depthStack = [
 const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
 
 const TAGLINE_WORDS =
-  'Bridging complex multi agent orchestration with deterministic production reliability across every token and state transition.'.split(
+  'Unifying multi-agent intelligence with deterministic safety — cutting AI cloud costs 96% and review times in half.'.split(
     ' '
   );
 
@@ -104,48 +107,45 @@ function TaglineRevealSection() {
   }, []);
 
   return (
-    <Section3D id="impact" className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-20">
-      <div
-        ref={containerRef}
-        className="rounded-3xl p-8 sm:p-12 border border-white/10 bg-[#181818]"
-      >
-        <div className="flex items-center gap-2 mb-4">
-          <span className="mono-accent text-xs tracking-widest text-[#E07A5F] uppercase font-semibold">
-            Production Philosophy
-          </span>
-          <span className="text-white/20">&middot;</span>
-          <span className="mono-accent text-xs tracking-wider text-[#B8B0A4] uppercase">
-            End to End Ownership
-          </span>
-        </div>
-
-        <h2
-          className="font-display text-2xl sm:text-4xl font-semibold leading-tight max-w-[680px]"
-          style={{ textWrap: 'balance' }}
+    <Section3D id="impact" className="mx-auto max-w-6xl px-6 sm:px-10 py-10 sm:py-16 scroll-mt-24">
+      <div>
+        <TiltCard3D
+          intensity={3}
+          glareColor="rgba(255, 255, 255, 0.75)"
+          className="spatial-glass rounded-3xl p-8 sm:p-10"
         >
-          {TAGLINE_WORDS.map((word, idx) => {
-            const isRevealed = idx < activeCount;
-            return (
-              <span
-                key={`${word}-${idx}`}
-                className={`inline-block mr-2 transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  isRevealed ? 'text-[#FAF6F0] opacity-100' : 'text-[#FAF6F0] opacity-30'
-                }`}
-              >
-                {word}
+          <div ref={containerRef}>
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-4">
+              <span className="h-3 w-[2px] bg-[#0F141C]" />
+              <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
+                WHY TEAMS HIRE ME
               </span>
-            );
-          })}
-        </h2>
+            </div>
 
-        <p
-          className="mt-6 max-w-[680px] text-base text-[#B8B0A4]"
-          style={{ textWrap: 'pretty' }}
-        >
-          I partner directly with cross functional stakeholders, from{' '}
-          <strong className="text-[#FAF6F0] font-semibold">NVIDIA engineers</strong> to{' '}
-          <strong className="text-[#FAF6F0] font-semibold">city officials across 6 roadmap phases</strong>, translating high stakes requirements into deterministic, low latency AI pipelines.
-        </p>
+            <h2
+              className="font-display text-2xl sm:text-4xl font-semibold leading-tight"
+              style={{ textWrap: 'balance' }}
+            >
+              {TAGLINE_WORDS.map((word, idx) => {
+                const isRevealed = idx < activeCount;
+                return (
+                  <span
+                    key={`${word}-${idx}`}
+                    className={`inline-block mr-2 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      isRevealed ? 'text-[#0F141C]' : 'text-[#94A3B8]'
+                    }`}
+                  >
+                    {word}
+                  </span>
+                );
+              })}
+            </h2>
+
+            <p className="mt-4 text-base text-[#475569]" style={{ textWrap: 'pretty' }}>
+              Trusted by cross-functional teams — from <strong className="text-[#0F141C] font-semibold">JPMorgan Chase</strong> and <strong className="text-[#0F141C] font-semibold">NVIDIA engineers</strong> to <strong className="text-[#0F141C] font-semibold">city officials</strong> — to take AI products from zero to production.
+            </p>
+          </div>
+        </TiltCard3D>
       </div>
     </Section3D>
   );
@@ -156,6 +156,23 @@ export default function Home() {
   const progressScale = useSpring(scrollYProgress, { stiffness: 130, damping: 24, mass: 0.22 });
   const timelineExperience = resumeData.experience;
   const [copiedFooterEmail, setCopiedFooterEmail] = useState(false);
+  const [cmdOpen, setCmdOpen] = useState(false);
+  const [cmdCopied, setCmdCopied] = useState(false);
+  const [stackDrawerOpen, setStackDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCmdOpen(prev => !prev);
+      } else if (e.key === 'Escape') {
+        setCmdOpen(false);
+        setStackDrawerOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   const handleCopyFooterEmail = () => {
     navigator.clipboard.writeText(resumeData.email);
@@ -163,10 +180,24 @@ export default function Home() {
     setTimeout(() => setCopiedFooterEmail(false), 2500);
   };
 
+  const handleCmdCopyEmail = () => {
+    navigator.clipboard.writeText(resumeData.email);
+    setCmdCopied(true);
+    setTimeout(() => {
+      setCmdCopied(false);
+      setCmdOpen(false);
+    }, 1200);
+  };
+
   return (
-    <main className="relative text-[var(--text-primary)]" style={{ background: 'var(--bg-dark)' }}>
-      <ParticleNetwork />
-      <MouseSpotlight />
+    <main
+      className="relative text-[#0F141C] min-h-screen"
+      style={{
+        background: 'linear-gradient(165deg, #CEDCEB 0%, #DFEAEF 38%, #EEF2F6 75%, #F4F6F9 100%)',
+      }}
+    >
+      {/* Studio Daylight 3D Fiber-Optic & Prismatic Iridescent Glass Sculpture */}
+      <Global3DScene scrollYProgress={scrollYProgress} />
 
       {/* Scroll progress bar */}
       <motion.div
@@ -174,275 +205,430 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left progress-bar"
       />
 
-      {/* Condensed Glass Navigation */}
-      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(96vw,960px)] -translate-x-1/2 rounded-full px-5 py-2.5">
-        <nav className="flex items-center justify-between text-xs sm:text-sm">
-          <a href="#story" className="shrink-0 flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#E07A5F]" />
-            <span className="font-semibold text-sm sm:text-base text-[#FAF6F0] tracking-tight">
-              {resumeData.name}
-            </span>
+      {/* NeuralKinetics-Style Minimalist Top Navigation Bar */}
+      <header className="fixed top-5 left-0 right-0 z-50 mx-auto max-w-6xl px-6 sm:px-10 flex items-center justify-between pointer-events-none">
+        {/* Left: Brand + Pill Menu */}
+        <div className="pointer-events-auto flex items-center gap-3">
+          <a
+            href="#story"
+            className="glass-nav rounded-full px-4 py-2 flex items-center gap-2 text-sm font-semibold text-[#0F141C]"
+          >
+            <span className="h-2 w-2 rounded-full bg-[#D97706]" />
+            <span>{resumeData.name}</span>
           </a>
 
-          {/* Desktop nav: 4 clean links + Resume + Direct Contact CTA */}
-          <div className="hidden md:flex items-center gap-6 text-[#B8B0A4]">
-            <a href="#case-studies" className="nav-link transition-colors duration-300 hover:text-[#FAF6F0]">
-              Case Studies
-            </a>
-            <a href="#projects" className="nav-link transition-colors duration-300 hover:text-[#FAF6F0]">
-              Projects &amp; PRs
-            </a>
-            <a href="#timeline-momentum" className="nav-link transition-colors duration-300 hover:text-[#FAF6F0]">
-              Experience
-            </a>
-            <a href="#stack" className="nav-link transition-colors duration-300 hover:text-[#FAF6F0]">
-              Stack
-            </a>
-            <a
-              href="/Haripriya_Rao_Resume.pdf"
-              download="Haripriya_Rao_Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full border border-white/15 bg-[#181818] hover:border-[#E07A5F]/50 hover:text-[#F4A261] text-[#FAF6F0] transition-colors duration-300"
-            >
-              <span>Resume (PDF)</span>
-            </a>
-            <a
-              href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-              className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold rounded-full bg-[#E07A5F] text-[#0E0D13] hover:bg-[#E8886E] transition-colors duration-300"
-            >
-              Email Me
-            </a>
-          </div>
+          <button
+            type="button"
+            onClick={() => setCmdOpen(true)}
+            className="inline-flex items-center gap-2 rounded-full bg-[#0F141C] hover:bg-[#1E293B] text-white px-4 py-2 text-xs font-semibold shadow-sm transition-all"
+          >
+            <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-white text-[#0F141C] font-bold">
+              +
+            </span>
+            <span>Menu</span>
+          </button>
 
-          {/* Mobile / Tablet nav */}
-          <div className="flex md:hidden items-center gap-2">
-            <a
-              href="/Haripriya_Rao_Resume.pdf"
-              download="Haripriya_Rao_Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full border border-white/20 bg-[#181818] text-[#FAF6F0]"
-            >
-              Resume
-            </a>
-            <a
-              href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-              className="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold rounded-full bg-[#E07A5F] text-[#0E0D13]"
-            >
-              Email Me
-            </a>
+          <div className="hidden lg:flex items-center gap-5 glass-nav rounded-full px-5 py-2 text-xs font-medium">
+            <a href="#case-studies" className="nav-link">Case Studies</a>
+            <a href="#projects" className="nav-link">Projects</a>
+            <a href="#timeline-momentum" className="nav-link">Experience</a>
+            <a href="#stack" className="nav-link">Skills</a>
           </div>
-        </nav>
+        </div>
+
+        {/* Right: Resume + Direct Contact Pill (matching "+ Adaptive Systems" in reference) */}
+        <div className="pointer-events-auto flex items-center gap-2.5">
+          <a
+            href="/Haripriya_Rao_Resume.pdf"
+            download="Haripriya_Rao_Resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            className="glass-nav rounded-full px-4 py-2 text-xs font-semibold text-[#0F141C] hover:bg-white transition-all"
+          >
+            Resume (PDF)
+          </a>
+
+          <a
+            href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
+            className="inline-flex items-center gap-2 rounded-full bg-white/90 hover:bg-[#0F141C] text-[#0F141C] hover:text-white border border-black/10 px-4 py-2 text-xs font-semibold shadow-sm transition-all"
+          >
+            <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#0F141C] text-white text-[10px]">
+              +
+            </span>
+            <span>Email Haripriya</span>
+          </a>
+        </div>
       </header>
 
-      {/* ── 1. Hero ── */}
-      <StoryCanvasSequence
-        name={resumeData.name}
-        tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
-      />
-
-      {/* ── 2. Flagship Case Studies (Onetera & JPMorgan Immediately Visible) ── */}
-      <CaseStudiesSection />
-
-      {/* ── 3. Tagline Reveal Section (B11) ── */}
-      <TaglineRevealSection />
-
-      {/* ── 4. Projects & Open Source (Interactive Procure-Loop DAG + Merged Google/OpenAI PRs) ── */}
-      <Section3D id="projects" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
-        <motion.div
-          className="mb-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <span className="mono-accent text-xs tracking-widest text-[#E07A5F] uppercase font-semibold">
-              Code &amp; Contributions
-            </span>
-            <span className="text-white/20">&middot;</span>
-            <span className="mono-accent text-xs tracking-wider text-[#B8B0A4] uppercase">
-              Tiered Portfolio
-            </span>
-          </div>
-          <h2
-            className="font-display text-3xl font-semibold text-[#FAF6F0] sm:text-5xl max-w-[680px]"
-            style={{ textWrap: 'balance' }}
+      {/* ⌘K / + Menu Quick Actions Modal */}
+      <AnimatePresence>
+        {cmdOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[80] flex items-start justify-center bg-slate-900/40 backdrop-blur-sm pt-24 px-4"
+            onClick={() => setCmdOpen(false)}
           >
-            Open source pull requests and autonomous agent systems.
-          </h2>
-          <p className="mt-3 text-base text-[#B8B0A4] max-w-[680px]" style={{ textWrap: 'pretty' }}>
-            Merged contributions to official Google and OpenAI ecosystem repositories, alongside live multi-agent orchestration swarms.
-          </p>
-        </motion.div>
-        <StoryProjectGrid projects={projects} />
-      </Section3D>
-
-      {/* ── 5. Career Timeline ── */}
-      <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
-
-      {/* ── 6. Engineering Notes: How I Think About Systems ── */}
-      <EngineeringNotes />
-
-      {/* ── 7. Engineering Stack & Production Depth ── */}
-      <Section3D id="stack" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-          className="mb-10"
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <span className="mono-accent text-xs tracking-widest text-[#E07A5F] uppercase font-semibold">
-              Technical Mastery
-            </span>
-            <span className="text-white/20">&middot;</span>
-            <span className="mono-accent text-xs tracking-wider text-[#B8B0A4] uppercase">
-              Production Depth
-            </span>
-          </div>
-          <h2
-            className="font-display text-3xl sm:text-5xl font-semibold text-[#FAF6F0] tracking-tight max-w-[680px]"
-            style={{ textWrap: 'balance' }}
-          >
-            Engineering stack and production context.
-          </h2>
-          <p className="mt-3 text-base text-[#B8B0A4] max-w-[680px]">
-            Architectural depth, domain competencies, and real world system responsibilities across every layer of the stack.
-          </p>
-        </motion.div>
-
-        <div className="grid gap-8 lg:grid-cols-3">
-          {depthStack.map((category, idx) => (
             <motion.div
-              key={category.category}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ ...spring, delay: idx * 0.1 }}
-              className="rounded-2xl p-6 sm:p-7 border border-white/10 bg-[#181818] flex flex-col justify-between hover:border-[#E07A5F]/40 transition-colors duration-300"
+              initial={{ opacity: 0, scale: 0.96, y: -12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: -12 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              onClick={e => e.stopPropagation()}
+              className="w-full max-w-lg rounded-3xl border border-white bg-[#F8FAFC] p-5 shadow-2xl text-[#0F141C]"
             >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="mono-accent text-xs font-semibold text-[#E07A5F] uppercase tracking-wider">
-                    {category.badge}
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-[#D97706]" />
+                  <span className="mono-accent text-xs font-semibold text-[#0F141C] uppercase tracking-wider">
+                    Quick Navigation &amp; Actions
                   </span>
-                  <span className="mono-accent text-xs text-[#B8B0A4] font-mono">0{idx + 1}</span>
                 </div>
-                <h3 className="font-display text-lg font-semibold text-[#FAF6F0] mb-2">
-                  {category.category}
-                </h3>
-                <p className="text-xs text-[#B8B0A4] mb-6">
-                  {category.headline}
-                </p>
+                <button
+                  type="button"
+                  onClick={() => setCmdOpen(false)}
+                  className="mono-accent text-xs text-[#64748B] hover:text-[#0F141C] px-2.5 py-0.5 rounded-full border border-slate-200 bg-white"
+                >
+                  ESC
+                </button>
+              </div>
 
-                <div className="space-y-4 border-t border-white/10 pt-5">
-                  {category.tech.map(item => (
-                    <div key={item.name} className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#E07A5F]" />
-                        <span className="font-display text-xs font-semibold text-[#FAF6F0]">{item.name}</span>
-                      </div>
-                      <p className="text-xs text-[#B8B0A4] pl-3.5">
-                        {item.role}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+              <div className="space-y-1.5">
+                <button
+                  type="button"
+                  onClick={handleCmdCopyEmail}
+                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-semibold text-[#0F141C] bg-white hover:border-[#0F141C] border border-slate-200 transition-colors"
+                >
+                  <span>{cmdCopied ? '✓ Copied haripriyaraov@gmail.com!' : 'Copy Email (haripriyaraov@gmail.com)'}</span>
+                  <span className="mono-accent text-xs text-[#D97706]">Copy</span>
+                </button>
+
+                <a
+                  href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
+                  onClick={() => setCmdOpen(false)}
+                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
+                >
+                  <span>Send Direct Email to Haripriya</span>
+                  <span className="mono-accent text-xs text-[#D97706]">mailto ↗</span>
+                </a>
+
+                <a
+                  href="/Haripriya_Rao_Resume.pdf"
+                  download="Haripriya_Rao_Resume.pdf"
+                  onClick={() => setCmdOpen(false)}
+                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
+                >
+                  <span>Download Resume (PDF)</span>
+                  <span className="mono-accent text-xs text-[#64748B]">PDF ↓</span>
+                </a>
+
+                <a
+                  href="#study-onetera"
+                  onClick={() => setCmdOpen(false)}
+                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
+                >
+                  <span>Onetera: 96% AI Cost Reduction</span>
+                  <span className="mono-accent text-xs text-[#64748B]">Jump →</span>
+                </a>
+
+                <a
+                  href="#study-jpmc"
+                  onClick={() => setCmdOpen(false)}
+                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
+                >
+                  <span>JPMorgan Chase: 2x Faster Document Review</span>
+                  <span className="mono-accent text-xs text-[#64748B]">Jump →</span>
+                </a>
+
+                <a
+                  href="#projects"
+                  onClick={() => setCmdOpen(false)}
+                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
+                >
+                  <span>Projects &amp; Google / OpenAI Merged PRs</span>
+                  <span className="mono-accent text-xs text-[#64748B]">Jump →</span>
+                </a>
               </div>
             </motion.div>
-          ))}
-        </div>
-      </Section3D>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* ── 8. Education ── */}
-      <Education />
+      {/* ── Spatial Foreground Layer ── */}
+      <div className="relative z-10">
+        {/* ── 1. Hero (Sculpture on Center-Right, Headline Bottom-Left, Contact Card Bottom-Right) ── */}
+        <StoryCanvasSequence
+          name={resumeData.name}
+          tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
+        />
 
-      {/* ── 9. High-Conversion Contact Box ── */}
-      <Section3D id="contact" className="relative overflow-hidden px-4 sm:px-6 pt-8 pb-28">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-          className="mx-auto max-w-3xl rounded-3xl p-8 sm:p-14 text-center border border-white/15 bg-[#181818]"
-        >
-          <span className="mono-accent inline-block text-xs tracking-widest text-[#F4A261] uppercase font-semibold mb-3">
-            Direct Contact &middot; Replies Within 24 Hours
-          </span>
-          <h2
-            className="font-display text-3xl font-semibold text-[#FAF6F0] sm:text-5xl mb-4"
-            style={{ textWrap: 'balance' }}
-          >
-            Ready to ship production AI systems together?
-          </h2>
-          <p className="text-sm sm:text-base text-[#B8B0A4] max-w-xl mx-auto mb-8" style={{ textWrap: 'pretty' }}>
-            Available for Senior AI Engineer, Founding Engineer, and Applied AI roles across the USA. Reach out directly via email or LinkedIn.
-          </p>
+        {/* ── 2. Flagship Case Studies (Cards on Right 64%, 3D Sculpture on Left 36%) ── */}
+        <CaseStudiesSection />
 
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-            <a
-              href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#E07A5F] hover:bg-[#E8886E] px-6 py-3 text-base font-semibold text-[#0E0D13] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-[0_0_24px_rgba(224,122,95,0.35)] hover:scale-[1.02] active:scale-[0.98]"
+        {/* ── 3. Tagline Reveal Section (Left 64%, 3D Sculpture on Right 36%) ── */}
+        <TaglineRevealSection />
+
+        {/* ── 4. Projects & Open Source ── */}
+        <Section3D id="projects" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
+          <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={spring}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <span>Email {resumeData.email}</span>
-            </a>
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-3">
+                <span className="h-3 w-[2px] bg-[#0F141C]" />
+                <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
+                  FEATURED PROJECTS &amp; OPEN SOURCE
+                </span>
+              </div>
+              <h2
+                className="font-display text-3xl font-semibold text-[#0F141C] sm:text-5xl"
+                style={{ textWrap: 'balance' }}
+              >
+                What I have{' '}
+                <span className="text-[#7D8998] font-normal">built and shipped.</span>
+              </h2>
+              <p className="mt-2 text-base text-[#475569]">
+                Live AI apps and official contributions merged by Google and OpenAI maintainers.
+              </p>
+            </motion.div>
+            <StoryProjectGrid projects={projects} />
+          </div>
+        </Section3D>
 
-            <button
-              type="button"
-              onClick={handleCopyFooterEmail}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-[#1F1F1F] hover:bg-[#272727] px-5 py-3 text-sm font-semibold text-[#FAF6F0] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.98]"
-            >
-              {copiedFooterEmail ? (
-                <span className="text-emerald-300">Copied to clipboard!</span>
-              ) : (
-                <span>Copy Email Address</span>
-              )}
-            </button>
+        {/* ── 5. Career Timeline ── */}
+        <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
 
-            <a
-              href="/Haripriya_Rao_Resume.pdf"
-              download="Haripriya_Rao_Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-[#E07A5F]/40 bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-[#F4A261] hover:bg-[#272727] transition-all duration-300"
-            >
-              <span>Download Resume (PDF)</span>
-            </a>
+        {/* ── 6. How I Work ── */}
+        <EngineeringNotes />
 
-            <Link
-              href={`https://${resumeData.linkedin}`}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-[#FAF6F0] hover:border-white/30 transition-all duration-300"
+        {/* ── 7. Clean, Scannable Core Skills ── */}
+        <Section3D id="stack" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-20 scroll-mt-24">
+          <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={spring}
+              className="flex flex-wrap items-end justify-between gap-4"
             >
-              <span>LinkedIn</span>
-              <span>↗</span>
-            </Link>
+              <div>
+                <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-3">
+                  <span className="h-3 w-[2px] bg-[#0F141C]" />
+                  <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
+                    SKILLS &amp; TOOLKIT
+                  </span>
+                </div>
+                <h2 className="font-display text-3xl sm:text-5xl font-semibold text-[#0F141C] tracking-tight">
+                  Core{' '}
+                  <span className="text-[#7D8998] font-normal">technologies.</span>
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setStackDrawerOpen(true)}
+                className="inline-flex items-center gap-2 rounded-full bg-[#0F141C] hover:bg-[#1E293B] px-4 py-2.5 text-xs font-semibold text-white transition-colors"
+              >
+                <span>Full Architectural Breakdown</span>
+                <span>→</span>
+              </button>
+            </motion.div>
 
-            <Link
-              href={githubProfile}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-[#FAF6F0] hover:border-white/30 transition-all duration-300"
-            >
-              <span>GitHub</span>
-              <span>↗</span>
-            </Link>
+            <div className="grid gap-5 md:grid-cols-3">
+              {depthStack.map((category, idx) => (
+                <motion.div
+                  key={category.category}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ ...spring, delay: idx * 0.08 }}
+                >
+                  <TiltCard3D
+                    glareColor="rgba(255, 255, 255, 0.75)"
+                    className="spatial-glass rounded-3xl p-6"
+                  >
+                    <div>
+                      <span className="mono-accent text-xs font-semibold text-[#D97706] uppercase tracking-wider">
+                        {category.badge}
+                      </span>
+                      <h3 className="font-display text-lg font-semibold text-[#0F141C] mt-1 mb-2">
+                        {category.category}
+                      </h3>
+                      <p className="text-sm text-[#475569] mb-5">
+                        {category.headline}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 pt-4 border-t border-black/5">
+                      {category.pills.map(pill => (
+                        <span
+                          key={pill}
+                          className="rounded-full border border-black/10 bg-white/80 px-3 py-1 text-xs font-medium text-[#0F141C]"
+                        >
+                          {pill}
+                        </span>
+                      ))}
+                    </div>
+                  </TiltCard3D>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
-          <div className="border-t border-white/10 pt-6">
-            <p className="mono-accent text-xs tracking-wider text-[#F4A261] uppercase font-semibold">
-              USA &middot; Cap Counted H1B (Eligible for Immediate Transfer)
-            </p>
+          {/* Optional Deep Stack Drawer for Engineers */}
+          <AnimatePresence>
+            {stackDrawerOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+                onClick={() => setStackDrawerOpen(false)}
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.96, y: 12 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.96, y: 12 }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={e => e.stopPropagation()}
+                  className="w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-3xl border border-white bg-[#F8FAFC] p-6 sm:p-8 shadow-2xl space-y-6 text-[#0F141C]"
+                >
+                  <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+                    <h3 className="font-display text-xl font-semibold text-[#0F141C]">
+                      Production Stack &amp; System Responsibilities
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={() => setStackDrawerOpen(false)}
+                      className="mono-accent rounded-full border border-slate-300 bg-white px-3.5 py-1 text-xs font-semibold text-[#0F141C] hover:bg-slate-100"
+                    >
+                      Close ✕
+                    </button>
+                  </div>
+
+                  <div className="grid gap-6 md:grid-cols-3">
+                    {depthStack.map(cat => (
+                      <div key={cat.category} className="space-y-3">
+                        <h4 className="font-display text-sm font-semibold text-[#D97706]">
+                          {cat.category}
+                        </h4>
+                        {cat.tech.map(item => (
+                          <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-3.5">
+                            <div className="text-xs font-semibold text-[#0F141C]">{item.name}</div>
+                            <div className="text-xs text-[#475569] mt-1">{item.role}</div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Section3D>
+
+        {/* ── 8. Education ── */}
+        <Education />
+
+        {/* ── 9. High-Conversion Frosted Glass Contact Box ── */}
+        <Section3D id="contact" className="relative overflow-hidden px-6 sm:px-10 pt-8 pb-28 max-w-6xl mx-auto scroll-mt-24">
+          <div>
+            <TiltCard3D
+              intensity={4}
+              glareColor="rgba(255, 255, 255, 0.75)"
+              className="spatial-glass rounded-3xl p-8 sm:p-12"
+            >
+              <div>
+                <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-4">
+                  <span className="h-3 w-[2px] bg-[#0F141C]" />
+                  <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
+                    DIRECT CONTACT &middot; REPLIES WITHIN 24 HOURS
+                  </span>
+                </div>
+
+                <h2
+                  className="font-display text-3xl font-semibold text-[#0F141C] sm:text-5xl mb-3"
+                  style={{ textWrap: 'balance' }}
+                >
+                  Ready to build{' '}
+                  <span className="text-[#7D8998] font-normal">together?</span>
+                </h2>
+                <p className="text-sm sm:text-base text-[#475569] max-w-xl mb-8">
+                  Available for Senior AI Engineer, Founding Engineer, and Applied AI roles across the USA.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3 mb-8">
+                  <MagneticButton>
+                    <a
+                      href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
+                      className="inline-flex items-center gap-2 rounded-full bg-[#0F141C] hover:bg-[#1E293B] px-6 py-3 text-sm font-semibold text-white transition-all shadow-md"
+                    >
+                      <span>Email {resumeData.email}</span>
+                    </a>
+                  </MagneticButton>
+
+                  <MagneticButton>
+                    <button
+                      type="button"
+                      onClick={handleCopyFooterEmail}
+                      className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/80 hover:bg-white px-5 py-3 text-sm font-semibold text-[#0F141C] transition-all"
+                    >
+                      {copiedFooterEmail ? (
+                        <span className="text-emerald-700">✓ Copied to clipboard!</span>
+                      ) : (
+                        <span>Copy Email Address</span>
+                      )}
+                    </button>
+                  </MagneticButton>
+
+                  <MagneticButton>
+                    <a
+                      href="/Haripriya_Rao_Resume.pdf"
+                      download="Haripriya_Rao_Resume.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/80 hover:bg-white px-5 py-3 text-sm font-semibold text-[#0F141C] transition-all"
+                    >
+                      <span>Download Resume (PDF)</span>
+                    </a>
+                  </MagneticButton>
+
+                  <Link
+                    href={`https://${resumeData.linkedin}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/80 hover:bg-white px-5 py-3 text-sm font-semibold text-[#0F141C] transition-all"
+                  >
+                    <span>LinkedIn</span>
+                    <span>↗</span>
+                  </Link>
+
+                  <Link
+                    href={githubProfile}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/80 hover:bg-white px-5 py-3 text-sm font-semibold text-[#0F141C] transition-all"
+                  >
+                    <span>GitHub</span>
+                    <span>↗</span>
+                  </Link>
+                </div>
+
+                <div className="border-t border-black/5 pt-5">
+                  <p className="mono-accent text-xs tracking-wider text-[#D97706] uppercase font-semibold">
+                    USA &middot; Cap Counted H1B (Eligible for Immediate Transfer)
+                  </p>
+                </div>
+              </div>
+            </TiltCard3D>
           </div>
-        </motion.div>
-      </Section3D>
+        </Section3D>
+      </div>
     </main>
   );
 }
