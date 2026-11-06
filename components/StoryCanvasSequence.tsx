@@ -186,7 +186,7 @@ export default function StoryCanvasSequence({ name }: Props) {
               { metric: '96%', label: 'AI Cost Cut' },
               { metric: '2x', label: 'Faster Review' },
               { metric: '99.98%', label: 'Uptime' },
-              { metric: '2 PRs', label: 'Google & OpenAI' },
+              { metric: '40%', label: 'Turn Latency Drop' },
             ].map(item => (
               <div
                 key={item.label}
@@ -276,10 +276,10 @@ export default function StoryCanvasSequence({ name }: Props) {
         {/* Left 6 Columns: Trust Line (.trust at 1.15s) + Large CTA (.btn.lg at 1.3s) */}
         <div className="lg:col-span-6 space-y-5">
           <p
-            className="fade-up text-[clamp(15px,1.25vw,19px)] tracking-[-0.015em] text-[#1d2f4f] font-medium"
+            className="fade-up text-[clamp(15px,1.25vw,19px)] tracking-[-0.015em] text-[#1d2f4f] font-medium leading-relaxed"
             style={{ ['--d' as any]: '1.15s' }}
           >
-            Engineering leaders &amp; enterprise teams trust {name}
+            I build production systems that bridge research and business outcomes — collaborating closely with cross-functional teams from day zero to launch.
           </p>
 
           <div

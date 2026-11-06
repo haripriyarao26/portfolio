@@ -317,11 +317,11 @@ export function HaldenPinnedStatement({
   const [revealProgress, setRevealProgress] = useState(0);
 
   const statementSegments: WordSegment[] = [
-    { text: 'Haripriya builds', highlight: false },
-    { text: 'production AI systems', highlight: true, lineBreakAfter: true },
+    { text: 'I build', highlight: false },
+    { text: 'production systems', highlight: true, lineBreakAfter: true },
     { text: 'that slash token costs 96%, cut latency in half,', lineBreakAfter: true },
-    { text: 'enforce deterministic AST guardrails, and scale', lineBreakAfter: true },
-    { text: 'multi-agent workflows at 99.98% uptime.', highlight: false },
+    { text: 'and partner with cross-functional teams to ship', lineBreakAfter: true },
+    { text: 'deterministic multi-agent workflows at 99.98% uptime.', highlight: false },
   ];
 
   useEffect(() => {
@@ -430,3 +430,4 @@ export function HaldenFadeUp({
     </motion.div>
   );
 }
+
