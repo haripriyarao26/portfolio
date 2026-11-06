@@ -359,21 +359,21 @@ export default function Home() {
         {/* ── 8. Education ── */}
         <Education />
 
-        {/* ── 9. Exact Halden Dark Navy Split Section (#split / #contact: 58.3% Left / 41.7% Right) ── */}
+        {/* ── 9. Halden Dark Navy Split Section (#split / #contact) ── */}
         <section
           ref={splitRef}
           id="contact"
-          className="relative z-20 mt-12 bg-[#0e1f3d] text-white min-h-[88vh] grid lg:grid-cols-[58.3%_41.7%]"
+          className="relative z-20 mt-12 bg-[#0e1f3d] text-white min-h-[88vh] grid grid-cols-1 lg:grid-cols-[58.3%_41.7%]"
         >
           {/* Left 58.3%: Guide Line + Dark Letter-Reveal Headline + Ruled Fade-Up Row */}
-          <div className="relative pl-[var(--gut)] flex flex-col justify-between py-20 lg:py-28">
+          <div className="relative px-6 sm:px-10 lg:px-0 lg:pl-[var(--gut)] flex flex-col justify-between py-16 sm:py-20 lg:py-28">
             {/* 1px Vertical Guide Line */}
             <div className="hidden lg:block absolute top-0 bottom-0 left-[var(--gut)] w-px bg-white/12" />
 
-            <div className="lg:pl-[5vw] pr-6">
+            <div className="lg:pl-[5vw] pr-0 sm:pr-6">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3.5 py-1 mb-6">
                 <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-                <span className="mono-accent text-xs uppercase tracking-[0.16em] text-[#8fe6f4]">
+                <span className="mono-accent text-[11px] sm:text-xs uppercase tracking-[0.16em] text-[#8fe6f4]">
                   DIRECT CONTACT &middot; REPLIES WITHIN 24 HOURS
                 </span>
               </div>
@@ -387,17 +387,17 @@ export default function Home() {
                   { text: 'AI systems that operate', highlight: false, lineBreakAfter: true },
                   { text: 'like your best team.', highlight: true },
                 ]}
-                className="font-display text-[clamp(32px,3.4vw,52px)] font-normal leading-[1.08] tracking-[-0.03em] text-white"
+                className="font-display text-[clamp(28px,3.4vw,52px)] font-normal leading-[1.08] tracking-[-0.03em] text-white"
               />
             </div>
 
             {/* Ruled Row (#row) that fades up when p2 > 0.75 */}
             <div
-              className={`mt-12 border-t border-white/12 pt-8 lg:pl-[5vw] pr-6 sm:pr-12 transition-all duration-900 ease-[cubic-bezier(0.22,0.7,0.2,1)] ${
+              className={`mt-10 lg:mt-12 border-t border-white/12 pt-8 lg:pl-[5vw] pr-0 sm:pr-6 lg:pr-12 transition-all duration-900 ease-[cubic-bezier(0.22,0.7,0.2,1)] ${
                 splitRowVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              <div className="grid sm:grid-cols-[1fr_1.35fr] gap-6 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.35fr] gap-6 mb-8">
                 <div>
                   <h3 className="font-display text-[clamp(18px,1.4vw,22px)] font-normal text-white">
                     Hiring Managers &amp; Founders
@@ -470,7 +470,7 @@ export default function Home() {
           </div>
 
           {/* Right 41.7%: Scroll-Zooming Visual Panel (1.08 -> 1.00 scale) */}
-          <div className="relative overflow-hidden min-h-[420px] bg-[#08152c] border-l border-white/10">
+          <div className="relative overflow-hidden min-h-[360px] sm:min-h-[420px] bg-[#08152c] border-t lg:border-t-0 lg:border-l border-white/10">
             <div
               ref={visualScaleRef}
               style={{ transformOrigin: '50% 60%', transform: 'scale(1.08)' }}

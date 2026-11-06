@@ -102,7 +102,7 @@ export default function StoryCanvasSequence({ name }: Props) {
   return (
     <section
       id="story"
-      className="relative min-h-screen flex flex-col justify-between pt-28 pb-10 px-6 sm:px-10 max-w-6xl mx-auto"
+      className="relative min-h-[92vh] flex flex-col justify-between pt-24 sm:pt-28 pb-10 px-4 sm:px-10 max-w-6xl mx-auto"
     >
       {/* Top / Middle Row: Halden Per-Character Blur-to-Navy Headline + Option 3 Live 3D Agent Stack */}
       <div className="grid lg:grid-cols-12 gap-8 items-start pt-6 sm:pt-10">
@@ -272,7 +272,7 @@ export default function StoryCanvasSequence({ name }: Props) {
         </div>
 
         {/* Right 6 Columns: Clean 4x2 Hairline Grid with Unified Typography (No mixed fonts, No icons) */}
-        <div className="lg:col-span-6">
+        <div className="lg:col-span-6 w-full overflow-hidden">
           <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-[#0b1d3a]/[0.06] lg:border-t-0">
             {TRUST_GRID.map((item, idx) => (
               <a
@@ -281,11 +281,11 @@ export default function StoryCanvasSequence({ name }: Props) {
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noreferrer' : undefined}
                 style={{ ['--d' as any]: item.delay }}
-                className={`fade-up group flex items-center justify-center py-5 px-3 text-[#3e4d68] hover:text-[#0b1d3a] transition-colors border-l border-[#0b1d3a]/[0.08] ${
-                  idx >= 4 ? 'border-t border-t-[#0b1d3a]/[0.06]' : ''
-                }`}
+                className={`fade-up group flex items-center justify-center py-4 sm:py-5 px-2 sm:px-3 text-[#3e4d68] hover:text-[#0b1d3a] transition-colors border-l border-[#0b1d3a]/[0.08] ${
+                  idx >= 2 ? 'border-t sm:border-t-0' : ''
+                } ${idx >= 4 ? 'sm:border-t sm:border-t-[#0b1d3a]/[0.06]' : ''}`}
               >
-                <span className="font-display text-[12px] font-semibold tracking-[0.06em] text-center">
+                <span className="font-display text-[11px] sm:text-[12px] font-semibold tracking-[0.04em] sm:tracking-[0.06em] text-center truncate px-1">
                   {item.name}
                 </span>
               </a>

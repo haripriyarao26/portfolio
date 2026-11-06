@@ -10,7 +10,7 @@
   --dot:            #2fe0d0;
   --panel:          #0e1f3d;
   --panel-line:     rgba(255, 255, 255, 0.12);
-  --gut:            clamp(20px, 5.7vw, 82px);
+  --gut:            clamp(14px, 4.2vw, 82px);
   --ease:           cubic-bezier(0.22, 0.7, 0.2, 1);
 
   --text-primary:   #0b1d3a;
@@ -76,10 +76,10 @@ h1, h2, h3,
 .halden-nav {
   position: fixed;
   z-index: 50;
-  top: 20px;
+  top: 14px;
   left: var(--gut);
   right: var(--gut);
-  height: 60px;
+  height: 56px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(18px);
@@ -87,7 +87,7 @@ h1, h2, h3,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px 0 22px;
+  padding: 0 8px 0 16px;
   box-shadow:
     0 1px 0 rgba(11, 29, 58, 0.04),
     0 10px 30px -18px rgba(11, 29, 58, 0.25);
@@ -96,12 +96,20 @@ h1, h2, h3,
   animation: navin 0.9s var(--ease) 0.15s forwards;
 }
 
+@media (min-width: 768px) {
+  .halden-nav {
+    top: 20px;
+    height: 60px;
+    padding: 0 10px 0 22px;
+  }
+}
+
 .halden-nav-cta {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   overflow: hidden;
   border-radius: 999px;
-  margin-left: -42px;
+  margin-left: -40px;
   transform: scale(0);
   transform-origin: 100% 50%;
   transition:
@@ -116,9 +124,21 @@ h1, h2, h3,
 }
 
 .halden-nav.on .halden-nav-cta {
-  width: 170px;
-  margin-left: 12px;
+  width: 148px;
+  margin-left: 8px;
   transform: scale(1);
+}
+
+@media (min-width: 640px) {
+  .halden-nav-cta {
+    width: 42px;
+    height: 42px;
+    margin-left: -42px;
+  }
+  .halden-nav.on .halden-nav-cta {
+    width: 170px;
+    margin-left: 12px;
+  }
 }
 
 .halden-nav.on .halden-nav-cta .halden-btn-label {
