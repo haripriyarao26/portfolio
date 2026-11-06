@@ -287,6 +287,22 @@ h1, h2, h3,
   height: 2px;
 }
 
+/* ── Cinematic Marquee for Motion Footer ── */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 details > summary {
   cursor: pointer;
   list-style: none;

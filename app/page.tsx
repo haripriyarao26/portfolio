@@ -10,6 +10,7 @@ import StoryTimeline from '@/components/StoryTimeline';
 import CaseStudiesSection from '@/components/CaseStudiesSection';
 import EngineeringNotes from '@/components/EngineeringNotes';
 import Education from '@/components/Education';
+import MotionFooter from '@/components/MotionFooter';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import {
   HaldenButton,
@@ -363,7 +364,7 @@ export default function Home() {
         <section
           ref={splitRef}
           id="contact"
-          className="relative z-20 mt-12 bg-[#0e1f3d] text-white min-h-[88vh] grid grid-cols-1 lg:grid-cols-[58.3%_41.7%]"
+          className="relative z-20 mt-12 bg-[#0e1f3d] text-white min-h-[88vh] grid grid-cols-1 lg:grid-cols-[58.3%_41.7%] rounded-b-[36px] sm:rounded-b-[52px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border-b border-white/10 overflow-hidden"
         >
           {/* Left 58.3%: Guide Line + Dark Letter-Reveal Headline + Ruled Fade-Up Row */}
           <div className="relative px-6 sm:px-10 lg:px-0 lg:pl-[var(--gut)] flex flex-col justify-between py-16 sm:py-20 lg:py-28">
@@ -509,6 +510,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* ── 10. Cinematic Motion Footer (Curtain Reveal + Aurora Glow + Magnetic Buttons) ── */}
+        <MotionFooter />
       </div>
     </main>
   );
