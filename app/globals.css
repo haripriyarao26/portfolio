@@ -2,21 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Luminous Ice-Pearl & NeuralKinetics Studio Design System ── */
+/* ── Halden Bowl-Glow & Precision Motion Design Tokens ── */
 :root {
-  --bg-dark:        #E2ECF5;
-  --bg-surface:     rgba(255, 255, 255, 0.72);
-  --bg-elevated:    rgba(255, 255, 255, 0.88);
-  --bg-card:        rgba(255, 255, 255, 0.72);
-  --text-primary:   #0F141C;
-  --text-muted:     #475569;
-  --border:         rgba(255, 255, 255, 0.92);
-  --accent:         #D97706;
-  --accent-light:   #F59E0B;
-  --accent-dark:    #0F141C;
+  --ink:            #0b1d3a;
+  --ink-2:          #1d2f4f;
+  --accent:         #5b7cf0;
+  --dot:            #2fe0d0;
+  --panel:          #0e1f3d;
+  --panel-line:     rgba(255, 255, 255, 0.12);
+  --gut:            clamp(20px, 5.7vw, 82px);
+  --ease:           cubic-bezier(0.22, 0.7, 0.2, 1);
 
-  --font-display:   var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-body:      var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --text-primary:   #0b1d3a;
+  --text-muted:     #3e4d68;
+
+  --font-display:   var(--font-manrope), system-ui, -apple-system, sans-serif;
+  --font-body:      var(--font-manrope), system-ui, -apple-system, sans-serif;
   --font-mono:      var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-card:    24px;
@@ -33,87 +34,236 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
-  background-color: #DDE7F2;
+  background: #ffffff;
 }
 
 body {
-  background: linear-gradient(165deg, #CEDCEB 0%, #DFEAEF 38%, #EEF2F6 75%, #F4F6F9 100%) !important;
-  background-attachment: fixed !important;
-  color: var(--text-primary);
+  background: #ffffff;
+  color: var(--ink);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
   min-height: 100dvh;
 }
-
-/* Soft studio atmosphere glow matching the golden fiber tips & iridescent halo */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(circle at 54% 26%, rgba(253, 224, 71, 0.22) 0%, rgba(251, 191, 36, 0.08) 28%, transparent 55%),
-    radial-gradient(circle at 25% 65%, rgba(186, 230, 253, 0.35) 0%, transparent 55%);
-}
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar          { width: 6px; }
-::-webkit-scrollbar-track    { background: #E2ECF5; }
-::-webkit-scrollbar-thumb    { background: #94A3B8; border-radius: var(--radius-pill); }
-::-webkit-scrollbar-thumb:hover { background: #64748B; }
 
 /* ── Typography ── */
 .font-display,
 h1, h2, h3,
 .metric-number {
   font-family: var(--font-display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.032em;
 }
 
 .mono-accent {
   font-family: var(--font-mono);
 }
 
-/* ── Frosted Studio Glass Surfaces ── */
+/* ── Halden Floating Pill Navbar & Morphing CTA (.navcta) ── */
+@keyframes navin {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.halden-nav {
+  position: fixed;
+  z-index: 50;
+  top: 20px;
+  left: var(--gut);
+  right: var(--gut);
+  height: 60px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 22px;
+  box-shadow:
+    0 1px 0 rgba(11, 29, 58, 0.04),
+    0 10px 30px -18px rgba(11, 29, 58, 0.25);
+  opacity: 0;
+  transform: translateY(-8px);
+  animation: navin 0.9s var(--ease) 0.15s forwards;
+}
+
+.halden-nav-cta {
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border-radius: 999px;
+  margin-left: -42px;
+  transform: scale(0);
+  transform-origin: 100% 50%;
+  transition:
+    transform 0.35s var(--ease),
+    width 0.65s var(--ease) 0.22s,
+    margin 0.35s var(--ease);
+}
+
+.halden-nav-cta .halden-btn-label {
+  opacity: 0;
+  transition: opacity 0.4s var(--ease) 0.45s;
+}
+
+.halden-nav.on .halden-nav-cta {
+  width: 170px;
+  margin-left: 12px;
+  transform: scale(1);
+}
+
+.halden-nav.on .halden-nav-cta .halden-btn-label {
+  opacity: 1;
+}
+
+/* ── Halden Button (.halden-btn): Cyan Dot -> Circle + Chevron Hover ── */
+.halden-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 46px 0 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.halden-btn-dot {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 999px;
+  background: var(--dot);
+  box-shadow: 0 0 10px rgba(47, 224, 208, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    width 0.45s var(--ease),
+    height 0.45s var(--ease),
+    margin-top 0.45s var(--ease),
+    right 0.45s var(--ease),
+    box-shadow 0.45s var(--ease);
+}
+
+.halden-btn-dot svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 0.3s var(--ease) 0.05s,
+    transform 0.3s var(--ease) 0.05s;
+}
+
+.halden-btn:hover .halden-btn-dot {
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  right: 5px;
+  box-shadow: 0 0 0 rgba(47, 224, 208, 0);
+}
+
+.halden-btn:hover .halden-btn-dot svg {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Large Hero CTA variant (.halden-btn-lg) */
+.halden-btn.halden-btn-lg {
+  height: 58px;
+  padding: 0 64px 0 26px;
+  font-size: 16px;
+}
+
+.halden-btn.halden-btn-lg .halden-btn-dot {
+  width: 13px;
+  height: 13px;
+  margin-top: -6.5px;
+  right: 22px;
+}
+
+.halden-btn.halden-btn-lg .halden-btn-dot svg {
+  width: 15px;
+  height: 15px;
+}
+
+.halden-btn.halden-btn-lg:hover .halden-btn-dot {
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  right: 7px;
+}
+
+/* ── Synchronized Load Fade-Up (.fade-up) ── */
+@keyframes fu {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fu 0.9s var(--ease) forwards;
+  animation-delay: var(--d, 0.3s);
+}
+
+/* ── Frosted White Studio Cards ── */
 .spatial-glass,
 .card,
 .glass-premium,
 .glass-card {
-  background: rgba(255, 255, 255, 0.66);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
   border-radius: var(--radius-card);
-  border: 1px solid rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(11, 29, 58, 0.08);
   box-shadow:
-    0 24px 48px rgba(15, 23, 42, 0.06),
-    inset 0 1px 1px rgba(255, 255, 255, 0.95);
-}
-
-.glass-nav {
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    0 1px 0 rgba(11, 29, 58, 0.03),
+    0 18px 42px -18px rgba(11, 29, 58, 0.1);
 }
 
 /* ── Nav link ── */
 .nav-link {
-  position: relative;
-  color: #334155;
-  transition: color 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  color: var(--ink);
+  opacity: 0.9;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: opacity 0.2s var(--ease);
 }
 .nav-link:hover {
-  color: #0F141C;
+  opacity: 0.52;
 }
 
 /* ── Progress bar ── */
 .progress-bar {
-  background: linear-gradient(90deg, #0F141C, #D97706);
+  background: linear-gradient(90deg, #0b1d3a, #5b7cf0, #2fe0d0);
   height: 2px;
 }
 
@@ -126,7 +276,7 @@ details > summary::-webkit-details-marker { display: none; }
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid #0F141C;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 8px;
 }

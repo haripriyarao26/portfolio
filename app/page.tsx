@@ -4,14 +4,19 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
-import Section3D from '@/components/Section3D';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
 import CaseStudiesSection from '@/components/CaseStudiesSection';
 import EngineeringNotes from '@/components/EngineeringNotes';
 import Education from '@/components/Education';
-import { MagneticButton, TiltCard3D } from '@/components/ReactBits3D';
+import { TiltCard3D } from '@/components/ReactBits3D';
+import {
+  HaldenButton,
+  HaldenFadeUp,
+  HaldenLetterReveal,
+  HaldenPinnedStatement,
+} from '@/components/HaldenMotion';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
 
@@ -58,120 +63,45 @@ const depthStack = [
   },
 ];
 
-const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
-
-const TAGLINE_WORDS =
-  'Unifying multi-agent intelligence with deterministic safety — cutting AI cloud costs 96% and review times in half.'.split(
-    ' '
-  );
-
-function TaglineRevealSection() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [activeCount, setActiveCount] = useState<number>(0);
-
-  useEffect(() => {
-    const prefersReduced =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReduced) {
-      setActiveCount(TAGLINE_WORDS.length);
-      return;
-    }
-
-    let rafId = 0;
-    const updateWords = () => {
-      const el = containerRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight || 800;
-      const start = vh * 0.85;
-      const end = vh * 0.25;
-      const progress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)));
-      setActiveCount(Math.round(progress * TAGLINE_WORDS.length));
-    };
-
-    const onScroll = () => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(updateWords);
-    };
-
-    updateWords();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, []);
-
-  return (
-    <Section3D id="impact" className="mx-auto max-w-6xl px-6 sm:px-10 py-10 sm:py-16 scroll-mt-24">
-      <div>
-        <TiltCard3D
-          intensity={3}
-          glareColor="rgba(255, 255, 255, 0.75)"
-          className="spatial-glass rounded-3xl p-8 sm:p-10"
-        >
-          <div ref={containerRef}>
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-4">
-              <span className="h-3 w-[2px] bg-[#0F141C]" />
-              <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
-                WHY TEAMS HIRE ME
-              </span>
-            </div>
-
-            <h2
-              className="font-display text-2xl sm:text-4xl font-semibold leading-tight"
-              style={{ textWrap: 'balance' }}
-            >
-              {TAGLINE_WORDS.map((word, idx) => {
-                const isRevealed = idx < activeCount;
-                return (
-                  <span
-                    key={`${word}-${idx}`}
-                    className={`inline-block mr-2 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                      isRevealed ? 'text-[#0F141C]' : 'text-[#94A3B8]'
-                    }`}
-                  >
-                    {word}
-                  </span>
-                );
-              })}
-            </h2>
-
-            <p className="mt-4 text-base text-[#475569]" style={{ textWrap: 'pretty' }}>
-              Trusted by cross-functional teams — from <strong className="text-[#0F141C] font-semibold">JPMorgan Chase</strong> and <strong className="text-[#0F141C] font-semibold">NVIDIA engineers</strong> to <strong className="text-[#0F141C] font-semibold">city officials</strong> — to take AI products from zero to production.
-            </p>
-          </div>
-        </TiltCard3D>
-      </div>
-    </Section3D>
-  );
-}
-
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const progressScale = useSpring(scrollYProgress, { stiffness: 130, damping: 24, mass: 0.22 });
   const timelineExperience = resumeData.experience;
+
+  const [navActive, setNavActive] = useState(false);
   const [copiedFooterEmail, setCopiedFooterEmail] = useState(false);
-  const [cmdOpen, setCmdOpen] = useState(false);
-  const [cmdCopied, setCmdCopied] = useState(false);
   const [stackDrawerOpen, setStackDrawerOpen] = useState(false);
 
+  const splitRef = useRef<HTMLElement | null>(null);
+  const visualScaleRef = useRef<HTMLDivElement | null>(null);
+  const [splitRowVisible, setSplitRowVisible] = useState(false);
+
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setCmdOpen(prev => !prev);
-      } else if (e.key === 'Escape') {
-        setCmdOpen(false);
-        setStackDrawerOpen(false);
-      }
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        if (!splitRef.current) return;
+        const rect = splitRef.current.getBoundingClientRect();
+        const vh = Math.max(1, window.innerHeight || 800);
+        const p2 = Math.max(0, Math.min(1, (0.8 - rect.top / vh) / 0.65));
+        setSplitRowVisible(p2 > 0.75);
+
+        if (visualScaleRef.current) {
+          const s = 1.08 - 0.08 * Math.max(0, Math.min(1, 1 - rect.top / vh));
+          visualScaleRef.current.style.transform = `scale(${s.toFixed(4)})`;
+        }
+      });
     };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, []);
 
   const handleCopyFooterEmail = () => {
@@ -180,23 +110,9 @@ export default function Home() {
     setTimeout(() => setCopiedFooterEmail(false), 2500);
   };
 
-  const handleCmdCopyEmail = () => {
-    navigator.clipboard.writeText(resumeData.email);
-    setCmdCopied(true);
-    setTimeout(() => {
-      setCmdCopied(false);
-      setCmdOpen(false);
-    }, 1200);
-  };
-
   return (
-    <main
-      className="relative text-[#0F141C] min-h-screen"
-      style={{
-        background: 'linear-gradient(165deg, #CEDCEB 0%, #DFEAEF 38%, #EEF2F6 75%, #F4F6F9 100%)',
-      }}
-    >
-      {/* Studio Daylight 3D Fiber-Optic & Prismatic Iridescent Glass Sculpture */}
+    <main className="relative text-[#0b1d3a] min-h-screen">
+      {/* Halden 96x60 Bilinear Sky-Cyan Bowl Glow + Subtle 3D Camera Flythrough */}
       <Global3DScene scrollYProgress={scrollYProgress} />
 
       {/* Scroll progress bar */}
@@ -205,200 +121,109 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left progress-bar"
       />
 
-      {/* NeuralKinetics-Style Minimalist Top Navigation Bar */}
-      <header className="fixed top-5 left-0 right-0 z-50 mx-auto max-w-6xl px-6 sm:px-10 flex items-center justify-between pointer-events-none">
-        {/* Left: Brand + Pill Menu */}
-        <div className="pointer-events-auto flex items-center gap-3">
-          <a
-            href="#story"
-            className="glass-nav rounded-full px-4 py-2 flex items-center gap-2 text-sm font-semibold text-[#0F141C]"
-          >
-            <span className="h-2 w-2 rounded-full bg-[#D97706]" />
-            <span>{resumeData.name}</span>
-          </a>
+      {/* Exact Halden Floating White Pill Navbar (#nav) with Morphing Scroll CTA (.halden-nav-cta) */}
+      <header id="nav" className={`halden-nav ${navActive ? 'on' : ''}`}>
+        {/* Brand (Left): 22px #5b7cf0 circle with two white wavy strokes */}
+        <a
+          href="#story"
+          className="flex items-center gap-[9px] text-[17px] font-medium tracking-[-0.02em] text-[#0b1d3a]"
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="11" fill="#5b7cf0" />
+            <path
+              d="M5 9.2c2.3-1.6 4.7-1.6 7 0s4.7 1.6 7 0"
+              stroke="#ffffff"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+            <path
+              d="M5 13.2c2.3-1.6 4.7-1.6 7 0s4.7 1.6 7 0"
+              stroke="#ffffff"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+          </svg>
+          <span>{resumeData.name}</span>
+        </a>
 
-          <button
-            type="button"
-            onClick={() => setCmdOpen(true)}
-            className="inline-flex items-center gap-2 rounded-full bg-[#0F141C] hover:bg-[#1E293B] text-white px-4 py-2 text-xs font-semibold shadow-sm transition-all"
-          >
-            <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-white text-[#0F141C] font-bold">
-              +
-            </span>
-            <span>Menu</span>
-          </button>
+        {/* Centered Links */}
+        <nav className="hidden lg:flex items-center gap-[31px] absolute left-1/2 -translate-x-1/2">
+          <a href="#case-studies" className="nav-link">Case Studies</a>
+          <a href="#projects" className="nav-link">Projects</a>
+          <a href="#timeline-momentum" className="nav-link">Experience</a>
+          <a href="#notes" className="nav-link">How I Work</a>
+          <a href="#stack" className="nav-link">Skills</a>
+        </nav>
 
-          <div className="hidden lg:flex items-center gap-5 glass-nav rounded-full px-5 py-2 text-xs font-medium">
-            <a href="#case-studies" className="nav-link">Case Studies</a>
-            <a href="#projects" className="nav-link">Projects</a>
-            <a href="#timeline-momentum" className="nav-link">Experience</a>
-            <a href="#stack" className="nav-link">Skills</a>
-          </div>
-        </div>
-
-        {/* Right: Resume + Direct Contact Pill (matching "+ Adaptive Systems" in reference) */}
-        <div className="pointer-events-auto flex items-center gap-2.5">
+        {/* Right: Resume + Morphing .halden-nav-cta Pill */}
+        <div className="flex items-center">
           <a
             href="/Haripriya_Rao_Resume.pdf"
             download="Haripriya_Rao_Resume.pdf"
             target="_blank"
             rel="noreferrer"
-            className="glass-nav rounded-full px-4 py-2 text-xs font-semibold text-[#0F141C] hover:bg-white transition-all"
+            className={`text-[14px] font-medium text-[#0b1d3a] hover:opacity-55 transition-all duration-300 ${
+              navActive ? 'px-2' : 'px-3.5'
+            }`}
           >
             Resume (PDF)
           </a>
 
-          <a
-            href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-            className="inline-flex items-center gap-2 rounded-full bg-white/90 hover:bg-[#0F141C] text-[#0F141C] hover:text-white border border-black/10 px-4 py-2 text-xs font-semibold shadow-sm transition-all"
-          >
-            <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#0F141C] text-white text-[10px]">
-              +
-            </span>
-            <span>Email Haripriya</span>
-          </a>
+          <div className="halden-nav-cta">
+            <HaldenButton
+              href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
+              className="w-[170px]"
+            >
+              Email Haripriya
+            </HaldenButton>
+          </div>
         </div>
       </header>
 
-      {/* ⌘K / + Menu Quick Actions Modal */}
-      <AnimatePresence>
-        {cmdOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[80] flex items-start justify-center bg-slate-900/40 backdrop-blur-sm pt-24 px-4"
-            onClick={() => setCmdOpen(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: -12 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: -12 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              onClick={e => e.stopPropagation()}
-              className="w-full max-w-lg rounded-3xl border border-white bg-[#F8FAFC] p-5 shadow-2xl text-[#0F141C]"
-            >
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#D97706]" />
-                  <span className="mono-accent text-xs font-semibold text-[#0F141C] uppercase tracking-wider">
-                    Quick Navigation &amp; Actions
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setCmdOpen(false)}
-                  className="mono-accent text-xs text-[#64748B] hover:text-[#0F141C] px-2.5 py-0.5 rounded-full border border-slate-200 bg-white"
-                >
-                  ESC
-                </button>
-              </div>
-
-              <div className="space-y-1.5">
-                <button
-                  type="button"
-                  onClick={handleCmdCopyEmail}
-                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-semibold text-[#0F141C] bg-white hover:border-[#0F141C] border border-slate-200 transition-colors"
-                >
-                  <span>{cmdCopied ? '✓ Copied haripriyaraov@gmail.com!' : 'Copy Email (haripriyaraov@gmail.com)'}</span>
-                  <span className="mono-accent text-xs text-[#D97706]">Copy</span>
-                </button>
-
-                <a
-                  href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-                  onClick={() => setCmdOpen(false)}
-                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
-                >
-                  <span>Send Direct Email to Haripriya</span>
-                  <span className="mono-accent text-xs text-[#D97706]">mailto ↗</span>
-                </a>
-
-                <a
-                  href="/Haripriya_Rao_Resume.pdf"
-                  download="Haripriya_Rao_Resume.pdf"
-                  onClick={() => setCmdOpen(false)}
-                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
-                >
-                  <span>Download Resume (PDF)</span>
-                  <span className="mono-accent text-xs text-[#64748B]">PDF ↓</span>
-                </a>
-
-                <a
-                  href="#study-onetera"
-                  onClick={() => setCmdOpen(false)}
-                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
-                >
-                  <span>Onetera: 96% AI Cost Reduction</span>
-                  <span className="mono-accent text-xs text-[#64748B]">Jump →</span>
-                </a>
-
-                <a
-                  href="#study-jpmc"
-                  onClick={() => setCmdOpen(false)}
-                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
-                >
-                  <span>JPMorgan Chase: 2x Faster Document Review</span>
-                  <span className="mono-accent text-xs text-[#64748B]">Jump →</span>
-                </a>
-
-                <a
-                  href="#projects"
-                  onClick={() => setCmdOpen(false)}
-                  className="w-full flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-[#0F141C] hover:bg-white transition-colors"
-                >
-                  <span>Projects &amp; Google / OpenAI Merged PRs</span>
-                  <span className="mono-accent text-xs text-[#64748B]">Jump →</span>
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── Spatial Foreground Layer ── */}
+      {/* ── Foreground Scroll Stack ── */}
       <div className="relative z-10">
-        {/* ── 1. Hero (Sculpture on Center-Right, Headline Bottom-Left, Contact Card Bottom-Right) ── */}
+        {/* ── 1. Hero (Synchronized Bowl Glow + Per-Character Letter Reveal + Staggered Fade-Ups) ── */}
         <StoryCanvasSequence
           name={resumeData.name}
           tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
         />
 
-        {/* ── 2. Flagship Case Studies (Cards on Right 64%, 3D Sculpture on Left 36%) ── */}
+        {/* ── 2. Pinned Scroll Statement (Rises & reveals letter-by-letter as bowl floods cyan) ── */}
+        <HaldenPinnedStatement onNavActivate={setNavActive} />
+
+        {/* ── 3. Flagship Case Studies ── */}
         <CaseStudiesSection />
 
-        {/* ── 3. Tagline Reveal Section (Left 64%, 3D Sculpture on Right 36%) ── */}
-        <TaglineRevealSection />
-
         {/* ── 4. Projects & Open Source ── */}
-        <Section3D id="projects" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
-          <div className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={spring}
-            >
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-3">
-                <span className="h-3 w-[2px] bg-[#0F141C]" />
-                <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
+        <section id="projects" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
+          <div className="space-y-10">
+            <HaldenFadeUp>
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+                <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
+                <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
                   FEATURED PROJECTS &amp; OPEN SOURCE
                 </span>
               </div>
-              <h2
-                className="font-display text-3xl font-semibold text-[#0F141C] sm:text-5xl"
-                style={{ textWrap: 'balance' }}
-              >
-                What I have{' '}
-                <span className="text-[#7D8998] font-normal">built and shipped.</span>
-              </h2>
-              <p className="mt-2 text-base text-[#475569]">
+
+              <HaldenLetterReveal
+                as="h2"
+                mode="scroll"
+                spread={0.32}
+                segments={[
+                  { text: 'What I have', highlight: false },
+                  { text: 'built and shipped.', highlight: true },
+                ]}
+                className="font-display text-3xl sm:text-5xl font-normal text-[#0b1d3a] tracking-[-0.03em]"
+              />
+
+              <p className="mt-3 text-base text-[#3e4d68]">
                 Live AI apps and official contributions merged by Google and OpenAI maintainers.
               </p>
-            </motion.div>
+            </HaldenFadeUp>
+
             <StoryProjectGrid projects={projects} />
           </div>
-        </Section3D>
+        </section>
 
         {/* ── 5. Career Timeline ── */}
         <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
@@ -407,79 +232,69 @@ export default function Home() {
         <EngineeringNotes />
 
         {/* ── 7. Clean, Scannable Core Skills ── */}
-        <Section3D id="stack" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-20 scroll-mt-24">
-          <div className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={spring}
-              className="flex flex-wrap items-end justify-between gap-4"
-            >
+        <section id="stack" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
+          <div className="space-y-10">
+            <HaldenFadeUp className="flex flex-wrap items-end justify-between gap-4">
               <div>
-                <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-3">
-                  <span className="h-3 w-[2px] bg-[#0F141C]" />
-                  <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
+                  <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
                     SKILLS &amp; TOOLKIT
                   </span>
                 </div>
-                <h2 className="font-display text-3xl sm:text-5xl font-semibold text-[#0F141C] tracking-tight">
-                  Core{' '}
-                  <span className="text-[#7D8998] font-normal">technologies.</span>
-                </h2>
+
+                <HaldenLetterReveal
+                  as="h2"
+                  mode="scroll"
+                  spread={0.32}
+                  segments={[
+                    { text: 'Core production', highlight: false },
+                    { text: 'technologies.', highlight: true },
+                  ]}
+                  className="font-display text-3xl sm:text-5xl font-normal text-[#0b1d3a] tracking-[-0.03em]"
+                />
               </div>
-              <button
-                type="button"
-                onClick={() => setStackDrawerOpen(true)}
-                className="inline-flex items-center gap-2 rounded-full bg-[#0F141C] hover:bg-[#1E293B] px-4 py-2.5 text-xs font-semibold text-white transition-colors"
-              >
-                <span>Full Architectural Breakdown</span>
-                <span>→</span>
-              </button>
-            </motion.div>
+
+              <HaldenButton onClick={() => setStackDrawerOpen(true)}>
+                Full Architectural Breakdown
+              </HaldenButton>
+            </HaldenFadeUp>
 
             <div className="grid gap-5 md:grid-cols-3">
               {depthStack.map((category, idx) => (
-                <motion.div
-                  key={category.category}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ ...spring, delay: idx * 0.08 }}
-                >
+                <HaldenFadeUp key={category.category} delay={idx * 0.08}>
                   <TiltCard3D
-                    glareColor="rgba(255, 255, 255, 0.75)"
-                    className="spatial-glass rounded-3xl p-6"
+                    glareColor="rgba(143, 213, 241, 0.35)"
+                    className="spatial-glass rounded-3xl p-6 h-full"
                   >
                     <div>
-                      <span className="mono-accent text-xs font-semibold text-[#D97706] uppercase tracking-wider">
+                      <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider">
                         {category.badge}
                       </span>
-                      <h3 className="font-display text-lg font-semibold text-[#0F141C] mt-1 mb-2">
+                      <h3 className="font-display text-lg font-semibold text-[#0b1d3a] mt-1 mb-2">
                         {category.category}
                       </h3>
-                      <p className="text-sm text-[#475569] mb-5">
+                      <p className="text-sm text-[#3e4d68] mb-5 leading-relaxed">
                         {category.headline}
                       </p>
                     </div>
 
-                    <div className="flex flex-wrap gap-1.5 pt-4 border-t border-black/5">
+                    <div className="flex flex-wrap gap-1.5 pt-4 border-t border-[#0b1d3a]/8">
                       {category.pills.map(pill => (
                         <span
                           key={pill}
-                          className="rounded-full border border-black/10 bg-white/80 px-3 py-1 text-xs font-medium text-[#0F141C]"
+                          className="rounded-full border border-[#0b1d3a]/10 bg-white/80 px-3 py-1 text-xs font-medium text-[#0b1d3a]"
                         >
                           {pill}
                         </span>
                       ))}
                     </div>
                   </TiltCard3D>
-                </motion.div>
+                </HaldenFadeUp>
               ))}
             </div>
           </div>
 
-          {/* Optional Deep Stack Drawer for Engineers */}
           <AnimatePresence>
             {stackDrawerOpen && (
               <motion.div
@@ -487,25 +302,25 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+                className="fixed inset-0 z-[80] flex items-center justify-center bg-[#0b1d3a]/40 backdrop-blur-sm p-4"
                 onClick={() => setStackDrawerOpen(false)}
               >
                 <motion.div
                   initial={{ opacity: 0, scale: 0.96, y: 12 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96, y: 12 }}
-                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.3, ease: [0.22, 0.7, 0.2, 1] }}
                   onClick={e => e.stopPropagation()}
-                  className="w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-3xl border border-white bg-[#F8FAFC] p-6 sm:p-8 shadow-2xl space-y-6 text-[#0F141C]"
+                  className="w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-3xl border border-white bg-[#F8FAFC] p-6 sm:p-8 shadow-2xl space-y-6 text-[#0b1d3a]"
                 >
                   <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-                    <h3 className="font-display text-xl font-semibold text-[#0F141C]">
+                    <h3 className="font-display text-xl font-semibold text-[#0b1d3a]">
                       Production Stack &amp; System Responsibilities
                     </h3>
                     <button
                       type="button"
                       onClick={() => setStackDrawerOpen(false)}
-                      className="mono-accent rounded-full border border-slate-300 bg-white px-3.5 py-1 text-xs font-semibold text-[#0F141C] hover:bg-slate-100"
+                      className="mono-accent rounded-full border border-slate-300 bg-white px-3.5 py-1 text-xs font-semibold text-[#0b1d3a] hover:bg-slate-100"
                     >
                       Close ✕
                     </button>
@@ -514,13 +329,13 @@ export default function Home() {
                   <div className="grid gap-6 md:grid-cols-3">
                     {depthStack.map(cat => (
                       <div key={cat.category} className="space-y-3">
-                        <h4 className="font-display text-sm font-semibold text-[#D97706]">
+                        <h4 className="font-display text-sm font-semibold text-[#5b7cf0]">
                           {cat.category}
                         </h4>
                         {cat.tech.map(item => (
                           <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-3.5">
-                            <div className="text-xs font-semibold text-[#0F141C]">{item.name}</div>
-                            <div className="text-xs text-[#475569] mt-1">{item.role}</div>
+                            <div className="text-xs font-semibold text-[#0b1d3a]">{item.name}</div>
+                            <div className="text-xs text-[#3e4d68] mt-1">{item.role}</div>
                           </div>
                         ))}
                       </div>
@@ -530,104 +345,161 @@ export default function Home() {
               </motion.div>
             )}
           </AnimatePresence>
-        </Section3D>
+        </section>
 
         {/* ── 8. Education ── */}
         <Education />
 
-        {/* ── 9. High-Conversion Frosted Glass Contact Box ── */}
-        <Section3D id="contact" className="relative overflow-hidden px-6 sm:px-10 pt-8 pb-28 max-w-6xl mx-auto scroll-mt-24">
-          <div>
-            <TiltCard3D
-              intensity={4}
-              glareColor="rgba(255, 255, 255, 0.75)"
-              className="spatial-glass rounded-3xl p-8 sm:p-12"
+        {/* ── 9. Exact Halden Dark Navy Split Section (#split / #contact: 58.3% Left / 41.7% Right) ── */}
+        <section
+          ref={splitRef}
+          id="contact"
+          className="relative z-20 mt-12 bg-[#0e1f3d] text-white min-h-[88vh] grid lg:grid-cols-[58.3%_41.7%]"
+        >
+          {/* Left 58.3%: Guide Line + Dark Letter-Reveal Headline + Ruled Fade-Up Row */}
+          <div className="relative pl-[var(--gut)] flex flex-col justify-between py-20 lg:py-28">
+            {/* 1px Vertical Guide Line */}
+            <div className="hidden lg:block absolute top-0 bottom-0 left-[var(--gut)] w-px bg-white/12" />
+
+            <div className="lg:pl-[5vw] pr-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3.5 py-1 mb-6">
+                <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
+                <span className="mono-accent text-xs uppercase tracking-[0.16em] text-[#8fe6f4]">
+                  DIRECT CONTACT &middot; REPLIES WITHIN 24 HOURS
+                </span>
+              </div>
+
+              <HaldenLetterReveal
+                as="h2"
+                mode="scroll"
+                theme="dark"
+                spread={0.35}
+                segments={[
+                  { text: 'AI systems that operate', highlight: false, lineBreakAfter: true },
+                  { text: 'like your best team.', highlight: true },
+                ]}
+                className="font-display text-[clamp(32px,3.4vw,52px)] font-normal leading-[1.08] tracking-[-0.03em] text-white"
+              />
+            </div>
+
+            {/* Ruled Row (#row) that fades up when p2 > 0.75 */}
+            <div
+              className={`mt-12 border-t border-white/12 pt-8 lg:pl-[5vw] pr-6 sm:pr-12 transition-all duration-900 ease-[cubic-bezier(0.22,0.7,0.2,1)] ${
+                splitRowVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
             >
-              <div>
-                <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-4">
-                  <span className="h-3 w-[2px] bg-[#0F141C]" />
-                  <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
-                    DIRECT CONTACT &middot; REPLIES WITHIN 24 HOURS
-                  </span>
-                </div>
-
-                <h2
-                  className="font-display text-3xl font-semibold text-[#0F141C] sm:text-5xl mb-3"
-                  style={{ textWrap: 'balance' }}
-                >
-                  Ready to build{' '}
-                  <span className="text-[#7D8998] font-normal">together?</span>
-                </h2>
-                <p className="text-sm sm:text-base text-[#475569] max-w-xl mb-8">
-                  Available for Senior AI Engineer, Founding Engineer, and Applied AI roles across the USA.
-                </p>
-
-                <div className="flex flex-wrap items-center gap-3 mb-8">
-                  <MagneticButton>
-                    <a
-                      href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-                      className="inline-flex items-center gap-2 rounded-full bg-[#0F141C] hover:bg-[#1E293B] px-6 py-3 text-sm font-semibold text-white transition-all shadow-md"
-                    >
-                      <span>Email {resumeData.email}</span>
-                    </a>
-                  </MagneticButton>
-
-                  <MagneticButton>
-                    <button
-                      type="button"
-                      onClick={handleCopyFooterEmail}
-                      className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/80 hover:bg-white px-5 py-3 text-sm font-semibold text-[#0F141C] transition-all"
-                    >
-                      {copiedFooterEmail ? (
-                        <span className="text-emerald-700">✓ Copied to clipboard!</span>
-                      ) : (
-                        <span>Copy Email Address</span>
-                      )}
-                    </button>
-                  </MagneticButton>
-
-                  <MagneticButton>
-                    <a
-                      href="/Haripriya_Rao_Resume.pdf"
-                      download="Haripriya_Rao_Resume.pdf"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/80 hover:bg-white px-5 py-3 text-sm font-semibold text-[#0F141C] transition-all"
-                    >
-                      <span>Download Resume (PDF)</span>
-                    </a>
-                  </MagneticButton>
-
-                  <Link
-                    href={`https://${resumeData.linkedin}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/80 hover:bg-white px-5 py-3 text-sm font-semibold text-[#0F141C] transition-all"
-                  >
-                    <span>LinkedIn</span>
-                    <span>↗</span>
-                  </Link>
-
-                  <Link
-                    href={githubProfile}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white/80 hover:bg-white px-5 py-3 text-sm font-semibold text-[#0F141C] transition-all"
-                  >
-                    <span>GitHub</span>
-                    <span>↗</span>
-                  </Link>
-                </div>
-
-                <div className="border-t border-black/5 pt-5">
-                  <p className="mono-accent text-xs tracking-wider text-[#D97706] uppercase font-semibold">
-                    USA &middot; Cap Counted H1B (Eligible for Immediate Transfer)
+              <div className="grid sm:grid-cols-[1fr_1.35fr] gap-6 mb-8">
+                <div>
+                  <h3 className="font-display text-[clamp(18px,1.4vw,22px)] font-normal text-white">
+                    Hiring Managers &amp; Founders
+                  </h3>
+                  <p className="mono-accent text-xs text-[#2fe0d0] mt-2 uppercase tracking-wider">
+                    USA &middot; Cap-Counted H-1B Ready
                   </p>
                 </div>
+
+                <p className="text-[clamp(14px,1.1vw,16px)] leading-[1.45] text-white/55 max-w-md">
+                  <strong className="text-white font-medium">
+                    Cut cloud costs 96%. Review 2x faster. Stop firefighting hallucinations.
+                  </strong>{' '}
+                  Haripriya takes multi-agent orchestration, evaluation harnesses, and full-stack AI products from zero to 99.98% production uptime.
+                </p>
               </div>
-            </TiltCard3D>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
+                  className="inline-flex items-center gap-3 rounded-full bg-[#2fe0d0] hover:bg-[#8fe6f4] text-[#0b1d3a] px-6 py-3.5 text-sm font-semibold transition-all"
+                >
+                  <span>Email {resumeData.email}</span>
+                  <span>→</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={handleCopyFooterEmail}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 px-5 py-3.5 text-sm font-medium text-white transition-all"
+                >
+                  {copiedFooterEmail ? (
+                    <span className="text-[#2fe0d0]">✓ Copied to clipboard!</span>
+                  ) : (
+                    <span>Copy Email Address</span>
+                  )}
+                </button>
+
+                <a
+                  href="/Haripriya_Rao_Resume.pdf"
+                  download="Haripriya_Rao_Resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 px-5 py-3.5 text-sm font-medium text-white transition-all"
+                >
+                  <span>Resume (PDF)</span>
+                </a>
+
+                <Link
+                  href={`https://${resumeData.linkedin}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 px-4 py-3.5 text-sm font-medium text-white transition-all"
+                >
+                  <span>LinkedIn</span>
+                  <span>↗</span>
+                </Link>
+
+                <Link
+                  href={githubProfile}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 px-4 py-3.5 text-sm font-medium text-white transition-all"
+                >
+                  <span>GitHub</span>
+                  <span>↗</span>
+                </Link>
+              </div>
+            </div>
           </div>
-        </Section3D>
+
+          {/* Right 41.7%: Scroll-Zooming Visual Panel (1.08 -> 1.00 scale) */}
+          <div className="relative overflow-hidden min-h-[420px] bg-[#08152c] border-l border-white/10">
+            <div
+              ref={visualScaleRef}
+              style={{ transformOrigin: '50% 60%', transform: 'scale(1.08)' }}
+              className="absolute inset-0 flex flex-col justify-between p-8 sm:p-12 bg-[radial-gradient(circle_at_50%_30%,rgba(91,124,240,0.32),rgba(47,224,208,0.14)_45%,rgba(8,21,44,0.95)_85%)]"
+            >
+              <div className="flex items-center justify-between border-b border-white/12 pb-4">
+                <span className="mono-accent text-xs uppercase tracking-[0.16em] text-[#8fe6f4]">
+                  PRODUCTION TELEMETRY // VERIFIED
+                </span>
+                <span className="h-2.5 w-2.5 rounded-full bg-[#2fe0d0] shadow-[0_0_12px_#2fe0d0]" />
+              </div>
+
+              <div className="my-auto space-y-4">
+                {[
+                  { value: '-96%', label: 'LLM Token Payload Reduction', sub: '200 KB → 8 KB via TOON' },
+                  { value: '19.6s', label: 'Financial Document Extraction', sub: 'Down from 40.8s (-52%)' },
+                  { value: '99.98%', label: 'Multi-Tenant Platform Uptime', sub: '22-Node LangGraph DAG' },
+                ].map(stat => (
+                  <div
+                    key={stat.label}
+                    className="rounded-2xl border border-white/12 bg-white/[0.04] backdrop-blur-md p-5"
+                  >
+                    <div className="font-display text-3xl font-semibold text-[#2fe0d0]">
+                      {stat.value}
+                    </div>
+                    <div className="text-sm font-medium text-white mt-1">{stat.label}</div>
+                    <div className="mono-accent text-xs text-white/55 mt-0.5">{stat.sub}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t border-white/12 pt-4 flex items-center justify-between text-xs text-white/50 mono-accent">
+                <span>HARIPRIYA RAO</span>
+                <span>ANTHROPIC CCA-F &middot; AWS AI</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   );

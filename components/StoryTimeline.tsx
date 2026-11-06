@@ -2,8 +2,8 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import Section3D from '@/components/Section3D';
 import { TiltCard3D } from '@/components/ReactBits3D';
+import { HaldenFadeUp, HaldenLetterReveal } from '@/components/HaldenMotion';
 import type { Experience } from '@/data/resume';
 
 type StoryTimelineProps = {
@@ -105,8 +105,6 @@ const roleMeta: Record<string, RoleMeta> = {
   },
 };
 
-const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
-
 export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTimelineProps) {
   const timelineRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -116,34 +114,33 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
   const lineScale = useSpring(scrollYProgress, { stiffness: 130, damping: 25, mass: 0.35 });
 
   return (
-    <Section3D id={sectionId} className="relative mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
-      <section ref={timelineRef}>
-        {/* Section header */}
-        <motion.div
-          className="mb-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-        >
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/60 border border-white/90 mb-3">
-            <span className="h-3 w-[2px] bg-[#0F141C]" />
-            <span className="mono-accent text-xs tracking-[0.18em] text-[#475569] uppercase font-semibold">
+    <section id={sectionId} className="relative mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
+      <div ref={timelineRef as any}>
+        <HaldenFadeUp className="mb-10">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
+            <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
               CAREER EXPERIENCE
             </span>
           </div>
-          <h2 className="font-display text-3xl font-semibold text-[#0F141C] sm:text-5xl">
-            Where I have{' '}
-            <span className="text-[#7D8998] font-normal">delivered impact.</span>
-          </h2>
-        </motion.div>
 
-        {/* Timeline spine */}
+          <HaldenLetterReveal
+            as="h2"
+            mode="scroll"
+            spread={0.32}
+            segments={[
+              { text: 'Where I have', highlight: false },
+              { text: 'delivered impact.', highlight: true },
+            ]}
+            className="font-display text-3xl sm:text-5xl font-normal text-[#0b1d3a] tracking-[-0.03em]"
+          />
+        </HaldenFadeUp>
+
         <div className="relative">
-          <div className="absolute left-4 top-0 h-full w-[2px] overflow-hidden bg-slate-200 sm:left-0">
+          <div className="absolute left-4 top-0 h-full w-[2px] overflow-hidden bg-[#0b1d3a]/10 sm:left-0">
             <motion.div
               style={{ scaleY: lineScale }}
-              className="h-full w-full origin-top bg-[#0F141C]"
+              className="h-full w-full origin-top bg-[#5b7cf0]"
             />
           </div>
 
@@ -161,104 +158,95 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
               };
 
               return (
-                <motion.div
-                  key={`${entry.company}-${entry.period}`}
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ ...spring, delay: idx * 0.07 }}
-                  className="relative"
-                >
-                  {/* Timeline dot */}
-                  <div className="absolute -left-10 top-6 h-3 w-3 -translate-x-1/2 rounded-full bg-white border-2 border-[#0F141C] sm:-left-8 shadow-sm" />
+                <HaldenFadeUp key={`${entry.company}-${entry.period}`} delay={idx * 0.06}>
+                  <div className="relative">
+                    <div className="absolute -left-10 top-6 h-3 w-3 -translate-x-1/2 rounded-full bg-[#2fe0d0] border-2 border-[#0b1d3a] sm:-left-8 shadow-sm" />
 
-                  <TiltCard3D
-                    intensity={3}
-                    glareColor="rgba(255, 255, 255, 0.75)"
-                    className="spatial-glass rounded-3xl p-6 sm:p-7"
-                  >
-                    <div>
-                      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                        <p className="mono-accent text-xs tracking-wider text-[#D97706] uppercase font-semibold">
-                          {entry.period} &middot; {entry.company}
-                        </p>
-                        <span className="mono-accent text-xs text-[#64748B]">
-                          {entry.location}
-                        </span>
-                      </div>
-
-                      <h3 className="font-display text-lg font-semibold text-[#0F141C] sm:text-xl mb-1">
-                        {meta.milestone}
-                      </h3>
-                      <p className="text-sm font-medium text-[#64748B] mb-4">
-                        {entry.position}
-                      </p>
-
-                      {/* Impact badges */}
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {meta.impactTags.map(tag => (
-                          <span
-                            key={tag}
-                            className="mono-accent rounded-full border border-black/10 bg-white/80 px-3 py-1 text-xs text-[#0F141C] font-medium"
-                          >
-                            {tag}
+                    <TiltCard3D
+                      intensity={3}
+                      glareColor="rgba(143, 213, 241, 0.35)"
+                      className="spatial-glass rounded-3xl p-6 sm:p-7"
+                    >
+                      <div>
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                          <p className="mono-accent text-xs tracking-wider text-[#5b7cf0] uppercase font-semibold">
+                            {entry.period} &middot; {entry.company}
+                          </p>
+                          <span className="mono-accent text-xs text-[#3e4d68]">
+                            {entry.location}
                           </span>
-                        ))}
-                      </div>
-
-                      {/* Plain-English 1-sentence summary */}
-                      <p className="text-sm sm:text-base text-[#475569]">
-                        {meta.narrative}
-                      </p>
-
-                      {/* Collapsible Technical Details Drawer */}
-                      <details className="mt-5 group">
-                        <summary className="flex items-center gap-2 text-xs tracking-wider text-[#0F141C] uppercase cursor-pointer select-none hover:text-[#D97706] transition-colors font-semibold">
-                          <svg
-                            className="h-3.5 w-3.5 transition-transform group-open:rotate-90 text-[#D97706]"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth={2.5}
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                          </svg>
-                          <span>Technical Engineering Details</span>
-                        </summary>
-
-                        <div className="mt-4 space-y-4 border-t border-black/5 pt-4">
-                          {meta.highlights && meta.highlights.length > 0 && (
-                            <ul className="space-y-2 text-xs sm:text-sm text-[#475569]">
-                              {meta.highlights.map((highlight, hIdx) => (
-                                <li key={hIdx} className="flex items-start gap-2.5">
-                                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#D97706] flex-shrink-0" />
-                                  <span>{highlight}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-
-                          <div className="flex flex-wrap gap-2 pt-2">
-                            {meta.stackGroups.flatMap(g => g.values).map(val => (
-                              <span
-                                key={val}
-                                className="mono-accent rounded-full border border-black/10 bg-white/80 px-2.5 py-1 text-xs text-[#0F141C]"
-                              >
-                                {val}
-                              </span>
-                            ))}
-                          </div>
                         </div>
-                      </details>
-                    </div>
-                  </TiltCard3D>
-                </motion.div>
+
+                        <h3 className="font-display text-lg font-semibold text-[#0b1d3a] sm:text-xl mb-1">
+                          {meta.milestone}
+                        </h3>
+                        <p className="text-sm font-medium text-[#3e4d68] mb-4">
+                          {entry.position}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {meta.impactTags.map(tag => (
+                            <span
+                              key={tag}
+                              className="mono-accent rounded-full border border-[#0b1d3a]/10 bg-white/80 px-3 py-1 text-xs text-[#0b1d3a] font-medium"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        <p className="text-sm sm:text-base text-[#3e4d68] leading-relaxed">
+                          {meta.narrative}
+                        </p>
+
+                        <details className="mt-5 group">
+                          <summary className="flex items-center gap-2 text-xs tracking-wider text-[#0b1d3a] uppercase cursor-pointer select-none hover:text-[#5b7cf0] transition-colors font-semibold">
+                            <svg
+                              className="h-3.5 w-3.5 transition-transform group-open:rotate-90 text-[#5b7cf0]"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth={2.5}
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                            <span>Technical Engineering Details</span>
+                          </summary>
+
+                          <div className="mt-4 space-y-4 border-t border-[#0b1d3a]/8 pt-4">
+                            {meta.highlights && meta.highlights.length > 0 && (
+                              <ul className="space-y-2 text-xs sm:text-sm text-[#3e4d68]">
+                                {meta.highlights.map((highlight, hIdx) => (
+                                  <li key={hIdx} className="flex items-start gap-2.5">
+                                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#2fe0d0] flex-shrink-0" />
+                                    <span>{highlight}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+
+                            <div className="flex flex-wrap gap-2 pt-2">
+                              {meta.stackGroups.flatMap(g => g.values).map(val => (
+                                <span
+                                  key={val}
+                                  className="mono-accent rounded-full border border-[#0b1d3a]/10 bg-white/80 px-2.5 py-1 text-xs text-[#0b1d3a]"
+                                >
+                                  {val}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </details>
+                      </div>
+                    </TiltCard3D>
+                  </div>
+                </HaldenFadeUp>
               );
             })}
           </div>
         </div>
-      </section>
-    </Section3D>
+      </div>
+    </section>
   );
 }
