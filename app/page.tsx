@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import Section3D from '@/components/Section3D';
@@ -18,15 +19,15 @@ const githubProfile = `https://${resumeData.github}`;
 
 const depthStack = [
   {
-    category: 'Multi-Agent Orchestration & Core Frameworks',
+    category: 'Multi Agent Orchestration & Core Frameworks',
     badge: 'State Machines & Tool Use',
-    headline: 'Deterministic state-machine workflows, cyclic graph resolution, and tool routing.',
+    headline: 'Deterministic state machine workflows, cyclic graph resolution, and tool routing.',
     tech: [
-      { name: 'LangGraph', role: '22-node cyclic state machines, conditional routing, checkpoint persistence' },
-      { name: 'LangChain', role: 'Open-source security hardening (PR #2568), runnables, memory adapters' },
-      { name: 'Anthropic API / Claude SDK', role: 'Tool-use agents, structured JSON parsing, prompt guardrails' },
-      { name: 'Model Context Protocol (MCP)', role: 'Standardized server/client tool invocation protocols' },
-      { name: 'Google Gemini API', role: 'Multimodal analysis, Cookbooks contributor (PR #1088)' },
+      { name: 'LangGraph', role: '22 node cyclic state machines, conditional routing, checkpoint persistence' },
+      { name: 'LangChain', role: 'Open source security hardening (PR #2568), runnables, memory adapters' },
+      { name: 'Anthropic API / Claude SDK', role: 'Tool use agents, structured JSON parsing, prompt guardrails' },
+      { name: 'Model Context Protocol (MCP)', role: 'Standardized server and client tool invocation protocols' },
+      { name: 'Google Gemini API', role: 'Multimodal analysis, official Cookbook contributor (PR #1088)' },
     ],
   },
   {
@@ -34,20 +35,20 @@ const depthStack = [
     badge: 'Empirical Evals & Gating',
     headline: 'Empirical regression testing, golden datasets, and latency optimization.',
     tech: [
-      { name: 'Golden Dataset Evals', role: '100+ annotated ground-truth test suites for LLM extraction' },
-      { name: 'A/B Regression Gating', role: 'Statistical field-agreement scoring (>95% threshold)' },
+      { name: 'Golden Dataset Evals', role: '100+ annotated ground truth test suites for LLM extraction' },
+      { name: 'A/B Regression Gating', role: 'Statistical field agreement scoring (>95% threshold)' },
       { name: 'AST & Regex Parsers', role: 'Deterministic AST salvage layer for guaranteed JSON schema recovery' },
-      { name: 'Adversarial Test Fixtures', role: 'Stress-testing nested forward chains and circular references' },
+      { name: 'Adversarial Test Fixtures', role: 'Stress testing nested forward chains and circular references' },
     ],
   },
   {
     category: 'Distributed Systems, Cloud & Observability',
     badge: 'Telemetry & Distributed State',
-    headline: 'High-throughput telemetry, real-time sync, and distributed state coordination.',
+    headline: 'High throughput telemetry, real time sync, and distributed state coordination.',
     tech: [
-      { name: 'ClickHouse', role: 'Sub-second real-time LLM telemetry and agent execution analytics' },
-      { name: 'Redis', role: 'Distributed locks, rate-limiting, and short-term state caching' },
-      { name: 'Supabase & PostgreSQL', role: 'Row-level security, pgvector semantic search, transactional storage' },
+      { name: 'ClickHouse', role: 'Sub second real time LLM telemetry and agent execution analytics' },
+      { name: 'Redis', role: 'Distributed locks, rate limiting, and short term state caching' },
+      { name: 'Supabase & PostgreSQL', role: 'Row level security, pgvector semantic search, transactional storage' },
       { name: 'Python & TypeScript', role: 'AsyncIO concurrency (asyncio.gather), Next.js App Router, Node.js' },
       { name: 'AWS & CI/CD Pipelines', role: 'ECS, S3, IAM, GitHub Actions canary deployments (98% pass rate)' },
     ],
@@ -55,19 +56,112 @@ const depthStack = [
 ];
 
 const spring = { type: 'spring' as const, stiffness: 100, damping: 30 };
-const staggerContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-const staggerItem = {
-  hidden: { opacity: 0, y: 18, scale: 0.97 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: spring },
-};
+
+const TAGLINE_WORDS =
+  'Bridging complex multi agent orchestration with deterministic production reliability across every token and state transition.'.split(
+    ' '
+  );
+
+function TaglineRevealSection() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [activeCount, setActiveCount] = useState<number>(0);
+
+  useEffect(() => {
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced) {
+      setActiveCount(TAGLINE_WORDS.length);
+      return;
+    }
+
+    let rafId = 0;
+    const updateWords = () => {
+      const el = containerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      const start = vh * 0.85;
+      const end = vh * 0.25;
+      const progress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)));
+      setActiveCount(Math.round(progress * TAGLINE_WORDS.length));
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateWords);
+    };
+
+    updateWords();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
+  return (
+    <Section3D id="impact" className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-20">
+      <div
+        ref={containerRef}
+        className="rounded-3xl p-8 sm:p-12 border border-white/10 bg-[#181818]"
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <span className="mono-accent text-xs tracking-widest text-[#E07A5F] uppercase font-semibold">
+            Production Philosophy
+          </span>
+          <span className="text-white/20">&middot;</span>
+          <span className="mono-accent text-xs tracking-wider text-[#B8B0A4] uppercase">
+            End to End Ownership
+          </span>
+        </div>
+
+        <h2
+          className="font-display text-2xl sm:text-4xl font-semibold leading-tight max-w-[680px]"
+          style={{ textWrap: 'balance' }}
+        >
+          {TAGLINE_WORDS.map((word, idx) => {
+            const isRevealed = idx < activeCount;
+            return (
+              <span
+                key={`${word}-${idx}`}
+                className={`inline-block mr-2 transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  isRevealed ? 'text-[#FAF6F0] opacity-100' : 'text-[#FAF6F0] opacity-30'
+                }`}
+              >
+                {word}
+              </span>
+            );
+          })}
+        </h2>
+
+        <p
+          className="mt-6 max-w-[680px] text-base text-[#B8B0A4]"
+          style={{ textWrap: 'pretty' }}
+        >
+          I partner directly with cross functional stakeholders, from{' '}
+          <strong className="text-[#FAF6F0] font-semibold">NVIDIA engineers</strong> to{' '}
+          <strong className="text-[#FAF6F0] font-semibold">city officials across 6 roadmap phases</strong>, translating high stakes requirements into deterministic, low latency AI pipelines.
+        </p>
+      </div>
+    </Section3D>
+  );
+}
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const progressScale = useSpring(scrollYProgress, { stiffness: 130, damping: 24, mass: 0.22 });
   const timelineExperience = resumeData.experience;
+  const [copiedFooterEmail, setCopiedFooterEmail] = useState(false);
+
+  const handleCopyFooterEmail = () => {
+    navigator.clipboard.writeText(resumeData.email);
+    setCopiedFooterEmail(true);
+    setTimeout(() => setCopiedFooterEmail(false), 2500);
+  };
 
   return (
     <main className="relative text-[var(--text-primary)]" style={{ background: 'var(--bg-dark)' }}>
@@ -80,131 +174,82 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left progress-bar"
       />
 
-      {/* Glass navigation */}
-      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(96vw,1040px)] -translate-x-1/2 rounded-full px-5 py-2.5">
+      {/* Condensed Glass Navigation */}
+      <header className="glass-nav fixed top-4 left-1/2 z-50 w-[min(96vw,960px)] -translate-x-1/2 rounded-full px-5 py-2.5">
         <nav className="flex items-center justify-between text-xs sm:text-sm">
-          <div className="shrink-0 flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#E07A5F] shadow-[0_0_10px_rgba(224,122,95,0.8)]" />
-            <span className="font-bold text-sm sm:text-base text-[#FAF6F0] tracking-tight">
+          <a href="#story" className="shrink-0 flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-[#E07A5F]" />
+            <span className="font-semibold text-sm sm:text-base text-[#FAF6F0] tracking-tight">
               {resumeData.name}
             </span>
-          </div>
+          </a>
 
-          {/* Desktop nav */}
-          <div className="hidden lg:flex items-center gap-4 text-[#A69F94]">
-            <a href="#case-studies" className="nav-link transition-colors hover:text-[#FAF6F0]">Case Studies</a>
-            <a href="#timeline-momentum" className="nav-link transition-colors hover:text-[#FAF6F0]">Experience</a>
-            <a href="#projects" className="nav-link transition-colors hover:text-[#FAF6F0]">Projects</a>
-            <a href="#notes" className="nav-link transition-colors hover:text-[#FAF6F0]">Notes</a>
-            <a href="#stack" className="nav-link transition-colors hover:text-[#FAF6F0]">Stack</a>
-            <a href="#education" className="nav-link transition-colors hover:text-[#FAF6F0]">Education</a>
-            <a href="#certifications" className="nav-link transition-colors hover:text-[#FAF6F0]">Certs</a>
+          {/* Desktop nav: 4 clean links + Resume + Direct Contact CTA */}
+          <div className="hidden md:flex items-center gap-6 text-[#B8B0A4]">
+            <a href="#case-studies" className="nav-link transition-colors duration-300 hover:text-[#FAF6F0]">
+              Case Studies
+            </a>
+            <a href="#projects" className="nav-link transition-colors duration-300 hover:text-[#FAF6F0]">
+              Projects &amp; PRs
+            </a>
+            <a href="#timeline-momentum" className="nav-link transition-colors duration-300 hover:text-[#FAF6F0]">
+              Experience
+            </a>
+            <a href="#stack" className="nav-link transition-colors duration-300 hover:text-[#FAF6F0]">
+              Stack
+            </a>
             <a
               href="/Haripriya_Rao_Resume.pdf"
               download="Haripriya_Rao_Resume.pdf"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border border-white/15 bg-white/5 hover:border-[#E07A5F]/40 hover:text-[#F4A261] text-[#FAF6F0] transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full border border-white/15 bg-[#181818] hover:border-[#E07A5F]/50 hover:text-[#F4A261] text-[#FAF6F0] transition-colors duration-300"
             >
-              <svg className="w-3.5 h-3.5 text-[#E07A5F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Resume (PDF)
+              <span>Resume (PDF)</span>
             </a>
             <a
-              href="#contact"
-              className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-bold rounded-full bg-[#E07A5F] text-[#0E0D13] hover:bg-[#E8886E] transition-all shadow-[0_0_16px_rgba(224,122,95,0.3)]"
+              href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
+              className="inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold rounded-full bg-[#E07A5F] text-[#0E0D13] hover:bg-[#E8886E] transition-colors duration-300"
             >
-              Get in Touch
+              Email Me
             </a>
           </div>
 
           {/* Mobile / Tablet nav */}
-          <div className="flex lg:hidden items-center gap-2">
+          <div className="flex md:hidden items-center gap-2">
             <a
               href="/Haripriya_Rao_Resume.pdf"
               download="Haripriya_Rao_Resume.pdf"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-full border border-white/20 bg-white/5 text-[#FAF6F0]"
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full border border-white/20 bg-[#181818] text-[#FAF6F0]"
             >
-              Resume (PDF)
+              Resume
             </a>
             <a
-              href="#contact"
-              className="inline-flex items-center justify-center px-3 py-1 text-[11px] font-bold rounded-full bg-[#E07A5F] text-[#0E0D13]"
+              href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
+              className="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold rounded-full bg-[#E07A5F] text-[#0E0D13]"
             >
-              Contact
+              Email Me
             </a>
           </div>
         </nav>
       </header>
 
-      {/* ── Hero ── */}
+      {/* ── 1. Hero ── */}
       <StoryCanvasSequence
         name={resumeData.name}
         tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
       />
 
-      {/* ── Executive Summary & Production Philosophy ── */}
-      <Section3D id="impact" className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={spring}
-          className="card p-8 sm:p-12 border border-white/10 bg-[#131217]"
-        >
-          <div className="flex items-center gap-2 mb-3">
-            <span className="mono-accent text-xs tracking-[0.22em] text-[#E07A5F] uppercase font-semibold">Executive Summary</span>
-            <span className="text-white/20">&middot;</span>
-            <span className="mono-accent text-xs tracking-[0.16em] text-[#A69F94] uppercase">Production Engineering</span>
-          </div>
-          <h2 className="font-display text-2xl sm:text-4xl font-bold text-[var(--text-primary)] leading-tight">
-            Bridging complex multi-agent orchestration with deterministic reliability.
-          </h2>
-          <p className="mt-4 max-w-3xl text-[15px] sm:text-base text-[var(--text-muted)] leading-relaxed">
-            I partner directly with cross-functional stakeholders — from <strong>NVIDIA engineers</strong> to <strong>city officials across 6 roadmap phases</strong> — translating high-stakes business requirements into deterministic, low-latency AI pipelines. By owning the complete lifecycle from multi-agent orchestration and AST parsers to real-time ClickHouse telemetry, I ensure systems maintain strict data consistency and sub-second execution under peak production load.
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href="/Haripriya_Rao_Resume.pdf"
-              download="Haripriya_Rao_Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 px-5 py-2.5 text-sm font-semibold text-[var(--accent)] transition hover:bg-[var(--accent)]/20"
-            >
-              Download Resume (PDF)
-            </a>
-            <Link
-              href={githubProfile}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-[var(--border)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
-            >
-              GitHub Profile
-            </Link>
-            <Link
-              href={`https://${resumeData.linkedin}`}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-[var(--border)] px-5 py-2.5 text-sm text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-card)]"
-            >
-              LinkedIn Profile
-            </Link>
-          </div>
-        </motion.div>
-      </Section3D>
-
-      {/* ── 2 Flagship Case Studies (JPMorgan & Onetera) ── */}
+      {/* ── 2. Flagship Case Studies (Onetera & JPMorgan Immediately Visible) ── */}
       <CaseStudiesSection />
 
-      {/* ── Career Timeline ── */}
-      <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
+      {/* ── 3. Tagline Reveal Section (B11) ── */}
+      <TaglineRevealSection />
 
-      {/* ── Projects & Open Source (2-Tier Layout) ── */}
-      <Section3D id="projects" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-28">
+      {/* ── 4. Projects & Open Source (Interactive Procure-Loop DAG + Merged Google/OpenAI PRs) ── */}
+      <Section3D id="projects" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
         <motion.div
           className="mb-10"
           initial={{ opacity: 0, y: 20 }}
@@ -213,24 +258,34 @@ export default function Home() {
           transition={spring}
         >
           <div className="flex items-center gap-2 mb-2">
-            <span className="mono-accent text-xs tracking-[0.22em] text-[#E07A5F] uppercase font-semibold">Code &amp; Contributions</span>
+            <span className="mono-accent text-xs tracking-widest text-[#E07A5F] uppercase font-semibold">
+              Code &amp; Contributions
+            </span>
             <span className="text-white/20">&middot;</span>
-            <span className="mono-accent text-xs tracking-[0.16em] text-[#A69F94] uppercase">Tiered Portfolio</span>
+            <span className="mono-accent text-xs tracking-wider text-[#B8B0A4] uppercase">
+              Tiered Portfolio
+            </span>
           </div>
-          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl">
-            Open Source PRs &amp; Agent Prototypes
+          <h2
+            className="font-display text-3xl font-semibold text-[#FAF6F0] sm:text-5xl max-w-[680px]"
+            style={{ textWrap: 'balance' }}
+          >
+            Open source pull requests and autonomous agent systems.
           </h2>
-          <p className="mt-3 text-base text-[var(--text-muted)] max-w-2xl">
-            Merged contributions to official Google &amp; OpenAI ecosystem repositories, backed by autonomous developer agent swarms.
+          <p className="mt-3 text-base text-[#B8B0A4] max-w-[680px]" style={{ textWrap: 'pretty' }}>
+            Merged contributions to official Google and OpenAI ecosystem repositories, alongside live multi-agent orchestration swarms.
           </p>
         </motion.div>
         <StoryProjectGrid projects={projects} />
       </Section3D>
 
-      {/* ── Engineering Notes: How I Think About Systems ── */}
+      {/* ── 5. Career Timeline ── */}
+      <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
+
+      {/* ── 6. Engineering Notes: How I Think About Systems ── */}
       <EngineeringNotes />
 
-      {/* ── Additive Engineering Stack & Production Depth ── */}
+      {/* ── 7. Engineering Stack & Production Depth ── */}
       <Section3D id="stack" className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -240,15 +295,22 @@ export default function Home() {
           className="mb-10"
         >
           <div className="flex items-center gap-2 mb-2">
-            <span className="mono-accent text-xs tracking-[0.22em] text-[#E07A5F] uppercase font-semibold">Technical Mastery</span>
+            <span className="mono-accent text-xs tracking-widest text-[#E07A5F] uppercase font-semibold">
+              Technical Mastery
+            </span>
             <span className="text-white/20">&middot;</span>
-            <span className="mono-accent text-xs tracking-[0.16em] text-[#A69F94] uppercase">Production Depth</span>
+            <span className="mono-accent text-xs tracking-wider text-[#B8B0A4] uppercase">
+              Production Depth
+            </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-[#FAF6F0] tracking-tight">
-            Engineering Stack &amp; Production Context
+          <h2
+            className="font-display text-3xl sm:text-5xl font-semibold text-[#FAF6F0] tracking-tight max-w-[680px]"
+            style={{ textWrap: 'balance' }}
+          >
+            Engineering stack and production context.
           </h2>
-          <p className="mt-3 text-base text-[#A69F94] max-w-2xl">
-            A granular breakdown of architectural depth, domain competencies, and real-world system responsibilities for each core technology.
+          <p className="mt-3 text-base text-[#B8B0A4] max-w-[680px]">
+            Architectural depth, domain competencies, and real world system responsibilities across every layer of the stack.
           </p>
         </motion.div>
 
@@ -260,30 +322,30 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ ...spring, delay: idx * 0.1 }}
-              className="card p-6 sm:p-7 border border-white/10 bg-[#131217] flex flex-col justify-between hover:border-[#E07A5F]/40 transition-colors"
+              className="rounded-2xl p-6 sm:p-7 border border-white/10 bg-[#181818] flex flex-col justify-between hover:border-[#E07A5F]/40 transition-colors duration-300"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="mono-accent text-[11px] font-bold text-[#E07A5F] uppercase tracking-wider">
+                  <span className="mono-accent text-xs font-semibold text-[#E07A5F] uppercase tracking-wider">
                     {category.badge}
                   </span>
-                  <span className="mono-accent text-[10px] text-white/30 font-mono">0{idx + 1}</span>
+                  <span className="mono-accent text-xs text-[#B8B0A4] font-mono">0{idx + 1}</span>
                 </div>
-                <h3 className="font-display text-lg font-bold text-[#FAF6F0] mb-2 leading-snug">
+                <h3 className="font-display text-lg font-semibold text-[#FAF6F0] mb-2">
                   {category.category}
                 </h3>
-                <p className="text-xs text-[#A69F94] mb-6 leading-relaxed">
+                <p className="text-xs text-[#B8B0A4] mb-6">
                   {category.headline}
                 </p>
 
-                <div className="space-y-3.5 border-t border-white/5 pt-5">
+                <div className="space-y-4 border-t border-white/10 pt-5">
                   {category.tech.map(item => (
                     <div key={item.name} className="space-y-1">
                       <div className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-[#E07A5F]" />
-                        <span className="font-display text-xs font-bold text-[#FAF6F0]">{item.name}</span>
+                        <span className="font-display text-xs font-semibold text-[#FAF6F0]">{item.name}</span>
                       </div>
-                      <p className="text-[11px] text-[#8C857A] pl-3.5 leading-normal">
+                      <p className="text-xs text-[#B8B0A4] pl-3.5">
                         {item.role}
                       </p>
                     </div>
@@ -295,124 +357,88 @@ export default function Home() {
         </div>
       </Section3D>
 
-      {/* ── Education ── */}
+      {/* ── 8. Education ── */}
       <Education />
 
-      {/* ── Certifications ── */}
-      <Section3D id="certifications" className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={spring}
-          className="mb-8"
-        >
-          <p className="mono-accent text-xs tracking-[0.22em] text-[var(--accent)] uppercase mb-2">Verified Badges</p>
-          <h2 className="font-display text-2xl font-bold text-[var(--text-primary)] sm:text-4xl">
-            Certifications
-          </h2>
-        </motion.div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {/* Card 1: CCA-F */}
-          <motion.div
-            variants={staggerItem}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="card p-6 border border-[var(--accent)]/30 hover:border-[var(--accent)]/60 transition-colors flex flex-row items-center justify-between gap-4"
-          >
-            <div className="min-w-0">
-              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-bold">Anthropic</span>
-              <h3 className="font-display text-sm sm:text-base font-bold text-[var(--text-primary)] mt-1 leading-tight">
-                Claude Certified Architect – Foundations (CCA-F)
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] mt-1">Agentic Workflows, Tool Use, Prompt Guardrails &amp; LLM Architecture</p>
-            </div>
-            <a
-              href="https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile"
-              target="_blank"
-              rel="noreferrer"
-              className="mono-accent shrink-0 rounded-full border border-[var(--accent)]/50 bg-[var(--accent)]/15 hover:bg-[var(--accent)]/25 px-3 py-1.5 text-[11px] font-bold text-[var(--accent)] tracking-wide transition-colors whitespace-nowrap"
-            >
-              CCA-F ↗
-            </a>
-          </motion.div>
-
-          {/* Card 2: AWS AI Practitioner */}
-          <motion.div
-            variants={staggerItem}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="card p-6 border border-white/10 hover:border-[var(--accent)]/40 transition-colors flex flex-row items-center justify-between gap-4"
-          >
-            <div className="min-w-0">
-              <span className="mono-accent text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase font-semibold">Amazon Web Services</span>
-              <h3 className="font-display text-sm sm:text-base font-bold text-[var(--text-primary)] mt-1 leading-tight">
-                AWS Certified AI Practitioner
-              </h3>
-              <p className="text-xs text-[var(--text-muted)] mt-1">AI/ML Fundamentals, Generative AI Systems &amp; Responsible AI</p>
-            </div>
-            <a
-              href="https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url"
-              target="_blank"
-              rel="noreferrer"
-              className="mono-accent shrink-0 rounded-full border border-white/20 bg-white/5 hover:border-[var(--accent)]/40 px-3 py-1.5 text-[11px] font-semibold text-[var(--text-primary)]/90 tracking-wide transition-colors whitespace-nowrap"
-            >
-              AWS ↗
-            </a>
-          </motion.div>
-        </div>
-      </Section3D>
-
-      {/* ── Contact ── */}
-      <Section3D id="contact" className="relative overflow-hidden px-4 sm:px-6 pt-6 pb-28">
+      {/* ── 9. High-Conversion Contact Box ── */}
+      <Section3D id="contact" className="relative overflow-hidden px-4 sm:px-6 pt-8 pb-28">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={spring}
-          className="mx-auto max-w-3xl card p-10 sm:p-14 text-center border border-white/10"
+          className="mx-auto max-w-3xl rounded-3xl p-8 sm:p-14 text-center border border-white/15 bg-[#181818]"
         >
-          <h2 className="font-display text-3xl font-bold text-[var(--text-primary)] sm:text-5xl mb-3">
-            Let&apos;s build together
+          <span className="mono-accent inline-block text-xs tracking-widest text-[#F4A261] uppercase font-semibold mb-3">
+            Direct Contact &middot; Replies Within 24 Hours
+          </span>
+          <h2
+            className="font-display text-3xl font-semibold text-[#FAF6F0] sm:text-5xl mb-4"
+            style={{ textWrap: 'balance' }}
+          >
+            Ready to ship production AI systems together?
           </h2>
-          <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-xl mx-auto mb-8">
-            Available for Senior AI Engineer, Founding Engineer, and Applied AI roles. Based in the USA.
+          <p className="text-sm sm:text-base text-[#B8B0A4] max-w-xl mx-auto mb-8" style={{ textWrap: 'pretty' }}>
+            Available for Senior AI Engineer, Founding Engineer, and Applied AI roles across the USA. Reach out directly via email or LinkedIn.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <a
-              href={`mailto:${resumeData.email}`}
-              className="btn-primary"
+              href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
+              className="inline-flex items-center gap-2 rounded-xl bg-[#E07A5F] hover:bg-[#E8886E] px-6 py-3 text-base font-semibold text-[#0E0D13] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] shadow-[0_0_24px_rgba(224,122,95,0.35)] hover:scale-[1.02] active:scale-[0.98]"
             >
-              Email ({resumeData.email})
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>Email {resumeData.email}</span>
             </a>
+
+            <button
+              type="button"
+              onClick={handleCopyFooterEmail}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-[#1F1F1F] hover:bg-[#272727] px-5 py-3 text-sm font-semibold text-[#FAF6F0] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.98]"
+            >
+              {copiedFooterEmail ? (
+                <span className="text-emerald-300">Copied to clipboard!</span>
+              ) : (
+                <span>Copy Email Address</span>
+              )}
+            </button>
+
             <a
               href="/Haripriya_Rao_Resume.pdf"
               download="Haripriya_Rao_Resume.pdf"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/40 bg-[var(--accent)]/10 px-5 py-2.5 text-sm font-semibold text-[var(--accent)] hover:bg-[var(--accent)]/20 transition-all"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#E07A5F]/40 bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-[#F4A261] hover:bg-[#272727] transition-all duration-300"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Download Resume (PDF)
+              <span>Download Resume (PDF)</span>
             </a>
+
             <Link
               href={`https://${resumeData.linkedin}`}
               target="_blank"
               rel="noreferrer"
-              className="btn-secondary"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-[#FAF6F0] hover:border-white/30 transition-all duration-300"
             >
-              LinkedIn Profile
+              <span>LinkedIn</span>
+              <span>↗</span>
+            </Link>
+
+            <Link
+              href={githubProfile}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-[#1F1F1F] px-5 py-3 text-sm font-semibold text-[#FAF6F0] hover:border-white/30 transition-all duration-300"
+            >
+              <span>GitHub</span>
+              <span>↗</span>
             </Link>
           </div>
 
           <div className="border-t border-white/10 pt-6">
-            <p className="mono-accent text-[11px] tracking-[0.14em] text-[var(--accent)] uppercase font-semibold">
-              USA &middot; Cap-Counted H-1B (Eligible for Immediate Transfer)
+            <p className="mono-accent text-xs tracking-wider text-[#F4A261] uppercase font-semibold">
+              USA &middot; Cap Counted H1B (Eligible for Immediate Transfer)
             </p>
           </div>
         </motion.div>
