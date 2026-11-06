@@ -18,19 +18,19 @@ const LIVE_AGENT_LAYERS = [
     step: '01',
     title: '22-Node LangGraph Router',
     detail: 'Parallel async tool scheduling',
-    badge: '-40% Latency',
+    badge: 'LangGraph DAG',
   },
   {
     step: '02',
-    title: 'TOON Payload Compression',
-    detail: '200 KB verbose JSON → 8 KB table',
-    badge: '-96% Cost',
+    title: 'AST Schema Recovery',
+    detail: 'Deterministic salvage · 0 schema crashes',
+    badge: 'AST Salvage',
   },
   {
     step: '03',
     title: 'Golden-Dataset Eval Gate',
     detail: '40.8s → 19.6s · 8/8 nested threads',
-    badge: '95% Accuracy',
+    badge: '95.4% Accuracy',
   },
 ];
 
@@ -38,22 +38,22 @@ const TRUST_GRID = [
   {
     name: 'JPMORGAN',
     delay: '1.25s',
-    href: '#study-jpmc',
+    href: '#experience',
   },
   {
     name: 'ONETERA',
     delay: '1.32s',
-    href: '#study-onetera',
+    href: '#case-studies',
   },
   {
     name: 'NVIDIA PARTNERS',
     delay: '1.39s',
-    href: '#study-onetera',
+    href: '#case-studies',
   },
   {
     name: 'DELOITTE',
     delay: '1.46s',
-    href: '#timeline-momentum',
+    href: '#experience',
   },
   {
     name: 'CCA-F ARCHITECT',
@@ -68,7 +68,7 @@ const TRUST_GRID = [
     external: true,
   },
   {
-    name: 'OPENAI #2568',
+    name: 'OPENAI PR #2568',
     delay: '1.56s',
     href: 'https://github.com/openai/openai-cookbook/pull/2568',
     external: true,
@@ -114,7 +114,7 @@ export default function StoryCanvasSequence({ name }: Props) {
           >
             <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
             <span className="mono-accent text-xs font-semibold tracking-[0.16em] uppercase text-[#1d2f4f]">
-              SENIOR AI &amp; FOUNDING ENGINEER &middot; USA (H-1B)
+              SENIOR AI &amp; FOUNDING ENGINEER
             </span>
           </div>
 
@@ -133,21 +133,18 @@ export default function StoryCanvasSequence({ name }: Props) {
             className="fade-up text-base sm:text-lg text-[#1d2f4f]/85 max-w-xl leading-relaxed"
             style={{ ['--d' as any]: '0.85s' }}
           >
-            I architect multi-agent workflows and deterministic safety layers — cutting AI cloud costs{' '}
-            <strong className="text-[#0b1d3a] font-semibold">96%</strong> and financial document review wait times in{' '}
-            <strong className="text-[#0b1d3a] font-semibold">half</strong>.
+            I architect multi-agent workflows, deterministic evaluation harnesses, and full-stack AI products from initial whiteboard to verified enterprise reliability.
           </p>
 
-          {/* Staggered Metric Pills */}
+          {/* Staggered Metric Pills: Exactly 3 Distinct Metrics */}
           <div
             className="fade-up flex flex-wrap items-center gap-2.5 pt-1"
             style={{ ['--d' as any]: '1.0s' }}
           >
             {[
-              { metric: '96%', label: 'AI Cost Cut' },
-              { metric: '2x', label: 'Faster Review' },
-              { metric: '99.98%', label: 'Uptime' },
               { metric: '40%', label: 'Turn Latency Drop' },
+              { metric: '255+', label: 'Workflow Steps Orchestrated' },
+              { metric: '100+', label: 'Ground-Truth Eval Benchmarks' },
             ].map(item => (
               <div
                 key={item.label}
@@ -159,6 +156,13 @@ export default function StoryCanvasSequence({ name }: Props) {
                 <span className="text-xs font-medium text-[#3e4d68]">{item.label}</span>
               </div>
             ))}
+          </div>
+
+          {/* Single Focused Primary CTA */}
+          <div className="fade-up pt-2" style={{ ['--d' as any]: '1.15s' }}>
+            <HaldenButton size="lg" href="#case-studies">
+              Explore Proven Work &darr;
+            </HaldenButton>
           </div>
         </div>
 
@@ -232,47 +236,23 @@ export default function StoryCanvasSequence({ name }: Props) {
         </div>
       </div>
 
-      {/* Bottom Row: Halden Trust Line + Large Cyan-Dot-to-Chevron CTA (Left) & 4x2 Hairline Credential Grid (Right) */}
-      <div className="mt-12 grid lg:grid-cols-12 gap-8 items-end pt-6">
-        {/* Left 6 Columns: Trust Line (.trust at 1.15s) + Large CTA (.btn.lg at 1.3s) */}
-        <div className="lg:col-span-6 space-y-5">
+      {/* Bottom Row: Verified Footprint & 4x2 Hairline Credential Grid */}
+      <div className="mt-14 pt-8 border-t border-[#0b1d3a]/8 grid lg:grid-cols-12 gap-8 items-center">
+        {/* Left 5 Columns: Production Trust Line */}
+        <div className="lg:col-span-5 space-y-2">
+          <span className="mono-accent text-xs font-semibold uppercase tracking-[0.16em] text-[#5b7cf0] block">
+            VERIFIED PRODUCTION FOOTPRINT
+          </span>
           <p
-            className="fade-up text-[clamp(15px,1.25vw,19px)] tracking-[-0.015em] text-[#1d2f4f] font-medium leading-relaxed"
+            className="fade-up text-[clamp(14px,1.15vw,16px)] tracking-[-0.015em] text-[#1d2f4f] font-medium leading-relaxed"
             style={{ ['--d' as any]: '1.15s' }}
           >
-            I build production systems that bridge research and business outcomes — collaborating closely with cross-functional teams from day zero to launch.
+            Architectures, evaluations, and official contributions trusted across enterprise and open-source ecosystems.
           </p>
-
-          <div
-            className="fade-up flex flex-wrap items-center gap-3"
-            style={{ ['--d' as any]: '1.3s' }}
-          >
-            <HaldenButton
-              size="lg"
-              href={`mailto:${email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-            >
-              Email Haripriya
-            </HaldenButton>
-
-            <HaldenButton size="lg" variant="ghost" onClick={handleCopyEmail}>
-              {copied ? '✓ Copied Email' : 'Copy Email'}
-            </HaldenButton>
-
-            <HaldenButton
-              size="lg"
-              variant="ghost"
-              href="/Haripriya_Rao_Resume.pdf"
-              download="Haripriya_Rao_Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Resume PDF
-            </HaldenButton>
-          </div>
         </div>
 
-        {/* Right 6 Columns: Clean 4x2 Hairline Grid with Unified Typography (No mixed fonts, No icons) */}
-        <div className="lg:col-span-6 w-full overflow-hidden">
+        {/* Right 7 Columns: Clean 4x2 Hairline Grid with Unified Typography */}
+        <div className="lg:col-span-7 w-full overflow-hidden">
           <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-[#0b1d3a]/[0.06] lg:border-t-0">
             {TRUST_GRID.map((item, idx) => (
               <a

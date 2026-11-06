@@ -218,7 +218,7 @@ export default function Home() {
               />
 
               <p className="mt-3 text-base text-[#3e4d68]">
-                Live AI apps and official contributions merged by Google and OpenAI maintainers.
+                Production AI architectures and official contributions for Google Gemini (Merged PR #1088) and OpenAI Cookbook (PR #2568).
               </p>
             </HaldenFadeUp>
 
@@ -410,62 +410,27 @@ export default function Home() {
 
                 <p className="text-[clamp(14px,1.1vw,16px)] leading-[1.6] text-white/70 max-w-lg">
                   <strong className="text-white font-medium block mb-1">
-                    Cut cloud costs 96%. Review 2x faster. Stop firefighting hallucinations.
+                    Turning probabilistic models into deterministic production infrastructure.
                   </strong>
-                  I partner with product, risk, and engineering teams to turn generative models into resilient production systems — scaling multi-agent orchestration and deterministic evaluation harnesses to 99.98% uptime.
+                  I collaborate with engineering leaders, product partners, and risk teams to scale multi-agent orchestration, deterministic evaluation harnesses, and sub-second task routing with verified enterprise reliability.
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="#motion-footer"
+                  className="inline-flex items-center gap-3 rounded-full bg-[#2fe0d0] hover:bg-[#8fe6f4] text-[#0b1d3a] px-7 py-3.5 text-sm font-semibold transition-all shadow-[0_10px_25px_-8px_rgba(47,224,208,0.5)]"
+                >
+                  <span>Connect with Haripriya</span>
+                  <span>&darr;</span>
+                </a>
+
                 <a
                   href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-                  className="inline-flex items-center gap-3 rounded-full bg-[#2fe0d0] hover:bg-[#8fe6f4] text-[#0b1d3a] px-6 py-3.5 text-sm font-semibold transition-all"
+                  className="mono-accent text-xs text-[#8fe6f4] hover:text-white transition-colors"
                 >
-                  <span>Email {resumeData.email}</span>
-                  <span>→</span>
+                  Direct: {resumeData.email} &rarr;
                 </a>
-
-                <button
-                  type="button"
-                  onClick={handleCopyFooterEmail}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 px-5 py-3.5 text-sm font-medium text-white transition-all"
-                >
-                  {copiedFooterEmail ? (
-                    <span className="text-[#2fe0d0]">✓ Copied to clipboard!</span>
-                  ) : (
-                    <span>Copy Email Address</span>
-                  )}
-                </button>
-
-                <a
-                  href="/Haripriya_Rao_Resume.pdf"
-                  download="Haripriya_Rao_Resume.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 px-5 py-3.5 text-sm font-medium text-white transition-all"
-                >
-                  <span>Resume (PDF)</span>
-                </a>
-
-                <Link
-                  href={`https://${resumeData.linkedin}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 px-4 py-3.5 text-sm font-medium text-white transition-all"
-                >
-                  <span>LinkedIn</span>
-                  <span>↗</span>
-                </Link>
-
-                <Link
-                  href={githubProfile}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 px-4 py-3.5 text-sm font-medium text-white transition-all"
-                >
-                  <span>GitHub</span>
-                  <span>↗</span>
-                </Link>
               </div>
             </div>
           </div>
@@ -486,9 +451,9 @@ export default function Home() {
 
               <div className="my-auto space-y-4">
                 {[
-                  { value: '-96%', label: 'LLM Token Payload Reduction', sub: '200 KB → 8 KB via TOON' },
-                  { value: '19.6s', label: 'Financial Document Extraction', sub: 'Down from 40.8s (-52%)' },
-                  { value: '99.98%', label: 'Multi-Tenant Platform Uptime', sub: '22-Node LangGraph DAG' },
+                  { value: '19.6s', label: 'Financial Document Extraction', sub: 'Down from 40.8s (-52% latency)' },
+                  { value: '95.4%', label: 'Golden-Dataset Agreement', sub: '100+ annotated ground-truth benchmark threads' },
+                  { value: '22 Nodes', label: 'Concurrent LangGraph State Machine', sub: '0 race conditions via Redis distributed locks' },
                 ].map(stat => (
                   <div
                     key={stat.label}

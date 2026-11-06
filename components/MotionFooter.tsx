@@ -74,15 +74,15 @@ export function MagneticButton({ children, className = '', onClick, href, extern
 
 /* ── Marquee Items ── */
 const MARQUEE_ITEMS = [
-  'FOUNDING AI ENGINEER',
-  '99.98% PRODUCTION SLA',
-  '-96% TOKEN COST COMPRESSION',
-  'SAN FRANCISCO & NYC',
-  '22-NODE ASYNC LANGGRAPH DAG',
-  'DETERMINISTIC AST SCHEMAS',
-  'NVIDIA & CIVIC PARTNERSHIPS',
-  'OPENAI & GEMINI MAINTAINER MERGED',
-  'CAP-COUNTED H-1B TRANSFER READY',
+  'SENIOR AI & FOUNDING ENGINEER',
+  'MULTI-AGENT ORCHESTRATION',
+  '22-NODE CYCLIC LANGGRAPH DAG',
+  'DETERMINISTIC EVALUATION HARNESSES',
+  'AST SCHEMA RECOVERY LAYERS',
+  'NVIDIA & CIVIC COLLABORATIONS',
+  'GOOGLE GEMINI PR #1088 (MERGED)',
+  'OPENAI COOKBOOK PR #2568 (CONTRIBUTED)',
+  'SAN FRANCISCO & NEW YORK',
 ];
 
 export default function MotionFooter() {
@@ -178,7 +178,7 @@ export default function MotionFooter() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2fe0d0]" />
               </span>
               <span className="mono-accent text-[11px] uppercase tracking-[0.14em] text-[#8fe6f4]">
-                AVAILABLE FOR FOUNDING AI &amp; SENIOR ROLES &middot; SF &amp; NYC
+                AVAILABLE FOR FOUNDING AI &amp; SENIOR ROLES &middot; CAP-COUNTED H-1B TRANSFER READY &middot; SF &amp; NYC
               </span>
             </div>
 
@@ -188,7 +188,7 @@ export default function MotionFooter() {
                 <span className="text-[#8fe6f4]">that don&rsquo;t hallucinate.</span>
               </h2>
               <p className="mt-2 text-sm sm:text-base text-white/60 max-w-xl leading-relaxed">
-                Specialized in multi-agent orchestration, deterministic AST schema recovery, and cutting cloud inference costs 96%.
+                Specialized in multi-agent orchestration, deterministic evaluation harnesses, and sub-second task routing.
               </p>
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function MotionFooter() {
               <ul className="space-y-1 text-white/60">
                 <li>Anthropic CCA-F Certified</li>
                 <li>AWS AI Practitioner</li>
-                <li>UMass Amherst MS in CS</li>
+                <li>USC &middot; MS in Computer Science</li>
               </ul>
             </div>
           </div>
@@ -293,7 +293,7 @@ export default function MotionFooter() {
         {/* ── Bottom Baseline: Copyright & Magnetic Back-to-Top Button ── */}
         <div className="relative z-10 w-full border-t border-white/[0.08] bg-black/30 backdrop-blur-md px-6 sm:px-10 py-4 flex items-center justify-between text-xs text-white/50 mono-accent">
           <div>
-            &copy; 2026 {resumeData.name} &middot; Halden Precision Motion Architecture
+            &copy; 2026 {resumeData.name} &middot; Designed &amp; Built by Haripriya Rao &middot; Built with Next.js &amp; React Three Fiber
           </div>
 
           <div className="flex items-center gap-4">

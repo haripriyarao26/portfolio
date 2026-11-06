@@ -317,11 +317,11 @@ export function HaldenPinnedStatement({
   const [revealProgress, setRevealProgress] = useState(0);
 
   const statementSegments: WordSegment[] = [
-    { text: 'I build', highlight: false },
-    { text: 'production systems', highlight: true, lineBreakAfter: true },
-    { text: 'that slash token costs 96%, cut latency in half,', lineBreakAfter: true },
-    { text: 'and partner with cross-functional teams to ship', lineBreakAfter: true },
-    { text: 'deterministic multi-agent workflows at 99.98% uptime.', highlight: false },
+    { text: 'I architect', highlight: false },
+    { text: 'production AI systems', highlight: true, lineBreakAfter: true },
+    { text: 'that replace brittle prompts with deterministic state,', lineBreakAfter: true },
+    { text: 'compress payload costs, eliminate concurrency race conditions,', lineBreakAfter: true },
+    { text: 'and scale multi-agent autonomy with verified enterprise safety.', highlight: false },
   ];
 
   useEffect(() => {

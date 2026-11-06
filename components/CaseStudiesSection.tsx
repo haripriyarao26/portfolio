@@ -75,15 +75,15 @@ export default function CaseStudiesSection() {
                     </div>
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
-                        <DecryptedMetric value="40%" />
+                        <DecryptedMetric value="200KB" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Faster</div>
+                      <div className="text-xs text-[#3e4d68]">&rarr; 8KB payload</div>
                     </div>
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
-                        <DecryptedMetric value="99.98%" />
+                        <DecryptedMetric value="0" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Uptime</div>
+                      <div className="text-xs text-[#3e4d68]">Schema breaks</div>
                     </div>
                   </div>
                 </div>
@@ -210,15 +210,18 @@ export default function CaseStudiesSection() {
                     <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
                       How the 3-Front Compression Pipeline Works
                     </h4>
-                    <ul className="space-y-2.5 text-sm text-[#3e4d68]">
+                    <ul className="space-y-3 text-sm text-[#3e4d68]">
                       <li>
-                        <strong className="text-[#0b1d3a]">1. Surgical Pre-Pass (Python):</strong> Isolates only the 10 to 20 steps with active conditional rules; 95% of inert UI steps are stripped before the LLM call.
+                        <strong className="text-[#0b1d3a]">1. Surgical Pre-Pass (Python):</strong> Isolates only the 10 to 20 steps with active conditional rules; 95% of inert UI steps are stripped before the LLM prompt is assembled.
                       </li>
                       <li>
-                        <strong className="text-[#0b1d3a]">2. TOON Serialization:</strong> Flattens uniform JSON arrays into pipe-delimited header rows, removing 60% of repetitive JSON keys and brackets.
+                        <strong className="text-[#0b1d3a]">2. TOON (Table-Oriented Object Notation) Serialization:</strong> A compact tabular serialization format that converts repetitive JSON object arrays into pipe-delimited header rows, stripping 60% of redundant brackets and keys before sending to the model.
                       </li>
                       <li>
-                        <strong className="text-[#0b1d3a]">3. O(1) Index Maps &amp; DFS Cycle Detection:</strong> Pre-computes bidirectional lookup maps and runs 3-color graph traversal to prevent recursive loops across 255+ steps.
+                        <strong className="text-[#0b1d3a]">3. Deterministic AST Schema Salvage:</strong> An Abstract Syntax Tree (AST) recovery parser that intercepts malformed model outputs (dropped closing braces, trailing commas, truncated strings) and safely repairs them into valid JSON schemas with 0 crashes.
+                      </li>
+                      <li>
+                        <strong className="text-[#0b1d3a]">4. O(1) Index Maps &amp; DFS Cycle Detection:</strong> Pre-computes bidirectional lookup maps and runs 3-color graph traversal to prevent recursive infinite loops across 255+ conditional steps.
                       </li>
                     </ul>
                   </div>
@@ -265,7 +268,7 @@ s02   | INCOME | annual_usd < 50000         | prog_grant
                         <strong className="text-[#0b1d3a]">3. NVIDIA Engineering Collaboration:</strong> Partnered directly with NVIDIA engineers to optimize GPU inference pipelines and streaming responses, cutting round-trip latency by 40% and eliminating bottlenecks in multi-tenant environments.
                       </li>
                       <li>
-                        <strong className="text-[#0b1d3a]">4. Production Hardening &amp; Distributed State:</strong> Integrated Redis distributed locks to eliminate concurrency conflicts and streaming ClickHouse telemetry, sustaining 99.98% uptime in production across all municipal workloads.
+                        <strong className="text-[#0b1d3a]">4. Production Hardening &amp; Redis Distributed Mutex:</strong> Integrated Redis distributed locks (mutexes) that grant millisecond-level exclusive execution locks across parallel agent workers, eliminating 100% of double-charge and race-condition edge cases under spike traffic.
                       </li>
                     </ul>
                   </div>
