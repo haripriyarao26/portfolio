@@ -16,11 +16,19 @@ export function getAssetUrl(src: string): string {
     return src;
   }
   const clean = src.startsWith('/') ? src : `/${src}`;
-  if (typeof window !== 'undefined' && window.location.pathname.startsWith('/portfolio')) {
-    if (!clean.startsWith('/portfolio')) {
-      return `/portfolio${clean}`;
+
+  // If in browser, detect whether GitHub Pages subpath (/portfolio) is active
+  if (typeof window !== 'undefined') {
+    const isGitHubPages =
+      window.location.hostname.includes('github.io') ||
+      window.location.pathname.startsWith('/portfolio');
+    if (isGitHubPages) {
+      return clean.startsWith('/portfolio') ? clean : `/portfolio${clean}`;
     }
+    return clean.replace(/^\/portfolio/, '');
   }
+
+  // Build time (Static HTML Export)
   const isProd = process.env.NODE_ENV === 'production';
   if (isProd && !clean.startsWith('/portfolio')) {
     return `/portfolio${clean}`;
@@ -286,10 +294,19 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                         alt="AgentGauge Live Telemetry & 4-Dimension Task Router"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
-                          const target = e.currentTarget;
-                          // Fallback to absolute or alternative path if basePath shifted
-                          if (!target.src.includes('/portfolio/')) {
-                            target.src = `/portfolio/projects/agent-gauge-demo.gif`;
+                          const img = e.currentTarget;
+                          if (!img.dataset.tried) {
+                            img.dataset.tried = 'true';
+                            if (img.src.includes('/portfolio/')) {
+                              img.src = img.src.replace('/portfolio/', '/');
+                            } else {
+                              try {
+                                const u = new URL(img.src);
+                                img.src = `${u.origin}/portfolio${u.pathname}`;
+                              } catch {
+                                img.src = '/portfolio/projects/agent-gauge-demo.gif';
+                              }
+                            }
                           }
                         }}
                       />
@@ -498,20 +515,24 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               {/* Sticky Top Header with Clean Close Button */}
               <div className="sticky -top-6 sm:-top-10 -mx-6 sm:-mx-10 px-6 sm:px-10 py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-start justify-between gap-4 z-10 mb-6">
                 <div className="flex items-center gap-3">
-                  {drawerProject.images && drawerProject.images.find(img => img.src.endsWith('.svg')) && (
+                  {drawerProject.id === 'agent-gauge' ? (
+                    <div className="w-10 h-10 rounded-xl bg-[#0b1d3a] border border-[#5b7cf0]/30 flex items-center justify-center shrink-0 shadow-sm text-[#2fe0d0]">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                      </svg>
+                    </div>
+                  ) : drawerProject.images && drawerProject.images.find(img => img.src.endsWith('.svg')) ? (
                     <img
                       src={getAssetUrl(drawerProject.images.find(img => img.src.endsWith('.svg'))!.src)}
                       alt="Logo"
                       className="w-10 h-10 rounded-xl shrink-0 object-contain shadow-sm"
                       onError={(e) => {
                         const target = e.currentTarget;
-                        const original = drawerProject.images.find(img => img.src.endsWith('.svg'))!.src;
-                        if (!target.src.includes('/portfolio/')) {
-                          target.src = `/portfolio${original.startsWith('/') ? original : `/${original}`}`;
-                        }
+                        target.style.display = 'none';
                       }}
                     />
-                  )}
+                  ) : null}
                   <div>
                     <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider">
                       Technical Architecture &amp; Specs
@@ -534,16 +555,25 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               </div>
 
               {drawerProject.images && drawerProject.images[0] && (
-                <div className="rounded-2xl overflow-hidden border border-[#0b1d3a]/10 bg-[#040509] shadow-inner mb-6">
+                <div className="rounded-2xl overflow-hidden border border-[#0b1d3a]/10 bg-[#040509] shadow-inner mb-6 relative">
                   <img
                     src={getAssetUrl(drawerProject.images[0].src)}
                     alt={drawerProject.images[0].alt}
                     className="w-full h-auto max-h-72 object-cover"
                     onError={(e) => {
-                      const target = e.currentTarget;
-                      const original = drawerProject.images[0].src;
-                      if (!target.src.includes('/portfolio/')) {
-                        target.src = `/portfolio${original.startsWith('/') ? original : `/${original}`}`;
+                      const img = e.currentTarget;
+                      if (!img.dataset.tried) {
+                        img.dataset.tried = 'true';
+                        if (img.src.includes('/portfolio/')) {
+                          img.src = img.src.replace('/portfolio/', '/');
+                        } else {
+                          try {
+                            const u = new URL(img.src);
+                            img.src = `${u.origin}/portfolio${u.pathname}`;
+                          } catch {
+                            img.src = `/portfolio${drawerProject.images[0].src}`;
+                          }
+                        }
                       }
                     }}
                   />
