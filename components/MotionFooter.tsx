@@ -82,7 +82,7 @@ const MARQUEE_ITEMS = [
   'NVIDIA & CIVIC COLLABORATIONS',
   'GOOGLE GEMINI PR #1088 (MERGED)',
   'OPENAI COOKBOOK PR #2568 (CONTRIBUTED)',
-  'SAN FRANCISCO & NEW YORK',
+  'AVAILABLE ACROSS THE UNITED STATES',
 ];
 
 export default function MotionFooter() {
@@ -107,7 +107,7 @@ export default function MotionFooter() {
       {/* ── Fixed Curtain Reveal Layer ── */}
       <div className="fixed bottom-0 left-0 w-full h-[760px] sm:h-[680px] lg:h-[620px] z-0 bg-[#060e1d] text-white flex flex-col justify-between overflow-hidden select-none">
         
-        {/* ── Layer 1: Animated Halden Aurora Glows ── */}
+        {/* ── Layer 1: Animated Aurora Glows ── */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           {/* Top-Left Sky Cyan Bloom */}
           <motion.div
@@ -178,7 +178,7 @@ export default function MotionFooter() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2fe0d0]" />
               </span>
               <span className="mono-accent text-[11px] uppercase tracking-[0.14em] text-[#8fe6f4]">
-                AVAILABLE FOR FOUNDING AI &amp; SENIOR ROLES &middot; CAP-COUNTED H-1B TRANSFER READY &middot; SF &amp; NYC
+                AVAILABLE FOR FOUNDING AI &amp; SENIOR ROLES &middot; CAP-COUNTED H-1B READY &middot; UNITED STATES (REMOTE &amp; RELOCATION)
               </span>
             </div>
 
@@ -297,7 +297,7 @@ export default function MotionFooter() {
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline text-white/40">SF &amp; NYC Available</span>
+            <span className="hidden sm:inline text-white/40">Available across the United States</span>
             <MagneticButton onClick={scrollToTop}>
               <button
                 type="button"

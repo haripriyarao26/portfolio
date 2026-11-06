@@ -73,38 +73,6 @@ export default function Home() {
   const [copiedFooterEmail, setCopiedFooterEmail] = useState(false);
   const [stackDrawerOpen, setStackDrawerOpen] = useState(false);
 
-  const splitRef = useRef<HTMLElement | null>(null);
-  const visualScaleRef = useRef<HTMLDivElement | null>(null);
-  const [splitRowVisible, setSplitRowVisible] = useState(false);
-
-  useEffect(() => {
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        if (!splitRef.current) return;
-        const rect = splitRef.current.getBoundingClientRect();
-        const vh = Math.max(1, window.innerHeight || 800);
-        const p2 = Math.max(0, Math.min(1, (0.8 - rect.top / vh) / 0.65));
-        setSplitRowVisible(p2 > 0.75);
-
-        if (visualScaleRef.current) {
-          const s = 1.08 - 0.08 * Math.max(0, Math.min(1, 1 - rect.top / vh));
-          visualScaleRef.current.style.transform = `scale(${s.toFixed(4)})`;
-        }
-      });
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, []);
-
   const handleCopyFooterEmail = () => {
     navigator.clipboard.writeText(resumeData.email);
     setCopiedFooterEmail(true);
@@ -357,124 +325,10 @@ export default function Home() {
           </AnimatePresence>
         </section>
 
-        {/* ── 8. Education ── */}
-        <Education />
-
-        {/* ── 9. Halden Dark Navy Split Section (#split / #contact) ── */}
-        <section
-          ref={splitRef}
-          id="contact"
-          className="relative z-20 mt-12 bg-[#0e1f3d] text-white min-h-[88vh] grid grid-cols-1 lg:grid-cols-[58.3%_41.7%] rounded-b-[36px] sm:rounded-b-[52px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border-b border-white/10 overflow-hidden"
-        >
-          {/* Left 58.3%: Guide Line + Dark Letter-Reveal Headline + Ruled Fade-Up Row */}
-          <div className="relative px-6 sm:px-10 lg:px-0 lg:pl-[var(--gut)] flex flex-col justify-between py-16 sm:py-20 lg:py-28">
-            {/* 1px Vertical Guide Line */}
-            <div className="hidden lg:block absolute top-0 bottom-0 left-[var(--gut)] w-px bg-white/12" />
-
-            <div className="lg:pl-[5vw] pr-0 sm:pr-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3.5 py-1 mb-6">
-                <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-                <span className="mono-accent text-[11px] sm:text-xs uppercase tracking-[0.16em] text-[#8fe6f4]">
-                  DIRECT CONTACT &middot; REPLIES WITHIN 24 HOURS
-                </span>
-              </div>
-
-              <HaldenLetterReveal
-                as="h2"
-                mode="scroll"
-                theme="dark"
-                spread={0.35}
-                segments={[
-                  { text: 'AI systems that operate', highlight: false, lineBreakAfter: true },
-                  { text: 'like your best team.', highlight: true },
-                ]}
-                className="font-display text-[clamp(28px,3.4vw,52px)] font-normal leading-[1.08] tracking-[-0.03em] text-white"
-              />
-            </div>
-
-            {/* Ruled Row (#row) that fades up when p2 > 0.75 */}
-            <div
-              className={`mt-10 lg:mt-12 border-t border-white/12 pt-8 lg:pl-[5vw] pr-0 sm:pr-6 lg:pr-12 transition-all duration-900 ease-[cubic-bezier(0.22,0.7,0.2,1)] ${
-                splitRowVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.35fr] gap-6 mb-8">
-                <div>
-                  <h3 className="font-display text-[clamp(18px,1.4vw,22px)] font-normal text-white">
-                    Hiring Managers &amp; Founders
-                  </h3>
-                  <p className="mono-accent text-xs text-[#2fe0d0] mt-2 uppercase tracking-wider">
-                    USA &middot; Cap-Counted H-1B Ready
-                  </p>
-                </div>
-
-                <p className="text-[clamp(14px,1.1vw,16px)] leading-[1.6] text-white/70 max-w-lg">
-                  <strong className="text-white font-medium block mb-1">
-                    Turning probabilistic models into deterministic production infrastructure.
-                  </strong>
-                  I collaborate with engineering leaders, product partners, and risk teams to scale multi-agent orchestration, deterministic evaluation harnesses, and sub-second task routing with verified enterprise reliability.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href="#motion-footer"
-                  className="inline-flex items-center gap-3 rounded-full bg-[#2fe0d0] hover:bg-[#8fe6f4] text-[#0b1d3a] px-7 py-3.5 text-sm font-semibold transition-all shadow-[0_10px_25px_-8px_rgba(47,224,208,0.5)]"
-                >
-                  <span>Connect with Haripriya</span>
-                  <span>&darr;</span>
-                </a>
-
-                <a
-                  href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya%20Rao`}
-                  className="mono-accent text-xs text-[#8fe6f4] hover:text-white transition-colors"
-                >
-                  Direct: {resumeData.email} &rarr;
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Right 41.7%: Scroll-Zooming Visual Panel (1.08 -> 1.00 scale) */}
-          <div className="relative overflow-hidden min-h-[360px] sm:min-h-[420px] bg-[#08152c] border-t lg:border-t-0 lg:border-l border-white/10">
-            <div
-              ref={visualScaleRef}
-              style={{ transformOrigin: '50% 60%', transform: 'scale(1.08)' }}
-              className="absolute inset-0 flex flex-col justify-between p-8 sm:p-12 bg-[radial-gradient(circle_at_50%_30%,rgba(91,124,240,0.32),rgba(47,224,208,0.14)_45%,rgba(8,21,44,0.95)_85%)]"
-            >
-              <div className="flex items-center justify-between border-b border-white/12 pb-4">
-                <span className="mono-accent text-xs uppercase tracking-[0.16em] text-[#8fe6f4]">
-                  PRODUCTION TELEMETRY // VERIFIED
-                </span>
-                <span className="h-2.5 w-2.5 rounded-full bg-[#2fe0d0] shadow-[0_0_12px_#2fe0d0]" />
-              </div>
-
-              <div className="my-auto space-y-4">
-                {[
-                  { value: '19.6s', label: 'Financial Document Extraction', sub: 'Down from 40.8s (-52% latency)' },
-                  { value: '95.4%', label: 'Golden-Dataset Agreement', sub: '100+ annotated ground-truth benchmark threads' },
-                  { value: '22 Nodes', label: 'Concurrent LangGraph State Machine', sub: '0 race conditions via Redis distributed locks' },
-                ].map(stat => (
-                  <div
-                    key={stat.label}
-                    className="rounded-2xl border border-white/12 bg-white/[0.04] backdrop-blur-md p-5"
-                  >
-                    <div className="font-display text-3xl font-semibold text-[#2fe0d0]">
-                      {stat.value}
-                    </div>
-                    <div className="text-sm font-medium text-white mt-1">{stat.label}</div>
-                    <div className="mono-accent text-xs text-white/55 mt-0.5">{stat.sub}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t border-white/12 pt-4 flex items-center justify-between text-xs text-white/50 mono-accent">
-                <span>HARIPRIYA RAO</span>
-                <span>ANTHROPIC CCA-F &middot; AWS AI</span>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* ── 8. Academic Foundation & Curtain Reveal Edge ── */}
+        <div className="relative z-20 bg-gradient-to-b from-transparent via-[#f8fafc]/90 to-white pb-14 sm:pb-20 rounded-b-[36px] sm:rounded-b-[56px] shadow-[0_45px_100px_-20px_rgba(11,29,58,0.22)] border-b border-slate-200/80 overflow-hidden">
+          <Education />
+        </div>
 
         {/* ── 10. Cinematic Motion Footer (Curtain Reveal + Aurora Glow + Magnetic Buttons) ── */}
         <MotionFooter />
