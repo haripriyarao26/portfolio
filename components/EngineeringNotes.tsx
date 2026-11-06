@@ -161,31 +161,32 @@ export default function EngineeringNotes() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[80] flex items-center justify-center bg-[#0b1d3a]/40 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-[100] flex items-center justify-end bg-[#0b1d3a]/60 backdrop-blur-md"
             onClick={() => setSelectedNote(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 12 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 12 }}
-              transition={{ duration: 0.3, ease: [0.22, 0.7, 0.2, 1] }}
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.35, ease: [0.22, 0.7, 0.2, 1] }}
               onClick={e => e.stopPropagation()}
-              className="w-full max-w-2xl rounded-3xl border border-white bg-[#F8FAFC] p-6 sm:p-8 shadow-2xl space-y-5 text-[#0b1d3a]"
+              className="relative h-full w-full max-w-2xl overflow-y-auto bg-white p-6 sm:p-10 shadow-2xl text-[#0b1d3a] flex flex-col"
             >
-              <div className="flex items-start justify-between gap-4 border-b border-slate-200 pb-4">
+              {/* Sticky Top Header with Clean Close Button */}
+              <div className="sticky -top-6 sm:-top-10 -mx-6 sm:-mx-10 px-6 sm:px-10 py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-start justify-between gap-4 z-10 mb-6">
                 <div>
                   <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider">
                     Engineering Deep Dive &middot; Principle {selectedNote.number}
                   </span>
-                  <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1">
+                  <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug">
                     {selectedNote.techTitle}
                   </h3>
                 </div>
                 <button
                   type="button"
                   onClick={() => setSelectedNote(null)}
-                  aria-label="Close"
-                  className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-slate-200 bg-white text-slate-500 hover:text-[#0b1d3a] hover:bg-slate-100 hover:border-slate-300 transition-all shadow-sm"
+                  aria-label="Close drawer"
+                  className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:text-[#0b1d3a] hover:bg-slate-100 transition-all shadow-sm"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                     <path d="M4 4l8 8M12 4l-8 8" />

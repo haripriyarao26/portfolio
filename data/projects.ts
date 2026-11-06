@@ -29,6 +29,71 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'agent-gauge',
+    title: 'AgentGauge: <15ms Task Complexity & Cost Router',
+    category: 'Agent Skill & MCP Server',
+    status: 'skills.sh Multi-Agent · MCP CLI & Server · VS Code Extension · Next.js 15',
+    description:
+      'An open-source, deterministic <15ms Agent Skill, Model Context Protocol (MCP) Server, VS Code status-bar extension, and Next.js 15 telemetry visualizer that routes coding tasks to the optimal (Model Tier + Effort Level: Low/Med/High + Agent Mode) while cutting LLM costs by up to 96% and learning from real git diff survival outcomes.',
+    images: [
+      {
+        src: '/projects/agent-gauge-demo.gif',
+        alt: 'AgentGauge <15ms 4-Dimension Task Router & Telemetry Demo',
+        caption: 'Live scoring demo: routing from Haiku/Flash Low (Score 14) to Sonnet Med (Score 48) to Opus/Pro High (Score 92 · plan-first)',
+      },
+      {
+        src: '/projects/agent-gauge-logo.svg',
+        alt: 'AgentGauge Logo — 3-Tier Deterministic Model & Effort Router',
+        caption: 'AgentGauge Logo',
+      },
+      {
+        src: '/projects/agent-gauge-icon.png',
+        alt: 'AgentGauge VS Code & Skill Icon',
+        caption: 'AgentGauge Marketplace Icon',
+      },
+    ],
+    github: 'https://github.com/Agent-Gauge/agent-gauge',
+    demo: 'https://agent-gauge.github.io/agent-gauge/',
+    links: [
+      {
+        label: 'Live GitHub Pages Demo',
+        href: 'https://agent-gauge.github.io/agent-gauge/',
+      },
+      {
+        label: 'VS Code Extension (VSIX)',
+        href: 'https://github.com/Agent-Gauge/agent-gauge/releases',
+      },
+    ],
+    tech: [
+      'TypeScript',
+      'Model Context Protocol (MCP)',
+      'Agent Skills (skills.sh)',
+      'VS Code Extension API',
+      'Next.js 15',
+      'Tailwind CSS',
+      'SQLite',
+    ],
+    features: [
+      'Deterministic <15ms 4-dimension scoring engine: Task Intent (0-35), Blast Radius (0-30), AST Structure (0-20), and Historical Repo Revert Risk (0-15)',
+      '4 unified distribution channels from one monorepo: skills.sh multi-agent skill (Router, Calibration, Report), MCP Server & CLI (npx agent-gauge-mcp), VS Code status-bar pill (⚡ Gauge), and Next.js 15 3D telemetry playground',
+      'Calibrated cost & latency optimization: slashes frontier LLM inference bills by up to 96% by preventing Opus High over-provisioning on simple CSS/copy tasks while directing deep reasoning to distributed lock bugs',
+      'Git diff survival telemetry: local SQLite database tracks whether AI-generated code survives future commits without reverts, calibrating repo-specific tier cutoffs',
+    ],
+    metrics: ['<15ms Scorer SLA', 'Up to 96% Cost Saved', '4 Distribution Channels'],
+    mermaidDiagram: `flowchart LR
+  T[Task Prompt & Files] --> S[AgentGauge Core Scorer]
+  S --> I[Intent: 0-35]
+  S --> B[Blast Radius: 0-30]
+  S --> A[AST Structure: 0-20]
+  S --> R[Repo Risk: 0-15]
+  I & B & A & R --> SC{Score 0-100}
+  SC -->|<= 25| F[Fast Tier: Flash / Haiku]
+  SC -->|26 - 65| M[Balanced Tier: Sonnet / Argon]
+  SC -->|> 65| D[Deep Tier: Opus / Pro]
+  F & M & D --> G[Git Diff Survival Feedback Loop]
+  G --> S`,
+  },
+  {
     id: 'procure-loop',
     title: 'Procure-Loop: 3-Agent Contract Intelligence Swarm',
     category: 'Agentic System & Live UI',
