@@ -194,9 +194,12 @@ export default function CaseStudiesSection() {
                 <button
                   type="button"
                   onClick={() => setOpenDrawer(null)}
-                  className="mono-accent shrink-0 rounded-full border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-[#0b1d3a] hover:bg-slate-100"
+                  aria-label="Close"
+                  className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-slate-200 bg-white text-slate-500 hover:text-[#0b1d3a] hover:bg-slate-100 hover:border-slate-300 transition-all shadow-sm"
                 >
-                  Close ✕
+                  <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M4 4l8 8M12 4l-8 8" />
+                  </svg>
                 </button>
               </div>
 
