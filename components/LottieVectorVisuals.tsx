@@ -74,64 +74,60 @@ export function OneteraCompressionLottie() {
   );
 }
 
-/* ── 2. JPMorgan Chase: Luminous Studio 2x Speedup Visual ── */
-export function JpmcSpeedupLottie() {
+/* ── 2. Onetera: Parallel 22-Node State Machine & Concurrency Visual ── */
+export function OneteraParallelEngineLottie() {
   return (
     <div className="relative h-32 w-full rounded-2xl border border-white/90 bg-white/55 p-4 flex items-center justify-between overflow-hidden shadow-inner">
-      {/* Left: Stacked Email Thread */}
-      <div className="relative z-10 w-24 rounded-xl border border-slate-200 bg-white p-2.5 overflow-hidden shadow-sm">
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between">
-            <span className="h-1.5 w-6 rounded bg-[#D97706]" />
-            <span className="mono-accent text-[10px] text-[#64748B]">6 emails</span>
-          </div>
-          <div className="h-1.5 w-full rounded bg-slate-200" />
-          <div className="h-1.5 w-4/5 rounded bg-slate-200" />
+      {/* Left: Input Payload & DAG Root */}
+      <div className="relative z-10 flex flex-col items-center gap-1 w-20">
+        <div className="w-14 rounded-xl border border-slate-200 bg-white p-2 text-center shadow-sm">
+          <span className="mono-accent text-[10px] text-[#5b7cf0] font-bold block">255+</span>
+          <span className="text-[9px] text-[#3e4d68] block">Steps</span>
         </div>
-        <motion.div
-          animate={{ y: [-4, 42, -4] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute left-0 right-0 top-0 h-0.5 bg-[#D97706]"
-        />
+        <span className="mono-accent text-[10px] text-[#5b7cf0] font-semibold">Workflow</span>
       </div>
 
-      {/* Center: Speed Gauge */}
-      <div className="relative z-10 flex flex-col items-center">
-        <svg className="w-24 h-14" viewBox="0 0 100 56" fill="none">
-          <path
-            d="M 16 48 A 34 34 0 0 1 84 48"
-            stroke="#E2E8F0"
-            strokeWidth="7"
-            strokeLinecap="round"
-          />
-          <motion.path
-            d="M 16 48 A 34 34 0 0 1 84 48"
-            stroke="#0F141C"
-            strokeWidth="7"
-            strokeLinecap="round"
-            strokeDasharray="108"
-            animate={{ strokeDashoffset: [108, 48, 48] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }}
-          />
-          <text x="50" y="45" textAnchor="middle" fill="#0F141C" fontSize="13" fontWeight="600">
-            19.6s
-          </text>
-        </svg>
-        <span className="mono-accent text-xs text-[#D97706] font-semibold">2x Faster</span>
-      </div>
-
-      {/* Right: Verified Checkmarks */}
-      <div className="relative z-10 flex flex-col gap-1">
-        {['Entities ✓', 'Amounts ✓', '95% Match ✓'].map((label, idx) => (
-          <motion.div
-            key={label}
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, delay: idx * 0.3, repeat: Infinity }}
-            className="rounded-full border border-emerald-300 bg-emerald-50 px-2.5 py-0.5 text-xs font-mono text-emerald-800"
-          >
-            {label}
-          </motion.div>
+      {/* Center: 3 Concurrent Async Pipelines */}
+      <div className="relative z-10 flex-1 flex flex-col gap-2 px-3">
+        {[
+          { label: 'asyncio.gather', color: '#5b7cf0', speed: 1.6 },
+          { label: 'Redis Locks', color: '#2fe0d0', speed: 1.3 },
+          { label: 'ClickHouse', color: '#0b1d3a', speed: 1.9 },
+        ].map((lane, idx) => (
+          <div key={lane.label} className="flex items-center gap-2">
+            <span className="mono-accent text-[9px] text-[#3e4d68] w-20 shrink-0 truncate">
+              {lane.label}
+            </span>
+            <div className="h-2 flex-1 rounded-full bg-slate-200/80 overflow-hidden relative">
+              <motion.div
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{
+                  duration: lane.speed,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: idx * 0.2,
+                }}
+                className="h-full w-1/2 rounded-full"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${lane.color})`,
+                }}
+              />
+            </div>
+          </div>
         ))}
+        <div className="text-center mt-0.5">
+          <span className="mono-accent text-[10px] text-[#2fe0d0] font-bold uppercase tracking-wider">
+            Zero Round-Trip Wait (-40%)
+          </span>
+        </div>
+      </div>
+
+      {/* Right: Live Telemetry SLA */}
+      <div className="relative z-10 flex flex-col items-center gap-1 w-20">
+        <div className="px-2.5 py-1.5 rounded-full border border-emerald-300 bg-emerald-50 text-center shadow-sm">
+          <span className="mono-accent text-[11px] font-bold text-emerald-800 block">99.98%</span>
+        </div>
+        <span className="mono-accent text-[10px] font-semibold text-emerald-700">Uptime</span>
       </div>
     </div>
   );

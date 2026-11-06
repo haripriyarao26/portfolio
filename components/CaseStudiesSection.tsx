@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { DecryptedMetric, TiltCard3D } from '@/components/ReactBits3D';
-import { JpmcSpeedupLottie, OneteraCompressionLottie } from '@/components/LottieVectorVisuals';
+import { OneteraCompressionLottie, OneteraParallelEngineLottie } from '@/components/LottieVectorVisuals';
 import { HaldenButton, HaldenFadeUp, HaldenLetterReveal } from '@/components/HaldenMotion';
 
 export default function CaseStudiesSection() {
-  const [openDrawer, setOpenDrawer] = useState<'onetera' | 'jpmc' | null>(null);
+  const [openDrawer, setOpenDrawer] = useState<'onetera-compression' | 'onetera-orchestration' | null>(null);
 
   return (
     <section id="case-studies" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
@@ -32,14 +32,14 @@ export default function CaseStudiesSection() {
           />
 
           <p className="mt-3 text-base text-[#3e4d68]">
-            Clear outcomes first. Click either card to open the technical architecture drawer.
+            Two core architectures engineered at Onetera Technologies. Click either card to inspect technical specifications.
           </p>
         </HaldenFadeUp>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {/* ── CARD 01: ONETERA ── */}
+          {/* ── CARD 01: ONETERA TOKEN COMPRESSION & AST SALVAGE ── */}
           <HaldenFadeUp delay={0.05}>
-            <article id="study-onetera" className="h-full">
+            <article id="study-onetera-compression" className="h-full">
               <TiltCard3D
                 intensity={5}
                 glareColor="rgba(143, 213, 241, 0.35)"
@@ -48,7 +48,7 @@ export default function CaseStudiesSection() {
                 <div className="space-y-5">
                   <div className="flex items-center justify-between gap-2">
                     <span className="mono-accent px-3 py-1 rounded-full bg-[#0b1d3a] text-[#FFFFFF] text-xs font-semibold">
-                      ONETERA
+                      ONETERA &middot; EFFICIENCY
                     </span>
                     <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">
                       Founding AI Engineer
@@ -62,7 +62,7 @@ export default function CaseStudiesSection() {
                       Cut AI cloud costs by 96% across 255+ workflow steps
                     </h3>
                     <p className="text-sm text-[#3e4d68] leading-relaxed">
-                      Filtered out 95% of unused data and compressed payloads from 200KB down to 8KB — slashing cloud bills by 96% and making replies 40% faster.
+                      Filtered out 95% of inert payload data and flattened schema arrays from 200KB down to 8KB — slashing cloud bills 96% while preventing model hallucinations with deterministic AST salvage.
                     </p>
                   </div>
 
@@ -75,22 +75,22 @@ export default function CaseStudiesSection() {
                     </div>
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
-                        <DecryptedMetric value="40%" />
+                        <DecryptedMetric value="200KB" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Faster</div>
+                      <div className="text-xs text-[#3e4d68]">→ 8KB payload</div>
                     </div>
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
-                        <DecryptedMetric value="99.98%" />
+                        <DecryptedMetric value="0" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Uptime</div>
+                      <div className="text-xs text-[#3e4d68]">Schema breaks</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#0b1d3a]/8 flex items-center justify-between">
                   <span className="text-xs text-[#3e4d68]">NVIDIA &amp; city partners</span>
-                  <HaldenButton onClick={() => setOpenDrawer('onetera')}>
+                  <HaldenButton onClick={() => setOpenDrawer('onetera-compression')}>
                     Tech Architecture
                   </HaldenButton>
                 </div>
@@ -98,9 +98,9 @@ export default function CaseStudiesSection() {
             </article>
           </HaldenFadeUp>
 
-          {/* ── CARD 02: JPMORGAN CHASE ── */}
+          {/* ── CARD 02: ONETERA DISTRIBUTED ORCHESTRATION & TELEMETRY ── */}
           <HaldenFadeUp delay={0.14}>
-            <article id="study-jpmc" className="h-full">
+            <article id="study-onetera-orchestration" className="h-full">
               <TiltCard3D
                 intensity={5}
                 glareColor="rgba(143, 213, 241, 0.35)"
@@ -109,49 +109,49 @@ export default function CaseStudiesSection() {
                 <div className="space-y-5">
                   <div className="flex items-center justify-between gap-2">
                     <span className="mono-accent px-3 py-1 rounded-full bg-[#0b1d3a] text-[#FFFFFF] text-xs font-semibold">
-                      JPMORGAN CHASE
+                      ONETERA &middot; PLATFORM
                     </span>
                     <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">
-                      Senior AI Consultant
+                      Founding AI Engineer
                     </span>
                   </div>
 
-                  <JpmcSpeedupLottie />
+                  <OneteraParallelEngineLottie />
 
                   <div>
                     <h3 className="font-display text-xl font-semibold text-[#0b1d3a] mb-2">
-                      Made financial document review 2x faster at 95% accuracy
+                      Cut turn latency 40% &amp; sustained 99.98% uptime
                     </h3>
                     <p className="text-sm text-[#3e4d68] leading-relaxed">
-                      Built an automated testing harness and upgraded extraction rules, cutting advisor wait time from 40.8s down to 19.6s with zero errors on nested email threads.
+                      Replaced blocking sequential tool loops with a 22-node cyclic state machine, Redis distributed locks to prevent race conditions, and real-time ClickHouse telemetry across 6 roadmap phases.
                     </p>
                   </div>
 
                   <div className="grid grid-cols-3 gap-2.5">
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
-                        <DecryptedMetric value="52%" />
+                        <DecryptedMetric value="40%" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Faster</div>
+                      <div className="text-xs text-[#3e4d68]">Latency drop</div>
                     </div>
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
-                        <DecryptedMetric value="95%" />
+                        <DecryptedMetric value="99.98%" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Accuracy</div>
+                      <div className="text-xs text-[#3e4d68]">SLA uptime</div>
                     </div>
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
-                        <DecryptedMetric value="100%" />
+                        <DecryptedMetric value="0" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Threads fixed</div>
+                      <div className="text-xs text-[#3e4d68]">Double-charges</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#0b1d3a]/8 flex items-center justify-between">
-                  <span className="text-xs text-[#3e4d68]">Regulated workflows</span>
-                  <HaldenButton onClick={() => setOpenDrawer('jpmc')}>
+                  <span className="text-xs text-[#3e4d68]">Civic &amp; enterprise scale</span>
+                  <HaldenButton onClick={() => setOpenDrawer('onetera-orchestration')}>
                     Tech Architecture
                   </HaldenButton>
                 </div>
@@ -184,12 +184,12 @@ export default function CaseStudiesSection() {
               <div className="sticky -top-6 sm:-top-10 -mx-6 sm:-mx-10 px-6 sm:px-10 py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-start justify-between gap-4 z-10 mb-6">
                 <div>
                   <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider">
-                    Engineering Deep Dive
+                    Engineering Deep Dive &middot; Onetera Technologies
                   </span>
                   <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug">
-                    {openDrawer === 'onetera'
-                      ? 'Onetera: 96% Token Compression & 22-Node LangGraph DAG'
-                      : 'JPMorgan Chase: Golden-Dataset A/B Harness & Thread Isolation'}
+                    {openDrawer === 'onetera-compression'
+                      ? 'Onetera: 96% Token Compression, TOON & AST Schema Salvage'
+                      : 'Onetera: 22-Node Asynchronous LangGraph State Machine & Distributed Locks'}
                   </h3>
                 </div>
                 <button
@@ -204,7 +204,7 @@ export default function CaseStudiesSection() {
                 </button>
               </div>
 
-              {openDrawer === 'onetera' ? (
+              {openDrawer === 'onetera-compression' ? (
                 <div className="space-y-6">
                   <div className="space-y-3">
                     <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
@@ -252,41 +252,41 @@ s02   | INCOME | annual_usd < 50000         | prog_grant
                 <div className="space-y-6">
                   <div className="space-y-3">
                     <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
-                      How the Golden-Dataset Eval Harness Works
+                      How the 22-Node Asynchronous Orchestrator Works
                     </h4>
                     <ul className="space-y-2.5 text-sm text-[#3e4d68]">
                       <li>
-                        <strong className="text-[#0b1d3a]">1. 100+ Ground-Truth Financial Threads:</strong> Curated multi-tiered benchmark datasets covering 5 to 6 level nested email forward chains.
+                        <strong className="text-[#0b1d3a]">1. Async DAG Scheduling Over Linear Chains:</strong> Replaced blocking sequential tool loops with a 22-node cyclic LangGraph state machine. Independent tool and I/O branches resolve concurrently using <code>asyncio.gather</code>, cutting turn delays from 31.3s down to 18.8s (-40%).
                       </li>
                       <li>
-                        <strong className="text-[#0b1d3a]">2. Contextual Branch Isolation:</strong> Replaced brittle regex heuristics with targeted prompt overrides that isolate the deepest authoritative message envelope.
+                        <strong className="text-[#0b1d3a]">2. Distributed Concurrency &amp; Race Condition Prevention:</strong> Implemented request-collapsing middleware and Redis distributed locks, eliminating 100% of duplicate task mutations and double-charge edge cases under spike loads.
                       </li>
                       <li>
-                        <strong className="text-[#0b1d3a]">3. Automated CI Regression Gate:</strong> Blocks any prompt or model change scoring below 95% field agreement or producing &gt;0% false positives.
+                        <strong className="text-[#0b1d3a]">3. Real-Time Telemetry &amp; 99.98% SLA:</strong> Streamed sub-second execution traces into ClickHouse, giving instant visibility into bottleneck nodes and enabling 40% faster MTTR across 6 production roadmap phases.
                       </li>
                     </ul>
                   </div>
 
                   <div className="rounded-2xl border border-slate-200 bg-[#0b1d3a] p-5 font-mono text-xs text-slate-200 space-y-2">
-                    <div className="text-[#2fe0d0] font-semibold"># Adversarial Thread Audit (8/8 Resolved)</div>
+                    <div className="text-[#2fe0d0] font-semibold"># Orchestrator Benchmark &amp; Telemetry Summary</div>
                     <div className="flex justify-between">
-                      <span>Case 1: 6-level inline client edits</span>
-                      <span className="text-[#2fe0d0]">PASS (100%)</span>
+                      <span>Concurrent Async Gather Node Resolution</span>
+                      <span className="text-[#2fe0d0]">40% FASTER</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Case 2: Split signatory across 3 replies</span>
-                      <span className="text-[#2fe0d0]">PASS (100%)</span>
+                      <span>Redis Lock Distributed Mutex</span>
+                      <span className="text-[#2fe0d0]">0 RACE CONDITIONS</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Case 3: Legal disclaimer header collision</span>
-                      <span className="text-[#2fe0d0]">PASS (100%)</span>
+                      <span>ClickHouse Sub-Second Event Traces</span>
+                      <span className="text-[#2fe0d0]">ACTIVE</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Case 4: Multi-fiduciary entity conflict</span>
-                      <span className="text-[#2fe0d0]">PASS (100%)</span>
+                      <span>Multi-Tenant Production SLA (6 Roadmap Phases)</span>
+                      <span className="text-[#2fe0d0]">99.98% UPTIME</span>
                     </div>
                     <div className="pt-3 border-t border-white/10 text-[#8fd5f1]">
-                      Median Latency: 40.8s → 19.6s (-52%) · Agreement: 95.4%
+                      Orchestrator Latency: 31.3s → 18.8s (-40%) · Platform Uptime: 99.98%
                     </div>
                   </div>
                 </div>
