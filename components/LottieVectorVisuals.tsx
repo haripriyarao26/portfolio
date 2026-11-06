@@ -74,60 +74,62 @@ export function OneteraCompressionLottie() {
   );
 }
 
-/* ── 2. Onetera: Parallel 22-Node State Machine & Concurrency Visual ── */
-export function OneteraParallelEngineLottie() {
+/* ── 2. Onetera: 0-to-1 Founding Engineering, City Meetings & NVIDIA Collab Visual ── */
+export function OneteraFoundingEcosystemLottie() {
   return (
-    <div className="relative h-32 w-full rounded-2xl border border-white/90 bg-white/55 p-4 flex items-center justify-between overflow-hidden shadow-inner">
-      {/* Left: Input Payload & DAG Root */}
-      <div className="relative z-10 flex flex-col items-center gap-1 w-20">
-        <div className="w-14 rounded-xl border border-slate-200 bg-white p-2 text-center shadow-sm">
-          <span className="mono-accent text-[10px] text-[#5b7cf0] font-bold block">255+</span>
-          <span className="text-[9px] text-[#3e4d68] block">Steps</span>
-        </div>
-        <span className="mono-accent text-[10px] text-[#5b7cf0] font-semibold">Workflow</span>
+    <div className="relative h-32 w-full rounded-2xl border border-white/90 bg-white/55 p-3 sm:p-4 flex items-center justify-between overflow-hidden shadow-inner">
+      {/* Left: City Meetings & Public Sector Alignment */}
+      <div className="relative z-10 flex flex-col items-center gap-1 w-24 shrink-0">
+        <motion.div
+          animate={{ scale: [1, 1.03, 1] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-full rounded-xl border border-blue-200 bg-blue-50/80 px-2 py-1.5 text-center shadow-sm"
+        >
+          <span className="mono-accent text-[9px] text-[#0b1d3a] font-bold block uppercase tracking-tight">City Meetings</span>
+          <span className="text-[8px] text-[#5b7cf0] font-semibold block">Civic Alignment</span>
+        </motion.div>
+        <span className="mono-accent text-[9px] text-[#3e4d68] font-semibold">0 → 1 Product</span>
       </div>
 
-      {/* Center: 3 Concurrent Async Pipelines */}
-      <div className="relative z-10 flex-1 flex flex-col gap-2 px-3">
-        {[
-          { label: 'asyncio.gather', color: '#5b7cf0', speed: 1.6 },
-          { label: 'Redis Locks', color: '#2fe0d0', speed: 1.3 },
-          { label: 'ClickHouse', color: '#0b1d3a', speed: 1.9 },
-        ].map((lane, idx) => (
-          <div key={lane.label} className="flex items-center gap-2">
-            <span className="mono-accent text-[9px] text-[#3e4d68] w-20 shrink-0 truncate">
-              {lane.label}
-            </span>
-            <div className="h-2 flex-1 rounded-full bg-slate-200/80 overflow-hidden relative">
-              <motion.div
-                animate={{ x: ['-100%', '100%'] }}
-                transition={{
-                  duration: lane.speed,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: idx * 0.2,
-                }}
-                className="h-full w-1/2 rounded-full"
-                style={{
-                  background: `linear-gradient(90deg, transparent, ${lane.color})`,
-                }}
-              />
-            </div>
-          </div>
-        ))}
-        <div className="text-center mt-0.5">
-          <span className="mono-accent text-[10px] text-[#2fe0d0] font-bold uppercase tracking-wider">
-            Zero Round-Trip Wait (-40%)
+      {/* Center: Collaborative Pipeline connecting City -> Ingestion -> NVIDIA Eng -> Prod */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-2">
+        <svg className="w-full h-14 overflow-visible" viewBox="0 0 160 50" fill="none">
+          <path d="M 5 25 L 155 25" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="3 3" />
+          <motion.circle
+            r="4.5"
+            fill="#5b7cf0"
+            animate={{ cx: [5, 80, 155] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.circle
+            r="3.5"
+            fill="#2fe0d0"
+            animate={{ cx: [155, 80, 5] }}
+            transition={{ duration: 2.8, delay: 0.4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          {/* Center NVIDIA & 6-Phase Pill */}
+          <rect x="36" y="10" width="88" height="30" rx="8" fill="#0b1d3a" />
+          <text x="80" y="23" textAnchor="middle" fill="#76B900" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            NVIDIA ENG
+          </text>
+          <text x="80" y="33" textAnchor="middle" fill="#FFFFFF" fontSize="7" fontFamily="sans-serif">
+            6 Roadmap Phases
+          </text>
+        </svg>
+        <div className="flex items-center gap-1.5 mt-0.5">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#2fe0d0] animate-ping" />
+          <span className="mono-accent text-[9px] text-[#0b1d3a] font-semibold tracking-wide">
+            Live Civic Deployment
           </span>
         </div>
       </div>
 
-      {/* Right: Live Telemetry SLA */}
-      <div className="relative z-10 flex flex-col items-center gap-1 w-20">
+      {/* Right: Production SLA & Enterprise Scale */}
+      <div className="relative z-10 flex flex-col items-center gap-1 w-20 shrink-0">
         <div className="px-2.5 py-1.5 rounded-full border border-emerald-300 bg-emerald-50 text-center shadow-sm">
           <span className="mono-accent text-[11px] font-bold text-emerald-800 block">99.98%</span>
         </div>
-        <span className="mono-accent text-[10px] font-semibold text-emerald-700">Uptime</span>
+        <span className="mono-accent text-[9px] font-semibold text-emerald-700">Uptime SLA</span>
       </div>
     </div>
   );
