@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import type { Project } from '@/data/projects';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import { HaldenButton, HaldenFadeUp } from '@/components/HaldenMotion';
@@ -126,6 +127,69 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
   const [activeGaugeGif, setActiveGaugeGif] = useState<'router' | 'rag'>('router');
   const [drawerMediaTab, setDrawerMediaTab] = useState<'router' | 'rag'>('router');
   const [showMoreProjects, setShowMoreProjects] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll, handle Esc, and trap focus while drawer is open
+  useEffect(() => {
+    if (drawerProject) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setDrawerProject(null);
+          return;
+        }
+
+        if (e.key === 'Tab' && drawerRef.current) {
+          const focusables = drawerRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          if (!focusables.length) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              last.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === last) {
+              first.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+
+      // Focus first actionable element inside drawer
+      const timer = setTimeout(() => {
+        const closeBtn = drawerRef.current?.querySelector<HTMLElement>(
+          'button[aria-label="Close drawer"], button, [href]'
+        );
+        closeBtn?.focus();
+      }, 50);
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = originalOverflow;
+        clearTimeout(timer);
+        previousFocusRef.current?.focus();
+      };
+    }
+  }, [drawerProject]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -606,66 +670,79 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
         )}
       </AnimatePresence>
 
-      {/* ── TECHNICAL ARCHITECTURE DRAWER MODAL ── */}
-      <AnimatePresence>
-        {drawerProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] flex items-center justify-end bg-[#0b1d3a]/60 backdrop-blur-md"
-            onClick={() => setDrawerProject(null)}
-          >
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ duration: 0.35, ease: [0.22, 0.7, 0.2, 1] }}
-              onClick={e => e.stopPropagation()}
-              className="relative h-full w-full max-w-2xl overflow-y-auto bg-white p-6 sm:p-10 shadow-2xl text-[#0b1d3a] flex flex-col"
-            >
-              {/* Sticky Top Header with Clean Close Button */}
-              <div className="sticky -top-6 sm:-top-10 -mx-6 sm:-mx-10 px-6 sm:px-10 py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-start justify-between gap-4 z-10 mb-6">
-                <div className="flex items-center gap-3">
-                  {drawerProject.id === 'agent-gauge' ? (
-                    <div className="w-10 h-10 rounded-xl bg-[#0b1d3a] border border-[#5b7cf0]/30 flex items-center justify-center shrink-0 shadow-sm text-[#2fe0d0]">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10" />
-                        <polyline points="12 6 12 12 16 14" />
-                      </svg>
-                    </div>
-                  ) : drawerProject.images && drawerProject.images.find(img => img.src.endsWith('.svg')) ? (
-                    <img
-                      src={getAssetUrl(drawerProject.images.find(img => img.src.endsWith('.svg'))!.src)}
-                      alt="Logo"
-                      className="w-10 h-10 rounded-xl shrink-0 object-contain shadow-sm"
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.style.display = 'none';
-                      }}
-                    />
-                  ) : null}
-                  <div>
-                    <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider">
-                      Technical Architecture &amp; Specs
-                    </span>
-                    <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-0.5 leading-snug">
-                      {drawerProject.title}
-                    </h3>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setDrawerProject(null)}
-                  aria-label="Close drawer"
-                  className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:text-[#0b1d3a] hover:bg-slate-100 transition-all shadow-sm"
+      {/* ── TECHNICAL ARCHITECTURE DRAWER MODAL (PORTALED TO BODY) ── */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {drawerProject && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={shouldReduceMotion ? { duration: 0.1 } : { duration: 0.2 }}
+                className="fixed inset-0 z-[9999] flex items-center justify-end bg-[#0b1d3a]/75 backdrop-blur-md"
+                onClick={() => setDrawerProject(null)}
+              >
+                <motion.div
+                  ref={drawerRef}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="spec-drawer-title"
+                  initial={shouldReduceMotion ? { opacity: 0 } : { x: '100%' }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { x: '100%' }}
+                  transition={
+                    shouldReduceMotion
+                      ? { duration: 0.1 }
+                      : { duration: 0.35, ease: [0.22, 0.7, 0.2, 1] }
+                  }
+                  onClick={e => e.stopPropagation()}
+                  className="relative h-full w-full sm:max-w-2xl overflow-y-auto bg-white p-5 sm:p-10 shadow-2xl text-[#0b1d3a] flex flex-col pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]"
                 >
-                  <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                    <path d="M4 4l8 8M12 4l-8 8" />
-                  </svg>
-                </button>
-              </div>
+                  {/* Sticky Top Header with Clean Close Button */}
+                  <div className="sticky -top-[max(1.5rem,env(safe-area-inset-top))] -mx-5 sm:-mx-10 px-5 sm:px-10 py-4 sm:py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-start justify-between gap-4 z-20 mb-6 shadow-sm">
+                    <div className="flex items-center gap-3 min-w-0">
+                      {drawerProject.id === 'agent-gauge' ? (
+                        <div className="w-10 h-10 rounded-xl bg-[#0b1d3a] border border-[#5b7cf0]/30 flex items-center justify-center shrink-0 shadow-sm text-[#2fe0d0]">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                          </svg>
+                        </div>
+                      ) : drawerProject.images && drawerProject.images.find(img => img.src.endsWith('.svg')) ? (
+                        <img
+                          src={getAssetUrl(drawerProject.images.find(img => img.src.endsWith('.svg'))!.src)}
+                          alt="Logo"
+                          className="w-10 h-10 rounded-xl shrink-0 object-contain shadow-sm"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            target.style.display = 'none';
+                          }}
+                        />
+                      ) : null}
+                      <div className="min-w-0">
+                        <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider block truncate">
+                          Technical Architecture &amp; Specs
+                        </span>
+                        <h3
+                          id="spec-drawer-title"
+                          className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-0.5 leading-snug truncate"
+                        >
+                          {drawerProject.title}
+                        </h3>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setDrawerProject(null)}
+                      aria-label="Close drawer"
+                      className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:text-[#0b1d3a] hover:bg-slate-100 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-[#5b7cf0]"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                        <path d="M4 4l8 8M12 4l-8 8" />
+                      </svg>
+                    </button>
+                  </div>
 
               {/* Media Preview Container with Switcher for AgentGauge */}
               {drawerProject.id === 'agent-gauge' ? (
@@ -792,40 +869,52 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               {/* Special Walkthrough Section for AgentGauge: Company Policy RAG Case Study */}
               {drawerProject.id === 'agent-gauge' && (
                 <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-[#0b1d3a] border border-[#5b7cf0]/30 text-white shadow-lg space-y-3.5">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="mono-accent text-xs font-semibold text-[#00F0FF] uppercase tracking-wider flex items-center gap-1.5">
                       <span>💡 Real-World Walkthrough: Company Policy RAG</span>
                     </span>
-                    <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-[#10F5A0] border border-emerald-500/40">
+                    <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-[#10F5A0] border border-emerald-500/40 whitespace-nowrap">
                       99% Quota Saved
                     </span>
                   </div>
 
-                  <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
-                      <div className="font-mono text-[#10F5A0] font-semibold">1. &lt;2ms Pre-Flight Score (0 Tokens)</div>
-                      <p className="text-slate-300 leading-relaxed text-[11px]">
+                  <div className="grid gap-3 sm:grid-cols-2 text-xs">
+                    <div className="p-3.5 sm:p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 min-w-0">
+                      <div className="font-mono text-[#10F5A0] font-semibold flex items-center justify-between flex-wrap gap-1">
+                        <span>1. &lt;2ms Pre-Flight Score</span>
+                        <span className="whitespace-nowrap px-1.5 py-0.5 rounded bg-emerald-500/20 text-[#10F5A0] text-[10px]">(0 Tokens)</span>
+                      </div>
+                      <p className="text-slate-300 leading-relaxed text-[11px] break-words">
                         Intent (10/35) + Blast (4/30) + Struct (4/20) + Risk (1/15) = <strong>Score 19/100</strong> → Routes to <strong>FAST Tier (Flash / Haiku)</strong>.
                       </p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
-                      <div className="font-mono text-[#00F0FF] font-semibold">2. 99% AI Quota Saved</div>
-                      <p className="text-slate-300 leading-relaxed text-[11px]">
+                    <div className="p-3.5 sm:p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 min-w-0">
+                      <div className="font-mono text-[#00F0FF] font-semibold flex items-center justify-between flex-wrap gap-1">
+                        <span>2. 99% AI Quota Saved</span>
+                        <span className="whitespace-nowrap px-1.5 py-0.5 rounded bg-cyan-500/20 text-[#00F0FF] text-[10px]">(23.8x Speed)</span>
+                      </div>
+                      <p className="text-slate-300 leading-relaxed text-[11px] break-words">
                         Routed at <strong>$0.0040</strong> vs <strong>$0.7320</strong> on Opus High (23.8x faster) for chunker &amp; vector scaffolding.
                       </p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
-                      <div className="font-mono text-[#c4b5fd] font-semibold">3. Context Window Blast Shield</div>
-                      <p className="text-slate-300 leading-relaxed text-[11px]">
+                    <div className="p-3.5 sm:p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 min-w-0">
+                      <div className="font-mono text-[#c4b5fd] font-semibold flex items-center justify-between flex-wrap gap-1">
+                        <span>3. Context Blast Shield</span>
+                        <span className="whitespace-nowrap px-1.5 py-0.5 rounded bg-purple-500/20 text-[#c4b5fd] text-[10px]">(&le; 4k Tokens)</span>
+                      </div>
+                      <p className="text-slate-300 leading-relaxed text-[11px] break-words">
                         Enforces a strict 4,000-token prompt budget &amp; &le;2 files, blocking agents from dumping 85,000 unneeded tokens.
                       </p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
-                      <div className="font-mono text-[#FF9E2C] font-semibold">4. Auto-Escalation on Deadlocks</div>
-                      <p className="text-slate-300 leading-relaxed text-[11px]">
+                    <div className="p-3.5 sm:p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 min-w-0">
+                      <div className="font-mono text-[#FF9E2C] font-semibold flex items-center justify-between flex-wrap gap-1">
+                        <span>4. Auto-Escalation</span>
+                        <span className="whitespace-nowrap px-1.5 py-0.5 rounded bg-amber-500/20 text-[#FF9E2C] text-[10px]">(Score 86)</span>
+                      </div>
+                      <p className="text-slate-300 leading-relaxed text-[11px] break-words">
                         Triage for pgvector memory leaks jumps to <strong>86/100</strong> → Auto-escalates to <strong>DEEP Tier (Opus High · Plan-First)</strong>.
                       </p>
                     </div>
@@ -834,10 +923,10 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                   {/* 5 Channels Quick-Copy Command Badges */}
                   <div className="pt-2 border-t border-white/10 flex flex-wrap items-center gap-2 text-[11px] font-mono">
                     <span className="text-slate-400">Install via:</span>
-                    <code className="px-2 py-0.5 rounded bg-black/40 text-[#00F0FF] border border-white/10">
+                    <code className="px-2 py-0.5 rounded bg-black/40 text-[#00F0FF] border border-white/10 whitespace-nowrap">
                       npx skills add Agent-Gauge/agent-gauge
                     </code>
-                    <code className="px-2 py-0.5 rounded bg-black/40 text-[#c4b5fd] border border-white/10">
+                    <code className="px-2 py-0.5 rounded bg-black/40 text-[#c4b5fd] border border-white/10 whitespace-nowrap">
                       npx agent-gauge pr-audit
                     </code>
                   </div>
@@ -895,7 +984,9 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+    )}
     </div>
   );
 }

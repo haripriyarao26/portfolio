@@ -42,34 +42,6 @@ const HOW_I_THINK_BEATS = [
   },
 ];
 
-/* ── THREE THINGS I REFUSED TO DO ── */
-const REFUSALS = [
-  {
-    number: '01',
-    title: 'Unchecked Prompt-Based Routing',
-    rejected: 'Letting an LLM decide in freeform text which downstream tool or model to call next.',
-    why: 'Led to unbounded latency (>8s), non-deterministic execution loops, and a 12% hallucinated tool routing rate.',
-    builtInstead: 'Built a deterministic AST & regex pre-flight scoring engine that routes requests in <15ms with 0 token overhead and zero routing hallucinations.',
-    tag: '<15ms Pre-Flight SLA',
-  },
-  {
-    number: '02',
-    title: 'Silent Rate-Limit Model Downgrades',
-    rejected: 'Silently falling back to a weak lightweight model on 429 rate limits without alerting users.',
-    why: 'Silently degraded financial document extraction accuracy from 95.4% to 71.2%, corrupting production accounting data.',
-    builtInstead: 'Built explicit Redis token-bucket queues, circuit breakers, and Dead Letter Queues (DLQ) with transparent telemetry rather than silent corruption.',
-    tag: 'Zero Silent Drift',
-  },
-  {
-    number: '03',
-    title: 'Shoving Raw 200MB Repos into 1M Context Windows',
-    rejected: 'Dumping entire unparsed git repositories into frontier context windows to avoid building indexing infrastructure.',
-    why: 'Triggered "lost-in-the-middle" attention degradation, context amnesia, and runaway $700+ daily API bills for trivial edits.',
-    builtInstead: 'Built tree-sitter AST slicing that extracts only the relevant 4KB function interfaces and call graphs (200MB to 4KB).',
-    tag: '200MB → 4KB AST Slice',
-  },
-];
-
 export default function HowIThinkExperience({
   onNavActivate,
 }: {
@@ -104,11 +76,6 @@ export default function HowIThinkExperience({
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 20 });
   const bgGridY = useTransform(smoothProgress, [0, 1], [-40, 40]);
   const stageParallaxY = useTransform(smoothProgress, [0, 1], [20, -20]);
-
-  // Subtle Parallax offsets for the 3 refusal cards
-  const refusalCard1Y = useTransform(smoothProgress, [0, 1], [15, -15]);
-  const refusalCard2Y = useTransform(smoothProgress, [0, 1], [0, 0]);
-  const refusalCard3Y = useTransform(smoothProgress, [0, 1], [-15, 15]);
 
   return (
     <section
@@ -417,55 +384,6 @@ export default function HowIThinkExperience({
             </div>
           </motion.div>
         </div>
-
-        {/* ── 2. THE THREE THINGS I REFUSED TO DO ── */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#f59e0b]" />
-            <span className="font-mono text-xs font-bold tracking-wider text-amber-300 uppercase">
-              OPERATING PRINCIPLES // THE THREE SHORTCUTS I REFUSED TO TAKE
-            </span>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-3">
-            {REFUSALS.map((r, rIdx) => {
-              const cardY = rIdx === 0 ? refusalCard1Y : rIdx === 1 ? refusalCard2Y : refusalCard3Y;
-              return (
-                <motion.div
-                  key={r.number}
-                  style={{ y: cardY }}
-                  className="p-6 rounded-3xl bg-[#060c18] border border-white/10 hover:border-amber-500/40 transition-colors flex flex-col justify-between shadow-lg"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="font-mono text-xs text-slate-500 font-bold">Shortcut {r.number}</span>
-                      <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/30">
-                        Rejected
-                      </span>
-                    </div>
-
-                    <h4 className="font-display text-base font-bold text-white mb-2">{r.title}</h4>
-
-                    <div className="text-xs text-slate-400 mb-3 space-y-1">
-                      <p><strong className="text-slate-300">Shortcut:</strong> {r.rejected}</p>
-                      <p><strong className="text-rose-400">Why I refused:</strong> {r.why}</p>
-                    </div>
-                  </div>
-
-                  <div className="pt-3 border-t border-white/10 mt-2">
-                    <p className="text-xs text-slate-200 leading-relaxed">
-                      <strong className="text-teal-300 font-mono">Built instead:</strong> {r.builtInstead}
-                    </p>
-                    <span className="inline-block mt-3 text-[10px] font-mono text-teal-400 bg-teal-950/60 border border-teal-500/30 px-2 py-0.5 rounded">
-                      {r.tag}
-                    </span>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-
       </div>
     </section>
   );

@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useSpring, useReducedMotion } from 'framer-motion';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
@@ -72,6 +73,68 @@ export default function Home() {
   const [navActive, setNavActive] = useState(false);
   const [copiedFooterEmail, setCopiedFooterEmail] = useState(false);
   const [stackDrawerOpen, setStackDrawerOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  const stackDrawerRef = useRef<HTMLDivElement | null>(null);
+  const previousStackFocusRef = useRef<HTMLElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll, handle Esc, and trap focus while drawer is open
+  useEffect(() => {
+    if (stackDrawerOpen) {
+      previousStackFocusRef.current = document.activeElement as HTMLElement;
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setStackDrawerOpen(false);
+          return;
+        }
+
+        if (e.key === 'Tab' && stackDrawerRef.current) {
+          const focusables = stackDrawerRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          if (!focusables.length) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              last.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === last) {
+              first.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+
+      const timer = setTimeout(() => {
+        const closeBtn = stackDrawerRef.current?.querySelector<HTMLElement>(
+          'button[aria-label="Close drawer"], button, [href]'
+        );
+        closeBtn?.focus();
+      }, 50);
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = originalOverflow;
+        clearTimeout(timer);
+        previousStackFocusRef.current?.focus();
+      };
+    }
+  }, [stackDrawerOpen]);
 
   const handleCopyFooterEmail = () => {
     navigator.clipboard.writeText(resumeData.email);
@@ -265,65 +328,80 @@ export default function Home() {
             </div>
           </div>
 
-          <AnimatePresence>
-            {stackDrawerOpen && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="fixed inset-0 z-[100] flex items-center justify-end bg-[#0b1d3a]/60 backdrop-blur-md"
-                onClick={() => setStackDrawerOpen(false)}
-              >
-                <motion.div
-                  initial={{ x: '100%' }}
-                  animate={{ x: 0 }}
-                  exit={{ x: '100%' }}
-                  transition={{ duration: 0.35, ease: [0.22, 0.7, 0.2, 1] }}
-                  onClick={e => e.stopPropagation()}
-                  className="relative h-full w-full max-w-3xl overflow-y-auto bg-white p-6 sm:p-10 shadow-2xl space-y-6 text-[#0b1d3a] flex flex-col"
-                >
-                  {/* Sticky Top Header with Clean Close Button */}
-                  <div className="sticky -top-6 sm:-top-10 -mx-6 sm:-mx-10 px-6 sm:px-10 py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-center justify-between gap-4 z-10">
-                    <div>
-                      <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider">
-                        Architectural Specification
-                      </span>
-                      <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug">
-                        Production Stack &amp; System Responsibilities
-                      </h3>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setStackDrawerOpen(false)}
-                      aria-label="Close drawer"
-                      className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:text-[#0b1d3a] hover:bg-slate-100 transition-all shadow-sm"
+          {mounted &&
+            createPortal(
+              <AnimatePresence>
+                {stackDrawerOpen && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={shouldReduceMotion ? { duration: 0.1 } : { duration: 0.2 }}
+                    className="fixed inset-0 z-[9999] flex items-center justify-end bg-[#0b1d3a]/75 backdrop-blur-md"
+                    onClick={() => setStackDrawerOpen(false)}
+                  >
+                    <motion.div
+                      ref={stackDrawerRef}
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby="stack-drawer-title"
+                      initial={shouldReduceMotion ? { opacity: 0 } : { x: '100%' }}
+                      animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
+                      exit={shouldReduceMotion ? { opacity: 0 } : { x: '100%' }}
+                      transition={
+                        shouldReduceMotion
+                          ? { duration: 0.1 }
+                          : { duration: 0.35, ease: [0.22, 0.7, 0.2, 1] }
+                      }
+                      onClick={e => e.stopPropagation()}
+                      className="relative h-full w-full sm:max-w-3xl overflow-y-auto bg-white p-5 sm:p-10 shadow-2xl space-y-6 text-[#0b1d3a] flex flex-col pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]"
                     >
-                      <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                        <path d="M4 4l8 8M12 4l-8 8" />
-                      </svg>
-                    </button>
-                  </div>
+                      {/* Sticky Top Header with Clean Close Button */}
+                      <div className="sticky -top-[max(1.5rem,env(safe-area-inset-top))] -mx-5 sm:-mx-10 px-5 sm:px-10 py-4 sm:py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-center justify-between gap-4 z-20 shadow-sm">
+                        <div className="min-w-0">
+                          <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider block truncate">
+                            Architectural Specification
+                          </span>
+                          <h3
+                            id="stack-drawer-title"
+                            className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug truncate"
+                          >
+                            Production Stack &amp; System Responsibilities
+                          </h3>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setStackDrawerOpen(false)}
+                          aria-label="Close drawer"
+                          className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:text-[#0b1d3a] hover:bg-slate-100 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-[#5b7cf0]"
+                        >
+                          <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                            <path d="M4 4l8 8M12 4l-8 8" />
+                          </svg>
+                        </button>
+                      </div>
 
-                  <div className="grid gap-6 md:grid-cols-3">
-                    {depthStack.map(cat => (
-                      <div key={cat.category} className="space-y-3">
-                        <h4 className="font-display text-sm font-semibold text-[#5b7cf0]">
-                          {cat.category}
-                        </h4>
-                        {cat.tech.map(item => (
-                          <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-3.5">
-                            <div className="text-xs font-semibold text-[#0b1d3a]">{item.name}</div>
-                            <div className="text-xs text-[#3e4d68] mt-1">{item.role}</div>
+                      <div className="grid gap-6 md:grid-cols-3">
+                        {depthStack.map(cat => (
+                          <div key={cat.category} className="space-y-3">
+                            <h4 className="font-display text-sm font-semibold text-[#5b7cf0]">
+                              {cat.category}
+                            </h4>
+                            {cat.tech.map(item => (
+                              <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-3.5">
+                                <div className="text-xs font-semibold text-[#0b1d3a]">{item.name}</div>
+                                <div className="text-xs text-[#3e4d68] mt-1">{item.role}</div>
+                              </div>
+                            ))}
                           </div>
                         ))}
                       </div>
-                    ))}
-                  </div>
-                </motion.div>
-              </motion.div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>,
+              document.body
             )}
-          </AnimatePresence>
         </section>
 
         {/* ── 8. Academic Foundation & Curtain Reveal Edge ── */}

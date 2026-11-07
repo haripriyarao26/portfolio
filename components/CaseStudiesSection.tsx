@@ -1,13 +1,76 @@
 'use client';
 
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { DecryptedMetric, TiltCard3D } from '@/components/ReactBits3D';
 import { OneteraCompressionLottie, OneteraFoundingEcosystemLottie } from '@/components/LottieVectorVisuals';
 import { HaldenButton, HaldenFadeUp, HaldenLetterReveal } from '@/components/HaldenMotion';
 
 export default function CaseStudiesSection() {
   const [openDrawer, setOpenDrawer] = useState<'onetera-compression' | 'onetera-founding' | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll, handle Esc, and trap focus while drawer is open
+  useEffect(() => {
+    if (openDrawer) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setOpenDrawer(null);
+          return;
+        }
+
+        if (e.key === 'Tab' && drawerRef.current) {
+          const focusables = drawerRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          if (!focusables.length) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              last.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === last) {
+              first.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+
+      const timer = setTimeout(() => {
+        const closeBtn = drawerRef.current?.querySelector<HTMLElement>(
+          'button[aria-label="Close drawer"], button, [href]'
+        );
+        closeBtn?.focus();
+      }, 50);
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = originalOverflow;
+        clearTimeout(timer);
+        previousFocusRef.current?.focus();
+      };
+    }
+  }, [openDrawer]);
 
   return (
     <section id="case-studies" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
@@ -161,76 +224,89 @@ export default function CaseStudiesSection() {
         </div>
       </div>
 
-      {/* ── SLIDE-OVER DRAWER FOR TECHNICAL ARCHITECTS & ENGINEERS ── */}
-      <AnimatePresence>
-        {openDrawer && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] flex items-center justify-end bg-[#0b1d3a]/60 backdrop-blur-md"
-            onClick={() => setOpenDrawer(null)}
-          >
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ duration: 0.35, ease: [0.22, 0.7, 0.2, 1] }}
-              onClick={e => e.stopPropagation()}
-              className="relative h-full w-full max-w-2xl overflow-y-auto bg-white p-6 sm:p-10 shadow-2xl text-[#0b1d3a] flex flex-col"
-            >
-              {/* Sticky Top Header with Clean Close Button */}
-              <div className="sticky -top-6 sm:-top-10 -mx-6 sm:-mx-10 px-6 sm:px-10 py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-start justify-between gap-4 z-10 mb-6">
-                <div>
-                  <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider">
-                    Engineering Deep Dive &middot; Onetera Technologies
-                  </span>
-                  <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug">
-                    {openDrawer === 'onetera-compression'
-                      ? 'Onetera: 96% Token Compression, TOON & AST Schema Salvage'
-                      : 'Onetera: 0-to-1 Product Engineering, City Agency Alignment & Production Scaling'}
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setOpenDrawer(null)}
-                  aria-label="Close drawer"
-                  className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:text-[#0b1d3a] hover:bg-slate-100 transition-all shadow-sm"
+      {/* ── SLIDE-OVER DRAWER FOR TECHNICAL ARCHITECTS & ENGINEERS (PORTALED TO BODY) ── */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {openDrawer && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={shouldReduceMotion ? { duration: 0.1 } : { duration: 0.2 }}
+                className="fixed inset-0 z-[9999] flex items-center justify-end bg-[#0b1d3a]/75 backdrop-blur-md"
+                onClick={() => setOpenDrawer(null)}
+              >
+                <motion.div
+                  ref={drawerRef}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="case-study-drawer-title"
+                  initial={shouldReduceMotion ? { opacity: 0 } : { x: '100%' }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { x: '100%' }}
+                  transition={
+                    shouldReduceMotion
+                      ? { duration: 0.1 }
+                      : { duration: 0.35, ease: [0.22, 0.7, 0.2, 1] }
+                  }
+                  onClick={e => e.stopPropagation()}
+                  className="relative h-full w-full sm:max-w-2xl overflow-y-auto bg-white p-5 sm:p-10 shadow-2xl text-[#0b1d3a] flex flex-col pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]"
                 >
-                  <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                    <path d="M4 4l8 8M12 4l-8 8" />
-                  </svg>
-                </button>
-              </div>
-
-              {openDrawer === 'onetera-compression' ? (
-                <div className="space-y-6">
-                  <div className="space-y-3">
-                    <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
-                      How the 3-Front Compression Pipeline Works
-                    </h4>
-                    <ul className="space-y-3 text-sm text-[#3e4d68]">
-                      <li>
-                        <strong className="text-[#0b1d3a]">1. Surgical Pre-Pass (Python):</strong> Isolates only the 10 to 20 steps with active conditional rules; 95% of inert UI steps are stripped before the LLM prompt is assembled.
-                      </li>
-                      <li>
-                        <strong className="text-[#0b1d3a]">2. TOON (Table-Oriented Object Notation) Serialization:</strong> A compact tabular serialization format that converts repetitive JSON object arrays into pipe-delimited header rows, stripping 60% of redundant brackets and keys before sending to the model.
-                      </li>
-                      <li>
-                        <strong className="text-[#0b1d3a]">3. Deterministic AST Schema Salvage:</strong> An Abstract Syntax Tree (AST) recovery parser that intercepts malformed model outputs (dropped closing braces, trailing commas, truncated strings) and safely repairs them into valid JSON schemas with 0 crashes.
-                      </li>
-                      <li>
-                        <strong className="text-[#0b1d3a]">4. O(1) Index Maps &amp; DFS Cycle Detection:</strong> Pre-computes bidirectional lookup maps and runs 3-color graph traversal to prevent recursive infinite loops across 255+ conditional steps.
-                      </li>
-                    </ul>
+                  {/* Sticky Top Header with Clean Close Button */}
+                  <div className="sticky -top-[max(1.5rem,env(safe-area-inset-top))] -mx-5 sm:-mx-10 px-5 sm:px-10 py-4 sm:py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-start justify-between gap-4 z-20 mb-6 shadow-sm">
+                    <div className="min-w-0">
+                      <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider block truncate">
+                        Engineering Deep Dive &middot; Onetera Technologies
+                      </span>
+                      <h3
+                        id="case-study-drawer-title"
+                        className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug truncate"
+                      >
+                        {openDrawer === 'onetera-compression'
+                          ? 'Onetera: 96% Token Compression, TOON & AST Schema Salvage'
+                          : 'Onetera: 0-to-1 Product Engineering, City Council Alignment & NVIDIA Scaling'}
+                      </h3>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setOpenDrawer(null)}
+                      aria-label="Close drawer"
+                      className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:text-[#0b1d3a] hover:bg-slate-100 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-[#5b7cf0]"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                        <path d="M4 4l8 8M12 4l-8 8" />
+                      </svg>
+                    </button>
                   </div>
 
-                  <div className="space-y-3">
-                    <div className="mono-accent text-xs text-rose-600 uppercase font-semibold">
-                      Before: Verbose JSON (~200,000 bytes / turn)
-                    </div>
-                    <pre className="rounded-2xl border border-slate-200 bg-[#0b1d3a] p-4 font-mono text-xs text-slate-300 overflow-x-auto">{`[
+                  {openDrawer === 'onetera-compression' ? (
+                    <div className="space-y-6">
+                      <div className="space-y-3">
+                        <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
+                          How the 3-Front Compression Pipeline Works
+                        </h4>
+                        <ul className="space-y-3 text-sm text-[#3e4d68]">
+                          <li>
+                            <strong className="text-[#0b1d3a]">1. Surgical Pre-Pass (Python):</strong> Isolates only the 10 to 20 steps with active conditional rules; 95% of inert UI steps are stripped before the LLM prompt is assembled.
+                          </li>
+                          <li>
+                            <strong className="text-[#0b1d3a]">2. TOON (Table-Oriented Object Notation) Serialization:</strong> A compact tabular serialization format that converts repetitive JSON object arrays into pipe-delimited header rows, stripping 60% of redundant brackets and keys before sending to the model.
+                          </li>
+                          <li>
+                            <strong className="text-[#0b1d3a]">3. Deterministic AST Schema Salvage:</strong> An Abstract Syntax Tree (AST) recovery parser that intercepts malformed model outputs (dropped closing braces, trailing commas, truncated strings) and safely repairs them into valid JSON schemas with 0 crashes.
+                          </li>
+                          <li>
+                            <strong className="text-[#0b1d3a]">4. O(1) Index Maps &amp; DFS Cycle Detection:</strong> Pre-computes bidirectional lookup maps and runs 3-color graph traversal to prevent recursive infinite loops across 255+ conditional steps.
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div className="space-y-3">
+                        <div className="mono-accent text-xs text-rose-600 uppercase font-semibold">
+                          Before: Verbose JSON (~200,000 bytes / turn)
+                        </div>
+                        <pre className="rounded-2xl border border-slate-200 bg-[#0b1d3a] p-4 font-mono text-xs text-slate-300 overflow-x-auto">{`[
   {
     "id": "step_001_applicant_residency",
     "section_title": "General Eligibility",
@@ -240,71 +316,73 @@ export default function CaseStudiesSection() {
   // ... 254 more steps sent on every turn
 ]`}</pre>
 
-                    <div className="mono-accent text-xs text-emerald-700 uppercase font-semibold pt-2">
-                      After: TOON Compressed Table (~8,000 bytes / turn · -96%)
-                    </div>
-                    <pre className="rounded-2xl border border-emerald-500/40 bg-[#0b1d3a] p-4 font-mono text-xs text-[#2fe0d0] overflow-x-auto">{`# ID  | TYPE   | CONDITION_RULE             | ACTIVATE
+                        <div className="mono-accent text-xs text-emerald-700 uppercase font-semibold pt-2">
+                          After: TOON Compressed Table (~8,000 bytes / turn · -96%)
+                        </div>
+                        <pre className="rounded-2xl border border-emerald-500/40 bg-[#0b1d3a] p-4 font-mono text-xs text-[#2fe0d0] overflow-x-auto">{`# ID  | TYPE   | CONDITION_RULE             | ACTIVATE
 s01   | SELECT | age >= 18                  | s04, s05
 s02   | INCOME | annual_usd < 50000         | prog_grant
 
 # Constrained Model Output:
 [{ "step": "s01", "activate": ["s04", "s05"] }]`}</pre>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  <div className="space-y-3">
-                    <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
-                      0-to-1 Architecture &amp; Stakeholder Leadership
-                    </h4>
-                    <ul className="space-y-3 text-sm text-[#3e4d68]">
-                      <li>
-                        <strong className="text-[#0b1d3a]">1. Built the Entire Platform from Scratch:</strong> Architected the system from initial whiteboard prototype to multi-tenant production across 6 roadmap phases. Designed the multi-agent orchestration runtime, state management, and production APIs without legacy scaffolding.
-                      </li>
-                      <li>
-                        <strong className="text-[#0b1d3a]">2. City Meetings &amp; Civic Agency Alignment:</strong> Attended and presented in live city agency &amp; municipal meetings. Translated nuanced public policies, municipal regulations, and non-technical stakeholder concerns into deterministic prompt boundaries, AST schemas, and strict compliance safeguards.
-                      </li>
-                      <li>
-                        <strong className="text-[#0b1d3a]">3. Municipal Stakeholder Alignment &amp; Model Hosting:</strong> Partnered directly with municipal officials and infrastructure stakeholders to validate model hosting pipelines, cutting round-trip latency by 40% and delivering sub-15ms task routing across 6 roadmap phases.
-                      </li>
-                      <li>
-                        <strong className="text-[#0b1d3a]">4. Production Hardening &amp; Redis Distributed Mutex:</strong> Integrated Redis distributed locks (mutexes) that grant millisecond-level exclusive execution locks across parallel agent workers, eliminating 100% of double-charge and race-condition edge cases under spike traffic.
-                      </li>
-                    </ul>
-                  </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      <div className="space-y-3">
+                        <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
+                          0-to-1 Architecture &amp; Stakeholder Leadership
+                        </h4>
+                        <ul className="space-y-3 text-sm text-[#3e4d68]">
+                          <li>
+                            <strong className="text-[#0b1d3a]">1. Built the Entire Platform from Scratch:</strong> Architected the system from initial whiteboard prototype to multi-tenant production across 6 roadmap phases. Designed the multi-agent orchestration runtime, state management, and production APIs without legacy scaffolding.
+                          </li>
+                          <li>
+                            <strong className="text-[#0b1d3a]">2. City Meetings &amp; Civic Agency Alignment:</strong> Attended and presented in live city agency &amp; municipal meetings. Translated nuanced public policies, municipal regulations, and non-technical stakeholder concerns into deterministic prompt boundaries, AST schemas, and strict compliance safeguards.
+                          </li>
+                          <li>
+                            <strong className="text-[#0b1d3a]">3. NVIDIA Stakeholder Alignment &amp; Model Hosting:</strong> Partnered directly with NVIDIA stakeholders and municipal officials to validate GPU acceleration and model hosting pipelines, cutting round-trip latency by 40% and delivering 99.98% platform uptime across 6 roadmap phases.
+                          </li>
+                          <li>
+                            <strong className="text-[#0b1d3a]">4. Production Hardening &amp; Redis Distributed Mutex:</strong> Integrated Redis distributed locks (mutexes) that grant millisecond-level exclusive execution locks across parallel agent workers, eliminating 100% of double-charge and race-condition edge cases under spike traffic.
+                          </li>
+                        </ul>
+                      </div>
 
-                  <div className="rounded-2xl border border-slate-200 bg-[#0b1d3a] p-5 font-mono text-xs text-slate-200 space-y-2.5">
-                    <div className="text-[#2fe0d0] font-semibold flex items-center justify-between">
-                      <span># Production Delivery &amp; Stakeholder Telemetry</span>
-                      <span className="text-[#2fe0d0]">CIVIC &amp; ENTERPRISE VERIFIED</span>
+                      <div className="rounded-2xl border border-slate-200 bg-[#0b1d3a] p-5 font-mono text-xs text-slate-200 space-y-2.5">
+                        <div className="text-[#2fe0d0] font-semibold flex items-center justify-between">
+                          <span># Production Delivery &amp; Stakeholder Telemetry</span>
+                          <span className="text-[#2fe0d0]">NVIDIA PARTNERED</span>
+                        </div>
+                        <div className="flex justify-between border-b border-white/10 pb-1.5">
+                          <span>0 → 1 Architecture Delivery</span>
+                          <span className="text-[#2fe0d0]">6 ROADMAP PHASES SHIPPED</span>
+                        </div>
+                        <div className="flex justify-between border-b border-white/10 pb-1.5">
+                          <span>City Agency &amp; Municipal Presentation</span>
+                          <span className="text-[#2fe0d0]">100% REGULATORY COMPLIANCE</span>
+                        </div>
+                        <div className="flex justify-between border-b border-white/10 pb-1.5">
+                          <span>Enterprise Decisioning Pipeline</span>
+                          <span className="text-[#2fe0d0]">40% TURN LATENCY DROP</span>
+                        </div>
+                        <div className="flex justify-between border-b border-white/10 pb-1.5">
+                          <span>Concurrency Mutex (Redis)</span>
+                          <span className="text-[#2fe0d0]">0 RACE CONDITIONS</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Task Routing &amp; State Stability</span>
+                          <span className="text-[#2fe0d0]">&lt;15MS SLA · 0 DESYNCS</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex justify-between border-b border-white/10 pb-1.5">
-                      <span>0 → 1 Architecture Delivery</span>
-                      <span className="text-[#2fe0d0]">6 ROADMAP PHASES SHIPPED</span>
-                    </div>
-                    <div className="flex justify-between border-b border-white/10 pb-1.5">
-                      <span>City Agency &amp; Municipal Presentation</span>
-                      <span className="text-[#2fe0d0]">100% REGULATORY COMPLIANCE</span>
-                    </div>
-                    <div className="flex justify-between border-b border-white/10 pb-1.5">
-                      <span>Enterprise Decisioning Pipeline</span>
-                      <span className="text-[#2fe0d0]">40% TURN LATENCY DROP</span>
-                    </div>
-                    <div className="flex justify-between border-b border-white/10 pb-1.5">
-                      <span>Concurrency Mutex (Redis)</span>
-                      <span className="text-[#2fe0d0]">0 RACE CONDITIONS</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Task Routing &amp; State Stability</span>
-                      <span className="text-[#2fe0d0]">&lt;15MS SLA · 0 DESYNCS</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
+                  )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </section>
   );
 }
