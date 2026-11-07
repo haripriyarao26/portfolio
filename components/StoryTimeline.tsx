@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useScroll, useSpring, useInView, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import { HaldenFadeUp, HaldenLetterReveal } from '@/components/HaldenMotion';
@@ -34,8 +34,8 @@ const roleConfigs: Record<string, RoleTimelineData> = {
       'Engineered production AI document extraction pipelines for regulated fiduciary workflows and eliminated false positives on nested email threads.',
     chips: ['52% Faster', '95% Accuracy', '8 Edge cases'],
     highlights: [
-      'Accelerated LLM extraction latency from 40.8s down to 19.6s at 95% field agreement using automated A/B golden-dataset regression testing.',
-      'Resolved 100% of thread misclassifications across 5 to 6 level nested forwards with zero false positives.',
+      'Accelerated LLM extraction latency from 40.8s down to 19.6s using automated A/B golden-dataset regression testing.',
+      'Resolved nested forwards across 5 to 6 level thread depth with zero classification errors.',
       'Engineered autonomous agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance.',
     ],
     stack: ['Claude', 'GPT-5.5', 'Anthropic API', 'MCP', 'LangGraph', 'Python', 'A/B Regression'],
@@ -47,14 +47,14 @@ const roleConfigs: Record<string, RoleTimelineData> = {
     dates: 'Jan 2024 – Apr 2026',
     location: 'Los Angeles, CA',
     impactSentence:
-      'Led full-stack architecture across 6 phases for municipal and enterprise partners with zero state desyncs.',
-    chips: ['96% Cost cut', '40% Faster', '0-to-1 Delivery'],
-    caseStudyId: 'onetera-compression',
+      'Led full-stack architecture from municipal requirements to enterprise production with zero state desyncs.',
+    chips: ['0-to-1 Delivery', '6 Phases', '96% Cost cut'],
+    caseStudyId: 'onetera-founding',
     highlights: [
-      'Delivered an end-to-end multi-tenant platform on schedule across 6 roadmap phases with zero state desyncs.',
+      'Delivered an end-to-end multi-tenant platform on schedule with zero state desyncs, partnering with city officials and enterprise stakeholders.',
       'Slashed LLM inference costs from 200KB down to 8KB per call while scaling horizontally to 255+ agentic steps.',
       'Cut per-turn orchestrator latency via a 22-node asynchronous state machine using parallel scheduling.',
-      'Engineered a recursive DFS algorithm to extract 100+ React components from Figma trees, cutting UI setup time by 90%.',
+      'Decreased manual UI scaffolding time by 90% via recursive Figma design AST parsing into React components.',
     ],
     stack: ['LangGraph', '22-Node State Machine', 'Python', 'TypeScript', 'Next.js', 'ClickHouse', 'Supabase', 'Redis'],
     isCompact: false,
@@ -68,8 +68,8 @@ const roleConfigs: Record<string, RoleTimelineData> = {
       'Stabilized credit-decision release cycles and sped up query evaluation under concurrent multi-user load.',
     chips: ['98% Pass rate', '40% Fewer defects', '50% Faster queries'],
     highlights: [
-      'Maintained 98% CI/CD pass rate and lowered credit risk SaaS regression defects by 40% with a 95% on-time release cadence.',
-      'Developed query optimization algorithms for credit decision workflows, improving response times by 50% under load.',
+      'Achieved a 95% on-time release cadence across regulated credit-decision workflows with automated test suites.',
+      'Developed incremental streaming query optimization for high-throughput decision pipelines.',
       'Supported 500+ concurrent users with sub-200ms latency.',
     ],
     stack: ['Spring Boot', 'Java', 'Angular', 'PostgreSQL', 'CI/CD Pipelines'],
@@ -81,11 +81,11 @@ const roleConfigs: Record<string, RoleTimelineData> = {
     dates: 'Jun 2021 – Jul 2022',
     location: 'Bengaluru, India',
     impactSentence:
-      'Consolidated legacy pipelines into a unified data retrieval layer and delivered executive hiring dashboards.',
+      'Consolidated legacy data pipelines into a unified data retrieval layer and delivered executive hiring dashboards.',
     chips: ['80% Faster', '4,000+ Users', '2022 Award'],
     highlights: [
-      'Consolidated 15+ data sources into a unified GraphQL API for 4,000+ users, dropping retrieval latency from 2s to 400ms.',
-      'Built executive analytics dashboards with PostgreSQL, winning the 2022 Excellency Award.',
+      'Consolidated 15+ data sources into a unified GraphQL API, dropping retrieval latency from 2s to 400ms.',
+      'Built executive analytics dashboards with PostgreSQL, winning the Excellency Award.',
       'Cut frontend dashboard load times by 50% via lazy-loaded modules and virtualized tables.',
     ],
     stack: ['GraphQL API', 'Node.js', 'React', 'Angular', 'PostgreSQL'],
@@ -102,9 +102,10 @@ export default function StoryTimeline({ items, sectionId = 'timeline-momentum' }
   const timelineRef = useRef<HTMLElement | null>(null);
   const shouldReduceMotion = useReducedMotion();
 
+  // Timeline line draws with scroll progress
   const { scrollYProgress } = useScroll({
     target: timelineRef,
-    offset: ['start 85%', 'end 40%'],
+    offset: ['start 80%', 'end 35%'],
   });
 
   const lineScale = useSpring(scrollYProgress, {
@@ -122,6 +123,10 @@ export default function StoryTimeline({ items, sectionId = 'timeline-momentum' }
       [index]: !prev[index],
     }));
   };
+
+  const handleCardActive = useCallback((index: number) => {
+    setActiveCardIndex(index);
+  }, []);
 
   return (
     <section id={sectionId} className="relative mx-auto max-w-6xl px-4 sm:px-10 py-16 sm:py-24 scroll-mt-24">
@@ -148,7 +153,7 @@ export default function StoryTimeline({ items, sectionId = 'timeline-momentum' }
 
         <div className="relative">
           {/* Scroll-Driven Timeline Line */}
-          <div className="absolute left-3.5 top-2 bottom-4 w-[2px] overflow-hidden bg-[#0b1d3a]/10 sm:left-4">
+          <div className="absolute left-3.5 top-6 bottom-8 w-[2px] overflow-hidden bg-[#0b1d3a]/10 sm:left-4">
             <motion.div
               style={shouldReduceMotion ? { height: '100%' } : { scaleY: lineScale }}
               className="h-full w-full origin-top bg-[#5b7cf0]"
@@ -168,7 +173,7 @@ export default function StoryTimeline({ items, sectionId = 'timeline-momentum' }
                 dates: entry.period,
                 location: entry.location,
                 impactSentence: entry.achievements[0] ?? '',
-                chips: ['Production Impact'],
+                chips: ['100% Production'],
                 highlights: entry.achievements,
                 stack: ['TypeScript', 'Python'],
                 isCompact: idx >= 2,
@@ -184,6 +189,7 @@ export default function StoryTimeline({ items, sectionId = 'timeline-momentum' }
                   onToggleExpand={() => toggleExpanded(idx)}
                   onMouseEnter={() => setActiveCardIndex(idx)}
                   onFocus={() => setActiveCardIndex(idx)}
+                  onActive={handleCardActive}
                   shouldReduceMotion={Boolean(shouldReduceMotion)}
                 />
               );
@@ -203,6 +209,7 @@ interface TimelineCardItemProps {
   onToggleExpand: () => void;
   onMouseEnter: () => void;
   onFocus: () => void;
+  onActive: (index: number) => void;
   shouldReduceMotion: boolean;
 }
 
@@ -214,17 +221,30 @@ function TimelineCardItem({
   onToggleExpand,
   onMouseEnter,
   onFocus,
+  onActive,
   shouldReduceMotion,
 }: TimelineCardItemProps) {
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const isInView = useInView(cardRef, { margin: '0px 0px -25% 0px', once: false });
+
+  // Dot fills when reached by scroll
+  const isReached = useInView(cardRef, { margin: '0px 0px -20% 0px', once: false });
+
+  // Scroll tracking to bring active card forward and push inactive cards back
+  const isScrollActive = useInView(cardRef, { margin: '-15% 0px -40% 0px', once: false });
+
+  useEffect(() => {
+    if (isScrollActive) {
+      onActive(idx);
+    }
+  }, [isScrollActive, idx, onActive]);
+
   const isCurrentRole = idx === 0;
   const detailsId = `timeline-details-${idx}`;
 
   // Inactive cards sit slightly back (scale 0.98, translateZ), active comes forward
   const scaleVal = shouldReduceMotion ? 1 : isActive ? 1 : 0.98;
-  const translateZVal = shouldReduceMotion ? '0px' : isActive ? '0px' : '-10px';
-  const opacityVal = shouldReduceMotion ? 1 : isActive ? 1 : 0.94;
+  const translateZVal = shouldReduceMotion ? '0px' : isActive ? '0px' : '-16px';
+  const opacityVal = shouldReduceMotion ? 1 : isActive ? 1 : 0.92;
 
   return (
     <div
@@ -238,12 +258,12 @@ function TimelineCardItem({
         transformStyle: 'preserve-3d',
       }}
     >
-      {/* Timeline Dot Indicator */}
+      {/* Timeline Dot Indicator: fills when reached */}
       <div
-        className={`absolute -left-[30px] sm:-left-[39px] top-5 sm:top-6 h-3.5 w-3.5 -translate-x-1/2 rounded-full transition-colors duration-400 flex items-center justify-center ${
-          isInView || shouldReduceMotion
-            ? 'bg-[#2fe0d0] border-2 border-[#0b1d3a] shadow-sm'
-            : 'bg-white border-2 border-[#5b7cf0]/40'
+        className={`absolute -left-[30px] sm:-left-[39px] top-5 sm:top-6 h-3.5 w-3.5 -translate-x-1/2 rounded-full transition-colors duration-300 flex items-center justify-center border-2 ${
+          isReached || shouldReduceMotion
+            ? 'bg-[#2fe0d0] border-[#0b1d3a] shadow-sm'
+            : 'bg-white border-[#5b7cf0]/40'
         }`}
       >
         {/* Current role dot pulses ONCE (no infinite loops) */}
@@ -253,8 +273,8 @@ function TimelineCardItem({
             initial={{ scale: 1, opacity: 0.8 }}
             animate={{ scale: [1, 2.2], opacity: [0.8, 0] }}
             transition={{
-              duration: 1.1,
-              delay: 0.4,
+              duration: 1.2,
+              delay: 0.5,
               repeat: 0,
               ease: 'easeOut',
             }}
@@ -263,28 +283,28 @@ function TimelineCardItem({
       </div>
 
       {config.isCompact ? (
-        /* ── Compact Older Role Row (Provenir, Deloitte) ── */
+        /* ── Compact Older Role Row (Provenir, Deloitte): role, company, dates, one line, expandable ── */
         <div className="spatial-glass rounded-2xl border border-[#0b1d3a]/8 bg-white/70 backdrop-blur-md p-4 sm:p-5 shadow-xs transition-shadow hover:shadow-md">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="min-w-0">
-              {/* Role · Company main heading */}
-              <h3 className="font-sans text-[18px] sm:text-[20px] font-normal text-[#0b1d3a] tracking-tight leading-snug">
+              {/* Role · Company main heading (dark, regular weight, ~20-22px sans) */}
+              <h3 className="font-sans text-[20px] sm:text-[22px] font-normal text-[#0b1d3a] tracking-tight leading-snug">
                 {config.role} &middot; {config.company}
               </h3>
-              {/* Dates & Location in normal sans, darker blue-grey */}
-              <p className="font-sans text-xs sm:text-sm text-[#2b3a52] mt-0.5">
+              {/* Dates and location on secondary line in normal sans (not mono caps), darker blue-grey */}
+              <p className="font-sans text-xs sm:text-sm text-[#2b3a52] mt-0.5 normal-case">
                 {config.dates} &middot; {config.location}
               </p>
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
-              {/* Expand/Collapse Button */}
+              {/* "Show details" Button with aria-expanded, focus ring and hover state */}
               <button
                 type="button"
                 aria-expanded={isExpanded}
                 aria-controls={detailsId}
                 onClick={onToggleExpand}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-2 py-1"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-2.5 py-1"
               >
                 <span>{isExpanded ? 'Hide details' : 'Show details'}</span>
                 <svg
@@ -315,29 +335,23 @@ function TimelineCardItem({
                 className="overflow-hidden"
               >
                 <div className="mt-4 pt-4 border-t border-[#0b1d3a]/8 space-y-3.5">
-                  {/* ONE Impact Sentence (max ~65ch) */}
+                  {/* ONE Impact Sentence (limited to ~65ch) */}
                   <p className="font-sans text-sm text-[#334155] leading-relaxed max-w-[65ch]">
                     {config.impactSentence}
                   </p>
 
-                  {/* Stat row: large number, small label below, thin vertical dividers, no borders or backgrounds */}
-                  <div className="flex flex-wrap items-center gap-4 sm:gap-6 my-2 pt-1">
-                    {config.chips.slice(0, 3).map((chip, cIdx) => {
+                  {/* Chips: max 3 chips, sans font, format "value label" */}
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 my-2.5">
+                    {config.chips.slice(0, 3).map((chip) => {
                       const { value, label } = parseMetric(chip);
                       return (
-                        <div key={chip} className="flex items-center gap-4 sm:gap-6">
-                          <div>
-                            <div className="font-display text-base sm:text-xl font-semibold text-[#0b1d3a] tracking-tight leading-none">
-                              {value}
-                            </div>
-                            <div className="font-sans text-[11px] text-[#3e4d68] mt-1 font-medium">
-                              {label}
-                            </div>
-                          </div>
-                          {cIdx < config.chips.length - 1 && (
-                            <div className="h-6 w-[1px] bg-[#0b1d3a]/12" />
-                          )}
-                        </div>
+                        <span
+                          key={chip}
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0b1d3a]/[0.05] border border-[#0b1d3a]/8 text-xs sm:text-[13px] font-sans text-[#2b3a52]"
+                        >
+                          <strong className="font-semibold text-[#0b1d3a]">{value}</strong>
+                          <span>{label}</span>
+                        </span>
                       );
                     })}
                   </div>
@@ -355,7 +369,7 @@ function TimelineCardItem({
                   )}
 
                   {/* Tech stack: one muted text line separated by " · " */}
-                  <div className="pt-2 text-xs font-sans text-[#475569] leading-relaxed">
+                  <div className="pt-2 text-xs font-sans text-[#475569] leading-relaxed border-t border-[#0b1d3a]/8">
                     <span className="font-semibold text-[#0b1d3a]">Stack: </span>
                     <span>{config.stack.join(' · ')}</span>
                   </div>
@@ -378,7 +392,7 @@ function TimelineCardItem({
             </h3>
 
             {/* Secondary Line: Dates and location in normal sans (not mono caps), darker blue-grey */}
-            <p className="font-sans text-sm text-[#2b3a52] mt-1">
+            <p className="font-sans text-sm text-[#2b3a52] mt-1 normal-case">
               {config.dates} &middot; {config.location}
             </p>
 
@@ -387,24 +401,18 @@ function TimelineCardItem({
               {config.impactSentence}
             </p>
 
-            {/* Stat row: large number, small label below, thin vertical dividers, no borders or backgrounds */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 my-4 pt-1">
-              {config.chips.slice(0, 3).map((chip, cIdx) => {
+            {/* Chips: max 3 chips, sans font, format "value label" */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 my-3.5">
+              {config.chips.slice(0, 3).map((chip) => {
                 const { value, label } = parseMetric(chip);
                 return (
-                  <div key={chip} className="flex items-center gap-4 sm:gap-6">
-                    <div>
-                      <div className="font-display text-lg sm:text-2xl font-semibold text-[#0b1d3a] tracking-tight leading-none">
-                        {value}
-                      </div>
-                      <div className="font-sans text-xs text-[#3e4d68] mt-1 font-medium">
-                        {label}
-                      </div>
-                    </div>
-                    {cIdx < config.chips.length - 1 && (
-                      <div className="h-7 w-[1px] bg-[#0b1d3a]/12" />
-                    )}
-                  </div>
+                  <span
+                    key={chip}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0b1d3a]/[0.05] border border-[#0b1d3a]/8 text-xs sm:text-[13px] font-sans text-[#2b3a52]"
+                  >
+                    <strong className="font-semibold text-[#0b1d3a]">{value}</strong>
+                    <span>{label}</span>
+                  </span>
                 );
               })}
             </div>
@@ -437,7 +445,7 @@ function TimelineCardItem({
                 aria-expanded={isExpanded}
                 aria-controls={detailsId}
                 onClick={onToggleExpand}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-2 py-1"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-2.5 py-1"
               >
                 <span>{isExpanded ? 'Hide details' : 'Show details'}</span>
                 <svg
