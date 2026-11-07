@@ -250,7 +250,7 @@ export default function MotionFooter() {
         {/* ── Bottom Baseline: Clean Copyright & Back-to-Top Button ── */}
         <div className="relative z-10 w-full border-t border-white/10 bg-black/40 backdrop-blur-md px-6 sm:px-10 py-3.5 flex items-center justify-between text-xs text-slate-400">
           <div>
-            &copy; 2026 {resumeData.name} &middot; Built with Next.js &amp; React Three Fiber
+            &copy; 2026 {resumeData.name}
           </div>
 
           <MagneticButton onClick={scrollToTop}>
