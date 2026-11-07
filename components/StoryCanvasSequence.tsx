@@ -18,30 +18,26 @@ const WHOLE_PRODUCT_STAGES = [
   {
     step: '01',
     phase: 'Listen',
-    summary: 'City meetings, user interviews & watching people struggle',
-    detail: 'Field research with actual users before writing a line of architecture.',
-    badge: 'Civic Context',
+    line: 'Talk to the people who’ll use it and watch where they struggle',
+    tag: 'Real needs',
   },
   {
     step: '02',
     phase: 'Design',
-    summary: 'Specs before code, schema bounds & state contracts',
-    detail: 'Mapping failure modes, fallback gates, and operational boundaries first.',
-    badge: 'Architecture',
+    line: 'Write the plan and agree on it before any code',
+    tag: 'Clear plan',
   },
   {
     step: '03',
     phase: 'Build',
-    summary: 'Fast backend, data pipelines, front end & AI where it helps',
-    detail: 'Full-stack shipping: robust APIs, real-time sync, and targeted AI.',
-    badge: 'Full-Stack Code',
+    line: 'Backend, data, front end, and AI where it helps',
+    tag: 'Full-stack',
   },
   {
     step: '04',
     phase: 'Run',
-    summary: 'Live telemetry, instant rollback & long-term production care',
-    detail: 'Total system ownership: tracking regressions and maintaining high uptime.',
-    badge: 'Production Care',
+    line: 'Monitor it, fix fast, roll back safely, keep improving',
+    tag: 'Reliable',
   },
 ];
 
@@ -94,6 +90,7 @@ const OPEN_SOURCE_AND_CERTS = [
 export default function StoryCanvasSequence({ name }: Props) {
   const heroRef = useRef<HTMLElement | null>(null);
   const [activeLayer, setActiveLayer] = useState(0);
+  const userInteractedRef = useRef(false);
 
   // Hero Parallax Scroll Tracking
   const { scrollYProgress } = useScroll({
@@ -105,12 +102,26 @@ export default function StoryCanvasSequence({ name }: Props) {
   const leftColY = useTransform(smoothHeroProgress, [0, 1], [0, -45]);
   const rightCardY = useTransform(smoothHeroProgress, [0, 1], [0, -85]);
 
+  // Sync scroll to activeLayer (01 -> 02 -> 03 -> 04 as you scroll)
+  useEffect(() => {
+    return scrollYProgress.on('change', (latest) => {
+      const index = Math.min(
+        Math.floor(latest * WHOLE_PRODUCT_STAGES.length),
+        WHOLE_PRODUCT_STAGES.length - 1
+      );
+      setActiveLayer(index);
+    });
+  }, [scrollYProgress]);
+
+  // Gentle auto-cycle when at the top and before scroll/hover
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveLayer(prev => (prev + 1) % WHOLE_PRODUCT_STAGES.length);
+      if (scrollYProgress.get() === 0 && !userInteractedRef.current) {
+        setActiveLayer(prev => (prev + 1) % WHOLE_PRODUCT_STAGES.length);
+      }
     }, 2800);
     return () => clearInterval(timer);
-  }, []);
+  }, [scrollYProgress]);
 
   return (
     <section
@@ -220,8 +231,8 @@ export default function StoryCanvasSequence({ name }: Props) {
                     Whole-Product Delivery
                   </span>
                 </div>
-                <span className="mono-accent text-[11px] text-[#5b7cf0] font-semibold bg-[#5b7cf0]/10 px-2 py-0.5 rounded">
-                  Onetera 0-to-1
+                <span className="text-xs text-[#5b7cf0] font-semibold bg-[#5b7cf0]/10 px-2.5 py-0.5 rounded-full">
+                  4 Stages
                 </span>
               </div>
 
@@ -231,9 +242,12 @@ export default function StoryCanvasSequence({ name }: Props) {
                   return (
                     <div
                       key={stage.step}
-                      onMouseEnter={() => setActiveLayer(idx)}
+                      onMouseEnter={() => {
+                        userInteractedRef.current = true;
+                        setActiveLayer(idx);
+                      }}
                       style={{
-                        transform: isActive ? 'translateZ(20px) scale(1.02)' : 'translateZ(6px)',
+                        transform: isActive ? 'translateZ(18px) scale(1.02)' : 'translateZ(6px)',
                       }}
                       className={`cursor-pointer rounded-2xl border p-3.5 transition-all duration-300 ${
                         isActive
@@ -241,30 +255,51 @@ export default function StoryCanvasSequence({ name }: Props) {
                           : 'border-[#0b1d3a]/8 bg-white/60 hover:bg-white'
                       }`}
                     >
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2.5">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2.5 min-w-0">
                           <span
-                            className={`mono-accent text-xs font-bold px-2 py-0.5 rounded-md ${
+                            className={`mono-accent text-xs font-bold px-2 py-0.5 rounded-md transition-colors ${
                               isActive
                                 ? 'bg-[#0b1d3a] text-white'
-                                : 'bg-[#d2daff]/50 text-[#1d2f4f]'
+                                : 'bg-slate-100 text-[#1d2f4f]'
                             }`}
                           >
                             {stage.step}
                           </span>
-                          <div>
-                            <p className="font-display text-sm font-semibold text-[#0b1d3a]">
-                              {stage.phase}: <span className="font-normal text-xs text-[#3e4d68]">{stage.summary}</span>
+                          <div className="min-w-0">
+                            <p className="font-display text-sm font-semibold text-[#0b1d3a] leading-snug">
+                              {stage.phase}:{' '}
+                              <span className="font-normal text-xs text-[#3e4d68]">
+                                {stage.line}
+                              </span>
                             </p>
                           </div>
                         </div>
-                        <span className="mono-accent text-[10px] font-semibold text-[#5b7cf0] shrink-0 hidden sm:inline-block">
-                          {stage.badge}
+                        <span
+                          className={`text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 transition-colors ${
+                            isActive
+                              ? 'bg-[#5b7cf0]/15 text-[#5b7cf0]'
+                              : 'bg-slate-100 text-[#3e4d68]'
+                          }`}
+                        >
+                          {stage.tag}
                         </span>
                       </div>
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Proof link under the card */}
+              <div className="pt-2 flex items-center justify-between border-t border-[#0b1d3a]/8 text-xs">
+                <span className="text-[#64748b]">Whole-product delivery in practice</span>
+                <a
+                  href="#case-studies"
+                  className="font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] hover:underline inline-flex items-center gap-1 transition-colors"
+                >
+                  <span>See it at Onetera</span>
+                  <span>→</span>
+                </a>
               </div>
             </div>
           </TiltCard3D>
