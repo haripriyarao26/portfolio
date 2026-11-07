@@ -52,11 +52,11 @@ const EMPLOYER_PROOF = [
   },
   {
     name: 'Provenir',
-    role: 'Fintech Extraction Engine',
+    role: 'Full-Stack Intern · Credit SaaS',
   },
   {
     name: 'Deloitte',
-    role: 'Risk Architecture',
+    role: 'Software Engineer · Data & GraphQL',
   },
 ];
 

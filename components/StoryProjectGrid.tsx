@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import type { Project } from '@/data/projects';
+import MermaidPreview from '@/components/MermaidPreview';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import { HaldenButton, HaldenFadeUp } from '@/components/HaldenMotion';
 
@@ -528,25 +529,16 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                   {/* Right Column (5 cols): Demo GIF */}
                   <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-[#0b1d3a]/8 bg-[#060813] p-2.5 shadow-inner">
                     <div className="relative w-full h-full min-h-[180px] flex items-center justify-center rounded-xl overflow-hidden bg-black/60">
-                      <img
-                        src={getAssetUrl('/projects/rag-example.gif')}
-                        alt="Google Gemini Cookbook Rate Backoff & Observability Demo"
-                        width={600}
-                        height={338}
-                        className="w-full h-auto max-h-[220px] object-contain rounded-lg"
-                        loading="lazy"
-                        onError={(e) => {
-                          const img = e.currentTarget;
-                          if (!img.dataset.tried) {
-                            img.dataset.tried = 'true';
-                            if (img.src.includes('/portfolio/')) {
-                              img.src = img.src.replace('/portfolio/', '/');
-                            } else {
-                              img.src = '/portfolio/projects/rag-example.gif';
-                            }
-                          }
-                        }}
-                      />
+                      <pre className="w-full text-left font-mono text-[11px] leading-relaxed text-cyan-200 p-4 overflow-x-auto">{`# Gemini Cookbook · PR #1088
+@retry(backoff=exponential(base=2, max=60),
+       on=(RateLimitError, ServiceUnavailable))
+def generate(prompt, model="gemini-2.0-flash"):
+    resp = client.models.generate_content(
+        model=model, contents=prompt)
+    cost = tracker.record(resp.usage_metadata, model)
+    log.info("tokens=%s cost=$%.5f",
+             resp.usage_metadata.total_token_count, cost)
+    return resp`}</pre>
                     </div>
                     <div className="px-2 pt-2 pb-0.5 flex items-center justify-between text-[11px] font-mono text-slate-400">
                       <span className="flex items-center gap-1.5">
@@ -861,6 +853,22 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               <p className="text-sm text-[#3e4d68] leading-relaxed mb-6">
                 {drawerProject.description}
               </p>
+
+              {/* Key metrics + architecture diagram (all projects) */}
+              {drawerProject.metrics && drawerProject.metrics.length > 0 && (
+                <div className="mb-6 flex flex-wrap gap-2">
+                  {drawerProject.metrics.map(m => (
+                    <span key={m} className="mono-accent text-xs font-semibold px-3 py-1.5 rounded-full bg-[#5b7cf0]/10 text-[#2a46b8] border border-[#5b7cf0]/25 whitespace-nowrap">
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {drawerProject.id !== 'agent-gauge' && drawerProject.mermaidDiagram?.trim() && (
+                <div className="mb-6">
+                  <MermaidPreview title="Architecture" chart={drawerProject.mermaidDiagram.trim()} />
+                </div>
+              )}
 
               {/* Special Walkthrough Section for AgentGauge: Company Policy RAG Case Study */}
               {drawerProject.id === 'agent-gauge' && (

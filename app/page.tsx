@@ -7,7 +7,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { AnimatePresence, motion, useScroll, useSpring, useReducedMotion } from 'framer-motion';
 import StoryCanvasSequence from '@/components/StoryCanvasSequence';
-import StoryProjectGrid from '@/components/StoryProjectGrid';
+import StoryProjectGrid, { getAssetUrl } from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
 import CaseStudiesSection from '@/components/CaseStudiesSection';
 import Education from '@/components/Education';
@@ -83,6 +83,10 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
+    const onScroll = () => setNavActive(window.scrollY > window.innerHeight * 0.6);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Lock body scroll, handle Esc, and trap focus while drawer is open
@@ -175,18 +179,18 @@ export default function Home() {
 
         {/* Centered Links */}
         <nav className="hidden lg:flex items-center gap-[28px] absolute left-1/2 -translate-x-1/2">
-          <a href="#how-i-think" className="nav-link">How I Think</a>
           <a href="#case-studies" className="nav-link">Case Studies</a>
           <a href="#projects" className="nav-link">Projects</a>
-          <a href="#daily-ai" className="nav-link">Daily AI</a>
           <a href="#timeline-momentum" className="nav-link">Experience</a>
+          <a href="#how-i-think" className="nav-link">How I Think</a>
+          <a href="#daily-ai" className="nav-link">Daily AI</a>
           <a href="#stack" className="nav-link">Skills</a>
         </nav>
 
         {/* Right: Resume + Morphing .halden-nav-cta Pill */}
         <div className="flex items-center">
           <a
-            href="/Haripriya_Rao_Resume.pdf"
+            href={getAssetUrl('/Haripriya_Rao_Resume.pdf')}
             download="Haripriya_Rao_Resume.pdf"
             target="_blank"
             rel="noreferrer"
@@ -216,9 +220,6 @@ export default function Home() {
           tagline="Customer conversations, architecture, full-stack code, production support, and the AI where it helps."
         />
 
-        {/* ── 2. How I Think & Why Engineering Leaders Hire Me (5-Beat Request Journey + Color Meaning) ── */}
-        <HowIThinkExperience onNavActivate={setNavActive} />
-
         {/* ── 3. Flagship Case Studies ── */}
         <CaseStudiesSection />
 
@@ -245,7 +246,7 @@ export default function Home() {
               />
 
               <p className="mt-3 text-base text-[#3e4d68]">
-                Production AI architectures and official contributions for Google Gemini (Merged PR #1088) and OpenAI Cookbook (PR #2568).
+                Production AI systems, developer tools, and merged open-source contributions.
               </p>
             </HaldenFadeUp>
 
@@ -255,6 +256,9 @@ export default function Home() {
 
         {/* ── 5. Career Timeline ── */}
         <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
+
+        {/* ── How I Think (after the proof: case studies, projects, experience) ── */}
+        <HowIThinkExperience onNavActivate={setNavActive} />
 
         {/* ── 6. How I Use AI Daily: A Real Production Session ── */}
         <HowIUseAIDaily />

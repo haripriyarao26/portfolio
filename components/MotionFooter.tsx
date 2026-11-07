@@ -1,5 +1,7 @@
 'use client';
 
+import { getAssetUrl } from '@/components/StoryProjectGrid';
+
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
@@ -86,11 +88,11 @@ export default function MotionFooter() {
   return (
     <footer
       id="motion-footer"
-      className="relative w-full h-[760px] sm:h-[680px] lg:h-[620px] overflow-hidden"
+      className="relative w-full md:h-[680px] lg:h-[620px] overflow-hidden"
       style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0% 100%)' }}
     >
       {/* ── Fixed Curtain Reveal Layer ── */}
-      <div className="fixed bottom-0 left-0 w-full h-[760px] sm:h-[680px] lg:h-[620px] z-0 bg-[#060c18] text-white flex flex-col justify-between overflow-hidden select-none">
+      <div className="relative md:fixed bottom-0 left-0 w-full min-h-[640px] md:min-h-0 md:h-[680px] lg:h-[620px] z-0 bg-[#060c18] text-white flex flex-col justify-between overflow-hidden select-none">
         
         {/* ── Background Glows ── */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -177,7 +179,7 @@ export default function MotionFooter() {
                 <span className="text-slate-600">&middot;</span>
 
                 <a
-                  href="/Haripriya_Rao_Resume.pdf"
+                  href={getAssetUrl('/Haripriya_Rao_Resume.pdf')}
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-white transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2fe0d0] rounded"

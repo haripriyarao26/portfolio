@@ -21,7 +21,7 @@ const DAILY_PRACTICES: DailyPractice[] = [
     phase: 'Human Ownership',
     title: 'I Make the Architecture Decisions, AI Drafts',
     workflow:
-      'I treat AI like a fast junior engineer: it generates alternatives, drafts repetitive boilerplate, and suggests implementations. But I write the system invariants, evaluate operational trade-offs, and make the authoritative commit decision.',
+      'AI generates alternatives, drafts repetitive boilerplate, and suggests implementations. I write the system invariants, evaluate operational trade-offs, and make the authoritative commit decision.',
     whereItFailed:
       'An agent quietly replaced a custom exponential backoff retry handler with a naive setInterval loop that stalled under rate limits. Caught in my manual diff review before merge.',
     codeSnippet: `// Human Gate: Review Invariants First
@@ -157,7 +157,7 @@ export default function HowIUseAIDaily() {
           />
 
           {/* Step Timeline Navigation Pills */}
-          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-8">
+          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-8 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1">
             {DAILY_PRACTICES.map((step, idx) => {
               const isSelected = activeStepIndex === idx;
               return (

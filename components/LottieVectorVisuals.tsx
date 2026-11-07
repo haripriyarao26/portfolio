@@ -222,9 +222,9 @@ export function OneteraFoundingEcosystemLottie() {
       {/* Right: Production SLA & Enterprise Scale */}
       <div className="relative z-10 flex flex-col items-center gap-1 w-20 shrink-0">
         <div className="px-2.5 py-1.5 rounded-full border border-emerald-300 bg-emerald-50 text-center shadow-sm">
-          <span className="mono-accent text-[11px] font-bold text-emerald-800 block">&lt;15ms</span>
+          <span className="mono-accent text-[11px] font-bold text-emerald-800 block">99.98%</span>
         </div>
-        <span className="mono-accent text-[9px] font-semibold text-emerald-700">Routing SLA</span>
+        <span className="mono-accent text-[9px] font-semibold text-emerald-700">Uptime</span>
       </div>
     </div>
   );

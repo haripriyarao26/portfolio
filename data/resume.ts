@@ -134,9 +134,11 @@ export const resumeData: ResumeData = {
       location: "Remote",
       period: "Jul 2026 – Present",
       achievements: [
-        "Accelerating LLM extraction latency by 52% (40.8s to 19.6s) at 95% field agreement by deploying GPT-5.5 and creating automated A/B golden-dataset regression comparison tooling.",
+        "Cut LLM extraction latency by 52% (40.8s to 19.6s) at 95% field agreement by deploying GPT-5.5 and creating automated A/B golden-dataset regression comparison tooling.",
         "Resolving 100% of thread misclassifications (8/8) across 5–6 level nested forwards with zero false positives via targeted prompt overrides and adversarial test suites.",
-        "Engineering autonomous Agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance for regulated financial document workflows."
+        "Engineering autonomous Agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance for regulated financial document workflows.",
+        "Built a 132-check golden dataset (12 emails × 11 payment fields) and GPT Vision decimal-shift correction for notary and invoice documents.",
+        "Shipped full-stack cent-level cash balance guardrails (React · Spring Boot · Oracle) protecting 6- and 7-figure trust payouts."
       ]
     },
     {

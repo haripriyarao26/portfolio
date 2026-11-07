@@ -124,7 +124,7 @@ export default function HowIThinkExperience({
             </div>
 
             {/* 5-Step Process Pills */}
-            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-7">
+            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-7 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1">
               {HOW_I_THINK_BEATS.map((beat, idx) => {
                 const isSelected = selectedStep === idx;
                 return (
@@ -369,11 +369,7 @@ export default function HowIThinkExperience({
             {/* Editorial Narrative */}
             <div className="relative z-10 border-t border-white/10 pt-6">
               <p className="text-base sm:text-lg text-slate-100 leading-relaxed font-normal">
-                I like building things people can{' '}
-                <span className="text-[#2dd4bf] font-bold underline decoration-[#2dd4bf]/40 underline-offset-4">
-                  actually rely on
-                </span>
-                . Anyone can make a model look impressive in a demo.
+                Anyone can make a model look impressive in a demo.
                 The harder and more interesting work starts when it meets real users, messy data and real consequences.
                 So I begin with how a system might fail, build the{' '}
                 <strong className="font-bold text-white border-b-2 border-amber-400/80 pb-0.5">
