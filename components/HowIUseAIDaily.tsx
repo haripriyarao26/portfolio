@@ -124,7 +124,6 @@ export default function HowIUseAIDaily() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 24, mass: 0.25 });
   const bgGridY = useTransform(smoothProgress, [0, 1], [-120, 120]);
   const codeEditorParallaxY = useTransform(smoothProgress, [0, 1], [30, -30]);
-  const floatPillY = useTransform(smoothProgress, [0, 1], [-60, 60]);
 
   return (
     <section
@@ -132,15 +131,6 @@ export default function HowIUseAIDaily() {
       id="daily-ai"
       className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24 relative"
     >
-      {/* Floating Parallax Depth Pill */}
-      <motion.div
-        style={{ y: floatPillY }}
-        className="hidden xl:flex absolute -right-4 top-36 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#091224]/90 border border-teal-400/40 shadow-[0_0_20px_rgba(45,212,191,0.25)] backdrop-blur-md text-xs font-mono text-teal-300 pointer-events-none"
-      >
-        <span className="w-2 h-2 rounded-full bg-[#2dd4bf] animate-ping" />
-        <span>Production AI Harness</span>
-      </motion.div>
-
       <div className="space-y-10">
         {/* Section Header */}
         <div>
