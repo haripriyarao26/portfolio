@@ -14,6 +14,7 @@ import Education from '@/components/Education';
 import MotionFooter from '@/components/MotionFooter';
 import HowIThinkExperience from '@/components/HowIThinkExperience';
 import HowIUseAIDaily from '@/components/HowIUseAIDaily';
+import SkillsToolkit from '@/components/SkillsToolkit';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import {
   HaldenButton,
@@ -45,8 +46,8 @@ const depthStack = [
   {
     category: 'AI Testing & Accuracy',
     badge: 'Quality & Speed',
-    headline: 'Automated testing pipelines that guarantee 95%+ accuracy and fast responses.',
-    pills: ['Golden Dataset Evals', 'A/B Testing', 'Token Compression (-96%)', 'Schema Validation'],
+    headline: 'Automated testing pipelines measured against a golden dataset and fast responses.',
+    pills: ['Golden Dataset Evals', 'A/B Testing', 'Token compression', 'Schema Validation'],
     tech: [
       { name: 'Golden Dataset Evals', role: '100+ annotated ground-truth test suites for LLM extraction' },
       { name: 'A/B Regression Gating', role: 'Statistical field-agreement scoring (>95% threshold)' },
@@ -258,69 +259,10 @@ export default function Home() {
         {/* ── 6. How I Use AI Daily: A Real Production Session ── */}
         <HowIUseAIDaily />
 
-        {/* ── 7. Clean, Scannable Core Skills ── */}
-        <section id="stack" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
-          <div className="space-y-10">
-            <HaldenFadeUp className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-                  <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
-                    SKILLS &amp; TOOLKIT
-                  </span>
-                </div>
+        {/* ── 7. Clean, Scannable Core Skills with Depth & Product Stack ── */}
+        <SkillsToolkit onOpenDrawer={() => setStackDrawerOpen(true)} />
 
-                <HaldenLetterReveal
-                  as="h2"
-                  mode="scroll"
-                  spread={0.32}
-                  segments={[
-                    { text: 'Core production', highlight: false },
-                    { text: 'technologies.', highlight: true },
-                  ]}
-                  className="font-display text-3xl sm:text-5xl font-normal text-[#0b1d3a] tracking-[-0.03em]"
-                />
-              </div>
-
-              <HaldenButton onClick={() => setStackDrawerOpen(true)}>
-                Full Architectural Breakdown
-              </HaldenButton>
-            </HaldenFadeUp>
-
-            <div className="grid gap-5 md:grid-cols-3">
-              {depthStack.map((category, idx) => (
-                <HaldenFadeUp key={category.category} delay={idx * 0.08}>
-                  <TiltCard3D
-                    glareColor="rgba(143, 213, 241, 0.35)"
-                    className="spatial-glass rounded-3xl p-6 h-full"
-                  >
-                    <div>
-                      <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider">
-                        {category.badge}
-                      </span>
-                      <h3 className="font-display text-lg font-semibold text-[#0b1d3a] mt-1 mb-2">
-                        {category.category}
-                      </h3>
-                      <p className="text-sm text-[#3e4d68] mb-5 leading-relaxed">
-                        {category.headline}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5 pt-4 border-t border-[#0b1d3a]/8">
-                      {category.pills.map(pill => (
-                        <span
-                          key={pill}
-                          className="rounded-full border border-[#0b1d3a]/10 bg-white/80 px-3 py-1 text-xs font-medium text-[#0b1d3a]"
-                        >
-                          {pill}
-                        </span>
-                      ))}
-                    </div>
-                  </TiltCard3D>
-                </HaldenFadeUp>
-              ))}
-            </div>
-          </div>
+        {/* ── Architectural Breakdown Drawer ── */}
 
           {mounted &&
             createPortal(
@@ -396,7 +338,6 @@ export default function Home() {
               </AnimatePresence>,
               document.body
             )}
-        </section>
 
         {/* ── 8. Academic Foundation & Curtain Reveal Edge ── */}
         <div className="relative z-20 bg-gradient-to-b from-transparent via-[#f8fafc]/90 to-white pb-14 sm:pb-20 rounded-b-[36px] sm:rounded-b-[56px] shadow-[0_45px_100px_-20px_rgba(11,29,58,0.22)] border-b border-slate-200/80 overflow-hidden">
