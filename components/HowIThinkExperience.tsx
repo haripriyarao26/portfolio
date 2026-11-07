@@ -602,15 +602,13 @@ export default function HowIThinkExperience({
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <span
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{ backgroundColor: beat.color }}
-                  />
-                  <span
-                    className={`text-[10px] font-mono font-semibold ${
-                      isSelected ? 'text-slate-400' : 'text-slate-400'
+                    className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md ${
+                      isSelected
+                        ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+                        : 'bg-slate-100 text-slate-600'
                     }`}
                   >
-                    {beat.step}
+                    Step {beat.step}
                   </span>
                 </div>
                 <div
@@ -661,21 +659,15 @@ export default function HowIThinkExperience({
               >
                 <p className="text-base sm:text-lg text-[#0b1d3a] leading-relaxed font-normal">
                   I like building things people can{' '}
-                  <span className="text-[#0d9488] font-bold underline decoration-[#0d9488]/40 underline-offset-4">
+                  <span className="text-[#0d9488] font-semibold underline decoration-[#0d9488]/40 underline-offset-4">
                     actually rely on
                   </span>
-                  . Anyone can make a{' '}
-                  <span className="text-[#6366f1] font-bold">model</span> look impressive in a demo.
+                  . Anyone can make a model look impressive in a demo.
                   The harder and more interesting work starts when it meets real users, messy data and real consequences.
-                  So I begin with how a system{' '}
-                  <span className="text-[#d97706] font-bold">might fail</span>, build the{' '}
-                  <span className="font-bold text-[#0b1d3a] border-b-2 border-[#d97706] pb-0.5">
-                    checks and fallbacks first
-                  </span>
-                  , and only then make the{' '}
-                  <span className="text-[#6366f1] font-bold">clever part clever</span>.
+                  So I begin with how a system might fail, build the{' '}
+                  <strong className="font-semibold text-[#0b1d3a]">checks and fallbacks first</strong>, and only then make the clever part clever.
                   And I work closely with the people who’ll use it, because{' '}
-                  <span className="text-[#0d9488] font-bold">
+                  <span className="text-[#0d9488] font-semibold">
                     trust gets built together
                   </span>
                   , not just coded.
@@ -691,16 +683,13 @@ export default function HowIThinkExperience({
               >
                 <p className="text-base sm:text-lg text-[#0b1d3a] leading-relaxed font-normal">
                   On a daily basis, I don&rsquo;t treat AI as an autocomplete toy or an unchecked oracle. I use it as an{' '}
-                  <span className="text-[#0d9488] font-bold">
+                  <span className="text-[#0d9488] font-semibold">
                     adversarial junior team
                   </span>
-                  . I use{' '}
-                  <span className="text-[#6366f1] font-bold">frontier models</span> for invariant design and AST schema contracts, lightweight models for repetitive plumbing, and an{' '}
-                  <span className="font-bold text-[#0b1d3a] border-b-2 border-[#d97706] pb-0.5">
-                    adversarial red-team agent
-                  </span>{' '}
-                  to break the code before human review. This unlocks{' '}
-                  <span className="text-[#0d9488] font-bold underline decoration-[#0d9488]/40 underline-offset-4">
+                  . I use frontier models for invariant design and AST schema contracts, lightweight models for repetitive plumbing, and an{' '}
+                  <strong className="font-semibold text-[#0b1d3a]">adversarial red-team agent</strong>{' '}
+                  to stress-test code before human review. This unlocks{' '}
+                  <span className="text-[#0d9488] font-semibold underline decoration-[#0d9488]/40 underline-offset-4">
                     3x engineering leverage
                   </span>{' '}
                   while preserving complete architectural ownership.

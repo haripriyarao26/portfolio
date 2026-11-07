@@ -32,14 +32,19 @@ export const projects: Project[] = [
     id: 'agent-gauge',
     title: 'AgentGauge: <15ms Task Complexity & Cost Router',
     category: 'Agent Skill & MCP Server',
-    status: 'skills.sh Multi-Agent · MCP CLI & Server · VS Code Extension · Next.js 15',
+    status: '5 Unified Channels · skills.sh · GitHub Action · MCP Server · VS Code · Next.js 15',
     description:
-      'An open-source, deterministic <15ms Agent Skill, Model Context Protocol (MCP) Server, VS Code status-bar extension, and Next.js 15 telemetry visualizer that routes coding tasks to the optimal (Model Tier + Effort Level: Low/Med/High + Agent Mode) while cutting LLM costs by up to 96% and learning from real git diff survival outcomes.',
+      'An open-source, deterministic <2ms pre-flight Agent Skill, Model Context Protocol (MCP) Server, GitHub Action PR Audit, and VS Code extension that routes coding tasks to the optimal model tier (saving up to 99% quota), blocks context window bloat with a blast shield, and learns from empirical git diff survival outcomes.',
     images: [
       {
         src: '/projects/agent-gauge-demo.gif',
         alt: 'AgentGauge <15ms 4-Dimension Task Router & Telemetry Demo',
-        caption: 'Live scoring demo: routing from Haiku/Flash Low (Score 14) to Sonnet Med (Score 48) to Opus/Pro High (Score 92 · plan-first)',
+        caption: 'Live interactive 3D router: watch <15ms deterministic scoring flip from Haiku/Flash Low (Score 14) to Sonnet Med (Score 48) to Opus/Pro High (Score 92 · plan-first).',
+      },
+      {
+        src: '/projects/rag-example.gif',
+        alt: 'AgentGauge Company Policy RAG Pre-Flight Router & Escalation Demo',
+        caption: 'Terminal CLI walkthrough: pre-flight RAG task scoring in <2ms, 99% quota saved ($0.004 vs $0.73 on Opus High), 4k context shield, and auto-escalation on concurrency deadlock.',
       },
       {
         src: '/projects/agent-gauge-logo.svg',
@@ -56,7 +61,7 @@ export const projects: Project[] = [
     demo: 'https://agent-gauge.github.io/agent-gauge/',
     links: [
       {
-        label: 'Live GitHub Pages Demo',
+        label: 'Live Interactive Playground',
         href: 'https://agent-gauge.github.io/agent-gauge/',
       },
       {
@@ -68,18 +73,19 @@ export const projects: Project[] = [
       'TypeScript',
       'Model Context Protocol (MCP)',
       'Agent Skills (skills.sh)',
+      'GitHub Actions (action.yml)',
       'VS Code Extension API',
       'Next.js 15',
-      'Tailwind CSS',
       'SQLite',
     ],
     features: [
-      'Deterministic <15ms 4-dimension scoring engine: Task Intent (0-35), Blast Radius (0-30), AST Structure (0-20), and Historical Repo Revert Risk (0-15)',
-      '4 unified distribution channels from one monorepo: skills.sh multi-agent skill (Router, Calibration, Report), MCP Server & CLI (npx agent-gauge-mcp), VS Code status-bar pill (⚡ Gauge), and Next.js 15 3D telemetry playground',
-      'Calibrated cost & latency optimization: slashes frontier LLM inference bills by up to 96% by preventing Opus High over-provisioning on simple CSS/copy tasks while directing deep reasoning to distributed lock bugs',
-      'Git diff survival telemetry: local SQLite database tracks whether AI-generated code survives future commits without reverts, calibrating repo-specific tier cutoffs',
+      'Deterministic Pre-Flight Routing (<2ms - <15ms): Scores Intent (0-35), Blast Radius (0-30), AST Structure (0-20), and Empirical Repo Risk (0-15) with zero LLM API cost',
+      '5 unified distribution channels: skills.sh multi-agent skill, automated GitHub Action PR audit badge, MCP Server & CLI (npx agent-gauge-mcp), VS Code status-bar pill (⚡ Gauge), and Next.js 15 3D telemetry playground',
+      'Context Window Blast Shield: enforces strict prompt and file injection budgets (e.g. 4,000 tokens / 2 files on fast tier) preventing context amnesia and blocking agents from dumping 85,000 tokens into context',
+      'Company Policy RAG Case Study: scaffolds RAG pipelines on Gemini Flash / Claude Haiku saving 99% quota ($0.0040 vs $0.7320 on Opus High, 23.8x faster), then auto-escalates pgvector deadlocks to Opus High plan-first mode',
+      'Historical Regret Sentry: local SQLite database tracks whether AI-generated code survives future commits without reverts (>20% revert rate triggers safety warnings and mandatory test verification)',
     ],
-    metrics: ['<15ms Scorer SLA', 'Up to 96% Cost Saved', '4 Distribution Channels'],
+    metrics: ['<2ms Pre-Flight SLA', 'Up to 99% Quota Saved', '5 Distribution Channels'],
     mermaidDiagram: `flowchart LR
   T[Task Prompt & Files] --> S[AgentGauge Core Scorer]
   S --> I[Intent: 0-35]
