@@ -8,10 +8,9 @@ import { HaldenButton, HaldenLetterReveal, WordSegment } from '@/components/Hald
 type Props = { name: string; tagline: string };
 
 const HERO_HEADLINE_SEGMENTS: WordSegment[] = [
-  { text: 'I build', highlight: false },
-  { text: 'production AI systems', highlight: true },
-  { text: 'that fail safely', highlight: false, lineBreakAfter: true },
-  { text: 'at enterprise scale.', highlight: false },
+  { text: 'I don’t just build AI.', highlight: false, lineBreakAfter: true },
+  { text: 'I build the whole product', highlight: true },
+  { text: 'around the problem.', highlight: false },
 ];
 
 const LIVE_AGENT_LAYERS = [
@@ -138,7 +137,7 @@ export default function StoryCanvasSequence({ name }: Props) {
             className="fade-up text-base sm:text-lg text-[#1d2f4f]/85 max-w-xl leading-relaxed"
             style={{ ['--d' as any]: '0.85s' }}
           >
-            I architect multi-agent workflows, deterministic evaluation harnesses, and full-stack AI products that fail safely when faced with messy data, edge cases, and real production consequences.
+            Customer conversations, architecture, full-stack code, production support, and the AI where it helps.
           </p>
 
           {/* Exactly 3 Focused, Verifiable Metrics */}

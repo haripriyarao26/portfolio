@@ -218,7 +218,7 @@ export default function Home() {
         {/* ── 1. Hero (Synchronized Bowl Glow + Per-Character Letter Reveal + Staggered Fade-Ups) ── */}
         <StoryCanvasSequence
           name={resumeData.name}
-          tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
+          tagline="Customer conversations, architecture, full-stack code, production support, and the AI where it helps."
         />
 
         {/* ── 2. How I Think & Why Engineering Leaders Hire Me (5-Beat Request Journey + Color Meaning) ── */}
