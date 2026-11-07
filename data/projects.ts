@@ -59,16 +59,6 @@ export const projects: Project[] = [
     ],
     github: 'https://github.com/Agent-Gauge/agent-gauge',
     demo: 'https://agent-gauge.github.io/agent-gauge/',
-    links: [
-      {
-        label: 'Live Interactive Playground',
-        href: 'https://agent-gauge.github.io/agent-gauge/',
-      },
-      {
-        label: 'VS Code Extension (VSIX)',
-        href: 'https://github.com/Agent-Gauge/agent-gauge/releases',
-      },
-    ],
     tech: [
       'TypeScript',
       'Model Context Protocol (MCP)',
