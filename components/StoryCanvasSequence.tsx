@@ -287,18 +287,6 @@ export default function StoryCanvasSequence({ name }: Props) {
                   );
                 })}
               </div>
-
-              {/* Proof link under the card */}
-              <div className="pt-2 flex items-center justify-between border-t border-[#0b1d3a]/8 text-xs">
-                <span className="text-[#64748b]">Whole-product delivery in practice</span>
-                <a
-                  href="#case-studies"
-                  className="font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] hover:underline inline-flex items-center gap-1 transition-colors"
-                >
-                  <span>See it at Onetera</span>
-                  <span>→</span>
-                </a>
-              </div>
             </div>
           </TiltCard3D>
         </motion.div>
