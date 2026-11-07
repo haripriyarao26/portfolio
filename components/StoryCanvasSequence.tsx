@@ -45,50 +45,49 @@ const WHOLE_PRODUCT_STAGES = [
   },
 ];
 
-const TRUST_GRID = [
+const EMPLOYER_PROOF = [
   {
-    name: 'JPMORGAN',
-    delay: '1.25s',
+    name: 'JPMorgan Chase',
+    role: 'Senior AI Consultant',
     href: '#timeline-momentum',
   },
   {
-    name: 'ONETERA',
-    delay: '1.32s',
+    name: 'Onetera Technologies',
+    role: 'Founding Engineer · 0-to-1',
     href: '#case-studies',
   },
   {
-    name: 'PROVENIR',
-    delay: '1.39s',
+    name: 'Provenir',
+    role: 'Fintech Extraction Engine',
     href: '#timeline-momentum',
   },
   {
-    name: 'DELOITTE',
-    delay: '1.46s',
+    name: 'Deloitte',
+    role: 'Risk Architecture',
     href: '#timeline-momentum',
   },
+];
+
+const OPEN_SOURCE_AND_CERTS = [
   {
-    name: 'CCA-F ARCHITECT',
-    delay: '1.42s',
-    href: 'https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile',
-    external: true,
-  },
-  {
-    name: 'GEMINI PR #1088 (MERGED)',
-    delay: '1.49s',
+    name: 'Gemini Cookbook (Merged PR #1088)',
     href: 'https://github.com/google-gemini/cookbook/pull/1088',
-    external: true,
+    type: 'Google Open Source ↗',
   },
   {
-    name: 'OPENAI PR #2568 (CONTRIBUTED)',
-    delay: '1.56s',
+    name: 'OpenAI Cookbook (PR #2568)',
     href: 'https://github.com/openai/openai-cookbook/pull/2568',
-    external: true,
+    type: 'OpenAI Open Source ↗',
   },
   {
-    name: 'AWS AI CERT',
-    delay: '1.63s',
+    name: 'Anthropic CCA-F Architect',
+    href: 'https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile',
+    type: 'Credly Verified ↗',
+  },
+  {
+    name: 'AWS AI Practitioner',
     href: 'https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url',
-    external: true,
+    type: 'Credly Verified ↗',
   },
 ];
 
@@ -272,40 +271,75 @@ export default function StoryCanvasSequence({ name }: Props) {
         </motion.div>
       </div>
 
-      {/* ── LOWER SECTION: Verified Footprint & 8 Credential Chips Moved Below ── */}
-      <div className="mt-14 pt-8 border-t border-[#0b1d3a]/8 grid lg:grid-cols-12 gap-8 items-center">
-        {/* Left 5 Columns: Production Trust Line */}
-        <div className="lg:col-span-5 space-y-2">
-          <span className="mono-accent text-xs font-semibold uppercase tracking-[0.16em] text-[#5b7cf0] block">
-            VERIFIED PRODUCTION FOOTPRINT
+      {/* ── LOWER SECTION: Production Track Record & Verified Proof ── */}
+      <div className="mt-14 pt-8 border-t border-[#0b1d3a]/8 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div>
+            <span className="mono-accent text-xs font-semibold uppercase tracking-[0.16em] text-[#5b7cf0] block">
+              PRODUCTION TRACK RECORD
+            </span>
+            <p className="mt-1 text-base sm:text-lg font-medium text-[#0b1d3a]">
+              Where I’ve worked, and what I’ve shipped in the open.
+            </p>
+          </div>
+          <span className="text-xs font-mono text-[#3e4d68]">
+            Click any item for verified proof &amp; case studies &rarr;
           </span>
-          <p
-            className="fade-up text-[clamp(14px,1.15vw,16px)] tracking-[-0.015em] text-[#1d2f4f] font-medium leading-relaxed"
-            style={{ ['--d' as any]: '1.15s' }}
-          >
-            Architectures, evaluations, and official contributions trusted across enterprise and open-source ecosystems.
-          </p>
         </div>
 
-        {/* Right 7 Columns: Clean 4x2 Hairline Grid with Unified Typography */}
-        <div className="lg:col-span-7 w-full overflow-hidden">
-          <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-[#0b1d3a]/[0.06] lg:border-t-0">
-            {TRUST_GRID.map((item, idx) => (
-              <a
-                key={item.name}
-                href={item.href}
-                target={item.external ? '_blank' : undefined}
-                rel={item.external ? 'noreferrer' : undefined}
-                style={{ ['--d' as any]: item.delay }}
-                className={`fade-up group flex items-center justify-center py-4 sm:py-5 px-2 sm:px-3 text-[#3e4d68] hover:text-[#0b1d3a] transition-colors border-l border-[#0b1d3a]/[0.08] ${
-                  idx >= 2 ? 'border-t sm:border-t-0' : ''
-                } ${idx >= 4 ? 'sm:border-t sm:border-t-[#0b1d3a]/[0.06]' : ''}`}
-              >
-                <span className="font-display text-[11px] sm:text-[12px] font-semibold tracking-[0.04em] sm:tracking-[0.06em] text-center truncate px-1">
-                  {item.name}
-                </span>
-              </a>
-            ))}
+        {/* Two distinct, clearly-labeled rows */}
+        <div className="space-y-3.5">
+          {/* Row 1: Employers */}
+          <div className="rounded-2xl border border-[#0b1d3a]/10 bg-white/60 backdrop-blur-md p-3.5 sm:p-4">
+            <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#3e4d68] mb-2.5 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#5b7cf0]" />
+              <span>Where I’ve Worked</span>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+              {EMPLOYER_PROOF.map((emp) => (
+                <a
+                  key={emp.name}
+                  href={emp.href}
+                  className="group p-3 rounded-xl border border-[#0b1d3a]/8 bg-white/80 hover:bg-white hover:border-[#5b7cf0]/40 transition-all shadow-sm"
+                >
+                  <div className="font-display text-xs sm:text-sm font-bold text-[#0b1d3a] group-hover:text-[#5b7cf0] transition-colors leading-tight">
+                    {emp.name}
+                  </div>
+                  <div className="text-[11px] text-[#3e4d68] mt-1 font-mono leading-tight">
+                    {emp.role}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 2: Open Source & Credentials */}
+          <div className="rounded-2xl border border-[#0b1d3a]/10 bg-white/60 backdrop-blur-md p-3.5 sm:p-4">
+            <div className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#3e4d68] mb-2.5 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2fe0d0]" />
+              <span>Shipped In The Open &amp; Credentials</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+              {OPEN_SOURCE_AND_CERTS.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group p-3 rounded-xl border border-[#0b1d3a]/8 bg-white/80 hover:bg-white hover:border-[#2fe0d0]/50 transition-all shadow-sm flex flex-col justify-between"
+                >
+                  <div className="flex items-start justify-between gap-1.5">
+                    <span className="font-display text-xs sm:text-sm font-bold text-[#0b1d3a] group-hover:text-[#0b1d3a] leading-snug">
+                      {item.name}
+                    </span>
+                    <span className="text-[#5b7cf0] text-xs font-bold shrink-0">↗</span>
+                  </div>
+                  <div className="text-[11px] font-mono text-[#0d9488] font-semibold mt-1.5">
+                    {item.type}
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
