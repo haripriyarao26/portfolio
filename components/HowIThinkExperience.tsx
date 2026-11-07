@@ -149,15 +149,29 @@ export default function HowIThinkExperience({
     setMouseTilt({ rotateX: 0, rotateY: 0 });
   };
 
-  // Parallax Scroll Tracking
+  // Parallax Scroll Tracking with Multi-Layer Depth
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 20 });
-  const bgGridY = useTransform(smoothProgress, [0, 1], [-40, 40]);
-  const stageParallaxY = useTransform(smoothProgress, [0, 1], [20, -20]);
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 24, mass: 0.25 });
+  
+  // Noticeable, clearly perceptible multi-plane vertical shifts
+  const bgGridY = useTransform(smoothProgress, [0, 1], [-140, 140]);
+  const bloomParallaxY = useTransform(smoothProgress, [0, 1], [-110, 110]);
+  const stageParallaxY = useTransform(smoothProgress, [0, 1], [45, -45]);
+  const scrollTiltX = useTransform(smoothProgress, [0, 0.5, 1], [3, 0, -3]);
+
+  // Floating exterior telemetry pills that glide across layers on scroll
+  const floatBadge1Y = useTransform(smoothProgress, [0, 1], [-90, 80]);
+  const floatBadge2Y = useTransform(smoothProgress, [0, 1], [70, -90]);
+  const floatBadge3Y = useTransform(smoothProgress, [0, 1], [-60, 90]);
+
+  // Refusal Cards 3D Parallax Stagger
+  const refusalCard1Y = useTransform(smoothProgress, [0.35, 0.95], [35, -35]);
+  const refusalCard2Y = useTransform(smoothProgress, [0.35, 0.95], [0, 0]);
+  const refusalCard3Y = useTransform(smoothProgress, [0.35, 0.95], [-35, 35]);
 
   // Run Guardrail Breaker Test
   const handleRunGuardrail = (preset = activePreset, overrideInput?: string) => {
@@ -201,7 +215,25 @@ export default function HowIThinkExperience({
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           style={{ perspective: 1200 }}
+          className="relative"
         >
+          {/* Parallax Floating Telemetry Depth Badges */}
+          <motion.div
+            style={{ y: floatBadge1Y }}
+            className="hidden xl:flex absolute -right-6 top-16 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#091224]/90 border border-cyan-400/40 shadow-[0_0_20px_rgba(0,240,255,0.25)] backdrop-blur-md text-xs font-mono text-cyan-300 pointer-events-none"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
+            <span>&lt;15ms AST Kernel</span>
+          </motion.div>
+
+          <motion.div
+            style={{ y: floatBadge2Y }}
+            className="hidden xl:flex absolute -left-8 top-72 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#091224]/90 border border-amber-400/40 shadow-[0_0_20px_rgba(245,158,11,0.25)] backdrop-blur-md text-xs font-mono text-amber-300 pointer-events-none"
+          >
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+            <span>Schema Sentry Active</span>
+          </motion.div>
+
           <motion.div
             animate={{
               rotateX: mouseTilt.rotateX,
@@ -213,11 +245,14 @@ export default function HowIThinkExperience({
             {/* Parallax Background Grid Layer */}
             <motion.div
               style={{ y: bgGridY }}
-              className="pointer-events-none absolute -inset-10 opacity-20 bg-[linear-gradient(to_right,#38bdf820_1px,transparent_1px),linear-gradient(to_bottom,#38bdf820_1px,transparent_1px)] bg-[size:44px_44px]"
+              className="pointer-events-none absolute -inset-20 opacity-30 bg-[linear-gradient(to_right,#38bdf830_1px,transparent_1px),linear-gradient(to_bottom,#38bdf830_1px,transparent_1px)] bg-[size:52px_52px]"
             />
 
-            {/* Top Ambient Cyber Bloom */}
-            <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-48 bg-gradient-to-b from-cyan-500/20 via-indigo-500/10 to-transparent blur-3xl" />
+            {/* Parallax Ambient Cyber Bloom */}
+            <motion.div
+              style={{ y: bloomParallaxY }}
+              className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-56 bg-gradient-to-b from-cyan-500/25 via-indigo-500/15 to-transparent blur-3xl"
+            />
 
             {/* Top Header */}
             <div className="relative z-10 border-b border-white/10 pb-6 mb-8">
@@ -597,37 +632,41 @@ export default function HowIThinkExperience({
           </div>
 
           <div className="grid gap-5 md:grid-cols-3">
-            {REFUSALS.map((r) => (
-              <div
-                key={r.number}
-                className="p-6 rounded-3xl bg-[#060c18] border border-white/10 hover:border-amber-500/40 transition-all flex flex-col justify-between shadow-lg"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-mono text-xs text-slate-500 font-bold">Shortcut {r.number}</span>
-                    <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/30">
-                      Rejected
+            {REFUSALS.map((r, rIdx) => {
+              const cardY = rIdx === 0 ? refusalCard1Y : rIdx === 1 ? refusalCard2Y : refusalCard3Y;
+              return (
+                <motion.div
+                  key={r.number}
+                  style={{ y: cardY }}
+                  className="p-6 rounded-3xl bg-[#060c18] border border-white/10 hover:border-amber-500/40 transition-colors flex flex-col justify-between shadow-lg"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-mono text-xs text-slate-500 font-bold">Shortcut {r.number}</span>
+                      <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/30">
+                        Rejected
+                      </span>
+                    </div>
+
+                    <h4 className="font-display text-base font-bold text-white mb-2">{r.title}</h4>
+
+                    <div className="text-xs text-slate-400 mb-3 space-y-1">
+                      <p><strong className="text-slate-300">Shortcut:</strong> {r.rejected}</p>
+                      <p><strong className="text-rose-400">Why I refused:</strong> {r.why}</p>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-white/10 mt-2">
+                    <p className="text-xs text-slate-200 leading-relaxed">
+                      <strong className="text-teal-300 font-mono">Built instead:</strong> {r.builtInstead}
+                    </p>
+                    <span className="inline-block mt-3 text-[10px] font-mono text-teal-400 bg-teal-950/60 border border-teal-500/30 px-2 py-0.5 rounded">
+                      {r.tag}
                     </span>
                   </div>
-
-                  <h4 className="font-display text-base font-bold text-white mb-2">{r.title}</h4>
-
-                  <div className="text-xs text-slate-400 mb-3 space-y-1">
-                    <p><strong className="text-slate-300">Shortcut:</strong> {r.rejected}</p>
-                    <p><strong className="text-rose-400">Why I refused:</strong> {r.why}</p>
-                  </div>
-                </div>
-
-                <div className="pt-3 border-t border-white/10 mt-2">
-                  <p className="text-xs text-slate-200 leading-relaxed">
-                    <strong className="text-teal-300 font-mono">Built instead:</strong> {r.builtInstead}
-                  </p>
-                  <span className="inline-block mt-3 text-[10px] font-mono text-teal-400 bg-teal-950/60 border border-teal-500/30 px-2 py-0.5 rounded">
-                    {r.tag}
-                  </span>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 

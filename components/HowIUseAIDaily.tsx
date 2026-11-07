@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 
 type DailySessionStep = {
   time: string;
@@ -111,11 +111,36 @@ await git.merge(prNumber, { mode: 'squash' });`,
 ];
 
 export default function HowIUseAIDaily() {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const activeStep = DAILY_SESSION[activeStepIndex];
 
+  // Scroll Parallax Tracking
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 24, mass: 0.25 });
+  const bgGridY = useTransform(smoothProgress, [0, 1], [-120, 120]);
+  const codeEditorParallaxY = useTransform(smoothProgress, [0, 1], [30, -30]);
+  const floatPillY = useTransform(smoothProgress, [0, 1], [-60, 60]);
+
   return (
-    <section id="daily-ai" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
+    <section
+      ref={sectionRef}
+      id="daily-ai"
+      className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24 relative"
+    >
+      {/* Floating Parallax Depth Pill */}
+      <motion.div
+        style={{ y: floatPillY }}
+        className="hidden xl:flex absolute -right-4 top-36 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#091224]/90 border border-teal-400/40 shadow-[0_0_20px_rgba(45,212,191,0.25)] backdrop-blur-md text-xs font-mono text-teal-300 pointer-events-none"
+      >
+        <span className="w-2 h-2 rounded-full bg-[#2dd4bf] animate-ping" />
+        <span>Production AI Harness</span>
+      </motion.div>
+
       <div className="space-y-10">
         {/* Section Header */}
         <div>
@@ -138,8 +163,11 @@ export default function HowIUseAIDaily() {
 
         {/* Interactive Session Timeline Card */}
         <div className="rounded-3xl bg-[#060c18] border border-cyan-500/30 p-6 sm:p-10 shadow-2xl text-white relative overflow-hidden">
-          {/* Subtle Ambient Background */}
-          <div className="pointer-events-none absolute -inset-10 opacity-15 bg-[linear-gradient(to_right,#38bdf820_1px,transparent_1px),linear-gradient(to_bottom,#38bdf820_1px,transparent_1px)] bg-[size:44px_44px]" />
+          {/* Parallax Moving Background Grid */}
+          <motion.div
+            style={{ y: bgGridY }}
+            className="pointer-events-none absolute -inset-20 opacity-25 bg-[linear-gradient(to_right,#38bdf825_1px,transparent_1px),linear-gradient(to_bottom,#38bdf825_1px,transparent_1px)] bg-[size:48px_48px]"
+          />
 
           {/* Step Timeline Navigation Pills */}
           <div className="relative z-10 grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-8">
@@ -218,8 +246,8 @@ export default function HowIUseAIDaily() {
                 </div>
               </div>
 
-              {/* Right Column (5 Cols): Live Production Code Pattern */}
-              <div className="lg:col-span-5 space-y-3">
+              {/* Right Column (5 Cols): Live Production Code Pattern with Parallax Elevation */}
+              <motion.div style={{ y: codeEditorParallaxY }} className="lg:col-span-5 space-y-3">
                 <div className="flex items-center justify-between text-xs font-mono text-slate-400 px-1">
                   <span>Production Code Pattern</span>
                   <span className="text-cyan-300">TypeScript / Python</span>
@@ -233,7 +261,7 @@ export default function HowIUseAIDaily() {
                   <span className="text-slate-300">Verifiable Spec:</span>
                   <span className="text-teal-300 font-bold">{activeStep.provableMetric}</span>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
         </div>

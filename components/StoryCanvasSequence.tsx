@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { DecryptedMetric, TiltCard3D } from '@/components/ReactBits3D';
 import { HaldenButton, HaldenLetterReveal, WordSegment } from '@/components/HaldenMotion';
 
@@ -82,7 +83,18 @@ const TRUST_GRID = [
 ];
 
 export default function StoryCanvasSequence({ name }: Props) {
+  const heroRef = useRef<HTMLElement | null>(null);
   const [activeLayer, setActiveLayer] = useState(0);
+
+  // Hero Parallax Scroll Tracking
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const smoothHeroProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 24, mass: 0.25 });
+  const leftColY = useTransform(smoothHeroProgress, [0, 1], [0, -45]);
+  const rightCardY = useTransform(smoothHeroProgress, [0, 1], [0, -85]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -93,13 +105,14 @@ export default function StoryCanvasSequence({ name }: Props) {
 
   return (
     <section
+      ref={heroRef}
       id="story"
       className="relative min-h-[92vh] flex flex-col justify-between pt-24 sm:pt-28 pb-10 px-4 sm:px-10 max-w-6xl mx-auto"
     >
       {/* ── HERO TOP ROW: Headline + 3 Metrics + 1 CTA + 3D Agent Stack ── */}
       <div className="grid lg:grid-cols-12 gap-8 items-start pt-6 sm:pt-10">
         {/* Left 7 Columns: First-Person Headline, Subtitle, 3 Metrics & 1 CTA */}
-        <div className="lg:col-span-7 space-y-6">
+        <motion.div style={{ y: leftColY }} className="lg:col-span-7 space-y-6">
           <div
             className="fade-up inline-flex items-center gap-2.5 rounded-full bg-white/80 backdrop-blur-md border border-[#0b1d3a]/10 px-4 py-1.5 shadow-sm"
             style={{ ['--d' as any]: '0.2s' }}
@@ -156,12 +169,12 @@ export default function StoryCanvasSequence({ name }: Props) {
               Explore Proven Work &darr;
             </HaldenButton>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right 5 Columns: Synchronized Fade-Up 3D Live Agent Stack Card */}
-        <div
+        {/* Right 5 Columns: Synchronized 3D Live Agent Stack Card with Parallax Elevation */}
+        <motion.div
+          style={{ y: rightCardY }}
           className="fade-up lg:col-span-5"
-          style={{ ['--d' as any]: '0.95s' }}
         >
           <TiltCard3D
             intensity={8}
@@ -225,7 +238,7 @@ export default function StoryCanvasSequence({ name }: Props) {
               </div>
             </div>
           </TiltCard3D>
-        </div>
+        </motion.div>
       </div>
 
       {/* ── LOWER SECTION: Verified Footprint & 8 Credential Chips Moved Below ── */}

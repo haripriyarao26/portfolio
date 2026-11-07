@@ -296,16 +296,16 @@ function HeroConstellationZone({ circleTex }: { circleTex: THREE.Texture | null 
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#5b7cf0" transparent opacity={0.12} />
+        <lineBasicMaterial color="#5b7cf0" transparent opacity={0.32} />
       </lineSegments>
 
       {nodes.map((pos, idx) => (
         <mesh key={idx} position={pos}>
-          <sphereGeometry args={[idx % 4 === 0 ? 0.042 : 0.025, 12, 12]} />
+          <sphereGeometry args={[idx % 4 === 0 ? 0.075 : 0.045, 16, 16]} />
           <meshBasicMaterial
-            color={idx % 4 === 0 ? '#5b7cf0' : '#0b1d3a'}
+            color={idx % 4 === 0 ? '#5b7cf0' : '#00f0ff'}
             transparent
-            opacity={idx % 4 === 0 ? 0.35 : 0.2}
+            opacity={idx % 4 === 0 ? 0.75 : 0.48}
           />
         </mesh>
       ))}
@@ -321,10 +321,10 @@ function HeroConstellationZone({ circleTex }: { circleTex: THREE.Texture | null 
         </bufferGeometry>
         <pointsMaterial
           map={circleTex ?? undefined}
-          size={0.11}
-          color="#2fe0d0"
+          size={0.22}
+          color="#00f0ff"
           transparent
-          opacity={0.55}
+          opacity={0.85}
           depthWrite={false}
           sizeAttenuation
         />
@@ -572,8 +572,8 @@ function ScrollCameraRig({ scrollYProgress }: { scrollYProgress: any }) {
     desiredCamPos.x += Math.sin(t * 0.4) * 0.9 * orbitWeight + state.pointer.x * 0.3;
     desiredCamPos.y += Math.cos(t * 0.3) * 0.4 * orbitWeight + state.pointer.y * 0.2;
 
-    state.camera.position.lerp(desiredCamPos, 0.06);
-    lookAtTarget.current.lerp(desiredLookAt, 0.06);
+    state.camera.position.lerp(desiredCamPos, 0.12);
+    lookAtTarget.current.lerp(desiredLookAt, 0.12);
     state.camera.lookAt(lookAtTarget.current);
   });
 
