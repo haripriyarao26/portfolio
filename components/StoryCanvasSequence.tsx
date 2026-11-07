@@ -126,18 +126,12 @@ export default function StoryCanvasSequence({ name }: Props) {
         {/* Left 7 Columns: First-Person Headline, Subtitle, Story Points & CTAs */}
         <motion.div style={{ y: leftColY }} className="lg:col-span-7 space-y-6">
           <div
-            className="fade-up inline-flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2.5 rounded-2xl sm:rounded-full bg-white/85 backdrop-blur-md border border-[#0b1d3a]/10 px-4 py-2 sm:py-1.5 shadow-sm"
+            className="fade-up inline-flex items-center gap-2 rounded-full bg-white/85 backdrop-blur-md border border-[#0b1d3a]/10 px-4 py-1.5 shadow-sm"
             style={{ ['--d' as any]: '0.2s' }}
           >
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-              <span className="mono-accent text-xs font-semibold tracking-[0.16em] uppercase text-[#1d2f4f]">
-                FOUNDING &amp; FORWARD-DEPLOYED ENGINEER
-              </span>
-            </div>
-            <span className="hidden sm:inline text-slate-300">·</span>
-            <span className="mono-accent text-[11px] font-medium text-[#5b7cf0]">
-              Software Engineer &middot; Full-Stack &middot; AI Engineer
+            <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
+            <span className="mono-accent text-xs font-semibold tracking-[0.16em] uppercase text-[#1d2f4f]">
+              Software Engineer &middot; Full-Stack &middot; AI
             </span>
           </div>
 
