@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { AnimatePresence, motion, useScroll, useSpring, useReducedMotion } from 'framer-motion';
@@ -155,26 +156,19 @@ export default function Home() {
 
       {/* Exact Halden Floating White Pill Navbar (#nav) with Morphing Scroll CTA (.halden-nav-cta) */}
       <header id="nav" className={`halden-nav ${navActive ? 'on' : ''}`}>
-        {/* Brand (Left): 22px #5b7cf0 circle with two white wavy strokes */}
+        {/* Brand (Left): Favicon HR Monogram + Name */}
         <a
           href="#story"
           className="flex items-center gap-[9px] text-[17px] font-medium tracking-[-0.02em] text-[#0b1d3a]"
         >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="11" fill="#5b7cf0" />
-            <path
-              d="M5 9.2c2.3-1.6 4.7-1.6 7 0s4.7 1.6 7 0"
-              stroke="#ffffff"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-            <path
-              d="M5 13.2c2.3-1.6 4.7-1.6 7 0s4.7 1.6 7 0"
-              stroke="#ffffff"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          </svg>
+          <Image
+            src="/icon.png"
+            alt={resumeData.name}
+            width={22}
+            height={22}
+            className="w-[22px] h-[22px] rounded-full object-cover shadow-sm border border-slate-200/90 shrink-0"
+            priority
+          />
           <span>{resumeData.name}</span>
         </a>
 

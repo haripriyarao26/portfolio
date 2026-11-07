@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { DecryptedMetric, TiltCard3D } from '@/components/ReactBits3D';
+import { TiltCard3D } from '@/components/ReactBits3D';
 import { HaldenButton, HaldenLetterReveal, WordSegment } from '@/components/HaldenMotion';
 
 type Props = { name: string; tagline: string };
@@ -140,30 +140,8 @@ export default function StoryCanvasSequence({ name }: Props) {
             Customer conversations, architecture, full-stack code, production support, and the AI where it helps.
           </p>
 
-          {/* Exactly 3 Focused, Verifiable Metrics */}
-          <div
-            className="fade-up flex flex-wrap items-center gap-2.5 pt-1"
-            style={{ ['--d' as any]: '1.0s' }}
-          >
-            {[
-              { metric: '96%', label: 'Token Cut (200KB → 8KB)' },
-              { metric: '<15ms', label: 'Deterministic Routing SLA' },
-              { metric: '0', label: 'Unhandled State Desyncs' },
-            ].map(item => (
-              <div
-                key={item.label}
-                className="inline-flex items-center gap-2 rounded-full bg-white/85 backdrop-blur-md border border-[#0b1d3a]/10 px-4 py-2 shadow-sm"
-              >
-                <span className="font-display text-sm font-bold text-[#0b1d3a]">
-                  <DecryptedMetric value={item.metric} />
-                </span>
-                <span className="text-xs font-medium text-[#3e4d68]">{item.label}</span>
-              </div>
-            ))}
-          </div>
-
           {/* Single Focused Primary CTA */}
-          <div className="fade-up pt-2" style={{ ['--d' as any]: '1.15s' }}>
+          <div className="fade-up pt-2" style={{ ['--d' as any]: '1.0s' }}>
             <HaldenButton size="lg" href="#case-studies">
               Explore Proven Work &darr;
             </HaldenButton>
