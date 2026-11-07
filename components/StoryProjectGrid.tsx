@@ -125,6 +125,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
   const [drawerProject, setDrawerProject] = useState<Project | null>(null);
   const [activeGaugeGif, setActiveGaugeGif] = useState<'router' | 'rag'>('router');
   const [drawerMediaTab, setDrawerMediaTab] = useState<'router' | 'rag'>('router');
+  const [showMoreProjects, setShowMoreProjects] = useState<boolean>(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -134,8 +135,131 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
   }, []);
 
   const agentGauge = projects.find(p => p.id === 'agent-gauge') || projects[0];
-  const otherProjects = projects.filter(p => p.id !== 'agent-gauge');
+  const gemini = projects.find(p => p.id === 'gemini-cookbook');
+  const restProjects = projects.filter(
+    p => p.id !== 'agent-gauge' && p.id !== 'gemini-cookbook'
+  );
   const selectedTask = GAUGE_TASKS[activeTaskIndex] || GAUGE_TASKS[0];
+
+  const renderCard = (project: Project) => {
+    const simple = SIMPLE_COPY[project.id] || {
+      title: project.title,
+      badge: project.category,
+      summary: project.description,
+    };
+
+    const previewImage = project.images && project.images[0];
+    const logoImage = project.images && project.images.find(img => img.src.endsWith('.svg'));
+
+    return (
+      <article className="h-full">
+        <TiltCard3D
+          glareColor="rgba(143, 213, 241, 0.35)"
+          className="spatial-glass rounded-3xl p-6 h-full flex flex-col justify-between"
+        >
+          <div>
+            {previewImage && (
+              <div className="relative w-full h-44 mb-4 rounded-2xl overflow-hidden border border-[#0b1d3a]/10 bg-[#040509] group/img">
+                <img
+                  src={getAssetUrl(previewImage.src)}
+                  alt={previewImage.alt}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.includes('/portfolio/')) {
+                      target.src = `/portfolio${previewImage.src.startsWith('/') ? previewImage.src : `/${previewImage.src}`}`;
+                    }
+                  }}
+                />
+                {project.demo && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-[#040509]/85 backdrop-blur-md border border-white/20 text-[11px] font-mono text-[#00F0FF] hover:bg-[#5b7cf0] hover:text-white transition-all shadow-md flex items-center gap-1.5"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2fe0d0] animate-pulse" />
+                    <span>Live Demo ↗</span>
+                  </a>
+                )}
+              </div>
+            )}
+
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase">
+                {simple.badge}
+              </span>
+              <span className="mono-accent text-xs text-[#3e4d68]">
+                {project.tech.slice(0, 3).join(' · ')}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2.5 mb-2">
+              {logoImage && (
+                <img
+                  src={getAssetUrl(logoImage.src)}
+                  alt=""
+                  className="w-7 h-7 rounded-lg shrink-0 object-contain shadow-sm"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.dataset.tried) {
+                      target.dataset.tried = 'true';
+                      if (target.src.includes('/portfolio/')) {
+                        target.src = target.src.replace('/portfolio/', '/');
+                      } else {
+                        target.src = `/portfolio${logoImage.src.startsWith('/') ? logoImage.src : `/${logoImage.src}`}`;
+                      }
+                    } else {
+                      target.style.display = 'none';
+                    }
+                  }}
+                />
+              )}
+              <h4 className="font-display text-lg font-semibold text-[#0b1d3a]">
+                {simple.title}
+              </h4>
+            </div>
+
+            <p className="text-sm text-[#3e4d68] mb-5 leading-relaxed">
+              {simple.summary}
+            </p>
+          </div>
+
+          <div className="pt-4 border-t border-[#0b1d3a]/8 flex items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#0b1d3a] hover:text-[#5b7cf0] transition-colors"
+                >
+                  <span>View on GitHub</span>
+                  <span>↗</span>
+                </a>
+              )}
+              {project.demo && !previewImage && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#2fe0d0] hover:text-[#5b7cf0] transition-colors"
+                >
+                  <span>Live Demo</span>
+                  <span>↗</span>
+                </a>
+              )}
+            </div>
+
+            <HaldenButton onClick={() => setDrawerProject(project)}>
+              Tech specs
+            </HaldenButton>
+          </div>
+        </TiltCard3D>
+      </article>
+    );
+  };
 
   return (
     <div className="space-y-6">
@@ -413,130 +537,74 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
         </HaldenFadeUp>
       )}
 
-      {/* ── OTHER PROJECTS IN GRID (INCLUDING PROCURE-LOOP) ── */}
-      <div className="grid gap-5 md:grid-cols-2">
-        {otherProjects.map((project, idx) => {
-          const simple = SIMPLE_COPY[project.id] || {
-            title: project.title,
-            badge: project.category,
-            summary: project.description,
-          };
+      {/* ── SECOND FEATURED PROJECT: GOOGLE GEMINI COOKBOOK (MERGED PR #1088) ── */}
+      {gemini && (
+        <HaldenFadeUp delay={0.08}>
+          <div className="w-full">
+            {renderCard(gemini)}
+          </div>
+        </HaldenFadeUp>
+      )}
 
-          const previewImage = project.images && project.images[0];
-          const logoImage = project.images && project.images.find(img => img.src.endsWith('.svg'));
+      {/* ── INTERACTIVE TOGGLE: "CLICK TO SEE MORE PROJECTS" ── */}
+      {restProjects.length > 0 && (
+        <div className="flex justify-center pt-2 pb-2">
+          <button
+            type="button"
+            onClick={() => setShowMoreProjects(!showMoreProjects)}
+            className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/90 hover:bg-white border border-[#0b1d3a]/15 text-[#0b1d3a] shadow-sm hover:shadow-md transition-all font-display text-sm font-semibold active:scale-95"
+          >
+            <span>
+              {showMoreProjects
+                ? 'Show Fewer Projects'
+                : `Click to See More Projects (${restProjects.length} More)`}
+            </span>
+            <motion.span
+              animate={{ rotate: showMoreProjects ? 180 : 0 }}
+              transition={{ duration: 0.25 }}
+              className="text-[#5b7cf0] font-bold text-base"
+            >
+              ↓
+            </motion.span>
+          </button>
+        </div>
+      )}
 
-          return (
-            <HaldenFadeUp key={project.id} delay={idx * 0.08}>
-              <article className="h-full">
-                <TiltCard3D
-                  glareColor="rgba(143, 213, 241, 0.35)"
-                  className="spatial-glass rounded-3xl p-6 h-full flex flex-col justify-between"
+      {/* ── REST OF PROJECTS WITH 3D MOTIONS UPON APPEARANCE ── */}
+      <AnimatePresence>
+        {showMoreProjects && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div
+              style={{ perspective: 1100 }}
+              className="grid gap-5 md:grid-cols-2 pt-2"
+            >
+              {restProjects.map((project, idx) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 35, rotateX: 18, scale: 0.94 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 25, rotateX: -15, scale: 0.94 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 240,
+                    damping: 22,
+                    delay: idx * 0.08,
+                  }}
+                  className="h-full"
                 >
-                  <div>
-                    {previewImage && (
-                      <div className="relative w-full h-44 mb-4 rounded-2xl overflow-hidden border border-[#0b1d3a]/10 bg-[#040509] group/img">
-                        <img
-                          src={getAssetUrl(previewImage.src)}
-                          alt={previewImage.alt}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
-                          loading="lazy"
-                          onError={(e) => {
-                            const target = e.currentTarget;
-                            if (!target.src.includes('/portfolio/')) {
-                              target.src = `/portfolio${previewImage.src.startsWith('/') ? previewImage.src : `/${previewImage.src}`}`;
-                            }
-                          }}
-                        />
-                        {project.demo && (
-                          <a
-                            href={project.demo}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-[#040509]/85 backdrop-blur-md border border-white/20 text-[11px] font-mono text-[#00F0FF] hover:bg-[#5b7cf0] hover:text-white transition-all shadow-md flex items-center gap-1.5"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#2fe0d0] animate-pulse" />
-                            <span>Live Demo ↗</span>
-                          </a>
-                        )}
-                      </div>
-                    )}
-
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase">
-                        {simple.badge}
-                      </span>
-                      <span className="mono-accent text-xs text-[#3e4d68]">
-                        {project.tech.slice(0, 3).join(' · ')}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2.5 mb-2">
-                      {logoImage && (
-                        <img
-                          src={getAssetUrl(logoImage.src)}
-                          alt=""
-                          className="w-7 h-7 rounded-lg shrink-0 object-contain shadow-sm"
-                          onError={(e) => {
-                            const target = e.currentTarget;
-                            if (!target.dataset.tried) {
-                              target.dataset.tried = 'true';
-                              if (target.src.includes('/portfolio/')) {
-                                target.src = target.src.replace('/portfolio/', '/');
-                              } else {
-                                target.src = `/portfolio${logoImage.src.startsWith('/') ? logoImage.src : `/${logoImage.src}`}`;
-                              }
-                            } else {
-                              target.style.display = 'none';
-                            }
-                          }}
-                        />
-                      )}
-                      <h4 className="font-display text-lg font-semibold text-[#0b1d3a]">
-                        {simple.title}
-                      </h4>
-                    </div>
-
-                    <p className="text-sm text-[#3e4d68] mb-5 leading-relaxed">
-                      {simple.summary}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 border-t border-[#0b1d3a]/8 flex items-center justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-3">
-                      {project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-[#0b1d3a] hover:text-[#5b7cf0] transition-colors"
-                        >
-                          <span>View on GitHub</span>
-                          <span>↗</span>
-                        </a>
-                      )}
-                      {project.demo && !previewImage && (
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-[#2fe0d0] hover:text-[#5b7cf0] transition-colors"
-                        >
-                          <span>Live Demo</span>
-                          <span>↗</span>
-                        </a>
-                      )}
-                    </div>
-
-                    <HaldenButton onClick={() => setDrawerProject(project)}>
-                      Tech specs
-                    </HaldenButton>
-                  </div>
-                </TiltCard3D>
-              </article>
-            </HaldenFadeUp>
-          );
-        })}
-      </div>
+                  {renderCard(project)}
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── TECHNICAL ARCHITECTURE DRAWER MODAL ── */}
       <AnimatePresence>
