@@ -95,7 +95,7 @@ export default function CaseStudiesSection() {
           />
 
           <p className="mt-3 text-base text-[#3e4d68]">
-            Clear outcomes first. Click either card to open the technical architecture drawer.
+            Clear outcomes first.
           </p>
         </HaldenFadeUp>
 
