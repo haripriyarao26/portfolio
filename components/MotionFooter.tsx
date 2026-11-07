@@ -86,11 +86,11 @@ export default function MotionFooter() {
   return (
     <footer
       id="motion-footer"
-      className="relative w-full h-[720px] sm:h-[640px] lg:h-[580px] overflow-hidden"
+      className="relative w-full h-[760px] sm:h-[680px] lg:h-[620px] overflow-hidden"
       style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0% 100%)' }}
     >
       {/* ── Fixed Curtain Reveal Layer ── */}
-      <div className="fixed bottom-0 left-0 w-full h-[720px] sm:h-[640px] lg:h-[580px] z-0 bg-[#060c18] text-white flex flex-col justify-between overflow-hidden select-none">
+      <div className="fixed bottom-0 left-0 w-full h-[760px] sm:h-[680px] lg:h-[620px] z-0 bg-[#060c18] text-white flex flex-col justify-between overflow-hidden select-none">
         
         {/* ── Background Glows ── */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -145,29 +145,34 @@ export default function MotionFooter() {
 
             <div className="max-w-3xl">
               <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.03em] leading-[1.12]">
-                Let&rsquo;s build production AI systems{' '}
-                <span className="text-[#2fe0d0]">that fail safely.</span>
+                Bring me the messy problem.{' '}
+                <span className="text-[#2fe0d0]">I’ll bring the solution and the ideas.</span>
               </h2>
-              <p className="mt-2 text-sm sm:text-base text-slate-300 max-w-xl leading-relaxed">
-                Specialized in multi-agent orchestration, deterministic evaluation harnesses, and sub-second task routing.
+              <p className="mt-3 text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+                I start by understanding the people and the problem, then build whatever it takes, from backend to front end to AI. You get an engineer who ships, questions the plan and suggests a better one.
               </p>
             </div>
           </div>
 
           {/* Unified Contact Block (Single Location with High Contrast) */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
+            <MagneticButton href={`mailto:${resumeData.email}?subject=Starting%20a%20conversation%20with%20Haripriya`}>
+              <span className="inline-flex items-center gap-2.5 h-12 px-6 rounded-full bg-[#2fe0d0] hover:bg-[#5eead4] text-[#060c18] transition-all shadow-[0_0_25px_rgba(47,224,208,0.35)] font-display text-sm font-bold tracking-tight">
+                <span>Start a conversation</span>
+                <span className="text-base font-bold">→</span>
+              </span>
+            </MagneticButton>
+
             <MagneticButton>
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className="group relative inline-flex items-center gap-3 h-12 px-6 rounded-full bg-white text-[#0b1d3a] hover:bg-[#8fe6f4] transition-all shadow-lg"
+                className="group relative inline-flex items-center gap-2.5 h-12 px-5 rounded-full border border-white/20 bg-white/[0.08] hover:bg-white/[0.15] text-white backdrop-blur-md transition-all font-display text-xs sm:text-sm font-semibold"
               >
-                <span className="h-2 w-2 rounded-full bg-[#0d9488]" />
-                <span className="font-display text-sm font-bold tracking-tight">
-                  {copiedEmail ? 'Email Copied!' : 'haripriyaraov@gmail.com'}
-                </span>
-                <span className="text-xs font-mono text-slate-500 group-hover:text-[#0b1d3a] transition-colors">
-                  {copiedEmail ? '✓ Copied' : 'Copy'}
+                <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
+                <span>{copiedEmail ? 'Email Copied!' : resumeData.email}</span>
+                <span className="text-[11px] font-mono text-slate-400 group-hover:text-white transition-colors">
+                  {copiedEmail ? '✓' : 'Copy'}
                 </span>
               </button>
             </MagneticButton>
