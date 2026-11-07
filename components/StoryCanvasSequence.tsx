@@ -45,45 +45,37 @@ const EMPLOYER_PROOF = [
   {
     name: 'JPMorgan Chase',
     role: 'Senior AI Consultant',
-    href: '#timeline-momentum',
   },
   {
     name: 'Onetera Technologies',
     role: 'Founding Engineer · 0-to-1',
-    href: '#case-studies',
   },
   {
     name: 'Provenir',
     role: 'Fintech Extraction Engine',
-    href: '#timeline-momentum',
   },
   {
     name: 'Deloitte',
     role: 'Risk Architecture',
-    href: '#timeline-momentum',
   },
 ];
 
 const OPEN_SOURCE_AND_CERTS = [
   {
     name: 'Gemini Cookbook (Merged PR #1088)',
-    href: 'https://github.com/google-gemini/cookbook/pull/1088',
-    type: 'Google Open Source ↗',
+    type: 'Google Open Source',
   },
   {
     name: 'OpenAI Cookbook (PR #2568)',
-    href: 'https://github.com/openai/openai-cookbook/pull/2568',
-    type: 'OpenAI Open Source ↗',
+    type: 'OpenAI Open Source',
   },
   {
     name: 'Anthropic CCA-F Architect',
-    href: 'https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile',
-    type: 'Credly Verified ↗',
+    type: 'Credly Verified',
   },
   {
     name: 'AWS AI Practitioner',
-    href: 'https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url',
-    type: 'Credly Verified ↗',
+    type: 'Credly Verified',
   },
 ];
 
@@ -323,9 +315,6 @@ export default function StoryCanvasSequence({ name }: Props) {
               Where I’ve worked, and what I’ve shipped in the open.
             </p>
           </div>
-          <span className="text-xs font-mono text-[#3e4d68]">
-            Click any item for verified proof &amp; case studies &rarr;
-          </span>
         </div>
 
         {/* Two distinct, clearly-labeled rows */}
@@ -338,18 +327,17 @@ export default function StoryCanvasSequence({ name }: Props) {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
               {EMPLOYER_PROOF.map((emp) => (
-                <a
+                <div
                   key={emp.name}
-                  href={emp.href}
-                  className="group p-3 rounded-xl border border-[#0b1d3a]/8 bg-white/80 hover:bg-white hover:border-[#5b7cf0]/40 transition-all shadow-sm"
+                  className="p-3 rounded-xl border border-[#0b1d3a]/8 bg-white/80 shadow-sm"
                 >
-                  <div className="font-display text-xs sm:text-sm font-bold text-[#0b1d3a] group-hover:text-[#5b7cf0] transition-colors leading-tight">
+                  <div className="font-display text-xs sm:text-sm font-bold text-[#0b1d3a] leading-tight">
                     {emp.name}
                   </div>
                   <div className="text-[11px] text-[#3e4d68] mt-1 font-mono leading-tight">
                     {emp.role}
                   </div>
-                </a>
+                </div>
               ))}
             </div>
           </div>
@@ -362,23 +350,17 @@ export default function StoryCanvasSequence({ name }: Props) {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
               {OPEN_SOURCE_AND_CERTS.map((item) => (
-                <a
+                <div
                   key={item.name}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group p-3 rounded-xl border border-[#0b1d3a]/8 bg-white/80 hover:bg-white hover:border-[#2fe0d0]/50 transition-all shadow-sm flex flex-col justify-between"
+                  className="p-3 rounded-xl border border-[#0b1d3a]/8 bg-white/80 shadow-sm flex flex-col justify-between"
                 >
-                  <div className="flex items-start justify-between gap-1.5">
-                    <span className="font-display text-xs sm:text-sm font-bold text-[#0b1d3a] group-hover:text-[#0b1d3a] leading-snug">
-                      {item.name}
-                    </span>
-                    <span className="text-[#5b7cf0] text-xs font-bold shrink-0">↗</span>
+                  <div className="font-display text-xs sm:text-sm font-bold text-[#0b1d3a] leading-snug">
+                    {item.name}
                   </div>
                   <div className="text-[11px] font-mono text-[#0d9488] font-semibold mt-1.5">
                     {item.type}
                   </div>
-                </a>
+                </div>
               ))}
             </div>
           </div>
