@@ -321,7 +321,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                       </span>
                     </div>
 
-                    <div className="relative w-full h-56 lg:h-full min-h-[220px] rounded-2xl overflow-hidden border border-[#0b1d3a]/12 bg-[#040509] group shadow-inner">
+                    <div className="relative w-full rounded-2xl overflow-hidden border border-[#0b1d3a]/12 bg-[#060813] shadow-inner flex items-center justify-center p-1">
                       <img
                         key={activeGaugeGif}
                         src={getAssetUrl(
@@ -334,7 +334,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                             ? 'AgentGauge Live Telemetry & 4-Dimension Task Router'
                             : 'AgentGauge Company Policy RAG Pre-Flight Router & Escalation'
                         }
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-auto max-h-[260px] object-contain rounded-xl"
                         onError={(e) => {
                           const img = e.currentTarget;
                           if (!img.dataset.tried) {
@@ -356,28 +356,16 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                           }
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#040509]/80 via-transparent to-transparent pointer-events-none" />
+                    </div>
 
-                      {/* Live Demo floating button */}
-                      <a
-                        href="https://agent-gauge.github.io/agent-gauge/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="absolute top-3 right-3 px-3 py-1.5 rounded-full bg-[#040509]/85 backdrop-blur-md border border-white/20 text-xs font-mono text-[#00F0FF] hover:bg-[#5b7cf0] hover:text-white transition-all shadow-md flex items-center gap-1.5"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#2fe0d0] animate-pulse" />
-                        <span>Live Demo ↗</span>
-                      </a>
-
-                      {/* Bottom caption overlay */}
-                      <div className="absolute bottom-3 left-3 right-3 text-xs text-white/80 font-mono flex items-center justify-between">
-                        <span>
-                          {activeGaugeGif === 'router'
-                            ? 'skills.sh · MCP · VS Code · Next.js'
-                            : 'RAG Pipeline: 99% quota saved · 4k shield'}
-                        </span>
-                        <span className="text-[#2fe0d0]">5 Channels</span>
-                      </div>
+                    {/* Clean caption bar below image */}
+                    <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 mt-2 px-1">
+                      <span>
+                        {activeGaugeGif === 'router'
+                          ? 'skills.sh · MCP · VS Code · Next.js'
+                          : 'RAG Pipeline: 99% quota saved · 4k shield'}
+                      </span>
+                      <span className="text-[#5b7cf0] font-semibold">5 Channels</span>
                     </div>
                   </div>
                 </div>

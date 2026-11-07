@@ -8,10 +8,10 @@ import StoryCanvasSequence from '@/components/StoryCanvasSequence';
 import StoryProjectGrid from '@/components/StoryProjectGrid';
 import StoryTimeline from '@/components/StoryTimeline';
 import CaseStudiesSection from '@/components/CaseStudiesSection';
-import EngineeringNotes from '@/components/EngineeringNotes';
 import Education from '@/components/Education';
 import MotionFooter from '@/components/MotionFooter';
 import HowIThinkExperience from '@/components/HowIThinkExperience';
+import HowIUseAIDaily from '@/components/HowIUseAIDaily';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import {
   HaldenButton,
@@ -116,11 +116,12 @@ export default function Home() {
         </a>
 
         {/* Centered Links */}
-        <nav className="hidden lg:flex items-center gap-[31px] absolute left-1/2 -translate-x-1/2">
+        <nav className="hidden lg:flex items-center gap-[28px] absolute left-1/2 -translate-x-1/2">
+          <a href="#how-i-think" className="nav-link">How I Think</a>
           <a href="#case-studies" className="nav-link">Case Studies</a>
           <a href="#projects" className="nav-link">Projects</a>
+          <a href="#daily-ai" className="nav-link">Daily AI</a>
           <a href="#timeline-momentum" className="nav-link">Experience</a>
-          <a href="#notes" className="nav-link">How I Work</a>
           <a href="#stack" className="nav-link">Skills</a>
         </nav>
 
@@ -197,8 +198,8 @@ export default function Home() {
         {/* ── 5. Career Timeline ── */}
         <StoryTimeline sectionId="timeline-momentum" items={timelineExperience} />
 
-        {/* ── 6. How I Work ── */}
-        <EngineeringNotes />
+        {/* ── 6. How I Use AI Daily: A Real Production Session ── */}
+        <HowIUseAIDaily />
 
         {/* ── 7. Clean, Scannable Core Skills ── */}
         <section id="stack" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
