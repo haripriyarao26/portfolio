@@ -581,13 +581,52 @@ function ScrollCameraRig({ scrollYProgress }: { scrollYProgress: any }) {
   return null;
 }
 
-export default function Global3DScene({ scrollYProgress }: Props) {
+function Desktop3DCanvas({ scrollYProgress }: Props) {
   const circleTex = useGlowCircleTexture();
-  const [ready, setReady] = useState(false);
+
+  return (
+    <div className="absolute inset-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.7,0.2,1)] opacity-100">
+      <Canvas
+        dpr={[1, 1.5]}
+        camera={{ position: [0, 0, 5.6], fov: 42, near: 0.1, far: 100 }}
+        gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+        }}
+      >
+        <ScrollCameraRig scrollYProgress={scrollYProgress} />
+        <HeroConstellationZone circleTex={circleTex} />
+        <ImpactFunnelZone circleTex={circleTex} />
+        <TimelinePathZone circleTex={circleTex} />
+        <SkillsOrbitZone circleTex={circleTex} />
+      </Canvas>
+    </div>
+  );
+}
+
+export default function Global3DScene({ scrollYProgress }: Props) {
+  const [shouldRender3D, setShouldRender3D] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setReady(true), 220);
-    return () => clearTimeout(timer);
+    // Disable heavy 3D on mobile screens, touch-only devices, and when reduced motion is preferred
+    const isMobile = window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024);
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isMobile || prefersReduced) {
+      return;
+    }
+
+    // Lazy load 3D scene on idle to prevent blocking LCP / FCP
+    if ('requestIdleCallback' in window) {
+      const handle = (window as any).requestIdleCallback(
+        () => setShouldRender3D(true),
+        { timeout: 2500 }
+      );
+      return () => (window as any).cancelIdleCallback(handle);
+    } else {
+      const timer = setTimeout(() => setShouldRender3D(true), 1500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
@@ -595,27 +634,8 @@ export default function Global3DScene({ scrollYProgress }: Props) {
       {/* 1. Halden 96x60 Bilinear Sky-Cyan & Periwinkle Bowl Glow */}
       <HaldenBowlGlowCanvas />
 
-      {/* 2. Synchronized Whisper-Soft 3D Camera Flythrough Layer */}
-      <div
-        className={`absolute inset-0 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.7,0.2,1)] ${
-          ready ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        <Canvas
-          dpr={[1, 1.75]}
-          camera={{ position: [0, 0, 5.6], fov: 42, near: 0.1, far: 100 }}
-          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-          onCreated={({ gl }) => {
-            gl.setClearColor(0x000000, 0);
-          }}
-        >
-          <ScrollCameraRig scrollYProgress={scrollYProgress} />
-          <HeroConstellationZone circleTex={circleTex} />
-          <ImpactFunnelZone circleTex={circleTex} />
-          <TimelinePathZone circleTex={circleTex} />
-          <SkillsOrbitZone circleTex={circleTex} />
-        </Canvas>
-      </div>
+      {/* 2. Synchronized Whisper-Soft 3D Camera Flythrough Layer (Desktop only, lazy-loaded on idle) */}
+      {shouldRender3D && <Desktop3DCanvas scrollYProgress={scrollYProgress} />}
     </div>
   );
 }

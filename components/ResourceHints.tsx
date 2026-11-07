@@ -20,11 +20,11 @@ export default function ResourceHints() {
     dnsPrefetch.href = 'https://vxisxudnyfyksbaktshp.supabase.co';
     document.head.appendChild(dnsPrefetch);
 
-    // Preload critical first image
+    // Preload critical hero avatar image
     const preload = document.createElement('link');
     preload.rel = 'preload';
     preload.as = 'image';
-    preload.href = 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/moodbite/image.png';
+    preload.href = 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/icon.png';
     preload.setAttribute('fetchPriority', 'high');
     document.head.appendChild(preload);
 

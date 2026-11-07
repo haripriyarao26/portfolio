@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, useScroll, useSpring, useInView, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import { HaldenFadeUp, HaldenLetterReveal } from '@/components/HaldenMotion';
 import type { Experience } from '@/data/resume';
@@ -11,112 +11,117 @@ type StoryTimelineProps = {
   sectionId?: string;
 };
 
-type RoleMeta = {
-  milestone: string;
-  narrative: string;
-  impactTags: string[];
-  scope: string;
-  productDecision: string;
+interface RoleTimelineData {
+  company: string;
+  role: string;
+  dates: string;
+  location: string;
+  impactSentence: string;
+  chips: string[]; // max 3, sans font, format "value label"
+  caseStudyId?: 'onetera-compression' | 'onetera-founding';
   highlights: string[];
-  stackGroups: Array<{ label: string; values: string[] }>;
-};
+  stack: string[];
+  isCompact?: boolean;
+}
 
-const roleMeta: Record<string, RoleMeta> = {
+const roleConfigs: Record<string, RoleTimelineData> = {
   'JPMorgan Chase & Co. (via Think41)|Senior AI Consultant': {
-    milestone: '2x Faster Financial Document Review at 95% Accuracy',
-    narrative:
-      'Cut AI document extraction wait times by 52% (from 40.8s down to 19.6s) and solved 100% of errors on long forwarded email chains.',
-    impactTags: ['52% Faster (19.6s)', '95% Accuracy', '8/8 Edge Cases Solved'],
-    scope:
-      'Designed and deployed automated AI workflows for regulated financial document extraction, entity verification, and compliance.',
-    productDecision:
-      'Built an automated Golden-Dataset A/B testing pipeline that blocks any update scoring below 95% accuracy.',
+    company: 'JPMorgan Chase & Co.',
+    role: 'Senior AI Consultant',
+    dates: 'Jul 2026 – Present',
+    location: 'Remote',
+    impactSentence:
+      'Engineered production AI document extraction pipelines for regulated fiduciary workflows and eliminated false positives on nested email threads.',
+    chips: ['52% Faster', '95% Accuracy', '8 Edge cases'],
     highlights: [
-      'Accelerated LLM extraction latency by 52% (40.8s to 19.6s) at 95% field agreement using automated A/B golden-dataset regression testing.',
-      'Resolved 100% of thread misclassifications (8/8) across 5 to 6 level nested forwards with zero false positives.',
-      'Engineered autonomous agentic AI workflows to automate multi-tiered document analysis and fiduciary compliance.',
+      'Accelerated LLM extraction latency from 40.8s down to 19.6s at 95% field agreement using automated A/B golden-dataset regression testing.',
+      'Resolved 100% of thread misclassifications across 5 to 6 level nested forwards with zero false positives.',
+      'Engineered autonomous agentic AI workflows to automate multi-tiered document analysis, entity verification, and fiduciary compliance.',
     ],
-    stackGroups: [
-      { label: 'Models', values: ['Claude', 'GPT-5.5', 'Anthropic API', 'MCP'] },
-      { label: 'Orch', values: ['LangGraph', 'Agentic Workflows', 'Python', 'Eval Tooling'] },
-      { label: 'Infra', values: ['Enterprise Cloud', 'Compliance Gateways', 'A/B Regression'] },
-    ],
+    stack: ['Claude', 'GPT-5.5', 'Anthropic API', 'MCP', 'LangGraph', 'Python', 'A/B Regression'],
+    isCompact: false,
   },
   'Onetera Technologies|Software Engineer 2 / Founding Engineer': {
-    milestone: 'Cut AI Cloud Costs 96% & Built 0-to-1 Civic Platform',
-    narrative:
-      'Partnered with municipal officials and enterprise infrastructure partners across 6 roadmap phases, cutting AI token costs by 96% and response latency by 40%.',
-    impactTags: ['96% Cost Cut', '40% Faster', '<15ms SLA', 'Civic & Enterprise Partners'],
-    scope:
-      'Scaled multi-agent workflows to 255+ steps, built a Figma-to-React compiler (100+ components, -90% setup time), and owned real-time ClickHouse telemetry.',
-    productDecision:
-      'Replaced slow sequential chains with a 22-node parallel state machine (asyncio.gather) and shrank payloads from 200KB to 8KB.',
+    company: 'Onetera Technologies',
+    role: 'Founding Engineer',
+    dates: 'Jan 2024 – Apr 2026',
+    location: 'Los Angeles, CA',
+    impactSentence:
+      'Led full-stack architecture across 6 phases for municipal and enterprise partners with zero state desyncs.',
+    chips: ['96% Cost cut', '40% Faster', '0-to-1 Delivery'],
+    caseStudyId: 'onetera-compression',
     highlights: [
       'Delivered an end-to-end multi-tenant platform on schedule across 6 roadmap phases with zero state desyncs.',
-      'Slashed LLM inference costs by 96% (from 200KB to 8KB per call) while scaling horizontally to 255+ agentic steps.',
-      'Cut per-turn orchestrator latency by 40% via a 22-node asynchronous state machine using parallel scheduling.',
-      'Engineered a recursive DFS algorithm to generate 100+ React components from Figma trees, cutting UI setup time by 90%.',
+      'Slashed LLM inference costs from 200KB down to 8KB per call while scaling horizontally to 255+ agentic steps.',
+      'Cut per-turn orchestrator latency via a 22-node asynchronous state machine using parallel scheduling.',
+      'Engineered a recursive DFS algorithm to extract 100+ React components from Figma trees, cutting UI setup time by 90%.',
     ],
-    stackGroups: [
-      { label: 'Infra', values: ['ClickHouse', 'Supabase', 'Redis', 'AWS', 'CI/CD'] },
-      { label: 'Logic', values: ['LangGraph', '22-Node State Machine', 'Python', 'TypeScript'] },
-      { label: 'UX', values: ['Next.js', 'Figma-to-React Engine', 'React'] },
-    ],
+    stack: ['LangGraph', '22-Node State Machine', 'Python', 'TypeScript', 'Next.js', 'ClickHouse', 'Supabase', 'Redis'],
+    isCompact: false,
   },
   'Provenir|Full Stack Engineering Intern': {
-    milestone: '98% CI/CD Pass Rate & 50% Faster Credit Workflows',
-    narrative:
-      'Lowered release defects by 40% and sped up high-volume credit decision queries by 50% for 500+ concurrent users.',
-    impactTags: ['98% Pass Rate', '40% Fewer Defects', '50% Faster Queries'],
-    scope:
-      'Stabilized high-risk credit-decision release paths across UI, backend APIs, and automated test suites.',
-    productDecision:
-      'Optimized backend state management with batched processing and priority queues to maintain sub-200ms latency.',
+    company: 'Provenir',
+    role: 'Full Stack Engineering Intern',
+    dates: 'May 2023 – Dec 2023',
+    location: 'New Jersey, USA',
+    impactSentence:
+      'Stabilized credit-decision release cycles and sped up query evaluation under concurrent multi-user load.',
+    chips: ['98% Pass rate', '40% Fewer defects', '50% Faster queries'],
     highlights: [
       'Maintained 98% CI/CD pass rate and lowered credit risk SaaS regression defects by 40% with a 95% on-time release cadence.',
       'Developed query optimization algorithms for credit decision workflows, improving response times by 50% under load.',
       'Supported 500+ concurrent users with sub-200ms latency.',
     ],
-    stackGroups: [
-      { label: 'Infra', values: ['CI/CD Pipelines', 'Automated Testing'] },
-      { label: 'Logic', values: ['Spring Boot', 'Java', 'REST APIs', 'PostgreSQL'] },
-      { label: 'UX', values: ['Angular', 'RxJS', 'Dynamic Forms'] },
-    ],
+    stack: ['Spring Boot', 'Java', 'Angular', 'PostgreSQL', 'CI/CD Pipelines'],
+    isCompact: true,
   },
   'Deloitte USI|Software Engineer 1': {
-    milestone: '80% Faster Data Layer for 4,000+ Users · Excellency Award',
-    narrative:
-      'Unified 15+ data sources into a single GraphQL API for 4,000+ users, cutting load times from 2s to 400ms (80% faster) and winning the 2022 Excellency Award.',
-    impactTags: ['80% Faster (400ms)', '4,000+ Users', '2022 Excellency Award'],
-    scope:
-      'Built executive analytics dashboards and candidate portals using React, Angular, Node.js, and PostgreSQL.',
-    productDecision:
-      'Consolidated 15 disparate legacy data pipelines into one unified GraphQL layer.',
+    company: 'Deloitte USI',
+    role: 'Software Engineer 1',
+    dates: 'Jun 2021 – Jul 2022',
+    location: 'Bengaluru, India',
+    impactSentence:
+      'Consolidated legacy pipelines into a unified data retrieval layer and delivered executive hiring dashboards.',
+    chips: ['80% Faster', '4,000+ Users', '2022 Award'],
     highlights: [
-      'Consolidated 15+ data sources into a unified GraphQL API for 4,000+ users, dropping latency from 2s to 400ms (80% speedup).',
+      'Consolidated 15+ data sources into a unified GraphQL API for 4,000+ users, dropping retrieval latency from 2s to 400ms.',
       'Built executive analytics dashboards with PostgreSQL, winning the 2022 Excellency Award.',
       'Cut frontend dashboard load times by 50% via lazy-loaded modules and virtualized tables.',
     ],
-    stackGroups: [
-      { label: 'Infra', values: ['PostgreSQL', 'GraphQL API'] },
-      { label: 'Logic', values: ['Node.js', 'Data Aggregation'] },
-      { label: 'UX', values: ['React', 'ANT Design', 'Dashboards'] },
-    ],
+    stack: ['GraphQL API', 'Node.js', 'React', 'Angular', 'PostgreSQL'],
+    isCompact: true,
   },
 };
 
-export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTimelineProps) {
+export default function StoryTimeline({ items, sectionId = 'timeline-momentum' }: StoryTimelineProps) {
   const timelineRef = useRef<HTMLElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
   const { scrollYProgress } = useScroll({
     target: timelineRef,
-    offset: ['start 75%', 'end 35%'],
+    offset: ['start 85%', 'end 40%'],
   });
-  const lineScale = useSpring(scrollYProgress, { stiffness: 130, damping: 25, mass: 0.35 });
+
+  const lineScale = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 26,
+    mass: 0.3,
+  });
+
+  const [activeCardIndex, setActiveCardIndex] = useState<number>(0);
+  const [expandedCards, setExpandedCards] = useState<Record<number, boolean>>({});
+
+  const toggleExpanded = (index: number) => {
+    setExpandedCards(prev => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   return (
-    <section id={sectionId} className="relative mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
+    <section id={sectionId} className="relative mx-auto max-w-6xl px-4 sm:px-10 py-16 sm:py-24 scroll-mt-24">
       <div ref={timelineRef as any}>
-        <HaldenFadeUp className="mb-10">
+        <HaldenFadeUp className="mb-12">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
             <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
             <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
@@ -137,116 +142,345 @@ export default function StoryTimeline({ items, sectionId = 'timeline' }: StoryTi
         </HaldenFadeUp>
 
         <div className="relative">
-          <div className="absolute left-4 top-0 h-full w-[2px] overflow-hidden bg-[#0b1d3a]/10 sm:left-0">
+          {/* Scroll-Driven Timeline Line */}
+          <div className="absolute left-3.5 top-2 bottom-4 w-[2px] overflow-hidden bg-[#0b1d3a]/10 sm:left-4">
             <motion.div
-              style={{ scaleY: lineScale }}
+              style={shouldReduceMotion ? { height: '100%' } : { scaleY: lineScale }}
               className="h-full w-full origin-top bg-[#5b7cf0]"
             />
           </div>
 
-          <div className="space-y-6 pl-10 sm:pl-8">
+          {/* Timeline Cards Container with 3D Perspective */}
+          <div
+            className="space-y-6 pl-9 sm:pl-12"
+            style={{ perspective: 1200 }}
+          >
             {items.map((entry, idx) => {
               const roleKey = `${entry.company}|${entry.position}`;
-              const meta = roleMeta[roleKey] ?? {
-                milestone: `${entry.company}`,
-                narrative: entry.achievements[0],
-                impactTags: ['Production Delivery'],
-                scope: entry.achievements[1] ?? '',
-                productDecision: '',
+              const config = roleConfigs[roleKey] ?? {
+                company: entry.company,
+                role: entry.position,
+                dates: entry.period,
+                location: entry.location,
+                impactSentence: entry.achievements[0] ?? '',
+                chips: ['Production Impact'],
                 highlights: entry.achievements,
-                stackGroups: [{ label: 'Stack', values: ['TypeScript', 'Python'] }],
+                stack: ['TypeScript', 'Python'],
+                isCompact: idx >= 2,
               };
 
               return (
-                <HaldenFadeUp key={`${entry.company}-${entry.period}`} delay={idx * 0.06}>
-                  <div className="relative">
-                    <div className="absolute -left-10 top-6 h-3 w-3 -translate-x-1/2 rounded-full bg-[#2fe0d0] border-2 border-[#0b1d3a] sm:-left-8 shadow-sm" />
-
-                    <TiltCard3D
-                      intensity={3}
-                      glareColor="rgba(143, 213, 241, 0.35)"
-                      className="spatial-glass rounded-3xl p-6 sm:p-7"
-                    >
-                      <div>
-                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                          <p className="mono-accent text-xs tracking-wider text-[#5b7cf0] uppercase font-semibold">
-                            {entry.period} &middot; {entry.company}
-                          </p>
-                          <span className="mono-accent text-xs text-[#3e4d68]">
-                            {entry.location}
-                          </span>
-                        </div>
-
-                        <h3 className="font-display text-lg font-semibold text-[#0b1d3a] sm:text-xl mb-1">
-                          {meta.milestone}
-                        </h3>
-                        <p className="text-sm font-medium text-[#3e4d68] mb-4">
-                          {entry.position}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {meta.impactTags.map(tag => (
-                            <span
-                              key={tag}
-                              className="mono-accent rounded-full border border-[#0b1d3a]/10 bg-white/80 px-3 py-1 text-xs text-[#0b1d3a] font-medium"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        <p className="text-sm sm:text-base text-[#3e4d68] leading-relaxed">
-                          {meta.narrative}
-                        </p>
-
-                        <details className="mt-5 group">
-                          <summary className="flex items-center gap-2 text-xs tracking-wider text-[#0b1d3a] uppercase cursor-pointer select-none hover:text-[#5b7cf0] transition-colors font-semibold">
-                            <svg
-                              className="h-3.5 w-3.5 transition-transform group-open:rotate-90 text-[#5b7cf0]"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth={2.5}
-                              viewBox="0 0 24 24"
-                              aria-hidden="true"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                            <span>Technical Engineering Details</span>
-                          </summary>
-
-                          <div className="mt-4 space-y-4 border-t border-[#0b1d3a]/8 pt-4">
-                            {meta.highlights && meta.highlights.length > 0 && (
-                              <ul className="space-y-2 text-xs sm:text-sm text-[#3e4d68]">
-                                {meta.highlights.map((highlight, hIdx) => (
-                                  <li key={hIdx} className="flex items-start gap-2.5">
-                                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#2fe0d0] flex-shrink-0" />
-                                    <span>{highlight}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-
-                            <div className="flex flex-wrap gap-2 pt-2">
-                              {meta.stackGroups.flatMap(g => g.values).map(val => (
-                                <span
-                                  key={val}
-                                  className="mono-accent rounded-full border border-[#0b1d3a]/10 bg-white/80 px-2.5 py-1 text-xs text-[#0b1d3a]"
-                                >
-                                  {val}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </details>
-                      </div>
-                    </TiltCard3D>
-                  </div>
-                </HaldenFadeUp>
+                <TimelineCardItem
+                  key={`${entry.company}-${entry.period}`}
+                  idx={idx}
+                  config={config}
+                  isActive={activeCardIndex === idx}
+                  isExpanded={Boolean(expandedCards[idx])}
+                  onToggleExpand={() => toggleExpanded(idx)}
+                  onMouseEnter={() => setActiveCardIndex(idx)}
+                  onFocus={() => setActiveCardIndex(idx)}
+                  shouldReduceMotion={Boolean(shouldReduceMotion)}
+                />
               );
             })}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+interface TimelineCardItemProps {
+  idx: number;
+  config: RoleTimelineData;
+  isActive: boolean;
+  isExpanded: boolean;
+  onToggleExpand: () => void;
+  onMouseEnter: () => void;
+  onFocus: () => void;
+  shouldReduceMotion: boolean;
+}
+
+function TimelineCardItem({
+  idx,
+  config,
+  isActive,
+  isExpanded,
+  onToggleExpand,
+  onMouseEnter,
+  onFocus,
+  shouldReduceMotion,
+}: TimelineCardItemProps) {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(cardRef, { margin: '0px 0px -25% 0px', once: false });
+  const isCurrentRole = idx === 0;
+  const detailsId = `timeline-details-${idx}`;
+
+  // Inactive cards sit slightly back (scale 0.98, translateZ), active comes forward
+  const scaleVal = shouldReduceMotion ? 1 : isActive ? 1 : 0.98;
+  const translateZVal = shouldReduceMotion ? '0px' : isActive ? '0px' : '-10px';
+  const opacityVal = shouldReduceMotion ? 1 : isActive ? 1 : 0.94;
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseEnter={onMouseEnter}
+      onFocus={onFocus}
+      className="relative transition-all duration-300"
+      style={{
+        transform: `scale(${scaleVal}) translateZ(${translateZVal})`,
+        opacity: opacityVal,
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {/* Timeline Dot Indicator */}
+      <div
+        className={`absolute -left-[30px] sm:-left-[39px] top-5 sm:top-6 h-3.5 w-3.5 -translate-x-1/2 rounded-full transition-colors duration-400 flex items-center justify-center ${
+          isInView || shouldReduceMotion
+            ? 'bg-[#2fe0d0] border-2 border-[#0b1d3a] shadow-sm'
+            : 'bg-white border-2 border-[#5b7cf0]/40'
+        }`}
+      >
+        {/* Current role dot pulses ONCE (no infinite loops) */}
+        {isCurrentRole && !shouldReduceMotion && (
+          <motion.span
+            className="absolute inset-0 rounded-full bg-[#2fe0d0]"
+            initial={{ scale: 1, opacity: 0.8 }}
+            animate={{ scale: [1, 2.2], opacity: [0.8, 0] }}
+            transition={{
+              duration: 1.1,
+              delay: 0.4,
+              repeat: 0,
+              ease: 'easeOut',
+            }}
+          />
+        )}
+      </div>
+
+      {config.isCompact ? (
+        /* ── Compact Older Role Row (Provenir, Deloitte) ── */
+        <div className="spatial-glass rounded-2xl border border-[#0b1d3a]/8 bg-white/70 backdrop-blur-md p-4 sm:p-5 shadow-xs transition-shadow hover:shadow-md">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="min-w-0">
+              {/* Role · Company main heading */}
+              <h3 className="font-sans text-[18px] sm:text-[20px] font-normal text-[#0b1d3a] tracking-tight leading-snug">
+                {config.role} &middot; {config.company}
+              </h3>
+              {/* Dates & Location in normal sans, darker blue-grey */}
+              <p className="font-sans text-xs sm:text-sm text-[#2b3a52] mt-0.5">
+                {config.dates} &middot; {config.location}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0">
+              {/* Expand/Collapse Button */}
+              <button
+                type="button"
+                aria-expanded={isExpanded}
+                aria-controls={detailsId}
+                onClick={onToggleExpand}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#0b1d3a] bg-white/90 hover:bg-[#5b7cf0]/10 hover:text-[#5b7cf0] border border-[#0b1d3a]/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] focus-visible:ring-offset-2"
+              >
+                <span>{isExpanded ? 'Hide details' : 'Show details'}</span>
+                <svg
+                  className={`h-3.5 w-3.5 text-[#5b7cf0] transition-transform duration-200 ${
+                    isExpanded ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2.2}
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Animated Expandable Details */}
+          <AnimatePresence initial={false}>
+            {isExpanded && (
+              <motion.div
+                id={detailsId}
+                initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                transition={shouldReduceMotion ? { duration: 0.1 } : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4 pt-4 border-t border-[#0b1d3a]/8 space-y-3.5">
+                  {/* ONE Impact Sentence (max ~65ch) */}
+                  <p className="font-sans text-sm text-[#334155] leading-relaxed max-w-[65ch]">
+                    {config.impactSentence}
+                  </p>
+
+                  {/* Chips: Max 3, sans font, "value label" */}
+                  <div className="flex flex-wrap gap-2">
+                    {config.chips.slice(0, 3).map(chip => (
+                      <span
+                        key={chip}
+                        className="inline-flex items-center rounded-full border border-[#0b1d3a]/10 bg-white/90 px-3 py-1 font-sans text-xs font-medium text-[#0b1d3a]"
+                      >
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Technical Engineering Highlights */}
+                  {config.highlights && config.highlights.length > 0 && (
+                    <ul className="space-y-1.5 pt-1 text-xs sm:text-sm text-[#3e4d68]">
+                      {config.highlights.map((item, hIdx) => (
+                        <li key={hIdx} className="flex items-start gap-2.5">
+                          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#2fe0d0] shrink-0" />
+                          <span className="leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Stack */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {config.stack.map(tech => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-[#0b1d3a]/8 bg-white/70 px-2.5 py-0.5 font-sans text-[11px] text-[#475569]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      ) : (
+        /* ── Flagship Role Card (JPMorgan Chase, Onetera) ── */
+        <TiltCard3D
+          intensity={3}
+          glareColor="rgba(143, 213, 241, 0.35)"
+          className="spatial-glass rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-md transition-shadow"
+        >
+          <div>
+            {/* Main Heading: "Role · Company" (dark, regular weight, ~20-22px sans) */}
+            <h3 className="font-sans text-[20px] sm:text-[22px] font-normal text-[#0b1d3a] tracking-tight leading-snug">
+              {config.role} &middot; {config.company}
+            </h3>
+
+            {/* Secondary Line: Dates and location in normal sans (not mono caps), darker blue-grey */}
+            <p className="font-sans text-sm text-[#2b3a52] mt-1">
+              {config.dates} &middot; {config.location}
+            </p>
+
+            {/* ONE Impact Sentence (limited to ~65ch) */}
+            <p className="font-sans text-sm sm:text-[15px] text-[#334155] leading-relaxed max-w-[65ch] mt-3">
+              {config.impactSentence}
+            </p>
+
+            {/* Chips: Max 3, sans font, format "value label" */}
+            <div className="flex flex-wrap gap-2 mt-4">
+              {config.chips.slice(0, 3).map(chip => (
+                <span
+                  key={chip}
+                  className="inline-flex items-center rounded-full border border-[#0b1d3a]/10 bg-white/90 px-3 py-1 font-sans text-xs font-medium text-[#0b1d3a] shadow-2xs"
+                >
+                  {chip}
+                </span>
+              ))}
+            </div>
+
+            {/* Actions: Case Study Drawer Link (if applicable) & "Show details" Button */}
+            <div className="mt-5 pt-4 border-t border-[#0b1d3a]/8 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                {config.caseStudyId && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      window.dispatchEvent(
+                        new CustomEvent('open-case-study', { detail: config.caseStudyId })
+                      );
+                      document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-1 -ml-1 group"
+                  >
+                    <span>Read the case study</span>
+                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                      &rarr;
+                    </span>
+                  </button>
+                )}
+              </div>
+
+              {/* Real button labeled "Show details" with aria-expanded, focus ring, hover state */}
+              <button
+                type="button"
+                aria-expanded={isExpanded}
+                aria-controls={detailsId}
+                onClick={onToggleExpand}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-[#0b1d3a] bg-white/90 hover:bg-[#5b7cf0]/10 hover:text-[#5b7cf0] border border-[#0b1d3a]/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] focus-visible:ring-offset-2"
+              >
+                <span>{isExpanded ? 'Hide details' : 'Show details'}</span>
+                <svg
+                  className={`h-3.5 w-3.5 text-[#5b7cf0] transition-transform duration-200 ${
+                    isExpanded ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2.2}
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Animated Expandable Technical Engineering Details */}
+            <AnimatePresence initial={false}>
+              {isExpanded && (
+                <motion.div
+                  id={detailsId}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                  transition={shouldReduceMotion ? { duration: 0.1 } : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="mt-4 pt-4 border-t border-[#0b1d3a]/8 space-y-4">
+                    <div>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#5b7cf0] block mb-2 font-mono">
+                        Technical Engineering Details
+                      </span>
+                      {config.highlights && config.highlights.length > 0 && (
+                        <ul className="space-y-2 text-xs sm:text-sm text-[#3e4d68]">
+                          {config.highlights.map((highlight, hIdx) => (
+                            <li key={hIdx} className="flex items-start gap-2.5">
+                              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#2fe0d0] shrink-0" />
+                              <span className="leading-relaxed">{highlight}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {config.stack.map(val => (
+                        <span
+                          key={val}
+                          className="rounded-full border border-[#0b1d3a]/10 bg-white/80 px-2.5 py-1 text-xs text-[#0b1d3a] font-sans"
+                        >
+                          {val}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </TiltCard3D>
+      )}
+    </div>
   );
 }

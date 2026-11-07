@@ -207,7 +207,9 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               <div className="relative w-full h-44 mb-4 rounded-2xl overflow-hidden border border-[#0b1d3a]/10 bg-[#040509] group/img">
                 <img
                   src={getAssetUrl(previewImage.src)}
-                  alt={previewImage.alt}
+                  alt={previewImage.alt || `${project.title} interface preview`}
+                  width={600}
+                  height={338}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
                   loading="lazy"
                   onError={(e) => {
@@ -244,7 +246,9 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               {logoImage && (
                 <img
                   src={getAssetUrl(logoImage.src)}
-                  alt=""
+                  alt={logoImage.alt || `${project.title} icon`}
+                  width={28}
+                  height={28}
                   className="w-7 h-7 rounded-lg shrink-0 object-contain shadow-sm"
                   onError={(e) => {
                     const target = e.currentTarget;
@@ -387,7 +391,10 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                       <img
                         src={getAssetUrl('/projects/agent-gauge-demo.gif')}
                         alt="AgentGauge Live 3D Model Router Demo"
+                        width={600}
+                        height={338}
                         className="w-full h-auto max-h-[220px] object-contain rounded-lg"
+                        loading="lazy"
                         onError={(e) => {
                           const img = e.currentTarget;
                           if (!img.dataset.tried) {
@@ -522,7 +529,10 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                       <img
                         src={getAssetUrl('/projects/rag-example.gif')}
                         alt="Google Gemini Cookbook Rate Backoff & Observability Demo"
+                        width={600}
+                        height={338}
                         className="w-full h-auto max-h-[220px] object-contain rounded-lg"
+                        loading="lazy"
                         onError={(e) => {
                           const img = e.currentTarget;
                           if (!img.dataset.tried) {
@@ -599,7 +609,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
             <span>
               {showMoreProjects
                 ? 'Show Fewer Projects'
-                : `Click to See More Projects (${restProjects.length} More)`}
+                : `View Additional Projects (${restProjects.length} More)`}
             </span>
             <motion.span
               animate={{ rotate: showMoreProjects ? 180 : 0 }}
@@ -690,7 +700,9 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                       ) : drawerProject.images && drawerProject.images.find(img => img.src.endsWith('.svg')) ? (
                         <img
                           src={getAssetUrl(drawerProject.images.find(img => img.src.endsWith('.svg'))!.src)}
-                          alt="Logo"
+                          alt={`${drawerProject.title} logo`}
+                          width={40}
+                          height={40}
                           className="w-10 h-10 rounded-xl shrink-0 object-contain shadow-sm"
                           onError={(e) => {
                             const target = e.currentTarget;
@@ -772,6 +784,8 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                           ? 'AgentGauge Interactive 3D Model Router Demo'
                           : 'AgentGauge Company Policy RAG Pre-Flight Router Demo'
                       }
+                      width={800}
+                      height={450}
                       className="w-full h-full object-contain block"
                     />
                   </div>
@@ -802,7 +816,9 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                   <div className="relative w-full aspect-[16/9] bg-[#070913] flex items-center justify-center overflow-hidden">
                     <img
                       src={getAssetUrl(drawerProject.images[0].src)}
-                      alt={drawerProject.images[0].alt || drawerProject.title}
+                      alt={drawerProject.images[0].alt || `${drawerProject.title} architecture preview`}
+                      width={800}
+                      height={450}
                       className="w-full h-full object-contain block"
                       onError={(e) => {
                         const img = e.currentTarget;

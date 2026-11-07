@@ -17,6 +17,16 @@ export default function CaseStudiesSection() {
 
   useEffect(() => {
     setMounted(true);
+
+    const handleOpen = (e: Event) => {
+      const customEvent = e as CustomEvent<'onetera-compression' | 'onetera-founding'>;
+      if (customEvent.detail) {
+        setOpenDrawer(customEvent.detail);
+      }
+    };
+
+    window.addEventListener('open-case-study', handleOpen);
+    return () => window.removeEventListener('open-case-study', handleOpen);
   }, []);
 
   // Lock body scroll, handle Esc, and trap focus while drawer is open
