@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://haripriyarao26.github.io'),
   title: 'Haripriya Rao — Applied AI & Founding Engineer',
   description:
-    'Applied AI and Full Stack Founding Engineer specializing in multi agent orchestration (LangGraph, Claude SDK, Anthropic API, MCP), token optimization (96% cost cut), and production systems at 99.98% uptime.',
+    'Applied AI and Full Stack Founding Engineer specializing in multi-agent orchestration (LangGraph, Claude SDK, Anthropic API, MCP), token optimization (96% cost cut), and sub-15ms deterministic task routing.',
   keywords: [
     'Haripriya Rao',
     'Applied AI Engineer',

@@ -562,74 +562,39 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               </div>
 
               {drawerProject.images && drawerProject.images[0] && (
-                <div className="rounded-2xl overflow-hidden border border-[#0b1d3a]/10 bg-[#040509] shadow-inner mb-6 relative">
-                  {/* Built-in Telemetry UI preview fallback if image is loading or fails */}
-                  <div className="p-4 sm:p-5 bg-gradient-to-br from-[#040814] to-[#0a1226] text-white">
-                    <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
-                      <div className="flex items-center gap-2">
-                        <span className="h-2 w-2 rounded-full bg-[#2fe0d0] animate-ping" />
-                        <span className="mono-accent text-[11px] font-semibold text-[#8fe6f4] uppercase tracking-wider">
-                          AgentGauge Scorer // &lt;15ms SLA
-                        </span>
-                      </div>
-                      <span className="mono-accent text-[11px] text-[#2fe0d0] px-2 py-0.5 rounded-full bg-[#2fe0d0]/10 border border-[#2fe0d0]/20">
-                        96% Cost Cut
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-                      <div className="p-2 rounded-lg bg-white/[0.04] border border-white/5">
-                        <div className="text-[10px] mono-accent text-slate-400">Intent</div>
-                        <div className="text-xs font-semibold text-white">32/35</div>
-                      </div>
-                      <div className="p-2 rounded-lg bg-white/[0.04] border border-white/5">
-                        <div className="text-[10px] mono-accent text-slate-400">Blast Radius</div>
-                        <div className="text-xs font-semibold text-white">28/30</div>
-                      </div>
-                      <div className="p-2 rounded-lg bg-white/[0.04] border border-white/5">
-                        <div className="text-[10px] mono-accent text-slate-400">AST Structure</div>
-                        <div className="text-xs font-semibold text-white">18/20</div>
-                      </div>
-                      <div className="p-2 rounded-lg bg-white/[0.04] border border-white/5">
-                        <div className="text-[10px] mono-accent text-slate-400">Repo Risk</div>
-                        <div className="text-xs font-semibold text-white">14/15</div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs mono-accent pt-1 text-slate-300">
-                      <span>Total Score: <strong className="text-[#2fe0d0]">92/100</strong></span>
-                      <span>Target: <span className="text-[#8fe6f4]">Opus / Pro High (Plan-First)</span></span>
-                    </div>
+                <div className="rounded-2xl overflow-hidden border border-[#0b1d3a]/15 bg-[#070913] shadow-xl mb-6">
+                  {/* Clean, Full-Width Animated Demo GIF */}
+                  <div className="relative w-full aspect-[16/9] bg-[#070913] flex items-center justify-center overflow-hidden">
+                    <img
+                      src={getAssetUrl(drawerProject.images[0].src)}
+                      alt={drawerProject.images[0].alt || drawerProject.title}
+                      className="w-full h-full object-contain block"
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        if (!img.dataset.tried) {
+                          img.dataset.tried = 'true';
+                          if (img.src.includes('/portfolio/')) {
+                            img.src = img.src.replace('/portfolio/', '/');
+                          } else {
+                            img.src = `/portfolio${drawerProject.images[0].src.startsWith('/') ? drawerProject.images[0].src : `/${drawerProject.images[0].src}`}`;
+                          }
+                        }
+                      }}
+                    />
                   </div>
 
-                  {/* Demo GIF loaded over fallback; hidden safely on error */}
-                  <img
-                    src={getAssetUrl(drawerProject.images[0].src)}
-                    alt=""
-                    className="w-full h-auto max-h-72 object-cover relative z-10"
-                    onError={(e) => {
-                      const img = e.currentTarget;
-                      if (!img.dataset.tried) {
-                        img.dataset.tried = 'true';
-                        if (img.src.includes('/portfolio/')) {
-                          img.src = img.src.replace('/portfolio/', '/');
-                        } else {
-                          img.src = `/portfolio${drawerProject.images[0].src.startsWith('/') ? drawerProject.images[0].src : `/${drawerProject.images[0].src}`}`;
-                        }
-                      } else {
-                        img.style.display = 'none';
-                      }
-                    }}
-                  />
                   {drawerProject.images[0].caption && (
-                    <div className="px-4 py-2 bg-[#060812] border-t border-white/5 flex items-center justify-between text-xs font-mono text-slate-300 relative z-20">
-                      <span>{drawerProject.images[0].caption}</span>
+                    <div className="px-4 py-3 bg-[#0a0d1a] border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-300">
+                      <span className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
+                        <span>{drawerProject.images[0].caption}</span>
+                      </span>
                       {drawerProject.demo && (
                         <a
                           href={drawerProject.demo}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-[#00F0FF] hover:underline flex items-center gap-1"
+                          className="text-[#00F0FF] hover:underline font-semibold flex items-center gap-1 ml-auto"
                         >
                           <span>Open Live Demo</span>
                           <span>↗</span>

@@ -79,7 +79,7 @@ const MARQUEE_ITEMS = [
   '22-NODE CYCLIC LANGGRAPH DAG',
   'DETERMINISTIC EVALUATION HARNESSES',
   'AST SCHEMA RECOVERY LAYERS',
-  'NVIDIA & CIVIC COLLABORATIONS',
+  'PROVENIR & CIVIC COLLABORATIONS',
   'GOOGLE GEMINI PR #1088 (MERGED)',
   'OPENAI COOKBOOK PR #2568 (CONTRIBUTED)',
   'AVAILABLE ACROSS THE UNITED STATES',
@@ -250,7 +250,7 @@ export default function MotionFooter() {
               </div>
               <ul className="space-y-1 text-white/60">
                 <li><a href="#case-studies" className="hover:text-white transition-colors">96% Token Cut (TOON)</a></li>
-                <li><a href="#case-studies" className="hover:text-white transition-colors">0-to-1 Founding &amp; NVIDIA</a></li>
+                <li><a href="#case-studies" className="hover:text-white transition-colors">0-to-1 Founding &amp; Provenir</a></li>
                 <li><a href="#case-studies" className="hover:text-white transition-colors">40% Turn Latency Drop</a></li>
               </ul>
             </div>

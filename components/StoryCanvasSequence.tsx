@@ -46,9 +46,9 @@ const TRUST_GRID = [
     href: '#case-studies',
   },
   {
-    name: 'NVIDIA PARTNERS',
+    name: 'PROVENIR',
     delay: '1.39s',
-    href: '#case-studies',
+    href: '#experience',
   },
   {
     name: 'DELOITTE',
@@ -185,7 +185,7 @@ export default function StoryCanvasSequence({ name }: Props) {
                   </span>
                 </div>
                 <span className="mono-accent text-[11px] text-[#5b7cf0] font-semibold">
-                  99.98% Uptime
+                  &lt;15ms SLA
                 </span>
               </div>
 

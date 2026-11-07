@@ -54,7 +54,7 @@ const depthStack = [
   {
     category: 'Full-Stack & Cloud',
     badge: 'Production Infra',
-    headline: 'Fast web apps, real-time dashboards, and cloud infrastructure at 99.98% uptime.',
+    headline: 'Fast web apps, real-time dashboards, and cloud infrastructure with sub-second telemetry.',
     pills: ['Python', 'TypeScript', 'React & Next.js', 'PostgreSQL', 'Redis', 'ClickHouse', 'AWS'],
     tech: [
       { name: 'Python & TypeScript', role: 'AsyncIO concurrency (asyncio.gather), Next.js App Router, Node.js' },

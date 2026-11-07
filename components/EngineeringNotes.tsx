@@ -24,7 +24,7 @@ const notes: NoteItem[] = [
     lottieType: 'shield',
     tag: 'Zero Crashes',
     title: 'Strict safety checks around every AI step',
-    outcome: '99.98% production uptime',
+    outcome: 'Zero crashes across 255+ steps',
     simpleSummary:
       'AI models can be unpredictable. I wrap every AI response in automated validation rules so bad formatting never crashes the app or corrupts customer data.',
     techTitle: 'Deterministic Pre/Post Guards & AST Schema Salvage',

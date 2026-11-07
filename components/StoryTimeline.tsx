@@ -43,16 +43,16 @@ const roleMeta: Record<string, RoleMeta> = {
     ],
   },
   'Onetera Technologies|Software Engineer 2 / Founding Engineer': {
-    milestone: 'Cut AI Cloud Costs 96% & Delivered 99.98% Uptime',
+    milestone: 'Cut AI Cloud Costs 96% & Built 0-to-1 Civic Platform',
     narrative:
-      'Partnered with NVIDIA engineers and city officials across 6 roadmap phases, cutting AI token costs by 96% and response latency by 40%.',
-    impactTags: ['96% Cost Cut', '40% Faster', '99.98% Uptime', 'NVIDIA & City Partners'],
+      'Partnered with enterprise risk stakeholders including Provenir and municipal officials across 6 roadmap phases, cutting AI token costs by 96% and response latency by 40%.',
+    impactTags: ['96% Cost Cut', '40% Faster', '<15ms SLA', 'Provenir & Civic Partners'],
     scope:
       'Scaled multi-agent workflows to 255+ steps, built a Figma-to-React compiler (100+ components, -90% setup time), and owned real-time ClickHouse telemetry.',
     productDecision:
       'Replaced slow sequential chains with a 22-node parallel state machine (asyncio.gather) and shrank payloads from 200KB to 8KB.',
     highlights: [
-      'Delivered an end-to-end multi-tenant platform on schedule across 6 roadmap phases with 99.98% platform uptime.',
+      'Delivered an end-to-end multi-tenant platform on schedule across 6 roadmap phases with zero state desyncs.',
       'Slashed LLM inference costs by 96% (from 200KB to 8KB per call) while scaling horizontally to 255+ agentic steps.',
       'Cut per-turn orchestrator latency by 40% via a 22-node asynchronous state machine using parallel scheduling.',
       'Engineered a recursive DFS algorithm to generate 100+ React components from Figma trees, cutting UI setup time by 90%.',
