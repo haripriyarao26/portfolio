@@ -1,9 +1,7 @@
 'use client';
 
-import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import * as THREE from 'three';
 
 /* ── TAB 1: 5 BEATS SPECIFICATION ("HOW I THINK") ── */
 const HOW_I_THINK_BEATS = [
@@ -13,6 +11,7 @@ const HOW_I_THINK_BEATS = [
     desc: 'The request enters wobbly and unpredictable. We map failure modes before writing happy paths.',
     color: '#818cf8', // Periwinkle
     tag: 'Unpredictable AI Input',
+    action: 'Simulate Chaos',
   },
   {
     step: '02',
@@ -20,6 +19,7 @@ const HOW_I_THINK_BEATS = [
     desc: 'An amber glass guardrail intercepts the input. Malformed schemas bounce off with strict schema gates.',
     color: '#f59e0b', // Warm Amber
     tag: 'Deterministic Guardrails',
+    action: 'Deploy Amber Gate',
   },
   {
     step: '03',
@@ -27,6 +27,7 @@ const HOW_I_THINK_BEATS = [
     desc: 'Passes 100+ messy golden-dataset edge cases, null fields, and adversarial inputs in CI/CD.',
     color: '#3b82f6', // Cobalt
     tag: 'Reality Evals',
+    action: 'Run Gauntlet',
   },
   {
     step: '04',
@@ -34,6 +35,7 @@ const HOW_I_THINK_BEATS = [
     desc: 'The payload turns teal, verified and deterministic. Deploys with zero state desyncs.',
     color: '#14b8a6', // Teal
     tag: 'Verified Production',
+    action: 'Verify & Ship',
   },
   {
     step: '05',
@@ -41,6 +43,7 @@ const HOW_I_THINK_BEATS = [
     desc: 'Human nodes connect directly into the system loop. Real user trust gets built together, not just coded.',
     color: '#0d9488', // Deep Teal
     tag: 'Human in the Loop',
+    action: 'Connect Humans',
   },
 ];
 
@@ -52,6 +55,7 @@ const DAILY_AI_BEATS = [
     desc: 'Never dump full repos into prompts. I use Model Context Protocol (MCP) and AST parsers to slice only the relevant 5% of code.',
     color: '#5b7cf0', // Cobalt
     tag: 'MCP & AST Slicing',
+    action: 'Filter AST Slice',
   },
   {
     step: '02',
@@ -59,6 +63,7 @@ const DAILY_AI_BEATS = [
     desc: 'Frontier models (Claude 3.7 / Opus) define schemas and system invariants; sub-second models (Haiku / Flash) write boilerplate.',
     color: '#a855f7', // Purple
     tag: 'Tiered Intelligence',
+    action: 'Route Models',
   },
   {
     step: '03',
@@ -66,6 +71,7 @@ const DAILY_AI_BEATS = [
     desc: 'An adversarial LLM agent actively attacks my PR with type coercion, malformed payloads, and edge cases before human review.',
     color: '#f59e0b', // Warm Amber
     tag: 'Adversarial Fuzzing',
+    action: 'Run Red Team',
   },
   {
     step: '04',
@@ -73,6 +79,7 @@ const DAILY_AI_BEATS = [
     desc: 'Automated test generation runs in feedback loops, mutating Jest and PyTest fixtures until 95%+ coverage is verified.',
     color: '#10b981', // Emerald
     tag: 'Self-Healing Evals',
+    action: 'Heal Test Loop',
   },
   {
     step: '05',
@@ -80,375 +87,474 @@ const DAILY_AI_BEATS = [
     desc: 'AI acts as a tireless junior team proposing 3 options; I own the architecture, regulatory trade-offs, and final merge decisions.',
     color: '#00f0ff', // Cyan
     tag: 'Architectural Ownership',
+    action: 'Human Sign-off',
   },
 ];
 
-/* ── 3D SCENE 1: "HOW I THINK" DOT JOURNEY ── */
-function DotJourney3D({ progress }: { progress: number }) {
-  const dotRef = useRef<THREE.Mesh>(null);
-  const trailRef = useRef<THREE.Points>(null);
-  const gateRef = useRef<THREE.Mesh>(null);
-  const humanGroupRef = useRef<THREE.Group>(null);
-
-  const spline = useMemo(() => {
-    return new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-3.2, 2.2, 0),      // Beat 1: Enter wobbly
-      new THREE.Vector3(-1.4, 1.1, -0.6),   // Beat 2: Amber gate
-      new THREE.Vector3(0.2, 0.0, 0.4),     // Beat 3: Evals row
-      new THREE.Vector3(1.8, -1.0, -0.3),   // Beat 4: Ship teal
-      new THREE.Vector3(3.2, -2.1, 0.2),    // Beat 5: Human nodes
-    ]);
-  }, []);
-
-  const pathPoints = useMemo(() => {
-    const pts = spline.getPoints(80);
-    const coords = new Float32Array(pts.length * 3);
-    pts.forEach((p, i) => {
-      coords[i * 3] = p.x;
-      coords[i * 3 + 1] = p.y;
-      coords[i * 3 + 2] = p.z;
-    });
-    return coords;
-  }, [spline]);
-
-  const trailCount = 36;
-  const trailPositions = useMemo(() => new Float32Array(trailCount * 3), []);
-
-  useFrame((state) => {
-    const t = state.clock.elapsedTime;
-    const p = Math.max(0, Math.min(1, progress));
-    const pos = spline.getPointAt(p);
-
-    if (p < 0.25) {
-      const wobbleAmp = (1 - p / 0.25) * 0.25;
-      pos.x += Math.sin(t * 12) * wobbleAmp;
-      pos.y += Math.cos(t * 14) * wobbleAmp;
-    }
-
-    if (dotRef.current) {
-      dotRef.current.position.copy(pos);
-      const mat = dotRef.current.material as THREE.MeshBasicMaterial;
-      if (p < 0.25) {
-        mat.color.set('#818cf8');
-      } else if (p < 0.55) {
-        mat.color.set('#f59e0b');
-      } else {
-        mat.color.set('#14b8a6');
-      }
-    }
-
-    if (gateRef.current) {
-      const gateMat = gateRef.current.material as THREE.MeshPhysicalMaterial;
-      if (p > 0.2 && p < 0.45) {
-        gateMat.opacity = 0.85;
-        gateRef.current.scale.set(1.05, 1.05, 1);
-      } else {
-        gateMat.opacity = 0.35;
-        gateRef.current.scale.set(1, 1, 1);
-      }
-    }
-
-    if (humanGroupRef.current) {
-      const humanVis = Math.max(0, Math.min(1, (p - 0.7) / 0.25));
-      humanGroupRef.current.scale.setScalar(humanVis);
-      humanGroupRef.current.rotation.z = t * 0.2;
-    }
-
-    if (trailRef.current) {
-      const attr = trailRef.current.geometry.attributes.position as THREE.BufferAttribute;
-      const arr = attr.array as Float32Array;
-      for (let i = trailCount - 1; i > 0; i--) {
-        arr[i * 3] = arr[(i - 1) * 3];
-        arr[i * 3 + 1] = arr[(i - 1) * 3 + 1];
-        arr[i * 3 + 2] = arr[(i - 1) * 3 + 2];
-      }
-      arr[0] = pos.x;
-      arr[1] = pos.y;
-      arr[2] = pos.z;
-      attr.needsUpdate = true;
-    }
-
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, pos.x * 0.45, 0.05);
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, pos.y * 0.45, 0.05);
-  });
-
-  return (
-    <group>
-      <line>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={pathPoints.length / 3}
-            array={pathPoints}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <lineBasicMaterial color="#cbd5e1" transparent opacity={0.35} />
-      </line>
-
-      <mesh ref={gateRef} position={[-1.4, 1.1, -0.6]}>
-        <boxGeometry args={[0.08, 1.4, 1.1]} />
-        <meshPhysicalMaterial
-          color="#f59e0b"
-          transparent
-          opacity={0.35}
-          roughness={0.15}
-          transmission={0.7}
-          thickness={0.5}
-        />
-      </mesh>
-
-      <group position={[0.2, 0.0, 0.4]}>
-        {[-0.4, -0.2, 0, 0.2, 0.4].map((offset, i) => (
-          <mesh key={i} position={[offset * 0.8, i % 2 === 0 ? 0.25 : -0.25, 0]}>
-            <sphereGeometry args={[0.04, 12, 12]} />
-            <meshBasicMaterial color="#3b82f6" transparent opacity={0.5} />
-          </mesh>
-        ))}
-      </group>
-
-      <group ref={humanGroupRef} position={[3.2, -2.1, 0.2]}>
-        {[0, 1, 2, 3].map((idx) => {
-          const angle = (idx / 4) * Math.PI * 2;
-          const r = 0.75;
-          return (
-            <group key={idx} position={[Math.cos(angle) * r, Math.sin(angle) * r, 0]}>
-              <mesh>
-                <sphereGeometry args={[0.065, 14, 14]} />
-                <meshBasicMaterial color="#0d9488" />
-              </mesh>
-              <line>
-                <bufferGeometry>
-                  <bufferAttribute
-                    attach="attributes-position"
-                    count={2}
-                    array={new Float32Array([0, 0, 0, -Math.cos(angle) * r, -Math.sin(angle) * r, 0])}
-                    itemSize={3}
-                  />
-                </bufferGeometry>
-                <lineBasicMaterial color="#14b8a6" transparent opacity={0.4} />
-              </line>
-            </group>
-          );
-        })}
-      </group>
-
-      <mesh ref={dotRef}>
-        <sphereGeometry args={[0.13, 24, 24]} />
-        <meshBasicMaterial color="#818cf8" />
-      </mesh>
-
-      <points ref={trailRef}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={trailCount}
-            array={trailPositions}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <pointsMaterial size={0.09} color="#818cf8" transparent opacity={0.45} depthWrite={false} />
-      </points>
-    </group>
-  );
-}
-
-/* ── 3D SCENE 2: "HOW I USE AI DAILY" ORBITAL WORKFLOW ── */
-function DailyAIWorkflow3D({ progress }: { progress: number }) {
-  const centralHubRef = useRef<THREE.Mesh>(null);
-  const ringGroupRef = useRef<THREE.Group>(null);
-  const laserRef = useRef<THREE.LineSegments>(null);
-
-  const nodes = useMemo(() => {
-    return DAILY_AI_BEATS.map((beat, i) => {
-      const angle = (i / 5) * Math.PI * 2 - Math.PI / 2;
-      const radius = 2.4;
-      return {
-        x: Math.cos(angle) * radius,
-        y: Math.sin(angle) * radius * 0.75,
-        z: Math.sin(angle * 2) * 0.4,
-        color: beat.color,
-      };
-    });
-  }, []);
-
-  const laserCoords = useMemo(() => {
-    const coords = new Float32Array(nodes.length * 6);
-    nodes.forEach((n, i) => {
-      coords[i * 6] = 0;
-      coords[i * 6 + 1] = 0;
-      coords[i * 6 + 2] = 0;
-      coords[i * 6 + 3] = n.x;
-      coords[i * 6 + 4] = n.y;
-      coords[i * 6 + 5] = n.z;
-    });
-    return coords;
-  }, [nodes]);
-
-  useFrame((state) => {
-    const t = state.clock.elapsedTime;
-    if (centralHubRef.current) {
-      centralHubRef.current.rotation.y = t * 0.4;
-      centralHubRef.current.rotation.x = Math.sin(t * 0.3) * 0.2;
-    }
-    if (ringGroupRef.current) {
-      ringGroupRef.current.rotation.z = Math.sin(t * 0.15) * 0.1;
-      ringGroupRef.current.rotation.y = Math.cos(t * 0.2) * 0.15;
-    }
-  });
-
-  const activeIndex = Math.min(4, Math.floor(progress * 5));
-
-  return (
-    <group ref={ringGroupRef}>
-      {/* Central Architecture Hub (Human Lead) */}
-      <mesh ref={centralHubRef}>
-        <icosahedronGeometry args={[0.32, 1]} />
-        <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
-          emissiveIntensity={0.6}
-          roughness={0.2}
-          wireframe
-        />
-      </mesh>
-
-      {/* Laser Connections */}
-      <lineSegments ref={laserRef}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={laserCoords.length / 3}
-            array={laserCoords}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <lineBasicMaterial color="#38bdf8" transparent opacity={0.25} />
-      </lineSegments>
-
-      {/* 5 Satellite Nodes */}
-      {nodes.map((n, i) => {
-        const isActive = activeIndex === i;
+/* ── STEP-SPECIFIC DYNAMIC ANIMATION VIEW ── */
+function StepAnimationView({ tab, stepIndex }: { tab: 'how-i-think' | 'daily-ai'; stepIndex: number }) {
+  if (tab === 'how-i-think') {
+    switch (stepIndex) {
+      case 0:
+        // Beat 1: Assume it will fail - Unpredictable chaotic request
         return (
-          <group key={i} position={[n.x, n.y, n.z]}>
-            <mesh scale={isActive ? 1.4 : 1.0}>
-              <sphereGeometry args={[0.12, 16, 16]} />
-              <meshStandardMaterial
-                color={n.color}
-                emissive={n.color}
-                emissiveIntensity={isActive ? 0.9 : 0.3}
-                roughness={0.25}
+          <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#070b1a] to-[#0f172a] rounded-2xl border border-indigo-500/30 overflow-hidden shadow-inner">
+            <div className="absolute top-3 left-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#818cf8] animate-ping" />
+              <span className="text-xs font-mono text-indigo-300 font-semibold uppercase">
+                Beat 01 // Unpredictable Request Enters
+              </span>
+            </div>
+            
+            {/* Chaotic drifting particle wave */}
+            <svg className="w-full h-32 overflow-visible" viewBox="0 0 400 100">
+              <path
+                d="M 20 50 Q 80 15, 140 85 T 260 20 T 380 50"
+                fill="none"
+                stroke="#818cf8"
+                strokeWidth="2.5"
+                strokeDasharray="4 4"
+                className="opacity-40 animate-pulse"
               />
-            </mesh>
-            {isActive && (
-              <mesh>
-                <ringGeometry args={[0.18, 0.22, 24]} />
-                <meshBasicMaterial color={n.color} side={THREE.DoubleSide} transparent opacity={0.7} />
-              </mesh>
-            )}
-          </group>
+              {/* Wobbling Main Dot */}
+              <motion.circle
+                r="9"
+                fill="#818cf8"
+                animate={{
+                  cx: [30, 110, 210, 310, 370, 30],
+                  cy: [50, 20, 80, 25, 50, 50],
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              {/* Drifting Ghost Duplicates */}
+              {[-15, 15, -25].map((off, i) => (
+                <motion.circle
+                  key={i}
+                  r="4"
+                  fill="#c7d2fe"
+                  opacity={0.5}
+                  animate={{
+                    cx: [30, 110, 210, 310, 370, 30],
+                    cy: [50 + off, 20 + off, 80 + off, 25 + off, 50 + off, 50 + off],
+                  }}
+                  transition={{ duration: 4, delay: i * 0.15, repeat: Infinity, ease: 'easeInOut' }}
+                />
+              ))}
+            </svg>
+
+            <div className="mt-2 text-center text-xs font-mono text-indigo-200">
+              <span className="text-[#818cf8] font-bold">Chaos Mode:</span> Floating unconstrained · Raw prompt output contains 18 potential hallucinations
+            </div>
+          </div>
         );
-      })}
-    </group>
-  );
+
+      case 1:
+        // Beat 2: Wrap it in checks - Amber glass firewall gate bounces bad schemas
+        return (
+          <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#130f05] to-[#1c1407] rounded-2xl border border-amber-500/40 overflow-hidden shadow-inner">
+            <div className="absolute top-3 left-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#f59e0b] animate-ping" />
+              <span className="text-xs font-mono text-amber-300 font-semibold uppercase">
+                Beat 02 // Amber Guardrail Intercept
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between w-full max-w-md px-4 my-auto">
+              {/* Input payloads arriving */}
+              <div className="flex flex-col gap-2">
+                <span className="px-2.5 py-1 rounded bg-rose-500/20 border border-rose-500/50 text-[11px] font-mono text-rose-300">
+                  ✗ Malformed JSON
+                </span>
+                <span className="px-2.5 py-1 rounded bg-rose-500/20 border border-rose-500/50 text-[11px] font-mono text-rose-300">
+                  ✗ Dropped Closing Brace
+                </span>
+                <span className="px-2.5 py-1 rounded bg-emerald-500/20 border border-emerald-500/50 text-[11px] font-mono text-emerald-300 font-bold">
+                  ✓ Valid AST Schema
+                </span>
+              </div>
+
+              {/* Central Amber Glass Gate */}
+              <motion.div
+                animate={{ scale: [1, 1.04, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-12 h-28 rounded-xl bg-gradient-to-b from-amber-400/30 to-amber-600/30 border-2 border-amber-400 backdrop-blur-md flex flex-col items-center justify-center shadow-[0_0_24px_rgba(245,158,11,0.4)]"
+              >
+                <span className="text-lg">🛡️</span>
+                <span className="text-[9px] font-mono text-amber-200 font-bold mt-1 text-center leading-tight">
+                  AST GATE
+                </span>
+              </motion.div>
+
+              {/* Output filtered cleanly */}
+              <div className="flex flex-col items-center">
+                <motion.div
+                  animate={{ x: [0, 10, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="px-3 py-1.5 rounded-lg bg-emerald-950 border border-emerald-400 text-xs font-mono text-emerald-300 font-bold shadow-md"
+                >
+                  0 Schema Breaks
+                </motion.div>
+                <span className="text-[10px] font-mono text-amber-400 mt-1">Malformed bounced</span>
+              </div>
+            </div>
+
+            <div className="text-center text-xs font-mono text-amber-200">
+              <span className="text-[#f59e0b] font-bold">Deterministic Salvage:</span> 100% of invalid JSON structures repaired before entering database
+            </div>
+          </div>
+        );
+
+      case 2:
+        // Beat 3: Test against real cases - Gauntlet of 4 real-world test cases
+        return (
+          <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#061026] to-[#0b1d3a] rounded-2xl border border-blue-500/30 overflow-hidden shadow-inner">
+            <div className="absolute top-3 left-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#3b82f6] animate-ping" />
+              <span className="text-xs font-mono text-blue-300 font-semibold uppercase">
+                Beat 03 // 100+ Reality Evals
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-lg my-auto">
+              {[
+                { name: 'Null Values', status: 'PASS', score: '100%' },
+                { name: 'Rate Spikes (429)', status: 'PASS', score: '30s Backoff' },
+                { name: 'AST Recursion', status: 'PASS', score: '0 Cycles' },
+                { name: 'Redis Mutex', status: 'PASS', score: '0 Races' },
+              ].map((ev, i) => (
+                <motion.div
+                  key={ev.name}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-3 rounded-xl bg-white/[0.06] border border-blue-400/20 text-center"
+                >
+                  <div className="text-[11px] font-mono text-slate-300 truncate">{ev.name}</div>
+                  <div className="text-xs font-bold text-emerald-400 mt-1 flex items-center justify-center gap-1">
+                    <span>✓</span>
+                    <span>{ev.status}</span>
+                  </div>
+                  <div className="text-[10px] font-mono text-blue-300 mt-0.5">{ev.score}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="text-center text-xs font-mono text-blue-200">
+              <span className="text-[#3b82f6] font-bold">Golden Evals:</span> Verified against 100+ annotated ground-truth enterprise contracts
+            </div>
+          </div>
+        );
+
+      case 3:
+        // Beat 4: Ship without drama - Teal dot glides steady and calm
+        return (
+          <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#04161a] to-[#072428] rounded-2xl border border-teal-500/40 overflow-hidden shadow-inner">
+            <div className="absolute top-3 left-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#14b8a6] animate-ping" />
+              <span className="text-xs font-mono text-teal-300 font-semibold uppercase">
+                Beat 04 // Ship Calmly & Deterministically
+              </span>
+            </div>
+
+            <div className="relative w-full max-w-md h-20 flex items-center justify-center my-auto">
+              {/* Perfectly Straight Railway Track */}
+              <div className="w-full h-1 bg-gradient-to-r from-teal-800 via-teal-400 to-emerald-400 rounded-full" />
+              
+              {/* Steady Calm Teal Dot */}
+              <motion.div
+                animate={{ x: [-140, 140] }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: 'linear' }}
+                className="absolute w-7 h-7 rounded-full bg-[#14b8a6] border-2 border-white shadow-[0_0_20px_#14b8a6] flex items-center justify-center text-[10px] font-bold text-white"
+              >
+                ✓
+              </motion.div>
+            </div>
+
+            <div className="flex items-center gap-6 text-xs font-mono text-teal-200">
+              <span>SLA: <strong className="text-white">&lt;15ms</strong></span>
+              <span>State Desyncs: <strong className="text-white">0</strong></span>
+              <span>Production Regressions: <strong className="text-white">0</strong></span>
+            </div>
+          </div>
+        );
+
+      case 4:
+        // Beat 5: Build with the people who use it - Human collaboration nodes
+        return (
+          <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#051c1c] to-[#0b2b2b] rounded-2xl border border-teal-600/40 overflow-hidden shadow-inner">
+            <div className="absolute top-3 left-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#0d9488] animate-ping" />
+              <span className="text-xs font-mono text-teal-300 font-semibold uppercase">
+                Beat 05 // Human-in-the-Loop Collaboration
+              </span>
+            </div>
+
+            <div className="flex items-center justify-center gap-4 sm:gap-6 my-auto">
+              {[
+                { role: 'Product Lead', icon: '👤', tag: 'Feedback' },
+                { role: 'City Partner', icon: '🏛️', tag: 'Civic Policy' },
+                { role: 'Haripriya', icon: '⚡', tag: 'AI Architecture', isMe: true },
+                { role: 'End User', icon: '👥', tag: 'Real Workflow' },
+              ].map((member, i) => (
+                <div key={member.role} className="flex flex-col items-center">
+                  <div
+                    className={`w-12 h-12 rounded-2xl flex items-center justify-center text-lg shadow-md border ${
+                      member.isMe
+                        ? 'bg-[#00f0ff] border-white text-[#0b1d3a] font-bold'
+                        : 'bg-white/10 border-white/20 text-white'
+                    }`}
+                  >
+                    {member.icon}
+                  </div>
+                  <span className="text-[11px] font-semibold text-white mt-1.5 text-center">
+                    {member.role}
+                  </span>
+                  <span className="text-[10px] font-mono text-teal-300">{member.tag}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center text-xs font-mono text-teal-200">
+              <span className="text-[#2fe0d0] font-bold">Collaborative Trust:</span> Software is engineered with the stakeholders who live with the results
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  }
+
+  // TAB 2: "HOW I USE AI DAILY" ANIMATIONS
+  switch (stepIndex) {
+    case 0:
+      // Daily Step 1: Context Sandboxing & MCP
+      return (
+        <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#070e24] to-[#0d1838] rounded-2xl border border-blue-500/30 overflow-hidden shadow-inner">
+          <div className="absolute top-3 left-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#5b7cf0] animate-ping" />
+            <span className="text-xs font-mono text-blue-300 font-semibold uppercase">
+              Daily AI 01 // MCP &amp; Context Slicing
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between w-full max-w-md px-2 my-auto">
+            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 text-xs font-mono text-slate-400">
+              <div>Entire Repo (200MB)</div>
+              <div className="text-rose-400 mt-1 line-through">95% Inert UI Files</div>
+            </div>
+
+            <div className="text-blue-400 text-xl font-bold font-mono">→ [MCP Parser] →</div>
+
+            <div className="p-3 rounded-xl bg-blue-950 border border-blue-400 text-xs font-mono text-blue-200 font-bold shadow-md">
+              <div>Target AST Slice</div>
+              <div className="text-emerald-400 mt-1">4KB Clean Payload</div>
+            </div>
+          </div>
+
+          <div className="text-center text-xs font-mono text-blue-200">
+            <span className="text-[#5b7cf0] font-bold">Precision Ingestion:</span> Zero token bloat · Only relevant type signatures sent to model
+          </div>
+        </div>
+      );
+
+    case 1:
+      // Daily Step 2: Dual-Model Routing Split
+      return (
+        <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#160a26] to-[#200e38] rounded-2xl border border-purple-500/40 overflow-hidden shadow-inner">
+          <div className="absolute top-3 left-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#a855f7] animate-ping" />
+            <span className="text-xs font-mono text-purple-300 font-semibold uppercase">
+              Daily AI 02 // Tiered Routing Split
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between w-full max-w-md gap-4 my-auto">
+            <div className="p-3 rounded-xl bg-purple-950/80 border border-purple-400/50 flex-1 text-center">
+              <div className="text-xs font-bold text-white">Opus / Claude 3.7</div>
+              <div className="text-[10px] font-mono text-purple-300 mt-1">High Cognition</div>
+              <div className="text-[10px] text-slate-300 mt-1">System Invariants &amp; Schemas</div>
+            </div>
+
+            <span className="text-lg font-bold text-purple-400">+</span>
+
+            <div className="p-3 rounded-xl bg-indigo-950/80 border border-indigo-400/50 flex-1 text-center">
+              <div className="text-xs font-bold text-white">Haiku / Flash</div>
+              <div className="text-[10px] font-mono text-indigo-300 mt-1">&lt;15ms Latency</div>
+              <div className="text-[10px] text-slate-300 mt-1">Localized Syntax &amp; Boilerplate</div>
+            </div>
+          </div>
+
+          <div className="text-center text-xs font-mono text-purple-200">
+            <span className="text-[#a855f7] font-bold">Right Model for Right Task:</span> Cuts 96% of frontier token waste
+          </div>
+        </div>
+      );
+
+    case 2:
+      // Daily Step 3: Autonomous Red-Teaming
+      return (
+        <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#1c1106] to-[#261608] rounded-2xl border border-amber-500/40 overflow-hidden shadow-inner">
+          <div className="absolute top-3 left-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#f59e0b] animate-ping" />
+            <span className="text-xs font-mono text-amber-300 font-semibold uppercase">
+              Daily AI 03 // Autonomous Red-Team Agent
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between w-full max-w-md px-4 my-auto">
+            <div className="text-center">
+              <span className="text-2xl">🤖</span>
+              <div className="text-xs font-mono text-amber-300 mt-1 font-bold">Red-Team LLM</div>
+              <div className="text-[10px] text-rose-400">Injects edge cases</div>
+            </div>
+
+            <motion.div
+              animate={{ x: [-8, 8, -8] }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+              className="text-amber-400 font-mono text-xs font-bold px-3 py-1 rounded bg-amber-500/10 border border-amber-500/30"
+            >
+              Fuzzing Schema ⚡
+            </motion.div>
+
+            <div className="text-center">
+              <span className="text-2xl">🛡️</span>
+              <div className="text-xs font-mono text-emerald-400 mt-1 font-bold">Pydantic / TS</div>
+              <div className="text-[10px] text-emerald-300">Catches 100% bugs</div>
+            </div>
+          </div>
+
+          <div className="text-center text-xs font-mono text-amber-200">
+            <span className="text-[#f59e0b] font-bold">Adversarial Testing:</span> AI aggressively stress-tests code before any human PR review
+          </div>
+        </div>
+      );
+
+    case 3:
+      // Daily Step 4: Self-Healing Test Cycles
+      return (
+        <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#061c14] to-[#0c291e] rounded-2xl border border-emerald-500/40 overflow-hidden shadow-inner">
+          <div className="absolute top-3 left-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#10b981] animate-ping" />
+            <span className="text-xs font-mono text-emerald-300 font-semibold uppercase">
+              Daily AI 04 // Self-Healing Test Loops
+            </span>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 my-auto">
+            <div className="p-3 rounded-xl bg-black/40 border border-white/10 text-xs font-mono text-slate-300">
+              Run Test Suite →
+            </div>
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+              className="w-10 h-10 rounded-full border-2 border-dashed border-emerald-400 flex items-center justify-center text-emerald-300 text-sm font-bold"
+            >
+              ↻
+            </motion.div>
+            <div className="p-3 rounded-xl bg-emerald-950 border border-emerald-400 text-xs font-mono text-emerald-300 font-bold shadow-md">
+              95%+ Coverage Reached
+            </div>
+          </div>
+
+          <div className="text-center text-xs font-mono text-emerald-200">
+            <span className="text-[#10b981] font-bold">Automated Reliability:</span> Tests self-mutate fixtures until all edge cases pass
+          </div>
+        </div>
+      );
+
+    case 4:
+      // Daily Step 5: Human Architectural Control
+      return (
+        <div className="relative w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#061c24] to-[#0a2733] rounded-2xl border border-cyan-500/40 overflow-hidden shadow-inner">
+          <div className="absolute top-3 left-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
+            <span className="text-xs font-mono text-cyan-300 font-semibold uppercase">
+              Daily AI 05 // Human Architectural Sign-Off
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between w-full max-w-md px-2 my-auto">
+            <div className="p-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-xs font-mono text-slate-300">
+              3 AI Architectures
+            </div>
+            <span className="text-cyan-400 font-bold">→</span>
+            <div className="p-3 rounded-xl bg-cyan-950 border-2 border-[#00f0ff] text-xs font-mono text-cyan-200 font-bold shadow-[0_0_15px_rgba(0,240,255,0.4)] text-center">
+              <div>Haripriya Review</div>
+              <div className="text-[10px] text-emerald-400 mt-0.5">Approved &amp; Merged</div>
+            </div>
+          </div>
+
+          <div className="text-center text-xs font-mono text-cyan-200">
+            <span className="text-[#00f0ff] font-bold">3x Engineering Leverage:</span> Speed of AI execution combined with human judgment
+          </div>
+        </div>
+      );
+
+    default:
+      return null;
+  }
 }
 
-/* ── MAIN DUAL-TAB EXPERIENCE COMPONENT ── */
+/* ── MAIN COMPONENT ── */
 export default function HowIThinkExperience({
   onNavActivate,
 }: {
   onNavActivate?: (active: boolean) => void;
 }) {
-  const containerRef = useRef<HTMLElement | null>(null);
   const [activeTab, setActiveTab] = useState<'how-i-think' | 'daily-ai'>('how-i-think');
-  const [progress, setProgress] = useState(0);
-  const [activeBeat, setActiveBeat] = useState(0);
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
+  const [selectedStep, setSelectedStep] = useState(0);
 
+  const beats = activeTab === 'how-i-think' ? HOW_I_THINK_BEATS : DAILY_AI_BEATS;
+
+  // Reset to first step when tab toggles
   useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setIsReducedMotion(media.matches);
-    const listener = (e: MediaQueryListEvent) => setIsReducedMotion(e.matches);
-    media.addEventListener('change', listener);
-    return () => media.removeEventListener('change', listener);
-  }, []);
-
-  useEffect(() => {
-    if (isReducedMotion) return;
-
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const el = containerRef.current;
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const vh = window.innerHeight || 800;
-        const total = Math.max(1, rect.height - vh);
-        const scrolled = -rect.top;
-        const p = Math.max(0, Math.min(1, scrolled / total));
-        setProgress(p);
-
-        const beat = Math.min(4, Math.floor(p * 5));
-        setActiveBeat(beat);
-
-        if (onNavActivate) {
-          onNavActivate(p > 0.15 || rect.top < 0);
-        }
-      });
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, [onNavActivate, isReducedMotion]);
-
-  const currentBeats = activeTab === 'how-i-think' ? HOW_I_THINK_BEATS : DAILY_AI_BEATS;
-
-  const headlineWordsTab1 = ['I', 'like', 'building', 'things', 'people', 'can', 'actually', 'rely', 'on.'];
-  const headlineWordsTab2 = ['AI', 'is', 'my', 'tireless', 'junior', 'team.', 'I', 'own', 'the', 'architecture.'];
-
-  const currentHeadlineWords = activeTab === 'how-i-think' ? headlineWordsTab1 : headlineWordsTab2;
-
-  const underlineProgress = Math.max(0, Math.min(1, (progress - 0.25) / 0.45));
-  const bgOpacity = Math.max(0, Math.min(1, Math.sin(progress * Math.PI))) * 0.045;
+    setSelectedStep(0);
+  }, [activeTab]);
 
   return (
-    <section
-      ref={containerRef}
-      id="how-i-think"
-      className="relative min-h-[260vh] select-none transition-colors duration-500"
-      style={{
-        backgroundColor: `rgba(15, 23, 42, ${bgOpacity.toFixed(3)})`,
-      }}
-    >
-      {/* Sticky Viewport Stage */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-between px-6 sm:px-10 lg:px-14 py-16 sm:py-20 overflow-hidden">
+    <section id="how-i-think" className="relative py-16 sm:py-24 px-6 sm:px-10 lg:px-14">
+      {/* High-Contrast Frosted Glass Studio Card */}
+      <div className="spatial-glass max-w-5xl mx-auto rounded-3xl p-6 sm:p-10 border border-slate-200/90 bg-white/96 backdrop-blur-2xl shadow-2xl">
         
-        {/* Top Controls: Interactive Tab Switcher & Status Badge */}
-        <div className="max-w-4xl mx-auto w-full text-center space-y-4 z-20">
-          
-          {/* Dual Tab Pill Bar */}
-          <div className="inline-flex items-center p-1 rounded-full bg-white/95 backdrop-blur-md border border-[#0b1d3a]/12 shadow-md">
+        {/* Top Header & Interactive Tab Switcher */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6 mb-8">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 border border-slate-200 px-3.5 py-1 mb-2">
+              <span className="h-2 w-2 rounded-full bg-[#f59e0b]" />
+              <span className="font-sans text-xs font-semibold tracking-wider text-[#0b1d3a] uppercase">
+                Why Engineering Leaders Hire Me
+              </span>
+            </div>
+            <h2 className="font-display text-2xl sm:text-4xl font-semibold text-[#0b1d3a] tracking-tight">
+              {activeTab === 'how-i-think' ? (
+                <>
+                  I like building things people can{' '}
+                  <span className="text-[#0d9488]">actually rely on.</span>
+                </>
+              ) : (
+                <>
+                  AI is my tireless junior team.{' '}
+                  <span className="text-[#0d9488]">I own the architecture.</span>
+                </>
+              )}
+            </h2>
+          </div>
+
+          {/* Interactive Dual-Tab Switcher */}
+          <div className="inline-flex items-center p-1 rounded-full bg-slate-100 border border-slate-200 self-start sm:self-auto shrink-0 shadow-inner">
             <button
               type="button"
               onClick={() => setActiveTab('how-i-think')}
-              className={`relative px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
-                activeTab === 'how-i-think'
-                  ? 'text-white shadow-sm'
-                  : 'text-[#0b1d3a] hover:text-[#5b7cf0]'
+              className={`relative px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
+                activeTab === 'how-i-think' ? 'text-white shadow-sm' : 'text-[#0b1d3a] hover:text-[#5b7cf0]'
               }`}
             >
               {activeTab === 'how-i-think' && (
                 <motion.div
-                  layoutId="activeTabPill"
+                  layoutId="activePillTab"
                   className="absolute inset-0 rounded-full bg-[#0b1d3a]"
-                  transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 28 }}
                 />
               )}
               <span className="relative z-10 flex items-center gap-1.5">
@@ -460,17 +566,15 @@ export default function HowIThinkExperience({
             <button
               type="button"
               onClick={() => setActiveTab('daily-ai')}
-              className={`relative px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
-                activeTab === 'daily-ai'
-                  ? 'text-white shadow-sm'
-                  : 'text-[#0b1d3a] hover:text-[#5b7cf0]'
+              className={`relative px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
+                activeTab === 'daily-ai' ? 'text-white shadow-sm' : 'text-[#0b1d3a] hover:text-[#5b7cf0]'
               }`}
             >
               {activeTab === 'daily-ai' && (
                 <motion.div
-                  layoutId="activeTabPill"
+                  layoutId="activePillTab"
                   className="absolute inset-0 rounded-full bg-[#0b1d3a]"
-                  transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 28 }}
                 />
               )}
               <span className="relative z-10 flex items-center gap-1.5">
@@ -479,216 +583,128 @@ export default function HowIThinkExperience({
               </span>
             </button>
           </div>
-
-          {/* Dynamic Headline with word-by-word scroll ink fill */}
-          <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-normal tracking-[-0.03em] leading-[1.14]">
-            {currentHeadlineWords.map((word, idx) => {
-              const wordThreshold = ((idx + 0.5) / currentHeadlineWords.length) * 0.45;
-              const isFilled = progress >= wordThreshold || isReducedMotion;
-              const isTeal =
-                word.includes('rely') || word.includes('actually') || word.includes('architecture');
-
-              return (
-                <span
-                  key={`${activeTab}-${idx}`}
-                  className={`inline-block mr-2 sm:mr-2.5 transition-colors duration-200 ${
-                    isFilled
-                      ? isTeal
-                        ? 'text-[#0d9488] font-medium'
-                        : 'text-[#0b1d3a] font-normal'
-                      : 'text-slate-300'
-                  }`}
-                >
-                  {word}
-                </span>
-              );
-            })}
-          </h2>
         </div>
 
-        {/* Center: The Interactive 3D Journey / Workflow Canvas */}
-        <div className="relative w-full max-w-5xl mx-auto h-[240px] sm:h-[300px] my-auto flex items-center justify-center z-10">
-          
-          {/* Desktop 3D Canvas switching smoothly between scenes */}
-          <div className="hidden sm:block absolute inset-0">
-            <Canvas camera={{ position: [0, 0, 5], fov: 46 }} gl={{ antialias: true, alpha: true }}>
-              <ambientLight intensity={0.9} />
-              <pointLight position={[5, 5, 5]} intensity={1.4} />
-              {activeTab === 'how-i-think' ? (
-                <DotJourney3D progress={progress} />
-              ) : (
-                <DailyAIWorkflow3D progress={progress} />
-              )}
-            </Canvas>
-          </div>
-
-          {/* Mobile 2D Telemetry Fallback with same 5 beats */}
-          <div className="sm:hidden w-full flex flex-col gap-2 p-4 rounded-2xl bg-white/95 border border-slate-200/80 shadow-md">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-              <span className="text-[11px] font-semibold text-[#0b1d3a] uppercase">
-                {activeTab === 'how-i-think' ? 'HOW I THINK' : 'DAILY AI WORKFLOW'}
-              </span>
-              <span className="text-xs font-mono font-bold" style={{ color: currentBeats[activeBeat].color }}>
-                {currentBeats[activeBeat].step} / 05
-              </span>
-            </div>
-            <div className="flex items-center gap-3 pt-1">
-              <div
-                className="w-3.5 h-3.5 rounded-full shrink-0 shadow-sm animate-pulse"
-                style={{ backgroundColor: currentBeats[activeBeat].color }}
-              />
-              <div>
-                <div className="text-sm font-semibold text-[#0b1d3a]">
-                  {currentBeats[activeBeat].title}
+        {/* 5-Step Interactive Process Pills (Click to switch animation) */}
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-6">
+          {beats.map((beat, idx) => {
+            const isSelected = selectedStep === idx;
+            return (
+              <button
+                key={beat.step}
+                type="button"
+                onClick={() => setSelectedStep(idx)}
+                className={`p-3 rounded-2xl border text-left transition-all duration-200 ${
+                  isSelected
+                    ? 'bg-slate-900 border-slate-900 text-white shadow-md scale-[1.02]'
+                    : 'bg-white border-slate-200/80 text-slate-700 hover:border-slate-400 hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: beat.color }}
+                  />
+                  <span
+                    className={`text-[10px] font-mono font-semibold ${
+                      isSelected ? 'text-slate-400' : 'text-slate-400'
+                    }`}
+                  >
+                    {beat.step}
+                  </span>
                 </div>
-                <div className="text-xs text-slate-600 mt-0.5">
-                  {currentBeats[activeBeat].desc}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Floating Beat Badges overlay (Desktop) */}
-          <div className="hidden sm:flex absolute -bottom-4 inset-x-0 justify-between items-center px-4">
-            {currentBeats.map((beat, idx) => {
-              const isActive = activeBeat === idx;
-              return (
                 <div
-                  key={beat.step}
-                  className={`flex flex-col items-center transition-all duration-300 ${
-                    isActive ? 'scale-105 opacity-100' : 'opacity-40 scale-95'
+                  className={`text-xs font-semibold leading-tight line-clamp-1 ${
+                    isSelected ? 'text-white' : 'text-[#0b1d3a]'
                   }`}
                 >
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 shadow-sm">
-                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: beat.color }} />
-                    <span className="text-[11px] font-sans font-semibold text-[#0b1d3a]">
-                      {beat.title}
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono text-slate-500 mt-1">{beat.tag}</span>
+                  {beat.title}
                 </div>
-              );
-            })}
-          </div>
+                <div
+                  className={`text-[10px] font-mono mt-1 ${
+                    isSelected ? 'text-teal-300' : 'text-slate-500'
+                  }`}
+                >
+                  {beat.tag}
+                </div>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Bottom Editorial Narrative Paragraph with Color Meaning Tokens */}
-        <div className="max-w-3xl mx-auto w-full z-20 pt-2 sm:pt-4">
+        {/* Dedicated Dynamic Step Animation Canvas */}
+        <div className="h-56 sm:h-64 w-full mb-8">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${activeTab}-${selectedStep}`}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              className="w-full h-full"
+            >
+              <StepAnimationView tab={activeTab} stepIndex={selectedStep} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* High-Contrast Editorial Narrative (Immediately Crisp Navy #0b1d3a) */}
+        <div className="border-t border-slate-200 pt-6">
           <AnimatePresence mode="wait">
             {activeTab === 'how-i-think' ? (
               <motion.div
                 key="narrative-how-i-think"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
               >
-                <p className="text-base sm:text-lg text-[#1e293b] leading-relaxed font-normal text-center sm:text-left">
+                <p className="text-base sm:text-lg text-[#0b1d3a] leading-relaxed font-normal">
                   I like building things people can{' '}
-                  <span className="text-[#0d9488] font-semibold underline decoration-[#14b8a6]/40 underline-offset-4">
+                  <span className="text-[#0d9488] font-bold underline decoration-[#0d9488]/40 underline-offset-4">
                     actually rely on
                   </span>
-                  . Anyone can make a <span className="text-[#6366f1] font-semibold">model</span> look impressive in a demo.
+                  . Anyone can make a{' '}
+                  <span className="text-[#6366f1] font-bold">model</span> look impressive in a demo.
                   The harder and more interesting work starts when it meets real users, messy data and real consequences.
                   So I begin with how a system{' '}
-                  <span className="text-[#f59e0b] font-semibold">might fail</span>, build the{' '}
-                  <span className="relative inline-block font-semibold text-[#0b1d3a]">
+                  <span className="text-[#d97706] font-bold">might fail</span>, build the{' '}
+                  <span className="font-bold text-[#0b1d3a] border-b-2 border-[#d97706] pb-0.5">
                     checks and fallbacks first
-                    <svg
-                      className="absolute -bottom-1 left-0 w-full h-1.5 overflow-visible"
-                      viewBox="0 0 100 6"
-                      preserveAspectRatio="none"
-                    >
-                      <path
-                        d="M 0 3 Q 50 6 100 3"
-                        fill="none"
-                        stroke="#f59e0b"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeDasharray="100"
-                        strokeDashoffset={isReducedMotion ? 0 : 100 * (1 - underlineProgress)}
-                        className="transition-all duration-300"
-                      />
-                    </svg>
                   </span>
                   , and only then make the{' '}
-                  <span className="text-[#6366f1] font-semibold">clever part clever</span>.
+                  <span className="text-[#6366f1] font-bold">clever part clever</span>.
                   And I work closely with the people who’ll use it, because{' '}
-                  <span className="text-[#0d9488] font-semibold">
+                  <span className="text-[#0d9488] font-bold">
                     trust gets built together
                   </span>
                   , not just coded.
                 </p>
-
-                <div className="mt-3 pt-3 border-t border-slate-200/70 flex flex-wrap items-center justify-center gap-4 text-xs font-mono">
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#6366f1]" />
-                    <span>Periwinkle: AI &amp; Unpredictability</span>
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
-                    <span>Warm Amber: Guardrails &amp; Checks</span>
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#0d9488]" />
-                    <span>Teal: Verified &amp; Trusted</span>
-                  </span>
-                </div>
               </motion.div>
             ) : (
               <motion.div
                 key="narrative-daily-ai"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
               >
-                <p className="text-base sm:text-lg text-[#1e293b] leading-relaxed font-normal text-center sm:text-left">
+                <p className="text-base sm:text-lg text-[#0b1d3a] leading-relaxed font-normal">
                   On a daily basis, I don&rsquo;t treat AI as an autocomplete toy or an unchecked oracle. I use it as an{' '}
-                  <span className="text-[#0d9488] font-semibold">
+                  <span className="text-[#0d9488] font-bold">
                     adversarial junior team
                   </span>
-                  . I use <span className="text-[#6366f1] font-semibold">frontier models</span> for invariant design and AST schema contracts, lightweight models for repetitive plumbing, and an{' '}
-                  <span className="relative inline-block font-semibold text-[#0b1d3a]">
+                  . I use{' '}
+                  <span className="text-[#6366f1] font-bold">frontier models</span> for invariant design and AST schema contracts, lightweight models for repetitive plumbing, and an{' '}
+                  <span className="font-bold text-[#0b1d3a] border-b-2 border-[#d97706] pb-0.5">
                     adversarial red-team agent
-                    <svg
-                      className="absolute -bottom-1 left-0 w-full h-1.5 overflow-visible"
-                      viewBox="0 0 100 6"
-                      preserveAspectRatio="none"
-                    >
-                      <path
-                        d="M 0 3 Q 50 6 100 3"
-                        fill="none"
-                        stroke="#f59e0b"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeDasharray="100"
-                        strokeDashoffset={isReducedMotion ? 0 : 100 * (1 - underlineProgress)}
-                        className="transition-all duration-300"
-                      />
-                    </svg>
                   </span>{' '}
                   to break the code before human review. This unlocks{' '}
-                  <span className="text-[#0d9488] font-semibold underline decoration-[#14b8a6]/40 underline-offset-4">
+                  <span className="text-[#0d9488] font-bold underline decoration-[#0d9488]/40 underline-offset-4">
                     3x engineering leverage
                   </span>{' '}
                   while preserving complete architectural ownership.
                 </p>
-
-                <div className="mt-3 pt-3 border-t border-slate-200/70 flex flex-wrap items-center justify-center gap-4 text-xs font-mono">
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#5b7cf0]" />
-                    <span>Cobalt: Model Context Protocol (MCP)</span>
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
-                    <span>Amber: Autonomous Red-Teaming</span>
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#0d9488]" />
-                    <span>Teal: 3x Verified Velocity</span>
-                  </span>
-                </div>
               </motion.div>
             )}
           </AnimatePresence>
