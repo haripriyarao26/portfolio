@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import { HaldenButton, HaldenLetterReveal, WordSegment } from '@/components/HaldenMotion';
+import { resumeData } from '@/data/resume';
 
 type Props = { name: string; tagline: string };
 
@@ -13,24 +14,34 @@ const HERO_HEADLINE_SEGMENTS: WordSegment[] = [
   { text: 'around the problem.', highlight: false },
 ];
 
-const LIVE_AGENT_LAYERS = [
+const WHOLE_PRODUCT_STAGES = [
   {
     step: '01',
-    title: 'Deterministic Pre-Flight Router',
-    detail: 'AST & regex triage in <15ms · 0 LLM cost',
-    badge: '<15ms SLA',
+    phase: 'Listen',
+    summary: 'City meetings, user interviews & watching people struggle',
+    detail: 'Field research with actual users before writing a line of architecture.',
+    badge: 'Civic Context',
   },
   {
     step: '02',
-    title: 'AST Schema Recovery Layer',
-    detail: 'Auto-repairs malformed JSON · 0 crashes',
-    badge: 'AST Salvage',
+    phase: 'Design',
+    summary: 'Specs before code, schema bounds & state contracts',
+    detail: 'Mapping failure modes, fallback gates, and operational boundaries first.',
+    badge: 'Architecture',
   },
   {
     step: '03',
-    title: 'Golden-Dataset Eval Harness',
-    detail: 'Automated CI gates · 95%+ field agreement',
-    badge: 'Reality Evals',
+    phase: 'Build',
+    summary: 'Fast backend, data pipelines, front end & AI where it helps',
+    detail: 'Full-stack shipping: robust APIs, real-time sync, and targeted AI.',
+    badge: 'Full-Stack Code',
+  },
+  {
+    step: '04',
+    phase: 'Run',
+    summary: 'Live telemetry, instant rollback & long-term production care',
+    detail: 'Total system ownership: tracking regressions and maintaining high uptime.',
+    badge: 'Production Care',
   },
 ];
 
@@ -97,7 +108,7 @@ export default function StoryCanvasSequence({ name }: Props) {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveLayer(prev => (prev + 1) % LIVE_AGENT_LAYERS.length);
+      setActiveLayer(prev => (prev + 1) % WHOLE_PRODUCT_STAGES.length);
     }, 2800);
     return () => clearInterval(timer);
   }, []);
@@ -108,9 +119,9 @@ export default function StoryCanvasSequence({ name }: Props) {
       id="story"
       className="relative min-h-[92vh] flex flex-col justify-between pt-24 sm:pt-28 pb-10 px-4 sm:px-10 max-w-6xl mx-auto"
     >
-      {/* ── HERO TOP ROW: Headline + 3 Metrics + 1 CTA + 3D Agent Stack ── */}
+      {/* ── HERO TOP ROW: Headline + Story Chips + CTAs + 3D Product Delivery Stack ── */}
       <div className="grid lg:grid-cols-12 gap-8 items-start pt-6 sm:pt-10">
-        {/* Left 7 Columns: First-Person Headline, Subtitle, 3 Metrics & 1 CTA */}
+        {/* Left 7 Columns: First-Person Headline, Subtitle, Story Points & CTAs */}
         <motion.div style={{ y: leftColY }} className="lg:col-span-7 space-y-6">
           <div
             className="fade-up inline-flex items-center gap-2.5 rounded-full bg-white/80 backdrop-blur-md border border-[#0b1d3a]/10 px-4 py-1.5 shadow-sm"
@@ -118,11 +129,11 @@ export default function StoryCanvasSequence({ name }: Props) {
           >
             <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
             <span className="mono-accent text-xs font-semibold tracking-[0.16em] uppercase text-[#1d2f4f]">
-              APPLIED AI &amp; FOUNDING ENGINEER
+              FOUNDING &amp; FORWARD-DEPLOYED ENGINEER
             </span>
           </div>
 
-          {/* First-Person Headline (Using "I" instead of third person) */}
+          {/* First-Person Headline */}
           <HaldenLetterReveal
             as="h1"
             mode="load"
@@ -130,25 +141,69 @@ export default function StoryCanvasSequence({ name }: Props) {
             delayMs={180}
             spread={0.35}
             segments={HERO_HEADLINE_SEGMENTS}
-            className="font-display text-[clamp(36px,4.65vw,68px)] font-normal leading-[1.04] tracking-[-0.035em] text-[#0b1d3a]"
+            className="font-display text-[clamp(30px,3.8vw,56px)] font-normal leading-[1.08] tracking-[-0.03em] text-[#0b1d3a]"
           />
 
           <p
             className="fade-up text-base sm:text-lg text-[#1d2f4f]/85 max-w-xl leading-relaxed"
             style={{ ['--d' as any]: '0.85s' }}
           >
-            Customer conversations, architecture, full-stack code, production support, and the AI where it helps.
+            Customer conversations, architecture, full-stack code, production support, with AI where it helps.
           </p>
 
-          {/* Single Focused Primary CTA */}
-          <div className="fade-up pt-2" style={{ ['--d' as any]: '1.0s' }}>
+          {/* Grounded Story Points */}
+          <div
+            className="fade-up flex flex-wrap items-center gap-2.5 pt-1"
+            style={{ ['--d' as any]: '0.95s' }}
+          >
+            <a
+              href="#case-studies"
+              className="group inline-flex items-center gap-2 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-[#0b1d3a]/10 hover:border-[#5b7cf0]/30 px-3.5 py-1.5 shadow-sm transition-all text-xs font-medium text-[#1d2f4f]"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[#5b7cf0]" />
+              <span className="font-semibold text-[#0b1d3a]">0-to-1 at Onetera:</span>
+              <span className="text-[#3e4d68]">city meetings to production</span>
+            </a>
+
+            <a
+              href="#stack"
+              className="group inline-flex items-center gap-2 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-[#0b1d3a]/10 hover:border-[#2fe0d0]/40 px-3.5 py-1.5 shadow-sm transition-all text-xs font-medium text-[#1d2f4f]"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[#2fe0d0]" />
+              <span className="font-semibold text-[#0b1d3a]">Backend, data and front end</span>
+            </a>
+
+            <a
+              href="https://github.com/google-gemini/cookbook/pull/1088"
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-[#0b1d3a]/10 hover:border-[#5b7cf0]/30 px-3.5 py-1.5 shadow-sm transition-all text-xs font-medium text-[#1d2f4f]"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[#818cf8]" />
+              <span className="font-semibold text-[#0b1d3a]">AI where it helps</span>
+              <span className="text-[#3e4d68]">(merged Gemini PR #1088)</span>
+              <span className="text-[10px] text-[#5b7cf0] font-bold">↗</span>
+            </a>
+          </div>
+
+          {/* Dual Action CTAs: Explore Work + Direct Recruiter Email */}
+          <div className="fade-up flex flex-wrap items-center gap-3 pt-2" style={{ ['--d' as any]: '1.05s' }}>
             <HaldenButton size="lg" href="#case-studies">
               Explore Proven Work &darr;
             </HaldenButton>
+
+            <a
+              href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya`}
+              className="inline-flex items-center gap-2 h-12 px-6 rounded-full border border-[#0b1d3a]/15 bg-white/90 hover:bg-white text-[#0b1d3a] hover:border-[#5b7cf0]/40 shadow-sm hover:shadow transition-all font-display text-sm font-semibold active:scale-95"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#2fe0d0]" />
+              <span>Email Haripriya</span>
+              <span className="text-xs text-[#5b7cf0] font-bold">↗</span>
+            </a>
           </div>
         </motion.div>
 
-        {/* Right 5 Columns: Synchronized 3D Live Agent Stack Card with Parallax Elevation */}
+        {/* Right 5 Columns: Synchronized 3D Whole-Product Delivery Stack */}
         <motion.div
           style={{ y: rightCardY }}
           className="fade-up lg:col-span-5"
@@ -163,23 +218,23 @@ export default function StoryCanvasSequence({ name }: Props) {
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-[#2fe0d0] shadow-[0_0_8px_rgba(47,224,208,0.8)]" />
                   <span className="mono-accent text-xs font-semibold uppercase tracking-wider text-[#0b1d3a]">
-                    Live 3D Agent Stack
+                    Whole-Product Delivery
                   </span>
                 </div>
-                <span className="mono-accent text-[11px] text-[#5b7cf0] font-semibold">
-                  &lt;15ms SLA
+                <span className="mono-accent text-[11px] text-[#5b7cf0] font-semibold bg-[#5b7cf0]/10 px-2 py-0.5 rounded">
+                  Onetera 0-to-1
                 </span>
               </div>
 
               <div className="space-y-2.5">
-                {LIVE_AGENT_LAYERS.map((layer, idx) => {
+                {WHOLE_PRODUCT_STAGES.map((stage, idx) => {
                   const isActive = idx === activeLayer;
                   return (
                     <div
-                      key={layer.step}
+                      key={stage.step}
                       onMouseEnter={() => setActiveLayer(idx)}
                       style={{
-                        transform: isActive ? 'translateZ(22px) scale(1.02)' : 'translateZ(6px)',
+                        transform: isActive ? 'translateZ(20px) scale(1.02)' : 'translateZ(6px)',
                       }}
                       className={`cursor-pointer rounded-2xl border p-3.5 transition-all duration-300 ${
                         isActive
@@ -196,17 +251,16 @@ export default function StoryCanvasSequence({ name }: Props) {
                                 : 'bg-[#d2daff]/50 text-[#1d2f4f]'
                             }`}
                           >
-                            {layer.step}
+                            {stage.step}
                           </span>
                           <div>
                             <p className="font-display text-sm font-semibold text-[#0b1d3a]">
-                              {layer.title}
+                              {stage.phase}: <span className="font-normal text-xs text-[#3e4d68]">{stage.summary}</span>
                             </p>
-                            <p className="text-xs text-[#3e4d68]">{layer.detail}</p>
                           </div>
                         </div>
-                        <span className="mono-accent text-xs font-semibold text-[#5b7cf0] shrink-0">
-                          {layer.badge}
+                        <span className="mono-accent text-[10px] font-semibold text-[#5b7cf0] shrink-0 hidden sm:inline-block">
+                          {stage.badge}
                         </span>
                       </div>
                     </div>

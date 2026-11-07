@@ -236,11 +236,12 @@ function HeroConstellationZone({ circleTex }: { circleTex: THREE.Texture | null 
     };
 
     const pts: THREE.Vector3[] = [];
-    const count = 24;
+    const count = 20;
     for (let i = 0; i < count; i++) {
-      const x = (rand(i * 3) - 0.35) * 7.5;
-      const y = (rand(i * 3 + 1) - 0.5) * 4.2;
-      const z = (rand(i * 3 + 2) - 0.5) * 3.0;
+      // Push constellation strictly to the right (+1.2 to +5.6) so it never sits on the hero headline
+      const x = 1.2 + rand(i * 3) * 4.4;
+      const y = (rand(i * 3 + 1) - 0.45) * 4.0;
+      const z = (rand(i * 3 + 2) - 0.5) * 2.5;
       pts.push(new THREE.Vector3(x, y, z));
     }
 
@@ -258,7 +259,7 @@ function HeroConstellationZone({ circleTex }: { circleTex: THREE.Texture | null 
     return {
       nodes: pts,
       lineCoords: new Float32Array(lines),
-      pulsePairs: pairs.slice(0, 14),
+      pulsePairs: pairs.slice(0, 12),
     };
   }, []);
 
@@ -267,8 +268,8 @@ function HeroConstellationZone({ circleTex }: { circleTex: THREE.Texture | null 
   useFrame(state => {
     const t = state.clock.elapsedTime;
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(t * 0.16) * 0.1 + state.pointer.x * 0.12;
-      groupRef.current.rotation.x = Math.cos(t * 0.12) * 0.06 - state.pointer.y * 0.08;
+      groupRef.current.rotation.y = Math.sin(t * 0.16) * 0.08 + state.pointer.x * 0.1;
+      groupRef.current.rotation.x = Math.cos(t * 0.12) * 0.05 - state.pointer.y * 0.06;
     }
 
     if (pulseRef.current) {
@@ -296,16 +297,16 @@ function HeroConstellationZone({ circleTex }: { circleTex: THREE.Texture | null 
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#5b7cf0" transparent opacity={0.32} />
+        <lineBasicMaterial color="#5b7cf0" transparent opacity={0.16} />
       </lineSegments>
 
       {nodes.map((pos, idx) => (
         <mesh key={idx} position={pos}>
-          <sphereGeometry args={[idx % 4 === 0 ? 0.075 : 0.045, 16, 16]} />
+          <sphereGeometry args={[idx % 4 === 0 ? 0.06 : 0.038, 16, 16]} />
           <meshBasicMaterial
             color={idx % 4 === 0 ? '#5b7cf0' : '#00f0ff'}
             transparent
-            opacity={idx % 4 === 0 ? 0.75 : 0.48}
+            opacity={idx % 4 === 0 ? 0.4 : 0.25}
           />
         </mesh>
       ))}
@@ -321,10 +322,10 @@ function HeroConstellationZone({ circleTex }: { circleTex: THREE.Texture | null 
         </bufferGeometry>
         <pointsMaterial
           map={circleTex ?? undefined}
-          size={0.22}
+          size={0.18}
           color="#00f0ff"
           transparent
-          opacity={0.85}
+          opacity={0.45}
           depthWrite={false}
           sizeAttenuation
         />

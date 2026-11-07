@@ -139,7 +139,7 @@ export default function MotionFooter() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2fe0d0]" />
               </span>
               <span className="text-xs sm:text-sm font-sans font-medium text-slate-200">
-                Available for Founding &amp; Senior AI Roles &middot; Authorized to work in the US (H-1B)
+                Available for Founding &amp; Forward-Deployed Roles &middot; Authorized to work in the US (H-1B)
               </span>
             </div>
 

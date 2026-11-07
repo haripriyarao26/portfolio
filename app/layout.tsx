@@ -19,25 +19,25 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://haripriyarao26.github.io'),
-  title: 'Haripriya Rao — Applied AI & Founding Engineer',
+  title: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
   description:
-    'Applied AI and Full Stack Founding Engineer specializing in multi-agent orchestration (LangGraph, Claude SDK, Anthropic API, MCP), token optimization (96% cost cut), and sub-15ms deterministic task routing.',
+    'Full-stack and founding engineer building products end-to-end: from customer conversations and architecture to full-stack code and production AI.',
   keywords: [
     'Haripriya Rao',
-    'Applied AI Engineer',
-    'LangGraph',
-    'Multi-Agent Systems',
-    'Claude Certified Architect',
-    'CCA-F',
-    'Agentic AI',
     'Founding Engineer',
-    'USA AI Engineer',
+    'Forward-Deployed Engineer',
+    'Full-Stack Engineer',
+    'AI Engineer',
+    'LangGraph',
+    'Next.js',
+    'Python',
+    'TypeScript',
   ],
   authors: [{ name: 'Haripriya Rao', url: 'https://haripriyarao26.github.io/portfolio' }],
   openGraph: {
-    title: 'Haripriya Rao — Applied AI & Founding Engineer',
+    title: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
     description:
-      'I cut LLM inference costs 96% and orchestration latency 40% in production agent systems. Claude Certified Architect (CCA-F), AWS Certified AI Practitioner.',
+      'I don’t just build AI. I build the whole product around the problem: customer conversations, architecture, full-stack code, production support, with AI where it helps.',
     url: 'https://haripriyarao26.github.io/portfolio',
     siteName: 'Haripriya Rao Portfolio',
     images: [
@@ -53,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Haripriya Rao — Applied AI & Founding Engineer',
+    title: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
     description:
-      'Applied AI Engineer specializing in multi agent orchestration, token optimization, and high uptime production systems.',
+      'I don’t just build AI. I build the whole product around the problem: customer conversations, architecture, full-stack code, production support, with AI where it helps.',
     images: ['/linkedin-banner.png'],
   },
 }
