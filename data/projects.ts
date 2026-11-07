@@ -103,9 +103,9 @@ export const projects: Project[] = [
     id: 'procure-loop',
     title: 'Procure-Loop: 3-Agent Contract Intelligence Swarm',
     category: 'Agentic System & Live UI',
-    status: 'Flagship Architecture · Full-Stack Demo',
+    status: 'Interactive Sandbox Demo · Multi-Agent Prototype',
     description:
-      'An end-to-end multi-agent orchestration system using LangGraph (StateGraph) in Python to coordinate 3 specialized agents (Ingestion, Scouter, Drafting) with real-time SVG state visualization, Okta seat utilization audits, and automated renewal intervention alerts.',
+      'A prototype multi-agent orchestration demo using LangGraph (StateGraph) in Python to coordinate 3 specialized agents (Ingestion, Scouter, Drafting) with real-time SVG state visualization, Okta seat utilization audits, and automated renewal intervention alerts.',
     images: [],
     github: 'https://github.com/haripriyarao26/Procure-Loop',
     tech: ['Python', 'LangGraph', 'FastAPI', 'React', 'TypeScript', 'Vite', 'SVG State Machine'],

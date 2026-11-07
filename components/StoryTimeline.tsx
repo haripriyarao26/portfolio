@@ -45,8 +45,8 @@ const roleMeta: Record<string, RoleMeta> = {
   'Onetera Technologies|Software Engineer 2 / Founding Engineer': {
     milestone: 'Cut AI Cloud Costs 96% & Built 0-to-1 Civic Platform',
     narrative:
-      'Partnered with enterprise AI stakeholders including NVIDIA and municipal officials across 6 roadmap phases, cutting AI token costs by 96% and response latency by 40%.',
-    impactTags: ['96% Cost Cut', '40% Faster', '<15ms SLA', 'NVIDIA & Civic Partners'],
+      'Partnered with municipal officials and enterprise infrastructure partners across 6 roadmap phases, cutting AI token costs by 96% and response latency by 40%.',
+    impactTags: ['96% Cost Cut', '40% Faster', '<15ms SLA', 'Civic & Enterprise Partners'],
     scope:
       'Scaled multi-agent workflows to 255+ steps, built a Figma-to-React compiler (100+ components, -90% setup time), and owned real-time ClickHouse telemetry.',
     productDecision:
