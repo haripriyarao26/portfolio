@@ -11,12 +11,12 @@ import CaseStudiesSection from '@/components/CaseStudiesSection';
 import EngineeringNotes from '@/components/EngineeringNotes';
 import Education from '@/components/Education';
 import MotionFooter from '@/components/MotionFooter';
+import HowIThinkExperience from '@/components/HowIThinkExperience';
 import { TiltCard3D } from '@/components/ReactBits3D';
 import {
   HaldenButton,
   HaldenFadeUp,
   HaldenLetterReveal,
-  HaldenPinnedStatement,
 } from '@/components/HaldenMotion';
 import { projects } from '@/data/projects';
 import { resumeData } from '@/data/resume';
@@ -157,8 +157,8 @@ export default function Home() {
           tagline="I cut LLM inference costs 96% and orchestration latency 40% in production agent systems."
         />
 
-        {/* ── 2. Pinned Scroll Statement (Rises & reveals letter-by-letter as bowl floods cyan) ── */}
-        <HaldenPinnedStatement onNavActivate={setNavActive} />
+        {/* ── 2. How I Think & Why Engineering Leaders Hire Me (5-Beat Request Journey + Color Meaning) ── */}
+        <HowIThinkExperience onNavActivate={setNavActive} />
 
         {/* ── 3. Flagship Case Studies ── */}
         <CaseStudiesSection />
