@@ -69,7 +69,7 @@ const SIMPLE_COPY: Record<string, { title: string; summary: string; badge: strin
     title: 'AgentGauge: pick the right model for each coding task',
     badge: 'Open-Source Router',
     summary:
-      'An open-source router that scores how hard a task is, then chooses the model tier before any tokens are spent. It decides in under 15 ms.',
+      'An open-source router that scores how hard a task is, then chooses the model tier before any tokens are spent.',
   },
   'procure-loop': {
     title: 'Procure-Loop: AI Contract & License Savings Agent',
@@ -327,49 +327,87 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                   {SIMPLE_COPY['agent-gauge'].summary}
                 </p>
 
-                {/* Task Scorer Visual (Three task cards; clicking one selects it) */}
-                <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-4 sm:p-5 shadow-sm mb-6">
-                  <div className="grid gap-3 sm:grid-cols-3 mb-4">
-                    {GAUGE_TASKS.map((task, index) => {
-                      const isSelected = index === activeTaskIndex;
-                      return (
-                        <button
-                          key={task.id}
-                          type="button"
-                          onClick={() => setActiveTaskIndex(index)}
-                          className={`text-left rounded-xl p-3.5 border transition-all duration-300 ${
-                            isSelected
-                              ? 'border-[#5b7cf0] bg-white shadow-sm ring-1 ring-[#5b7cf0]/20'
-                              : 'border-[#0b1d3a]/10 bg-white/50 hover:bg-white'
-                          }`}
-                        >
-                          <div className="font-display text-xs font-semibold text-[#0b1d3a] mb-1">
-                            {task.name}
-                          </div>
-                          <div className="text-[11px] text-[#3e4d68] leading-snug">{task.desc}</div>
-                        </button>
-                      );
-                    })}
+                {/* Two-Column Showcase: Interactive Scorer on Left + Live Demo GIF on Right */}
+                <div className="grid lg:grid-cols-12 gap-6 mb-6 items-stretch">
+                  {/* Left Column (7 cols): Task Scorer */}
+                  <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-4 sm:p-5 shadow-sm">
+                    <div>
+                      <div className="text-xs font-mono font-semibold text-slate-500 mb-3 uppercase tracking-wider">
+                        Task Complexity Scorer
+                      </div>
+
+                      <div className="grid gap-2.5 sm:grid-cols-3 mb-4">
+                        {GAUGE_TASKS.map((task, index) => {
+                          const isSelected = index === activeTaskIndex;
+                          return (
+                            <button
+                              key={task.id}
+                              type="button"
+                              onClick={() => setActiveTaskIndex(index)}
+                              className={`text-left rounded-xl p-3 border transition-all duration-300 ${
+                                isSelected
+                                  ? 'border-[#5b7cf0] bg-white shadow-sm ring-1 ring-[#5b7cf0]/20'
+                                  : 'border-[#0b1d3a]/10 bg-white/50 hover:bg-white'
+                              }`}
+                            >
+                              <div className="font-display text-xs font-semibold text-[#0b1d3a] mb-1">
+                                {task.name}
+                              </div>
+                              <div className="text-[11px] text-[#3e4d68] leading-snug">{task.desc}</div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Per-task line shown when selected */}
+                    <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm">
+                      <div className="flex items-center gap-2 min-w-0 font-medium text-[#0b1d3a]">
+                        <span
+                          className="h-2 w-2 rounded-full shrink-0"
+                          style={{ backgroundColor: selectedTask.tierColor }}
+                        />
+                        <span className="truncate">{selectedTask.routingLine}</span>
+                      </div>
+                      <span
+                        className="mono-accent text-[11px] font-semibold px-2.5 py-0.5 rounded shrink-0 uppercase tracking-wide"
+                        style={{
+                          color: selectedTask.tierColor,
+                          backgroundColor: `${selectedTask.tierColor}15`,
+                        }}
+                      >
+                        {selectedTask.tier}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Per-task line shown when selected */}
-                  <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm">
-                    <div className="flex items-center gap-2 min-w-0 font-medium text-[#0b1d3a]">
-                      <span
-                        className="h-2 w-2 rounded-full shrink-0"
-                        style={{ backgroundColor: selectedTask.tierColor }}
+                  {/* Right Column (5 cols): Live Demo GIF Preview */}
+                  <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-[#0b1d3a]/8 bg-[#060813] p-2.5 shadow-inner">
+                    <div className="relative w-full h-full min-h-[180px] flex items-center justify-center rounded-xl overflow-hidden bg-black/60">
+                      <img
+                        src={getAssetUrl('/projects/agent-gauge-demo.gif')}
+                        alt="AgentGauge Live 3D Model Router Demo"
+                        className="w-full h-auto max-h-[220px] object-contain rounded-lg"
+                        onError={(e) => {
+                          const img = e.currentTarget;
+                          if (!img.dataset.tried) {
+                            img.dataset.tried = 'true';
+                            if (img.src.includes('/portfolio/')) {
+                              img.src = img.src.replace('/portfolio/', '/');
+                            } else {
+                              img.src = '/portfolio/projects/agent-gauge-demo.gif';
+                            }
+                          }
+                        }}
                       />
-                      <span className="truncate">{selectedTask.routingLine}</span>
                     </div>
-                    <span
-                      className="mono-accent text-[11px] font-semibold px-2.5 py-0.5 rounded shrink-0 uppercase tracking-wide"
-                      style={{
-                        color: selectedTask.tierColor,
-                        backgroundColor: `${selectedTask.tierColor}15`,
-                      }}
-                    >
-                      {selectedTask.tier}
-                    </span>
+                    <div className="px-2 pt-2 pb-0.5 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse" />
+                        <span>Live Router Demo</span>
+                      </span>
+                      <span className="text-[#5b7cf0] font-semibold">3-Tier Router</span>
+                    </div>
                   </div>
                 </div>
 
@@ -411,9 +449,142 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
       {/* ── SECOND FEATURED PROJECT: GOOGLE GEMINI COOKBOOK (MERGED PR #1088) ── */}
       {gemini && (
         <HaldenFadeUp delay={0.08}>
-          <div className="w-full">
-            {renderCard(gemini)}
-          </div>
+          <article id="project-gemini-cookbook">
+            <TiltCard3D
+              intensity={4}
+              glareColor="rgba(143, 213, 241, 0.35)"
+              className="spatial-glass rounded-3xl p-6 sm:p-8"
+            >
+              <div>
+                {/* Top Badge & Tech Pills */}
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <span className="mono-accent px-3 py-1 rounded-full bg-[#0b1d3a] text-white text-xs font-semibold">
+                    Merged by Google Maintainers
+                  </span>
+                  <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">
+                    Python &middot; Google Gemini API &middot; LLM Observability
+                  </span>
+                </div>
+
+                {/* Headline */}
+                <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#0b1d3a] mb-2">
+                  Google Gemini Official Cookbook (Merged PR #1088)
+                </h3>
+
+                <p className="text-sm sm:text-base text-[#3e4d68] max-w-3xl mb-6 leading-relaxed">
+                  Reviewed and merged by Google engineers into the official Gemini repository. Adds automatic retry handling, rate-limit backoff, and real-time dollar cost tracking.
+                </p>
+
+                {/* Two-Column: What I Solved on Left + Terminal GIF on Right */}
+                <div className="grid lg:grid-cols-12 gap-6 mb-6 items-stretch">
+                  {/* Left Column (7 cols): What I Solved */}
+                  <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-4 sm:p-5 shadow-sm space-y-3">
+                    <div className="text-xs font-mono font-semibold text-slate-500 uppercase tracking-wider">
+                      What I Solved in the Official Repository
+                    </div>
+
+                    <div className="space-y-3">
+                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm">
+                        <div className="flex items-center gap-2 font-bold text-[#0b1d3a] mb-1">
+                          <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                          <span>429 Resource Exhausted Rate Limiting</span>
+                        </div>
+                        <p className="text-slate-600 text-xs leading-relaxed pl-4">
+                          Engineered error-aware exponential backoff (30s/60s/90s) with jitter, preventing batch workflow failures when API rate quotas spike.
+                        </p>
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm">
+                        <div className="flex items-center gap-2 font-bold text-[#0b1d3a] mb-1">
+                          <span className="h-2 w-2 rounded-full bg-[#5b7cf0] shrink-0" />
+                          <span>Real-Time Token-to-USD Cost Tracking</span>
+                        </div>
+                        <p className="text-slate-600 text-xs leading-relaxed pl-4">
+                          Built a cost normalization layer across Gemini 2.0/3.0 models, letting developers monitor exact dollar spend per prompt and output in real time.
+                        </p>
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm">
+                        <div className="flex items-center gap-2 font-bold text-[#0b1d3a] mb-1">
+                          <span className="h-2 w-2 rounded-full bg-amber-500 shrink-0" />
+                          <span>Sub-Second Health Heartbeats</span>
+                        </div>
+                        <p className="text-slate-600 text-xs leading-relaxed pl-4">
+                          Added continuous health probing for Gemini API endpoints, verifying latency thresholds before executing multi-turn agent tasks.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column (5 cols): Demo GIF */}
+                  <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-[#0b1d3a]/8 bg-[#060813] p-2.5 shadow-inner">
+                    <div className="relative w-full h-full min-h-[180px] flex items-center justify-center rounded-xl overflow-hidden bg-black/60">
+                      <img
+                        src={getAssetUrl('/projects/rag-example.gif')}
+                        alt="Google Gemini Cookbook Rate Backoff & Observability Demo"
+                        className="w-full h-auto max-h-[220px] object-contain rounded-lg"
+                        onError={(e) => {
+                          const img = e.currentTarget;
+                          if (!img.dataset.tried) {
+                            img.dataset.tried = 'true';
+                            if (img.src.includes('/portfolio/')) {
+                              img.src = img.src.replace('/portfolio/', '/');
+                            } else {
+                              img.src = '/portfolio/projects/rag-example.gif';
+                            }
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="px-2 pt-2 pb-0.5 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse" />
+                        <span>Google Gemini PR #1088</span>
+                      </span>
+                      <a
+                        href="https://github.com/google-gemini/cookbook/pull/1088"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-[#2fe0d0] hover:underline font-semibold"
+                      >
+                        GitHub PR ↗
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons Row */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#0b1d3a]/8">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <HaldenButton
+                      href="https://github.com/google-gemini/cookbook/pull/1088"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View Merged PR #1088 ↗
+                    </HaldenButton>
+
+                    <HaldenButton
+                      href="https://github.com/google-gemini/cookbook"
+                      target="_blank"
+                      rel="noreferrer"
+                      variant="ghost"
+                    >
+                      Official Cookbook Repo ↗
+                    </HaldenButton>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setDrawerProject(gemini)}
+                    className="text-xs sm:text-sm font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] hover:underline transition-colors"
+                  >
+                    Technical specs →
+                  </button>
+                </div>
+              </div>
+            </TiltCard3D>
+          </article>
         </HaldenFadeUp>
       )}
 
