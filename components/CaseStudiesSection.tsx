@@ -114,18 +114,18 @@ export default function CaseStudiesSection() {
                       ONETERA
                     </span>
                     <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">
-                      Founding AI Engineer
+                      Software Engineer 2 / Founding Engineer
                     </span>
                   </div>
 
                   <OneteraCompressionLottie />
 
                   <div>
-                    <h3 className="font-display text-xl font-semibold text-[#0b1d3a] mb-2">
+                    <h3 className="font-display text-xl font-semibold text-[#0b1d3a] mb-2 leading-snug">
                       Cut AI cloud costs by 96% across 255+ workflow steps
                     </h3>
                     <p className="text-sm text-[#3e4d68] leading-relaxed">
-                      Filtered out unreferenced fields via Task-Oriented Object Notation (TOON) — an AST-pruned schema stripping unneeded data before prompt serialization. Compressing payloads from 200KB to 8KB cut input token volume by 96%, proportionally slashing inference costs by 96%.
+                      Filtered out unreferenced fields via Task-Oriented Object Notation (TOON) — an AST-pruned schema stripping unneeded data before prompt serialization. Compressing payloads from 200KB to 8KB slashed input token volume with zero schema breaks in the first six months.
                     </p>
                   </div>
 
@@ -134,7 +134,7 @@ export default function CaseStudiesSection() {
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
                         <DecryptedMetric value="96%" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Cost cut</div>
+                      <div className="text-xs text-[#3e4d68]">Token cost cut</div>
                     </div>
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
@@ -146,7 +146,7 @@ export default function CaseStudiesSection() {
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
                         <DecryptedMetric value="0" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Schema breaks</div>
+                      <div className="text-xs text-[#3e4d68]">Breaks in 6 mos</div>
                     </div>
                   </div>
                 </div>
@@ -167,7 +167,7 @@ export default function CaseStudiesSection() {
               <TiltCard3D
                 intensity={5}
                 glareColor="rgba(143, 213, 241, 0.35)"
-                className="spatial-glass rounded-3xl p-6 sm:p-8 h-full"
+                className="spatial-glass rounded-3xl p-6 sm:p-8 h-full flex flex-col justify-between"
               >
                 <div className="space-y-5">
                   <div className="flex items-center justify-between gap-2">
@@ -175,18 +175,18 @@ export default function CaseStudiesSection() {
                       ONETERA
                     </span>
                     <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">
-                      Founding AI Engineer
+                      Software Engineer 2 / Founding Engineer
                     </span>
                   </div>
 
                   <OneteraFoundingEcosystemLottie />
 
                   <div>
-                    <h3 className="font-display text-xl font-semibold text-[#0b1d3a] mb-2">
-                      Built 0-to-1 AI product: from city meetings to enterprise production
+                    <h3 className="font-display text-xl font-semibold text-[#0b1d3a] mb-2 leading-snug">
+                      Built 0-to-1 product: from city meetings to enterprise production
                     </h3>
                     <p className="text-sm text-[#3e4d68] leading-relaxed">
-                      Built the platform from scratch across 6 roadmap phases — presenting in city agency meetings, aligning civic requirements, collaborating with enterprise infrastructure partners, and delivering sub-15ms task routing with zero state desyncs.
+                      Started from vague requirements in city meetings and built the platform from scratch over six roadmap phases, working with city officials and NVIDIA engineers. I watched residents use it in person and changed the product based on what I saw.
                     </p>
                   </div>
 
@@ -205,15 +205,15 @@ export default function CaseStudiesSection() {
                     </div>
                     <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-3">
                       <div className="text-xl font-semibold text-[#0b1d3a] font-display">
-                        <DecryptedMetric value="<15ms" />
+                        <DecryptedMetric value="55+" />
                       </div>
-                      <div className="text-xs text-[#3e4d68]">Routing SLA</div>
+                      <div className="text-xs text-[#3e4d68]">Routes monitored</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#0b1d3a]/8 flex items-center justify-between">
-                  <span className="text-xs text-[#3e4d68]">City officials &amp; civic partners</span>
+                  <span className="text-xs text-[#3e4d68]">City officials &amp; NVIDIA engineers</span>
                   <HaldenButton onClick={() => setOpenDrawer('onetera-founding')}>
                     Tech Architecture
                   </HaldenButton>
@@ -256,16 +256,16 @@ export default function CaseStudiesSection() {
                   {/* Sticky Top Header with Clean Close Button */}
                   <div className="sticky -top-[max(1.5rem,env(safe-area-inset-top))] -mx-5 sm:-mx-10 px-5 sm:px-10 py-4 sm:py-5 bg-white/95 backdrop-blur-md border-b border-slate-100 flex items-start justify-between gap-4 z-20 mb-6 shadow-sm">
                     <div className="min-w-0">
-                      <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider block truncate">
+                      <span className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase tracking-wider block">
                         Engineering Deep Dive &middot; Onetera Technologies
                       </span>
                       <h3
                         id="case-study-drawer-title"
-                        className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug truncate"
+                        className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug"
                       >
                         {openDrawer === 'onetera-compression'
-                          ? 'Onetera: 96% Token Compression, TOON & AST Schema Salvage'
-                          : 'Onetera: 0-to-1 Product Engineering, City Council Alignment & NVIDIA Scaling'}
+                          ? 'Onetera: Token Compression, TOON & AST Schema Salvage'
+                          : 'Onetera: 0-to-1 Product Engineering, City Alignment & NVIDIA Scaling'}
                       </h3>
                     </div>
                     <button
@@ -282,22 +282,30 @@ export default function CaseStudiesSection() {
 
                   {openDrawer === 'onetera-compression' ? (
                     <div className="space-y-6">
+                      {/* Plain-English Problem & Solution Summary */}
+                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-[#0b1d3a] leading-relaxed">
+                        <span className="font-semibold block text-[#5b7cf0] text-xs uppercase tracking-wider mb-1 font-mono">
+                          Plain-English Problem &amp; Solution
+                        </span>
+                        The model was being sent 200 KB of raw rules and catalog data on every turn. I built an AST-sliced schema (TOON) that sent only the 10–20 fields that mattered, cutting token costs by 96% with zero schema breaks in production.
+                      </div>
+
                       <div className="space-y-3">
                         <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
                           How the 3-Front Compression Pipeline Works
                         </h4>
                         <ul className="space-y-3 text-sm text-[#3e4d68]">
                           <li>
-                            <strong className="text-[#0b1d3a]">1. Surgical Pre-Pass (Python):</strong> Isolates only the 10 to 20 steps with active conditional rules; 95% of inert UI steps are stripped before the LLM prompt is assembled.
+                            <strong className="text-[#0b1d3a]">1. Surgical Pre-Pass (Python):</strong> Isolates only the 10 to 20 steps with active conditional rules; 95% of inert UI steps are stripped before the prompt is assembled.
                           </li>
                           <li>
-                            <strong className="text-[#0b1d3a]">2. TOON (Table-Oriented Object Notation) Serialization:</strong> A compact tabular serialization format that converts repetitive JSON object arrays into pipe-delimited header rows, stripping 60% of redundant brackets and keys before sending to the model.
+                            <strong className="text-[#0b1d3a]">2. Task-Oriented Object Notation (TOON):</strong> A compact tabular serialization format that converts repetitive JSON object arrays into pipe-delimited header rows, stripping 60% of redundant brackets and keys before sending to the model.
                           </li>
                           <li>
-                            <strong className="text-[#0b1d3a]">3. Deterministic AST Schema Salvage:</strong> An Abstract Syntax Tree (AST) recovery parser that intercepts malformed model outputs (dropped closing braces, trailing commas, truncated strings) and safely repairs them into valid JSON schemas with 0 crashes.
+                            <strong className="text-[#0b1d3a]">3. Deterministic AST Schema Salvage:</strong> An Abstract Syntax Tree (AST) recovery parser that intercepts malformed model outputs (dropped closing braces, trailing commas, truncated strings) and safely repairs them into valid JSON schemas with no unhandled parser crashes in production.
                           </li>
                           <li>
-                            <strong className="text-[#0b1d3a]">4. O(1) Index Maps &amp; DFS Cycle Detection:</strong> Pre-computes bidirectional lookup maps and runs 3-color graph traversal to prevent recursive infinite loops across 255+ conditional steps.
+                            <strong className="text-[#0b1d3a]">4. O(1) Index Maps &amp; Cycle Detection:</strong> Pre-computes bidirectional lookup maps and runs 3-color graph traversal to prevent recursive infinite loops across 255+ conditional steps.
                           </li>
                         </ul>
                       </div>
@@ -326,25 +334,45 @@ s02   | INCOME | annual_usd < 50000         | prog_grant
 # Constrained Model Output:
 [{ "step": "s01", "activate": ["s04", "s05"] }]`}</pre>
                       </div>
+
+                      {/* Connection to How I Think */}
+                      <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#3e4d68]">
+                        <span>Connects to How I Think: <strong>Step 02 (Wrap in checks) &amp; Step 04 (Ship calmly)</strong></span>
+                        <a
+                          href="#how-i-think"
+                          onClick={() => setOpenDrawer(null)}
+                          className="font-mono text-[#5b7cf0] font-semibold hover:underline"
+                        >
+                          View Thinking Model &rarr;
+                        </a>
+                      </div>
                     </div>
                   ) : (
                     <div className="space-y-6">
+                      {/* Plain-English Problem & Solution Summary */}
+                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-[#0b1d3a] leading-relaxed">
+                        <span className="font-semibold block text-[#5b7cf0] text-xs uppercase tracking-wider mb-1 font-mono">
+                          Plain-English Problem &amp; Solution
+                        </span>
+                        Started from vague requirements in city agency meetings and built the platform from scratch over six roadmap phases, collaborating with city officials and NVIDIA engineers. I watched residents use it in person and changed the product based on what I saw.
+                      </div>
+
                       <div className="space-y-3">
                         <h4 className="font-display text-base font-semibold text-[#0b1d3a]">
                           0-to-1 Architecture &amp; Stakeholder Leadership
                         </h4>
                         <ul className="space-y-3 text-sm text-[#3e4d68]">
                           <li>
-                            <strong className="text-[#0b1d3a]">1. Built the Entire Platform from Scratch:</strong> Architected the system from initial whiteboard prototype to multi-tenant production across 6 roadmap phases. Designed the multi-agent orchestration runtime, state management, and production APIs without legacy scaffolding.
+                            <strong className="text-[#0b1d3a]">1. Built the Entire Platform from Scratch:</strong> Architected the system from whiteboard prototype to multi-tenant production across 6 roadmap phases. Designed the multi-agent orchestration runtime, state management, and production APIs without legacy scaffolding.
                           </li>
                           <li>
-                            <strong className="text-[#0b1d3a]">2. City Meetings &amp; Civic Agency Alignment:</strong> Attended and presented in live city agency &amp; municipal meetings. Translated nuanced public policies, municipal regulations, and non-technical stakeholder concerns into deterministic prompt boundaries, AST schemas, and strict compliance safeguards.
+                            <strong className="text-[#0b1d3a]">2. City Meetings &amp; Civic Agency Alignment:</strong> Attended and presented in live city agency meetings. Translated municipal regulations and non-technical stakeholder concerns into clear schema boundaries and automated fallback gates.
                           </li>
                           <li>
-                            <strong className="text-[#0b1d3a]">3. NVIDIA Stakeholder Alignment &amp; Model Hosting:</strong> Partnered directly with NVIDIA stakeholders and municipal officials to validate GPU acceleration and model hosting pipelines, cutting round-trip latency by 40% and delivering 99.98% platform uptime across 6 roadmap phases.
+                            <strong className="text-[#0b1d3a]">3. NVIDIA Alignment &amp; Model Hosting:</strong> Partnered with NVIDIA engineers and city officials to validate GPU acceleration pipelines. Parallel DAG execution cut round-trip orchestration latency by 40% with 99.98% platform uptime.
                           </li>
                           <li>
-                            <strong className="text-[#0b1d3a]">4. Production Hardening &amp; Redis Distributed Mutex:</strong> Integrated Redis distributed locks (mutexes) that grant millisecond-level exclusive execution locks across parallel agent workers, eliminating 100% of double-charge and race-condition edge cases under spike traffic.
+                            <strong className="text-[#0b1d3a]">4. Concurrency Hardening (Redis Mutex):</strong> Integrated distributed locks granting millisecond-level exclusive execution locks across parallel agent workers, preventing duplicate execution and race conditions under spike traffic.
                           </li>
                         </ul>
                       </div>
@@ -352,28 +380,40 @@ s02   | INCOME | annual_usd < 50000         | prog_grant
                       <div className="rounded-2xl border border-slate-200 bg-[#0b1d3a] p-5 font-mono text-xs text-slate-200 space-y-2.5">
                         <div className="text-[#2fe0d0] font-semibold flex items-center justify-between">
                           <span># Production Delivery &amp; Stakeholder Telemetry</span>
-                          <span className="text-[#2fe0d0]">NVIDIA PARTNERED</span>
+                          <span className="text-[#2fe0d0]">NVIDIA COLLABORATION</span>
                         </div>
                         <div className="flex justify-between border-b border-white/10 pb-1.5">
                           <span>0 → 1 Architecture Delivery</span>
                           <span className="text-[#2fe0d0]">6 ROADMAP PHASES SHIPPED</span>
                         </div>
                         <div className="flex justify-between border-b border-white/10 pb-1.5">
-                          <span>City Agency &amp; Municipal Presentation</span>
-                          <span className="text-[#2fe0d0]">100% REGULATORY COMPLIANCE</span>
+                          <span>City Agency Alignment</span>
+                          <span className="text-[#2fe0d0]">REVIEWED WITH CITY STAFF</span>
                         </div>
                         <div className="flex justify-between border-b border-white/10 pb-1.5">
-                          <span>Enterprise Decisioning Pipeline</span>
+                          <span>Parallel DAG Scheduling</span>
                           <span className="text-[#2fe0d0]">40% TURN LATENCY DROP</span>
                         </div>
                         <div className="flex justify-between border-b border-white/10 pb-1.5">
                           <span>Concurrency Mutex (Redis)</span>
-                          <span className="text-[#2fe0d0]">0 RACE CONDITIONS</span>
+                          <span className="text-[#2fe0d0]">0 LOCK CONFLICTS</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Task Routing &amp; State Stability</span>
-                          <span className="text-[#2fe0d0]">&lt;15MS SLA · 0 DESYNCS</span>
+                          <span>Multi-Turn City Pilots</span>
+                          <span className="text-[#2fe0d0]">0 STATE REGRESSIONS</span>
                         </div>
+                      </div>
+
+                      {/* Connection to How I Think */}
+                      <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#3e4d68]">
+                        <span>Connects to How I Think: <strong>Step 01 (Assume it fails) &amp; Step 05 (Build with users)</strong></span>
+                        <a
+                          href="#how-i-think"
+                          onClick={() => setOpenDrawer(null)}
+                          className="font-mono text-[#5b7cf0] font-semibold hover:underline"
+                        >
+                          View Thinking Model &rarr;
+                        </a>
                       </div>
                     </div>
                   )}
