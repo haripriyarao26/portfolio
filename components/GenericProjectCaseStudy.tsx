@@ -75,18 +75,24 @@ function GenericProjectCaseStudy({ projectId }: GenericProjectCaseStudyProps) {
             ))}
           </div>
 
-          {project.images && project.images[0] && (
-            <div className="mt-8 rounded-2xl overflow-hidden border border-[#e5e5e5] bg-[#040509] shadow-md">
-              <img
-                src={project.images[0].src}
-                alt={project.images[0].alt}
-                className="w-full h-auto max-h-96 object-cover"
-              />
-              {project.images[0].caption && (
-                <div className="px-4 py-2 bg-[#090d1a] border-t border-white/10 text-xs font-mono text-slate-300 text-left">
-                  {project.images[0].caption}
-                </div>
-              )}
+          {project.images && project.images.length > 0 && (
+            <div className="mt-8 space-y-5">
+              {project.images
+                .filter((img) => img.src.endsWith('.gif') || (!img.src.endsWith('.svg') && !img.src.endsWith('.png')))
+                .map((img) => (
+                  <div key={img.src} className="rounded-2xl overflow-hidden border border-[#e5e5e5] bg-[#040509] shadow-md">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-auto max-h-96 object-cover"
+                    />
+                    {img.caption && (
+                      <div className="px-4 py-2 bg-[#090d1a] border-t border-white/10 text-xs font-mono text-slate-300 text-left">
+                        {img.caption}
+                      </div>
+                    )}
+                  </div>
+                ))}
             </div>
           )}
         </div>

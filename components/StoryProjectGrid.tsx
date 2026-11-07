@@ -123,6 +123,8 @@ const SIMPLE_COPY: Record<string, { title: string; summary: string; badge: strin
 export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
   const [activeTaskIndex, setActiveTaskIndex] = useState<number>(0);
   const [drawerProject, setDrawerProject] = useState<Project | null>(null);
+  const [activeGaugeGif, setActiveGaugeGif] = useState<'router' | 'rag'>('router');
+  const [drawerMediaTab, setDrawerMediaTab] = useState<'router' | 'rag'>('router');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -286,17 +288,61 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                     </div>
                   </div>
 
-                  {/* Right (5 Cols): Visual Demo Screenshot / GIF with Live Demo Pill */}
+                  {/* Right (5 Cols): Dual GIF Demo with Interactive Switcher */}
                   <div className="lg:col-span-5 flex flex-col justify-between">
+                    {/* GIF Switcher Controls */}
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-100/90 border border-slate-200/70">
+                        <button
+                          type="button"
+                          onClick={() => setActiveGaugeGif('router')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
+                            activeGaugeGif === 'router'
+                              ? 'bg-white text-[#0b1d3a] shadow-sm'
+                              : 'text-[#64748B] hover:text-[#0b1d3a]'
+                          }`}
+                        >
+                          ⚡ 3D Router
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveGaugeGif('rag')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
+                            activeGaugeGif === 'rag'
+                              ? 'bg-white text-[#0b1d3a] shadow-sm'
+                              : 'text-[#64748B] hover:text-[#0b1d3a]'
+                          }`}
+                        >
+                          💡 RAG CLI
+                        </button>
+                      </div>
+                      <span className="mono-accent text-[11px] font-semibold text-[#5b7cf0]">
+                        {activeGaugeGif === 'router' ? '<15ms Web UI' : '<2ms Pre-Flight'}
+                      </span>
+                    </div>
+
                     <div className="relative w-full h-56 lg:h-full min-h-[220px] rounded-2xl overflow-hidden border border-[#0b1d3a]/12 bg-[#040509] group shadow-inner">
                       <img
-                        src={getAssetUrl('/projects/agent-gauge-demo.gif')}
-                        alt="AgentGauge Live Telemetry & 4-Dimension Task Router"
+                        key={activeGaugeGif}
+                        src={getAssetUrl(
+                          activeGaugeGif === 'router'
+                            ? '/projects/agent-gauge-demo.gif'
+                            : '/projects/rag-example.gif'
+                        )}
+                        alt={
+                          activeGaugeGif === 'router'
+                            ? 'AgentGauge Live Telemetry & 4-Dimension Task Router'
+                            : 'AgentGauge Company Policy RAG Pre-Flight Router & Escalation'
+                        }
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
                           const img = e.currentTarget;
                           if (!img.dataset.tried) {
                             img.dataset.tried = 'true';
+                            const targetPath =
+                              activeGaugeGif === 'router'
+                                ? '/projects/agent-gauge-demo.gif'
+                                : '/projects/rag-example.gif';
                             if (img.src.includes('/portfolio/')) {
                               img.src = img.src.replace('/portfolio/', '/');
                             } else {
@@ -304,7 +350,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                                 const u = new URL(img.src);
                                 img.src = `${u.origin}/portfolio${u.pathname}`;
                               } catch {
-                                img.src = '/portfolio/projects/agent-gauge-demo.gif';
+                                img.src = `/portfolio${targetPath}`;
                               }
                             }
                           }
@@ -325,8 +371,12 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
 
                       {/* Bottom caption overlay */}
                       <div className="absolute bottom-3 left-3 right-3 text-xs text-white/80 font-mono flex items-center justify-between">
-                        <span>skills.sh &middot; MCP &middot; VS Code</span>
-                        <span className="text-[#2fe0d0]">4 Distribution Channels</span>
+                        <span>
+                          {activeGaugeGif === 'router'
+                            ? 'skills.sh · MCP · VS Code · Next.js'
+                            : 'RAG Pipeline: 99% quota saved · 4k shield'}
+                        </span>
+                        <span className="text-[#2fe0d0]">5 Channels</span>
                       </div>
                     </div>
                   </div>
@@ -561,9 +611,83 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                 </button>
               </div>
 
-              {drawerProject.images && drawerProject.images[0] && (
+              {/* Media Preview Container with Switcher for AgentGauge */}
+              {drawerProject.id === 'agent-gauge' ? (
                 <div className="rounded-2xl overflow-hidden border border-[#0b1d3a]/15 bg-[#070913] shadow-xl mb-6">
-                  {/* Clean, Full-Width Animated Demo GIF */}
+                  {/* Tab Bar Switcher for AgentGauge */}
+                  <div className="px-4 py-2.5 bg-[#0a0d1a] border-b border-white/10 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/10 border border-white/10">
+                      <button
+                        type="button"
+                        onClick={() => setDrawerMediaTab('router')}
+                        className={`px-3 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
+                          drawerMediaTab === 'router'
+                            ? 'bg-[#5b7cf0] text-white shadow-sm'
+                            : 'text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        ⚡ 3D Model Router (Web)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDrawerMediaTab('rag')}
+                        className={`px-3 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
+                          drawerMediaTab === 'rag'
+                            ? 'bg-[#5b7cf0] text-white shadow-sm'
+                            : 'text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        💡 Company Policy RAG (&lt;2ms CLI)
+                      </button>
+                    </div>
+                    <span className="mono-accent text-[11px] text-[#2fe0d0]">
+                      {drawerMediaTab === 'router'
+                        ? '<15ms Web SLA · VS Code Status Pill'
+                        : '<2ms Pre-Flight · 99% Quota Saved'}
+                    </span>
+                  </div>
+
+                  {/* Clean Animated Demo Container */}
+                  <div className="relative w-full aspect-[16/9] bg-[#070913] flex items-center justify-center overflow-hidden">
+                    <img
+                      key={drawerMediaTab}
+                      src={getAssetUrl(
+                        drawerMediaTab === 'router'
+                          ? '/projects/agent-gauge-demo.gif'
+                          : '/projects/rag-example.gif'
+                      )}
+                      alt={
+                        drawerMediaTab === 'router'
+                          ? 'AgentGauge Interactive 3D Model Router Demo'
+                          : 'AgentGauge Company Policy RAG Pre-Flight Router Demo'
+                      }
+                      className="w-full h-full object-contain block"
+                    />
+                  </div>
+
+                  {/* Interactive Caption Bar */}
+                  <div className="px-4 py-3 bg-[#0a0d1a] border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-300">
+                    <span className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
+                      <span>
+                        {drawerMediaTab === 'router'
+                          ? 'Watching <15ms 4-dimension scoring flip from Haiku Low (Score 14) to Sonnet Med (Score 48) to Opus High (Score 92).'
+                          : 'Pre-flight RAG task scoring in <2ms, 99% quota saved ($0.004 vs $0.73 on Opus High), 4k context shield, and auto-escalation on deadlock.'}
+                      </span>
+                    </span>
+                    <a
+                      href="https://agent-gauge.github.io/agent-gauge/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#00F0FF] hover:underline font-semibold flex items-center gap-1 ml-auto"
+                    >
+                      <span>Open Live Demo</span>
+                      <span>↗</span>
+                    </a>
+                  </div>
+                </div>
+              ) : drawerProject.images && drawerProject.images[0] ? (
+                <div className="rounded-2xl overflow-hidden border border-[#0b1d3a]/15 bg-[#070913] shadow-xl mb-6">
                   <div className="relative w-full aspect-[16/9] bg-[#070913] flex items-center justify-center overflow-hidden">
                     <img
                       src={getAssetUrl(drawerProject.images[0].src)}
@@ -603,11 +727,66 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                     </div>
                   )}
                 </div>
-              )}
+              ) : null}
 
               <p className="text-sm text-[#3e4d68] leading-relaxed mb-6">
                 {drawerProject.description}
               </p>
+
+              {/* Special Walkthrough Section for AgentGauge: Company Policy RAG Case Study */}
+              {drawerProject.id === 'agent-gauge' && (
+                <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-[#0b1d3a] border border-[#5b7cf0]/30 text-white shadow-lg space-y-3.5">
+                  <div className="flex items-center justify-between">
+                    <span className="mono-accent text-xs font-semibold text-[#00F0FF] uppercase tracking-wider flex items-center gap-1.5">
+                      <span>💡 Real-World Walkthrough: Company Policy RAG</span>
+                    </span>
+                    <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-[#10F5A0] border border-emerald-500/40">
+                      99% Quota Saved
+                    </span>
+                  </div>
+
+                  <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                      <div className="font-mono text-[#10F5A0] font-semibold">1. &lt;2ms Pre-Flight Score (0 Tokens)</div>
+                      <p className="text-slate-300 leading-relaxed text-[11px]">
+                        Intent (10/35) + Blast (4/30) + Struct (4/20) + Risk (1/15) = <strong>Score 19/100</strong> → Routes to <strong>FAST Tier (Flash / Haiku)</strong>.
+                      </p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                      <div className="font-mono text-[#00F0FF] font-semibold">2. 99% AI Quota Saved</div>
+                      <p className="text-slate-300 leading-relaxed text-[11px]">
+                        Routed at <strong>$0.0040</strong> vs <strong>$0.7320</strong> on Opus High (23.8x faster) for chunker &amp; vector scaffolding.
+                      </p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                      <div className="font-mono text-[#c4b5fd] font-semibold">3. Context Window Blast Shield</div>
+                      <p className="text-slate-300 leading-relaxed text-[11px]">
+                        Enforces a strict 4,000-token prompt budget &amp; &le;2 files, blocking agents from dumping 85,000 unneeded tokens.
+                      </p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                      <div className="font-mono text-[#FF9E2C] font-semibold">4. Auto-Escalation on Deadlocks</div>
+                      <p className="text-slate-300 leading-relaxed text-[11px]">
+                        Triage for pgvector memory leaks jumps to <strong>86/100</strong> → Auto-escalates to <strong>DEEP Tier (Opus High · Plan-First)</strong>.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 5 Channels Quick-Copy Command Badges */}
+                  <div className="pt-2 border-t border-white/10 flex flex-wrap items-center gap-2 text-[11px] font-mono">
+                    <span className="text-slate-400">Install via:</span>
+                    <code className="px-2 py-0.5 rounded bg-black/40 text-[#00F0FF] border border-white/10">
+                      npx skills add Agent-Gauge/agent-gauge
+                    </code>
+                    <code className="px-2 py-0.5 rounded bg-black/40 text-[#c4b5fd] border border-white/10">
+                      npx agent-gauge pr-audit
+                    </code>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-2 mb-6">
                 <div className="mono-accent text-xs font-semibold text-[#5b7cf0] uppercase">
