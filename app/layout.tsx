@@ -18,10 +18,16 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://haripriyarao26.github.io'),
-  title: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
+  metadataBase: new URL('https://haripriyarao26.github.io/portfolio'),
+  title: {
+    default: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
+    template: '%s | Haripriya Rao',
+  },
   description:
     'Full-stack and founding engineer building products end-to-end: from customer conversations and architecture to full-stack code and production AI.',
+  alternates: {
+    canonical: 'https://haripriyarao26.github.io/portfolio',
+  },
   icons: {
     icon: [
       {
@@ -46,8 +52,31 @@ export const metadata: Metadata = {
     'Next.js',
     'Python',
     'TypeScript',
+    'ClickHouse',
+    'Redis',
+    'LLM Observability',
+    'USC Computer Science',
   ],
   authors: [{ name: 'Haripriya Rao', url: 'https://haripriyarao26.github.io/portfolio' }],
+  creator: 'Haripriya Rao',
+  publisher: 'Haripriya Rao',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
     description:
@@ -56,10 +85,10 @@ export const metadata: Metadata = {
     siteName: 'Haripriya Rao Portfolio',
     images: [
       {
-        url: '/linkedin-banner.png',
+        url: 'https://haripriyarao26.github.io/portfolio/linkedin-banner.png',
         width: 1200,
         height: 630,
-        alt: 'Haripriya Rao — Applied AI Engineer',
+        alt: 'Haripriya Rao — Founding & Forward-Deployed Engineer Portfolio',
       },
     ],
     locale: 'en_US',
@@ -70,8 +99,82 @@ export const metadata: Metadata = {
     title: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
     description:
       'I don’t just build AI. I build the whole product around the problem: customer conversations, architecture, full-stack code, production support, with AI where it helps.',
-    images: ['/linkedin-banner.png'],
+    images: ['https://haripriyarao26.github.io/portfolio/linkedin-banner.png'],
   },
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://haripriyarao26.github.io/portfolio/#person',
+      name: 'Haripriya Rao',
+      url: 'https://haripriyarao26.github.io/portfolio',
+      image: 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/icon.png',
+      jobTitle: 'Founding & Forward-Deployed Engineer',
+      description:
+        'Full-stack and founding engineer building products end-to-end: customer conversations, architecture, full-stack code, production support, and AI.',
+      knowsAbout: [
+        'Full-Stack Software Engineering',
+        'Artificial Intelligence',
+        'AI Agents',
+        'Agentic Workflows',
+        'LangGraph',
+        'Python',
+        'TypeScript',
+        'Next.js',
+        'React',
+        'ClickHouse',
+        'PostgreSQL',
+        'Redis',
+        'LLM Observability'
+      ],
+      alumniOf: [
+        {
+          '@type': 'CollegeOrUniversity',
+          name: 'University of Southern California',
+          sameAs: 'https://www.usc.edu'
+        },
+        {
+          '@type': 'CollegeOrUniversity',
+          name: 'Visvesvaraya Technological University'
+        }
+      ],
+      sameAs: [
+        'https://github.com/haripriyarao26',
+        'https://linkedin.com/in/haripriya-rao',
+        'https://github.com/google-gemini/cookbook/pull/1088',
+        'https://github.com/openai/openai-cookbook/pull/2568',
+        'https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile'
+      ],
+      worksFor: [
+        {
+          '@type': 'Organization',
+          name: 'JPMorgan Chase & Co.'
+        },
+        {
+          '@type': 'Organization',
+          name: 'Onetera Technologies'
+        }
+      ]
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': 'https://haripriyarao26.github.io/portfolio/#webpage',
+      url: 'https://haripriyarao26.github.io/portfolio',
+      name: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
+      isPartOf: {
+        '@type': 'WebSite',
+        '@id': 'https://haripriyarao26.github.io/portfolio/#website',
+        url: 'https://haripriyarao26.github.io/portfolio',
+        name: 'Haripriya Rao Portfolio'
+      },
+      mainEntity: {
+        '@id': 'https://haripriyarao26.github.io/portfolio/#person'
+      }
+    }
+  ]
 }
 
 export default function RootLayout({
@@ -81,6 +184,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${manrope.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
         <ResourceHints />
         {children}
