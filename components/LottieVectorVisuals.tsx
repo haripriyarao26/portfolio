@@ -169,7 +169,7 @@ export function OneteraCompressionLottie() {
   );
 }
 
-/* ── 2. Onetera: 0-to-1 Founding Engineering, City Meetings & Provenir Collab Visual ── */
+/* ── 2. Onetera: 0-to-1 Founding Engineering, City Meetings & NVIDIA Collab Visual ── */
 export function OneteraFoundingEcosystemLottie() {
   return (
     <div className="relative h-32 w-full rounded-2xl border border-white/90 bg-white/55 p-3 sm:p-4 flex items-center justify-between overflow-hidden shadow-inner">
@@ -186,7 +186,7 @@ export function OneteraFoundingEcosystemLottie() {
         <span className="mono-accent text-[9px] text-[#3e4d68] font-semibold">0 → 1 Product</span>
       </div>
 
-      {/* Center: Collaborative Pipeline connecting City -> Ingestion -> Provenir -> Prod */}
+      {/* Center: Collaborative Pipeline connecting City -> Ingestion -> NVIDIA -> Prod */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-2">
         <svg className="w-full h-14 overflow-visible" viewBox="0 0 160 50" fill="none">
           <path d="M 5 25 L 155 25" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="3 3" />
@@ -202,10 +202,10 @@ export function OneteraFoundingEcosystemLottie() {
             animate={{ cx: [155, 80, 5] }}
             transition={{ duration: 2.8, delay: 0.4, repeat: Infinity, ease: 'easeInOut' }}
           />
-          {/* Center Provenir & 6-Phase Pill */}
+          {/* Center NVIDIA & 6-Phase Pill */}
           <rect x="36" y="10" width="88" height="30" rx="8" fill="#0b1d3a" />
           <text x="80" y="23" textAnchor="middle" fill="#2fe0d0" fontSize="8" fontWeight="bold" fontFamily="monospace">
-            PROVENIR
+            NVIDIA
           </text>
           <text x="80" y="33" textAnchor="middle" fill="#FFFFFF" fontSize="7" fontFamily="sans-serif">
             6 Roadmap Phases

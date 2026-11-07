@@ -145,7 +145,7 @@ export const resumeData: ResumeData = {
       location: "Los Angeles, CA",
       period: "Jan 2024 – Apr 2026",
       achievements: [
-        "Delivered an end-to-end multi-tenant platform on schedule across 6 roadmap phases with zero state desyncs, partnering with enterprise stakeholders including Provenir and municipal officials.",
+        "Delivered an end-to-end multi-tenant platform on schedule across 6 roadmap phases with zero state desyncs, partnering with enterprise stakeholders including NVIDIA and municipal officials.",
         "Slashed LLM inference costs by 96% (from 200KB to 8KB/call) by redesigning the transformation pipeline to scale horizontally to 255+ agentic steps.",
         "Cut per-turn orchestrator latency by 40% via a 22-node asynchronous state machine using asyncio.gather parallel scheduling to eliminate serial round-trips.",
         "Engineered a recursive DFS algorithm to extract 100+ React components from Figma design trees, decreasing manual UI scaffolding time by 90%.",

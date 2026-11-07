@@ -89,7 +89,7 @@ export default function CaseStudiesSection() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#0b1d3a]/8 flex items-center justify-between">
-                  <span className="text-xs text-[#3e4d68]">Provenir &amp; city partners</span>
+                  <span className="text-xs text-[#3e4d68]">NVIDIA &amp; city partners</span>
                   <HaldenButton onClick={() => setOpenDrawer('onetera-compression')}>
                     Tech Architecture
                   </HaldenButton>
@@ -98,7 +98,7 @@ export default function CaseStudiesSection() {
             </article>
           </HaldenFadeUp>
 
-          {/* ── CARD 02: ONETERA 0-TO-1 PRODUCT, CITY MEETINGS & PROVENIR PARTNERSHIP ── */}
+          {/* ── CARD 02: ONETERA 0-TO-1 PRODUCT, CITY MEETINGS & NVIDIA PARTNERSHIP ── */}
           <HaldenFadeUp delay={0.14}>
             <article id="study-onetera-founding" className="h-full">
               <TiltCard3D
@@ -123,7 +123,7 @@ export default function CaseStudiesSection() {
                       Built 0-to-1 AI product: from city meetings to enterprise production
                     </h3>
                     <p className="text-sm text-[#3e4d68] leading-relaxed">
-                      Built the platform from scratch across 6 roadmap phases — presenting in city agency meetings, aligning civic requirements, collaborating with enterprise risk partners including Provenir, and delivering sub-15ms task routing.
+                      Built the platform from scratch across 6 roadmap phases — presenting in city agency meetings, aligning civic requirements, collaborating with enterprise stakeholders including NVIDIA, and delivering sub-15ms task routing.
                     </p>
                   </div>
 
@@ -150,7 +150,7 @@ export default function CaseStudiesSection() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#0b1d3a]/8 flex items-center justify-between">
-                  <span className="text-xs text-[#3e4d68]">City officials &amp; enterprise partners</span>
+                  <span className="text-xs text-[#3e4d68]">City officials &amp; NVIDIA stakeholders</span>
                   <HaldenButton onClick={() => setOpenDrawer('onetera-founding')}>
                     Tech Architecture
                   </HaldenButton>
@@ -189,7 +189,7 @@ export default function CaseStudiesSection() {
                   <h3 className="font-display text-xl sm:text-2xl font-semibold text-[#0b1d3a] mt-1 leading-snug">
                     {openDrawer === 'onetera-compression'
                       ? 'Onetera: 96% Token Compression, TOON & AST Schema Salvage'
-                      : 'Onetera: 0-to-1 Product Engineering, City Council Alignment & Provenir Scaling'}
+                      : 'Onetera: 0-to-1 Product Engineering, City Council Alignment & NVIDIA Scaling'}
                   </h3>
                 </div>
                 <button
@@ -265,7 +265,7 @@ s02   | INCOME | annual_usd < 50000         | prog_grant
                         <strong className="text-[#0b1d3a]">2. City Meetings &amp; Civic Agency Alignment:</strong> Attended and presented in live city agency &amp; municipal meetings. Translated nuanced public policies, municipal regulations, and non-technical stakeholder concerns into deterministic prompt boundaries, AST schemas, and strict compliance safeguards.
                       </li>
                       <li>
-                        <strong className="text-[#0b1d3a]">3. Enterprise Risk Alignment &amp; Provenir:</strong> Partnered directly with enterprise risk partners including Provenir to optimize decisioning pipelines and streaming responses, cutting round-trip latency by 40% and eliminating bottlenecks in multi-tenant environments.
+                        <strong className="text-[#0b1d3a]">3. NVIDIA Stakeholder Alignment &amp; Model Hosting:</strong> Partnered directly with NVIDIA stakeholders and municipal officials to validate GPU acceleration and model hosting pipelines, cutting round-trip latency by 40% and delivering 99.98% platform uptime across 6 roadmap phases.
                       </li>
                       <li>
                         <strong className="text-[#0b1d3a]">4. Production Hardening &amp; Redis Distributed Mutex:</strong> Integrated Redis distributed locks (mutexes) that grant millisecond-level exclusive execution locks across parallel agent workers, eliminating 100% of double-charge and race-condition edge cases under spike traffic.
@@ -276,7 +276,7 @@ s02   | INCOME | annual_usd < 50000         | prog_grant
                   <div className="rounded-2xl border border-slate-200 bg-[#0b1d3a] p-5 font-mono text-xs text-slate-200 space-y-2.5">
                     <div className="text-[#2fe0d0] font-semibold flex items-center justify-between">
                       <span># Production Delivery &amp; Stakeholder Telemetry</span>
-                      <span className="text-[#2fe0d0]">PROVENIR PARTNERED</span>
+                      <span className="text-[#2fe0d0]">NVIDIA PARTNERED</span>
                     </div>
                     <div className="flex justify-between border-b border-white/10 pb-1.5">
                       <span>0 → 1 Architecture Delivery</span>

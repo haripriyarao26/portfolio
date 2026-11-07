@@ -7,30 +7,30 @@ import { HaldenButton, HaldenLetterReveal, WordSegment } from '@/components/Hald
 type Props = { name: string; tagline: string };
 
 const HERO_HEADLINE_SEGMENTS: WordSegment[] = [
-  { text: 'Meet', highlight: false },
-  { text: 'Haripriya,', highlight: true },
-  { text: 'your AI engineer', highlight: false, lineBreakAfter: true },
-  { text: 'for production scale.', highlight: false },
+  { text: 'I build', highlight: false },
+  { text: 'production AI systems', highlight: true },
+  { text: 'that fail safely', highlight: false, lineBreakAfter: true },
+  { text: 'at enterprise scale.', highlight: false },
 ];
 
 const LIVE_AGENT_LAYERS = [
   {
     step: '01',
-    title: '22-Node LangGraph Router',
-    detail: 'Parallel async tool scheduling',
-    badge: 'LangGraph DAG',
+    title: 'Deterministic Pre-Flight Router',
+    detail: 'AST & regex triage in <15ms · 0 LLM cost',
+    badge: '<15ms SLA',
   },
   {
     step: '02',
-    title: 'AST Schema Recovery',
-    detail: 'Deterministic salvage · 0 schema crashes',
+    title: 'AST Schema Recovery Layer',
+    detail: 'Auto-repairs malformed JSON · 0 crashes',
     badge: 'AST Salvage',
   },
   {
     step: '03',
-    title: 'Golden-Dataset Eval Gate',
-    detail: '40.8s → 19.6s · 8/8 nested threads',
-    badge: '95.4% Accuracy',
+    title: 'Golden-Dataset Eval Harness',
+    detail: 'Automated CI gates · 95%+ field agreement',
+    badge: 'Reality Evals',
   },
 ];
 
@@ -38,7 +38,7 @@ const TRUST_GRID = [
   {
     name: 'JPMORGAN',
     delay: '1.25s',
-    href: '#experience',
+    href: '#timeline-momentum',
   },
   {
     name: 'ONETERA',
@@ -48,12 +48,12 @@ const TRUST_GRID = [
   {
     name: 'PROVENIR',
     delay: '1.39s',
-    href: '#experience',
+    href: '#timeline-momentum',
   },
   {
     name: 'DELOITTE',
     delay: '1.46s',
-    href: '#experience',
+    href: '#timeline-momentum',
   },
   {
     name: 'CCA-F ARCHITECT',
@@ -62,13 +62,13 @@ const TRUST_GRID = [
     external: true,
   },
   {
-    name: 'GEMINI PR #1088',
+    name: 'GEMINI PR #1088 (MERGED)',
     delay: '1.49s',
     href: 'https://github.com/google-gemini/cookbook/pull/1088',
     external: true,
   },
   {
-    name: 'OPENAI PR #2568',
+    name: 'OPENAI PR #2568 (CONTRIBUTED)',
     delay: '1.56s',
     href: 'https://github.com/openai/openai-cookbook/pull/2568',
     external: true,
@@ -82,31 +82,23 @@ const TRUST_GRID = [
 ];
 
 export default function StoryCanvasSequence({ name }: Props) {
-  const [copied, setCopied] = useState(false);
   const [activeLayer, setActiveLayer] = useState(0);
-  const email = 'haripriyaraov@gmail.com';
 
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveLayer(prev => (prev + 1) % LIVE_AGENT_LAYERS.length);
-    }, 2600);
+    }, 2800);
     return () => clearInterval(timer);
   }, []);
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
-  };
 
   return (
     <section
       id="story"
       className="relative min-h-[92vh] flex flex-col justify-between pt-24 sm:pt-28 pb-10 px-4 sm:px-10 max-w-6xl mx-auto"
     >
-      {/* Top / Middle Row: Halden Per-Character Blur-to-Navy Headline + Option 3 Live 3D Agent Stack */}
+      {/* ── HERO TOP ROW: Headline + 3 Metrics + 1 CTA + 3D Agent Stack ── */}
       <div className="grid lg:grid-cols-12 gap-8 items-start pt-6 sm:pt-10">
-        {/* Left 7 Columns: Per-Character Reveal Headline + Subtitle + Metric Pills */}
+        {/* Left 7 Columns: First-Person Headline, Subtitle, 3 Metrics & 1 CTA */}
         <div className="lg:col-span-7 space-y-6">
           <div
             className="fade-up inline-flex items-center gap-2.5 rounded-full bg-white/80 backdrop-blur-md border border-[#0b1d3a]/10 px-4 py-1.5 shadow-sm"
@@ -114,11 +106,11 @@ export default function StoryCanvasSequence({ name }: Props) {
           >
             <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
             <span className="mono-accent text-xs font-semibold tracking-[0.16em] uppercase text-[#1d2f4f]">
-              SENIOR AI &amp; FOUNDING ENGINEER
+              APPLIED AI &amp; FOUNDING ENGINEER
             </span>
           </div>
 
-          {/* Exact Halden Time-Based Per-Character Letter Reveal (#h1) */}
+          {/* First-Person Headline (Using "I" instead of third person) */}
           <HaldenLetterReveal
             as="h1"
             mode="load"
@@ -133,18 +125,18 @@ export default function StoryCanvasSequence({ name }: Props) {
             className="fade-up text-base sm:text-lg text-[#1d2f4f]/85 max-w-xl leading-relaxed"
             style={{ ['--d' as any]: '0.85s' }}
           >
-            I architect multi-agent workflows, deterministic evaluation harnesses, and full-stack AI products from initial whiteboard to verified enterprise reliability.
+            I architect multi-agent workflows, deterministic evaluation harnesses, and full-stack AI products that fail safely when faced with messy data, edge cases, and real production consequences.
           </p>
 
-          {/* Staggered Metric Pills: Exactly 3 Distinct Metrics */}
+          {/* Exactly 3 Focused, Verifiable Metrics */}
           <div
             className="fade-up flex flex-wrap items-center gap-2.5 pt-1"
             style={{ ['--d' as any]: '1.0s' }}
           >
             {[
-              { metric: '40%', label: 'Turn Latency Drop' },
-              { metric: '255+', label: 'Workflow Steps Orchestrated' },
-              { metric: '100+', label: 'Ground-Truth Eval Benchmarks' },
+              { metric: '96%', label: 'Token Cut (200KB → 8KB)' },
+              { metric: '<15ms', label: 'Deterministic Routing SLA' },
+              { metric: '0', label: 'Unhandled State Desyncs' },
             ].map(item => (
               <div
                 key={item.label}
@@ -236,7 +228,7 @@ export default function StoryCanvasSequence({ name }: Props) {
         </div>
       </div>
 
-      {/* Bottom Row: Verified Footprint & 4x2 Hairline Credential Grid */}
+      {/* ── LOWER SECTION: Verified Footprint & 8 Credential Chips Moved Below ── */}
       <div className="mt-14 pt-8 border-t border-[#0b1d3a]/8 grid lg:grid-cols-12 gap-8 items-center">
         {/* Left 5 Columns: Production Trust Line */}
         <div className="lg:col-span-5 space-y-2">
