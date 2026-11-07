@@ -153,41 +153,6 @@ export default function StoryCanvasSequence({ name }: Props) {
             Customer conversations, architecture, full-stack code, production support, with AI where it helps.
           </p>
 
-          {/* Grounded Story Points */}
-          <div
-            className="fade-up flex flex-wrap items-center gap-2.5 pt-1"
-            style={{ ['--d' as any]: '0.95s' }}
-          >
-            <a
-              href="#case-studies"
-              className="group inline-flex items-center gap-2 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-[#0b1d3a]/10 hover:border-[#5b7cf0]/30 px-3.5 py-1.5 shadow-sm transition-all text-xs font-medium text-[#1d2f4f]"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#5b7cf0]" />
-              <span className="font-semibold text-[#0b1d3a]">0-to-1 at Onetera:</span>
-              <span className="text-[#3e4d68]">city meetings to production</span>
-            </a>
-
-            <a
-              href="#stack"
-              className="group inline-flex items-center gap-2 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-[#0b1d3a]/10 hover:border-[#2fe0d0]/40 px-3.5 py-1.5 shadow-sm transition-all text-xs font-medium text-[#1d2f4f]"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#2fe0d0]" />
-              <span className="font-semibold text-[#0b1d3a]">Backend, data and front end</span>
-            </a>
-
-            <a
-              href="https://github.com/google-gemini/cookbook/pull/1088"
-              target="_blank"
-              rel="noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-white/85 hover:bg-white backdrop-blur-md border border-[#0b1d3a]/10 hover:border-[#5b7cf0]/30 px-3.5 py-1.5 shadow-sm transition-all text-xs font-medium text-[#1d2f4f]"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#818cf8]" />
-              <span className="font-semibold text-[#0b1d3a]">AI where it helps</span>
-              <span className="text-[#3e4d68]">(merged Gemini PR #1088)</span>
-              <span className="text-[10px] text-[#5b7cf0] font-bold">↗</span>
-            </a>
-          </div>
-
           {/* Dual Action CTAs: Explore Work + Direct Recruiter Email */}
           <div className="fade-up flex flex-wrap items-center gap-3 pt-2" style={{ ['--d' as any]: '1.05s' }}>
             <HaldenButton size="lg" href="#case-studies">
