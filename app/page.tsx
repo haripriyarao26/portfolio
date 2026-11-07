@@ -162,7 +162,7 @@ export default function Home() {
           className="flex items-center gap-[9px] text-[17px] font-medium tracking-[-0.02em] text-[#0b1d3a]"
         >
           <Image
-            src="/icon.png"
+            src="https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/icon.png"
             alt={resumeData.name}
             width={22}
             height={22}

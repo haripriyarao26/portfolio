@@ -22,6 +22,20 @@ export const metadata: Metadata = {
   title: 'Haripriya Rao — Founding & Forward-Deployed Engineer',
   description:
     'Full-stack and founding engineer building products end-to-end: from customer conversations and architecture to full-stack code and production AI.',
+  icons: {
+    icon: [
+      {
+        url: 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/icon.png',
+        type: 'image/png',
+      },
+    ],
+    shortcut: ['https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/icon.png'],
+    apple: [
+      {
+        url: 'https://vxisxudnyfyksbaktshp.supabase.co/storage/v1/object/public/portfolio/icon.png',
+      },
+    ],
+  },
   keywords: [
     'Haripriya Rao',
     'Founding Engineer',
