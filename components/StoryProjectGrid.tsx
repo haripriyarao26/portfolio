@@ -42,52 +42,34 @@ const GAUGE_TASKS = [
     id: 'task-simple',
     name: '1. CSS & Copy Fix',
     desc: 'Minor modal styling adjustment',
-    intent: 8,
-    blast: 4,
-    ast: 2,
-    risk: 0,
-    total: 14,
-    tier: 'Fast Tier (Haiku 3.5 / Flash Low)',
+    routingLine: 'Small, low risk -> fast model',
+    tier: 'fast tier',
     tierColor: '#10B981',
-    metric: 'Score: 14 · -96% Cost',
-    log: '[AgentGauge <15ms] Intent: 8 · Blast: 4 · AST: 2 · Risk: 0 → Score 14/100 → Routed to Fast Tier (Flash/Haiku Low). Instant latency.',
   },
   {
     id: 'task-medium',
     name: '2. API Auth Refactor',
     desc: 'Update token bucket & cache headers',
-    intent: 22,
-    blast: 14,
-    ast: 10,
-    risk: 2,
-    total: 48,
-    tier: 'Balanced Tier (Sonnet 3.7 / Argon Med)',
+    routingLine: 'Touches security code -> balanced model',
+    tier: 'balanced tier',
     tierColor: '#5b7cf0',
-    metric: 'Score: 48 · 2x Speed',
-    log: '[AgentGauge <15ms] Intent: 22 · Blast: 14 · AST: 10 · Risk: 2 → Score 48/100 → Routed to Balanced Tier (Sonnet Med). Standard verify.',
   },
   {
     id: 'task-complex',
     name: '3. Distributed State Mutex',
     desc: 'Resolve race conditions in 22-node DAG',
-    intent: 35,
-    blast: 28,
-    ast: 18,
-    risk: 11,
-    total: 92,
-    tier: 'Deep Tier (Opus 4 / Pro High · Plan-First)',
+    routingLine: 'Concurrency across many files, high risk -> deep model',
+    tier: 'deep tier',
     tierColor: '#7C3AED',
-    metric: 'Score: 92 · Deep Reasoning',
-    log: '[AgentGauge <15ms] Intent: 35 · Blast: 28 · AST: 18 · Risk: 11 → Score 92/100 → Routed to Deep Tier (Opus High). Mandatory plan-first.',
   },
 ];
 
 const SIMPLE_COPY: Record<string, { title: string; summary: string; badge: string }> = {
   'agent-gauge': {
-    title: 'AgentGauge: <15ms Task Complexity & Cost Router',
-    badge: 'Flagship Agent Infrastructure',
+    title: 'AgentGauge: pick the right model for each coding task',
+    badge: 'Open-Source Router',
     summary:
-      'Deterministic <15ms multi-agent router, MCP server, and VS Code extension that routes coding tasks across 4 dimensions to the optimal model tier and effort level (saving up to 96% on LLM inference) with git diff survival telemetry.',
+      'An open-source router that scores how hard a task is, then chooses the model tier before any tokens are spent. It decides in under 15 ms.',
   },
   'procure-loop': {
     title: 'Procure-Loop: AI Contract & License Savings Agent',
@@ -124,7 +106,6 @@ const SIMPLE_COPY: Record<string, { title: string; summary: string; badge: strin
 export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
   const [activeTaskIndex, setActiveTaskIndex] = useState<number>(0);
   const [drawerProject, setDrawerProject] = useState<Project | null>(null);
-  const [activeGaugeGif, setActiveGaugeGif] = useState<'router' | 'rag'>('router');
   const [drawerMediaTab, setDrawerMediaTab] = useState<'router' | 'rag'>('router');
   const [showMoreProjects, setShowMoreProjects] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
@@ -337,264 +318,90 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               className="spatial-glass rounded-3xl p-6 sm:p-8"
             >
               <div>
-                {/* Top Badge & Tech Pills */}
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="mono-accent px-3 py-1 rounded-full bg-[#0b1d3a] text-[#FFFFFF] text-xs font-semibold">
-                      {SIMPLE_COPY['agent-gauge'].badge}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 text-[11px] font-semibold mono-accent">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      &lt;15ms Router SLA
-                    </span>
-                  </div>
-                  <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">
-                    TypeScript &middot; MCP Server &middot; VS Code &middot; Next.js 15
-                  </span>
-                </div>
-
                 {/* Headline & High-Signal Pitch */}
                 <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#0b1d3a] mb-2">
                   {SIMPLE_COPY['agent-gauge'].title}
                 </h3>
 
-                <p className="text-sm sm:text-base text-[#3e4d68] max-w-4xl mb-6 leading-relaxed">
+                <p className="text-sm sm:text-base text-[#3e4d68] max-w-3xl mb-6 leading-relaxed">
                   {SIMPLE_COPY['agent-gauge'].summary}
                 </p>
 
-                {/* Two-Column Showcase: Interactive Scorer on Left + Live Demo Preview on Right */}
-                <div className="grid lg:grid-cols-12 gap-6 mb-6">
-                  {/* Left (7 Cols): Interactive 4-Dimension Task Scorer Simulator */}
-                  <div className="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-4 shadow-inner">
-                    <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="mono-accent text-xs font-semibold text-[#0b1d3a] uppercase tracking-wide">
-                          Live 4-Dimension Task Scorer (<span className="text-[#5b7cf0]">&lt;15ms SLA</span>)
-                        </span>
-                        <span
-                          className="mono-accent text-xs font-semibold px-2.5 py-0.5 rounded-md"
-                          style={{
-                            color: selectedTask.tierColor,
-                            backgroundColor: `${selectedTask.tierColor}15`,
-                          }}
+                {/* Task Scorer Visual (Three task cards; clicking one selects it) */}
+                <div className="rounded-2xl border border-[#0b1d3a]/8 bg-white/80 p-4 sm:p-5 shadow-sm mb-6">
+                  <div className="grid gap-3 sm:grid-cols-3 mb-4">
+                    {GAUGE_TASKS.map((task, index) => {
+                      const isSelected = index === activeTaskIndex;
+                      return (
+                        <button
+                          key={task.id}
+                          type="button"
+                          onClick={() => setActiveTaskIndex(index)}
+                          className={`text-left rounded-xl p-3.5 border transition-all duration-300 ${
+                            isSelected
+                              ? 'border-[#5b7cf0] bg-white shadow-sm ring-1 ring-[#5b7cf0]/20'
+                              : 'border-[#0b1d3a]/10 bg-white/50 hover:bg-white'
+                          }`}
                         >
-                          {selectedTask.tier}
-                        </span>
-                      </div>
-
-                      {/* 3 Interactive Clickable Test Scenarios */}
-                      <div className="grid gap-2 sm:grid-cols-3 mb-4">
-                        {GAUGE_TASKS.map((task, index) => {
-                          const isSelected = index === activeTaskIndex;
-                          return (
-                            <button
-                              key={task.id}
-                              type="button"
-                              onClick={() => setActiveTaskIndex(index)}
-                              className={`text-left rounded-xl p-3 border transition-all duration-300 ${
-                                isSelected
-                                  ? 'border-[#5b7cf0] bg-white shadow-sm ring-1 ring-[#5b7cf0]/20'
-                                  : 'border-[#0b1d3a]/10 bg-white/50 hover:bg-white'
-                              }`}
-                            >
-                              <div className="font-display text-xs font-semibold text-[#0b1d3a]">
-                                {task.name}
-                              </div>
-                              <div className="text-[11px] text-[#3e4d68] mt-0.5 truncate">{task.desc}</div>
-                              <div className="mt-2 text-[11px] font-mono text-[#5b7cf0] font-semibold">
-                                {task.metric}
-                              </div>
-                            </button>
-                          );
-                        })}
-                      </div>
-
-                      {/* 4 Dimension Breakdown Visual Meters */}
-                      <div className="space-y-2 mb-3 bg-slate-50/70 p-3 rounded-xl border border-slate-200/60 text-xs">
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          <div>
-                            <div className="flex justify-between text-[11px] mono-accent text-[#3e4d68]">
-                              <span>Intent</span>
-                              <span className="font-semibold text-[#0b1d3a]">{selectedTask.intent}/35</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-slate-200 rounded-full mt-1 overflow-hidden">
-                              <div
-                                className="h-full bg-[#5b7cf0] rounded-full transition-all duration-500"
-                                style={{ width: `${(selectedTask.intent / 35) * 100}%` }}
-                              />
-                            </div>
+                          <div className="font-display text-xs font-semibold text-[#0b1d3a] mb-1">
+                            {task.name}
                           </div>
-
-                          <div>
-                            <div className="flex justify-between text-[11px] mono-accent text-[#3e4d68]">
-                              <span>Blast Radius</span>
-                              <span className="font-semibold text-[#0b1d3a]">{selectedTask.blast}/30</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-slate-200 rounded-full mt-1 overflow-hidden">
-                              <div
-                                className="h-full bg-[#2fe0d0] rounded-full transition-all duration-500"
-                                style={{ width: `${(selectedTask.blast / 30) * 100}%` }}
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <div className="flex justify-between text-[11px] mono-accent text-[#3e4d68]">
-                              <span>AST Struct</span>
-                              <span className="font-semibold text-[#0b1d3a]">{selectedTask.ast}/20</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-slate-200 rounded-full mt-1 overflow-hidden">
-                              <div
-                                className="h-full bg-amber-500 rounded-full transition-all duration-500"
-                                style={{ width: `${(selectedTask.ast / 20) * 100}%` }}
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <div className="flex justify-between text-[11px] mono-accent text-[#3e4d68]">
-                              <span>Repo Risk</span>
-                              <span className="font-semibold text-[#0b1d3a]">{selectedTask.risk}/15</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-slate-200 rounded-full mt-1 overflow-hidden">
-                              <div
-                                className="h-full bg-rose-500 rounded-full transition-all duration-500"
-                                style={{ width: `${(selectedTask.risk / 15) * 100}%` }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Monospace Telemetry Banner */}
-                    <div className="rounded-xl bg-[#0b1d3a] px-3.5 py-2.5 font-mono text-xs text-[#2fe0d0] flex items-center justify-between overflow-x-auto">
-                      <span className="truncate mr-2">{selectedTask.log}</span>
-                      <span className="text-[#8fd5f1] shrink-0 text-[10px] uppercase font-semibold">
-                        Real-time Telemetry
-                      </span>
-                    </div>
+                          <div className="text-[11px] text-[#3e4d68] leading-snug">{task.desc}</div>
+                        </button>
+                      );
+                    })}
                   </div>
 
-                  {/* Right (5 Cols): Dual GIF Demo with Interactive Switcher */}
-                  <div className="lg:col-span-5 flex flex-col justify-between">
-                    {/* GIF Switcher Controls */}
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-100/90 border border-slate-200/70">
-                        <button
-                          type="button"
-                          onClick={() => setActiveGaugeGif('router')}
-                          className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
-                            activeGaugeGif === 'router'
-                              ? 'bg-white text-[#0b1d3a] shadow-sm'
-                              : 'text-[#64748B] hover:text-[#0b1d3a]'
-                          }`}
-                        >
-                          ⚡ 3D Router
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setActiveGaugeGif('rag')}
-                          className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
-                            activeGaugeGif === 'rag'
-                              ? 'bg-white text-[#0b1d3a] shadow-sm'
-                              : 'text-[#64748B] hover:text-[#0b1d3a]'
-                          }`}
-                        >
-                          💡 RAG CLI
-                        </button>
-                      </div>
-                      <span className="mono-accent text-[11px] font-semibold text-[#5b7cf0]">
-                        {activeGaugeGif === 'router' ? '<15ms Web UI' : '<2ms Pre-Flight'}
-                      </span>
-                    </div>
-
-                    <div className="relative w-full rounded-2xl overflow-hidden border border-[#0b1d3a]/12 bg-[#060813] shadow-inner flex items-center justify-center p-1">
-                      <img
-                        key={activeGaugeGif}
-                        src={getAssetUrl(
-                          activeGaugeGif === 'router'
-                            ? '/projects/agent-gauge-demo.gif'
-                            : '/projects/rag-example.gif'
-                        )}
-                        alt={
-                          activeGaugeGif === 'router'
-                            ? 'AgentGauge Live Telemetry & 4-Dimension Task Router'
-                            : 'AgentGauge Company Policy RAG Pre-Flight Router & Escalation'
-                        }
-                        className="w-full h-auto max-h-[260px] object-contain rounded-xl"
-                        onError={(e) => {
-                          const img = e.currentTarget;
-                          if (!img.dataset.tried) {
-                            img.dataset.tried = 'true';
-                            const targetPath =
-                              activeGaugeGif === 'router'
-                                ? '/projects/agent-gauge-demo.gif'
-                                : '/projects/rag-example.gif';
-                            if (img.src.includes('/portfolio/')) {
-                              img.src = img.src.replace('/portfolio/', '/');
-                            } else {
-                              try {
-                                const u = new URL(img.src);
-                                img.src = `${u.origin}/portfolio${u.pathname}`;
-                              } catch {
-                                img.src = `/portfolio${targetPath}`;
-                              }
-                            }
-                          }
-                        }}
+                  {/* Per-task line shown when selected */}
+                  <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm">
+                    <div className="flex items-center gap-2 min-w-0 font-medium text-[#0b1d3a]">
+                      <span
+                        className="h-2 w-2 rounded-full shrink-0"
+                        style={{ backgroundColor: selectedTask.tierColor }}
                       />
+                      <span className="truncate">{selectedTask.routingLine}</span>
                     </div>
-
-                    {/* Clean caption bar below image */}
-                    <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 mt-2 px-1">
-                      <span>
-                        {activeGaugeGif === 'router'
-                          ? 'skills.sh · MCP · VS Code · Next.js'
-                          : 'RAG Pipeline: 99% quota saved · 4k shield'}
-                      </span>
-                      <span className="text-[#5b7cf0] font-semibold">5 Channels</span>
-                    </div>
+                    <span
+                      className="mono-accent text-[11px] font-semibold px-2.5 py-0.5 rounded shrink-0 uppercase tracking-wide"
+                      style={{
+                        color: selectedTask.tierColor,
+                        backgroundColor: `${selectedTask.tierColor}15`,
+                      }}
+                    >
+                      {selectedTask.tier}
+                    </span>
                   </div>
                 </div>
-              </div>
 
-              {/* Action Buttons Row */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#0b1d3a]/8">
-                <div className="flex flex-wrap items-center gap-3">
-                  <HaldenButton
-                    href="https://agent-gauge.github.io/agent-gauge/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Launch Live Demo ↗
-                  </HaldenButton>
+                {/* Action Buttons Row */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#0b1d3a]/8">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <HaldenButton
+                      href="https://agent-gauge.github.io/agent-gauge/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Launch Live Demo ↗
+                    </HaldenButton>
 
-                  <HaldenButton
-                    href={agentGauge.github || 'https://github.com/Agent-Gauge/agent-gauge'}
-                    target="_blank"
-                    rel="noreferrer"
-                    variant="ghost"
-                  >
-                    GitHub Repo ↗
-                  </HaldenButton>
+                    <HaldenButton
+                      href={agentGauge.github || 'https://github.com/Agent-Gauge/agent-gauge'}
+                      target="_blank"
+                      rel="noreferrer"
+                      variant="ghost"
+                    >
+                      GitHub Repo ↗
+                    </HaldenButton>
+                  </div>
 
-                  <a
-                    href="https://github.com/Agent-Gauge/agent-gauge/releases"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#5b7cf0] hover:underline px-2"
+                  <button
+                    type="button"
+                    onClick={() => setDrawerProject(agentGauge)}
+                    className="text-xs sm:text-sm font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] hover:underline transition-colors"
                   >
-                    <span>VS Code Extension (VSIX) ↗</span>
-                  </a>
+                    Technical specs →
+                  </button>
                 </div>
-
-                <HaldenButton
-                  variant="ghost"
-                  onClick={() => setDrawerProject(agentGauge)}
-                >
-                  Technical specs →
-                </HaldenButton>
               </div>
             </TiltCard3D>
           </article>
