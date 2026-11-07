@@ -86,10 +86,10 @@ export default function CaseStudiesSection() {
     <section id="case-studies" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
       <div className="space-y-10">
         <HaldenFadeUp>
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+          <div className="flex items-center gap-2 mb-3">
             <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-            <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
-              PROVEN PRODUCTION IMPACT
+            <span className="font-sans text-[13px] sm:text-[14px] font-medium text-[#5b7cf0] uppercase tracking-wider">
+              Proven Production Impact
             </span>
           </div>
 
@@ -120,7 +120,7 @@ export default function CaseStudiesSection() {
               >
                 <div className="space-y-5">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="mono-accent px-3 py-1 rounded-full bg-[#0b1d3a] text-[#FFFFFF] text-xs font-semibold">
+                    <span className="font-sans text-xs font-bold text-[#0b1d3a] tracking-wider uppercase">
                       ONETERA
                     </span>
                     <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">
@@ -181,7 +181,7 @@ export default function CaseStudiesSection() {
               >
                 <div className="space-y-5">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="mono-accent px-3 py-1 rounded-full bg-[#0b1d3a] text-[#FFFFFF] text-xs font-semibold">
+                    <span className="font-sans text-xs font-bold text-[#0b1d3a] tracking-wider uppercase">
                       ONETERA
                     </span>
                     <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">

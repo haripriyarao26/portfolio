@@ -109,10 +109,10 @@ export default function HowIThinkExperience({
 
             {/* Top Header */}
             <div className="relative z-10 border-b border-white/10 pb-6 mb-8">
-              <div className="inline-flex items-center gap-2 rounded-full bg-slate-900/90 border border-cyan-500/30 px-3 py-0.5 mb-3 shadow-[0_0_12px_rgba(0,240,255,0.15)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#00f0ff] animate-ping" />
-                <span className="font-mono text-[10px] sm:text-[11px] font-semibold tracking-[0.12em] text-cyan-300 uppercase">
-                  WHY ENGINEERING LEADERS HIRE ME // ARCHITECTURAL THINKING
+              <div className="flex items-center gap-2 mb-3">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00f0ff]" />
+                <span className="font-sans text-[13px] sm:text-[14px] font-medium tracking-wider text-cyan-300 uppercase">
+                  Why Engineering Leaders Hire Me &middot; Architectural Thinking
                 </span>
               </div>
               <h2 className="font-display text-2xl sm:text-4xl font-bold text-white tracking-tight drop-shadow-sm">

@@ -224,7 +224,7 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                     href={project.demo}
                     target="_blank"
                     rel="noreferrer"
-                    className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-[#040509]/85 backdrop-blur-md border border-white/20 text-[11px] font-mono text-[#00F0FF] hover:bg-[#5b7cf0] hover:text-white transition-all shadow-md flex items-center gap-1.5"
+                    className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-md bg-[#040509]/85 backdrop-blur-md border border-white/20 text-[11px] font-mono text-[#00F0FF] hover:bg-[#5b7cf0] hover:text-white transition-all shadow-md flex items-center gap-1.5"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[#2fe0d0] animate-pulse" />
                     <span>Live Demo ↗</span>
@@ -429,14 +429,15 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
                       Launch Live Demo ↗
                     </HaldenButton>
 
-                    <HaldenButton
+                    <a
                       href={agentGauge.github || 'https://github.com/Agent-Gauge/agent-gauge'}
                       target="_blank"
                       rel="noreferrer"
-                      variant="ghost"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded"
                     >
-                      GitHub Repo ↗
-                    </HaldenButton>
+                      <span>GitHub Repo</span>
+                      <span aria-hidden="true">&rarr;</span>
+                    </a>
                   </div>
 
                   <button
@@ -465,8 +466,9 @@ export default function StoryProjectGrid({ projects }: StoryProjectGridProps) {
               <div>
                 {/* Top Badge & Tech Pills */}
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <span className="mono-accent px-3 py-1 rounded-full bg-[#0b1d3a] text-white text-xs font-semibold">
-                    Merged by Google Maintainers
+                  <span className="flex items-center gap-1.5 text-xs font-semibold text-[#0b1d3a] tracking-wider uppercase">
+                    <span className="h-2 w-2 rounded-full bg-[#10b981]" />
+                    <span>Merged by Google Maintainers</span>
                   </span>
                   <span className="mono-accent text-xs text-[#5b7cf0] font-semibold">
                     Python &middot; Google Gemini API &middot; LLM Observability

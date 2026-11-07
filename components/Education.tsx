@@ -9,10 +9,10 @@ export default function Education() {
     <section id="education" className="mx-auto max-w-6xl px-6 sm:px-10 py-14 sm:py-20 scroll-mt-24">
       <div>
         <HaldenFadeUp className="mb-8">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+          <div className="flex items-center gap-2 mb-3">
             <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-            <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
-              ACADEMIC FOUNDATION
+            <span className="font-sans text-[13px] sm:text-[14px] font-medium text-[#5b7cf0] uppercase tracking-wider">
+              Academic Foundation
             </span>
           </div>
 
@@ -53,19 +53,12 @@ export default function Education() {
                 </div>
                 {edu.coursework && edu.coursework.length > 0 && (
                   <div className="mt-5 pt-4 border-t border-[#0b1d3a]/8">
-                    <p className="mono-accent text-xs uppercase tracking-wider text-[#3e4d68] mb-2 font-medium">
+                    <p className="font-mono text-xs uppercase tracking-wider text-[#3e4d68] mb-1 font-semibold">
                       Key Coursework
                     </p>
-                    <div className="flex flex-wrap gap-2">
-                      {edu.coursework.map(subject => (
-                        <span
-                          key={subject}
-                          className="mono-accent text-xs px-2.5 py-1 rounded-full bg-white/80 text-[#0b1d3a] border border-[#0b1d3a]/10"
-                        >
-                          {subject}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="text-xs sm:text-sm font-sans text-[#475569] leading-relaxed">
+                      {edu.coursework.join(' · ')}
+                    </p>
                   </div>
                 )}
               </TiltCard3D>

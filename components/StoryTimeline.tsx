@@ -93,6 +93,11 @@ const roleConfigs: Record<string, RoleTimelineData> = {
   },
 };
 
+function parseMetric(chip: string) {
+  const [val, ...rest] = chip.split(' ');
+  return { value: val, label: rest.join(' ') };
+}
+
 export default function StoryTimeline({ items, sectionId = 'timeline-momentum' }: StoryTimelineProps) {
   const timelineRef = useRef<HTMLElement | null>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -122,10 +127,10 @@ export default function StoryTimeline({ items, sectionId = 'timeline-momentum' }
     <section id={sectionId} className="relative mx-auto max-w-6xl px-4 sm:px-10 py-16 sm:py-24 scroll-mt-24">
       <div ref={timelineRef as any}>
         <HaldenFadeUp className="mb-12">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+          <div className="flex items-center gap-2 mb-3">
             <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-            <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
-              CAREER EXPERIENCE
+            <span className="font-sans text-[13px] sm:text-[14px] font-medium text-[#5b7cf0] uppercase tracking-wider">
+              Career Experience
             </span>
           </div>
 
@@ -279,7 +284,7 @@ function TimelineCardItem({
                 aria-expanded={isExpanded}
                 aria-controls={detailsId}
                 onClick={onToggleExpand}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#0b1d3a] bg-white/90 hover:bg-[#5b7cf0]/10 hover:text-[#5b7cf0] border border-[#0b1d3a]/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-2 py-1"
               >
                 <span>{isExpanded ? 'Hide details' : 'Show details'}</span>
                 <svg
@@ -315,16 +320,26 @@ function TimelineCardItem({
                     {config.impactSentence}
                   </p>
 
-                  {/* Chips: Max 3, sans font, "value label" */}
-                  <div className="flex flex-wrap gap-2">
-                    {config.chips.slice(0, 3).map(chip => (
-                      <span
-                        key={chip}
-                        className="inline-flex items-center rounded-full border border-[#0b1d3a]/10 bg-white/90 px-3 py-1 font-sans text-xs font-medium text-[#0b1d3a]"
-                      >
-                        {chip}
-                      </span>
-                    ))}
+                  {/* Stat row: large number, small label below, thin vertical dividers, no borders or backgrounds */}
+                  <div className="flex flex-wrap items-center gap-4 sm:gap-6 my-2 pt-1">
+                    {config.chips.slice(0, 3).map((chip, cIdx) => {
+                      const { value, label } = parseMetric(chip);
+                      return (
+                        <div key={chip} className="flex items-center gap-4 sm:gap-6">
+                          <div>
+                            <div className="font-display text-base sm:text-xl font-semibold text-[#0b1d3a] tracking-tight leading-none">
+                              {value}
+                            </div>
+                            <div className="font-sans text-[11px] text-[#3e4d68] mt-1 font-medium">
+                              {label}
+                            </div>
+                          </div>
+                          {cIdx < config.chips.length - 1 && (
+                            <div className="h-6 w-[1px] bg-[#0b1d3a]/12" />
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
 
                   {/* Technical Engineering Highlights */}
@@ -339,16 +354,10 @@ function TimelineCardItem({
                     </ul>
                   )}
 
-                  {/* Stack */}
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {config.stack.map(tech => (
-                      <span
-                        key={tech}
-                        className="rounded-full border border-[#0b1d3a]/8 bg-white/70 px-2.5 py-0.5 font-sans text-[11px] text-[#475569]"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  {/* Tech stack: one muted text line separated by " · " */}
+                  <div className="pt-2 text-xs font-sans text-[#475569] leading-relaxed">
+                    <span className="font-semibold text-[#0b1d3a]">Stack: </span>
+                    <span>{config.stack.join(' · ')}</span>
                   </div>
                 </div>
               </motion.div>
@@ -378,16 +387,26 @@ function TimelineCardItem({
               {config.impactSentence}
             </p>
 
-            {/* Chips: Max 3, sans font, format "value label" */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              {config.chips.slice(0, 3).map(chip => (
-                <span
-                  key={chip}
-                  className="inline-flex items-center rounded-full border border-[#0b1d3a]/10 bg-white/90 px-3 py-1 font-sans text-xs font-medium text-[#0b1d3a] shadow-2xs"
-                >
-                  {chip}
-                </span>
-              ))}
+            {/* Stat row: large number, small label below, thin vertical dividers, no borders or backgrounds */}
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 my-4 pt-1">
+              {config.chips.slice(0, 3).map((chip, cIdx) => {
+                const { value, label } = parseMetric(chip);
+                return (
+                  <div key={chip} className="flex items-center gap-4 sm:gap-6">
+                    <div>
+                      <div className="font-display text-lg sm:text-2xl font-semibold text-[#0b1d3a] tracking-tight leading-none">
+                        {value}
+                      </div>
+                      <div className="font-sans text-xs text-[#3e4d68] mt-1 font-medium">
+                        {label}
+                      </div>
+                    </div>
+                    {cIdx < config.chips.length - 1 && (
+                      <div className="h-7 w-[1px] bg-[#0b1d3a]/12" />
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Actions: Case Study Drawer Link (if applicable) & "Show details" Button */}
@@ -402,7 +421,7 @@ function TimelineCardItem({
                       );
                       document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-1 -ml-1 group"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-1 -ml-1 group"
                   >
                     <span>Read the case study</span>
                     <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
@@ -418,7 +437,7 @@ function TimelineCardItem({
                 aria-expanded={isExpanded}
                 aria-controls={detailsId}
                 onClick={onToggleExpand}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-[#0b1d3a] bg-white/90 hover:bg-[#5b7cf0]/10 hover:text-[#5b7cf0] border border-[#0b1d3a]/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded px-2 py-1"
               >
                 <span>{isExpanded ? 'Hide details' : 'Show details'}</span>
                 <svg
@@ -464,15 +483,10 @@ function TimelineCardItem({
                       )}
                     </div>
 
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {config.stack.map(val => (
-                        <span
-                          key={val}
-                          className="rounded-full border border-[#0b1d3a]/10 bg-white/80 px-2.5 py-1 text-xs text-[#0b1d3a] font-sans"
-                        >
-                          {val}
-                        </span>
-                      ))}
+                    {/* Tech stack: one muted text line separated by " · " */}
+                    <div className="pt-2 text-xs font-sans text-[#475569] leading-relaxed border-t border-[#0b1d3a]/8">
+                      <span className="font-semibold text-[#0b1d3a]">Core Stack: </span>
+                      <span>{config.stack.join(' · ')}</span>
                     </div>
                   </div>
                 </motion.div>

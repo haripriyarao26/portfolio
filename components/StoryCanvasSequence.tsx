@@ -126,13 +126,11 @@ export default function StoryCanvasSequence({ name }: Props) {
         {/* Left 7 Columns: First-Person Headline, Subtitle, Story Points & CTAs */}
         <motion.div style={{ y: leftColY }} className="lg:col-span-7 space-y-6">
           <div
-            className="fade-up inline-flex items-center gap-2 rounded-full bg-white/85 backdrop-blur-md border border-[#0b1d3a]/10 px-4 py-1.5 shadow-sm"
+            className="fade-up flex items-center gap-2 text-xs sm:text-sm font-sans font-medium text-[#3e4d68]"
             style={{ ['--d' as any]: '0.2s' }}
           >
             <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-            <span className="mono-accent text-xs font-semibold tracking-[0.16em] uppercase text-[#1d2f4f]">
-              Software Engineer &middot; Full-Stack &middot; AI
-            </span>
+            <span>Software Engineer &middot; Full-Stack &middot; AI</span>
           </div>
 
           {/* First-Person Headline */}
@@ -153,19 +151,18 @@ export default function StoryCanvasSequence({ name }: Props) {
             Customer conversations, architecture, full-stack code, production support, with AI where it helps.
           </p>
 
-          {/* Dual Action CTAs: Explore Work + Direct Recruiter Email */}
-          <div className="fade-up flex flex-wrap items-center gap-3 pt-2" style={{ ['--d' as any]: '1.05s' }}>
+          {/* Dual Action CTAs: Explore Work (Primary solid pill) + Direct Recruiter Email (Text link with arrow) */}
+          <div className="fade-up flex flex-wrap items-center gap-4 sm:gap-6 pt-2" style={{ ['--d' as any]: '1.05s' }}>
             <HaldenButton size="lg" href="#case-studies">
               Explore Proven Work &darr;
             </HaldenButton>
 
             <a
               href={`mailto:${resumeData.email}?subject=Engineering%20Opportunity%20for%20Haripriya`}
-              className="inline-flex items-center gap-2 h-12 px-6 rounded-full border border-[#0b1d3a]/15 bg-white/90 hover:bg-white text-[#0b1d3a] hover:border-[#5b7cf0]/40 shadow-sm hover:shadow transition-all font-display text-sm font-semibold active:scale-95"
+              className="inline-flex items-center gap-1.5 text-sm sm:text-base font-semibold text-[#5b7cf0] hover:text-[#0b1d3a] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] rounded"
             >
-              <span className="w-2 h-2 rounded-full bg-[#2fe0d0]" />
               <span>Email Haripriya</span>
-              <span className="text-xs text-[#5b7cf0] font-bold">↗</span>
+              <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
         </motion.div>
@@ -188,7 +185,7 @@ export default function StoryCanvasSequence({ name }: Props) {
                     Whole-Product Delivery
                   </span>
                 </div>
-                <span className="text-xs text-[#5b7cf0] font-semibold bg-[#5b7cf0]/10 px-2.5 py-0.5 rounded-full">
+                <span className="text-xs text-[#5b7cf0] font-semibold">
                   4 Stages
                 </span>
               </div>
@@ -233,10 +230,8 @@ export default function StoryCanvasSequence({ name }: Props) {
                           </div>
                         </div>
                         <span
-                          className={`text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 transition-colors ${
-                            isActive
-                              ? 'bg-[#5b7cf0]/15 text-[#5b7cf0]'
-                              : 'bg-slate-100 text-[#3e4d68]'
+                          className={`text-xs font-medium shrink-0 transition-colors ${
+                            isActive ? 'text-[#5b7cf0]' : 'text-[#3e4d68]'
                           }`}
                         >
                           {stage.tag}

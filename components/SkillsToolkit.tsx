@@ -273,10 +273,10 @@ export default function SkillsToolkit({ onOpenDrawer }: SkillsToolkitProps) {
         {/* ── Section Header ── */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+            <div className="flex items-center gap-2 mb-3">
               <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-              <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
-                SKILLS &amp; TOOLKIT
+              <span className="font-sans text-[13px] sm:text-[14px] font-medium text-[#5b7cf0] uppercase tracking-wider">
+                Skills &amp; Architecture Toolkit
               </span>
             </div>
 
@@ -443,88 +443,88 @@ function CardWithDepth({
           </p>
         </div>
 
-        {/* Layer 3: Interactive Chips floating forward in Z with 30ms pop-in stagger */}
+        {/* Layer 3: Tech skills as one clean muted text line separated by " · " */}
         <div
-          className="relative z-20 pt-4 border-t border-[#0b1d3a]/8 flex flex-wrap gap-2"
+          className="relative z-20 pt-4 border-t border-[#0b1d3a]/8 text-xs sm:text-sm font-sans text-[#334155] leading-relaxed"
           style={{
             transform: shouldReduceMotion ? 'none' : 'translateZ(28px)',
           }}
         >
-          {card.pills.map((pill, pillIdx) => {
-            const isChipActive = activeChip === pill;
-            const usageInfo = USAGE_DATA[pill];
+          <span className="font-semibold text-[#0b1d3a] block mb-2 text-xs uppercase tracking-wider font-mono">
+            Key Technologies
+          </span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            {card.pills.map((pill, pillIdx) => {
+              const isChipActive = activeChip === pill;
+              const usageInfo = USAGE_DATA[pill];
 
-            return (
-              <div key={pill} className="relative">
-                <motion.button
-                  type="button"
-                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.3,
-                    delay: cardIdx * 0.12 + 0.2 + pillIdx * 0.03,
-                    ease: [0.22, 1, 0.36, 1] as const,
-                  }}
-                  onMouseEnter={() => onChipSelect(pill)}
-                  onMouseLeave={onChipDeselect}
-                  onFocus={() => onChipSelect(pill)}
-                  onBlur={onChipDeselect}
-                  onClick={() => {
-                    if (isTouchDevice) {
-                      if (isChipActive) {
-                        onChipDeselect();
-                      } else {
-                        onChipSelect(pill);
-                      }
-                    }
-                  }}
-                  className={`relative rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[#5b7cf0] focus-visible:ring-offset-2 ${
-                    isChipActive
-                      ? 'bg-[#0b1d3a] text-white shadow-md scale-105 border border-[#0b1d3a]'
-                      : 'bg-white/85 text-[#0b1d3a] border border-[#0b1d3a]/12 hover:bg-white hover:border-[#5b7cf0]/50 hover:shadow-sm'
-                  }`}
-                >
-                  <span>{pill}</span>
-                </motion.button>
+              return (
+                <span key={pill} className="inline-flex items-center">
+                  <span className="relative inline-block">
+                    <button
+                      type="button"
+                      onMouseEnter={() => onChipSelect(pill)}
+                      onMouseLeave={onChipDeselect}
+                      onFocus={() => onChipSelect(pill)}
+                      onBlur={onChipDeselect}
+                      onClick={() => {
+                        if (isTouchDevice) {
+                          if (isChipActive) {
+                            onChipDeselect();
+                          } else {
+                            onChipSelect(pill);
+                          }
+                        }
+                      }}
+                      className={`hover:text-[#5b7cf0] hover:underline underline-offset-2 transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-[#5b7cf0] rounded ${
+                        isChipActive ? 'text-[#5b7cf0] font-bold' : 'text-[#334155]'
+                      }`}
+                    >
+                      {pill}
+                    </button>
 
-                {/* Accessible Tooltip with One-Line Note & Link */}
-                {isChipActive && usageInfo && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 6, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 4, scale: 0.96 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 w-64 sm:w-72 p-3 rounded-2xl bg-[#0b1d3a] text-white text-xs shadow-xl border border-white/10 pointer-events-auto"
-                  >
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[10px] font-mono font-semibold text-[#2fe0d0]">
-                        <span className="uppercase tracking-wider">{pill} in production</span>
-                        <span className="text-slate-400">Where I used it</span>
-                      </div>
-                      <p className="text-slate-200 leading-snug font-normal text-xs">
-                        {usageInfo.note}
-                      </p>
-                      <div className="pt-1.5 border-t border-white/10 flex justify-end">
-                        <a
-                          href={usageInfo.href}
-                          target={usageInfo.href.startsWith('http') ? '_blank' : undefined}
-                          rel={usageInfo.href.startsWith('http') ? 'noreferrer' : undefined}
-                          className="inline-flex items-center gap-1 font-semibold text-[#2fe0d0] hover:text-white hover:underline text-[11px]"
-                        >
-                          <span>View verified proof</span>
-                          <span>→</span>
-                        </a>
-                      </div>
-                    </div>
+                    {/* Accessible Tooltip with One-Line Note & Link */}
+                    {isChipActive && usageInfo && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 6, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 4, scale: 0.96 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 w-64 sm:w-72 p-3 rounded-2xl bg-[#0b1d3a] text-white text-xs shadow-xl border border-white/10 pointer-events-auto"
+                      >
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between text-[10px] font-mono font-semibold text-[#2fe0d0]">
+                            <span className="uppercase tracking-wider">{pill} in production</span>
+                            <span className="text-slate-400">Where I used it</span>
+                          </div>
+                          <p className="text-slate-200 leading-snug font-normal text-xs">
+                            {usageInfo.note}
+                          </p>
+                          <div className="pt-1.5 border-t border-white/10 flex justify-end">
+                            <a
+                              href={usageInfo.href}
+                              target={usageInfo.href.startsWith('http') ? '_blank' : undefined}
+                              rel={usageInfo.href.startsWith('http') ? 'noreferrer' : undefined}
+                              className="inline-flex items-center gap-1 font-semibold text-[#2fe0d0] hover:text-white hover:underline text-[11px]"
+                            >
+                              <span>View verified proof</span>
+                              <span>→</span>
+                            </a>
+                          </div>
+                        </div>
 
-                    {/* Tooltip Arrow */}
-                    <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-[#0b1d3a]" />
-                  </motion.div>
-                )}
-              </div>
-            );
-          })}
+                        {/* Tooltip Arrow */}
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-[#0b1d3a]" />
+                      </motion.div>
+                    )}
+                  </span>
+                  {pillIdx < card.pills.length - 1 && (
+                    <span className="text-slate-400 select-none ml-2">&middot;</span>
+                  )}
+                </span>
+              );
+            })}
+          </div>
         </div>
       </motion.div>
     </div>
@@ -623,13 +623,12 @@ function ProductStackView({
                       <div className="font-display font-bold text-sm text-[#0b1d3a] flex items-center gap-2">
                         <span>{layer.name}</span>
                         <span
-                          className="mono-accent text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                          className="mono-accent text-[11px] font-semibold"
                           style={{
-                            backgroundColor: `${layer.color}18`,
                             color: layer.color,
                           }}
                         >
-                          {layer.tag}
+                          &middot; {layer.tag}
                         </span>
                       </div>
                       <div className="text-xs text-slate-500 mt-0.5 font-mono">
@@ -638,25 +637,9 @@ function ProductStackView({
                     </div>
                   </div>
 
-                  {/* Right: Skills in this layer */}
-                  <div className="flex flex-wrap gap-1.5 max-w-sm justify-end">
-                    {layer.skills.slice(0, 4).map((skill) => {
-                      const isSpecificChip = activeChip === skill;
-                      return (
-                        <span
-                          key={skill}
-                          className={`text-[11px] font-medium px-2 py-0.5 rounded-md border transition-all ${
-                            isSpecificChip
-                              ? 'bg-[#0b1d3a] text-white border-[#0b1d3a] shadow-sm font-semibold'
-                              : isLayerActive
-                              ? 'bg-slate-100 text-[#0b1d3a] border-slate-300 font-semibold'
-                              : 'bg-white/80 text-slate-600 border-slate-200'
-                          }`}
-                        >
-                          {skill}
-                        </span>
-                      );
-                    })}
+                  {/* Right: Skills in this layer as one clean muted text line */}
+                  <div className="text-xs font-sans text-[#475569] max-w-sm text-right leading-relaxed">
+                    {layer.skills.slice(0, 4).join(' · ')}
                   </div>
                 </motion.div>
               );
@@ -694,9 +677,8 @@ function ProductStackView({
                   </span>
                 </div>
                 <span
-                  className="mono-accent text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                  className="mono-accent text-[11px] font-semibold"
                   style={{
-                    backgroundColor: `${layer.color}15`,
                     color: layer.color,
                   }}
                 >
@@ -704,22 +686,8 @@ function ProductStackView({
                 </span>
               </div>
 
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {layer.skills.map((skill) => {
-                  const isSpecificChip = activeChip === skill;
-                  return (
-                    <span
-                      key={skill}
-                      className={`text-xs px-2 py-0.5 rounded-md border font-medium ${
-                        isSpecificChip
-                          ? 'bg-[#0b1d3a] text-white border-[#0b1d3a]'
-                          : 'bg-slate-50 text-slate-700 border-slate-200'
-                      }`}
-                    >
-                      {skill}
-                    </span>
-                  );
-                })}
+              <div className="text-xs font-sans text-[#475569] mt-2 leading-relaxed">
+                {layer.skills.join(' · ')}
               </div>
             </div>
           );

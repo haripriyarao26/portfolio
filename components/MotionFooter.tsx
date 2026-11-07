@@ -131,14 +131,14 @@ export default function MotionFooter() {
         {/* ── Main Content Container ── */}
         <div className="relative z-10 max-w-6xl w-full mx-auto px-6 sm:px-10 py-8 sm:py-10 flex-1 flex flex-col justify-between">
           
-          {/* Header Block: Status Pill & Credible Action Statement */}
+          {/* Header Block: Plain Text Status & Credible Action Statement */}
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.08] border border-white/15 px-4 py-1.5 backdrop-blur-md">
+            <div className="flex items-center gap-2.5">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2fe0d0] opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2fe0d0]" />
               </span>
-              <span className="text-xs sm:text-sm font-sans font-medium text-slate-200">
+              <span className="text-xs sm:text-sm font-sans font-medium text-slate-300">
                 Available for Founding &amp; Forward-Deployed Roles &middot; Authorized to work in the US (H-1B)
               </span>
             </div>
@@ -154,49 +154,63 @@ export default function MotionFooter() {
             </div>
           </div>
 
-          {/* Unified Contact Block (Single Location with High Contrast) */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
-            <MagneticButton href={`mailto:${resumeData.email}?subject=Starting%20a%20conversation%20with%20Haripriya`}>
-              <span className="inline-flex items-center gap-2.5 h-12 px-6 rounded-full bg-[#2fe0d0] hover:bg-[#5eead4] text-[#060c18] transition-all shadow-[0_0_25px_rgba(47,224,208,0.35)] font-display text-sm font-bold tracking-tight">
-                <span>Start a conversation</span>
-                <span className="text-base font-bold">→</span>
-              </span>
-            </MagneticButton>
-
-            <MagneticButton>
-              <button
-                type="button"
-                onClick={handleCopyEmail}
-                className="group relative inline-flex items-center gap-2.5 h-12 px-5 rounded-full border border-white/20 bg-white/[0.08] hover:bg-white/[0.15] text-white backdrop-blur-md transition-all font-display text-xs sm:text-sm font-semibold"
-              >
-                <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-                <span>{copiedEmail ? 'Email Copied!' : resumeData.email}</span>
-                <span className="text-[11px] font-mono text-slate-400 group-hover:text-white transition-colors">
-                  {copiedEmail ? '✓' : 'Copy'}
+          {/* Unified Contact Block: ONE Primary Solid Pill Button + Clean Text Links */}
+          <div className="space-y-4 pt-2">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+              <MagneticButton href={`mailto:${resumeData.email}?subject=Starting%20a%20conversation%20with%20Haripriya`}>
+                <span className="inline-flex items-center gap-2.5 h-12 px-6 rounded-full bg-[#2fe0d0] hover:bg-[#5eead4] text-[#060c18] transition-all shadow-[0_0_25px_rgba(47,224,208,0.35)] font-display text-sm font-bold tracking-tight">
+                  <span>Start a conversation</span>
+                  <span className="text-base font-bold">→</span>
                 </span>
-              </button>
-            </MagneticButton>
+              </MagneticButton>
 
-            <MagneticButton href="/Haripriya_Rao_Resume.pdf" external>
-              <span className="inline-flex items-center gap-2 h-12 px-5 rounded-full border border-white/20 bg-white/[0.08] hover:bg-white/[0.15] text-white backdrop-blur-md transition-all font-display text-sm font-semibold">
-                <svg className="w-4 h-4 text-[#2fe0d0]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Resume (PDF)
-              </span>
-            </MagneticButton>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm font-sans text-slate-300">
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2fe0d0] rounded"
+                >
+                  <span>{copiedEmail ? 'Email Copied!' : resumeData.email}</span>
+                  <span className="text-xs text-[#2fe0d0] font-mono">{copiedEmail ? '✓' : '(copy)'}</span>
+                </button>
 
-            <MagneticButton href={`https://${resumeData.github}`} external>
-              <span className="inline-flex items-center gap-1.5 h-12 px-4 rounded-full border border-white/15 bg-white/[0.05] hover:bg-white/[0.12] text-slate-200 hover:text-white transition-all text-xs font-mono font-medium">
-                GitHub ↗
-              </span>
-            </MagneticButton>
+                <span className="text-slate-600">&middot;</span>
 
-            <MagneticButton href={`https://${resumeData.linkedin}`} external>
-              <span className="inline-flex items-center gap-1.5 h-12 px-4 rounded-full border border-white/15 bg-white/[0.05] hover:bg-white/[0.12] text-slate-200 hover:text-white transition-all text-xs font-mono font-medium">
-                LinkedIn ↗
-              </span>
-            </MagneticButton>
+                <a
+                  href="/Haripriya_Rao_Resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2fe0d0] rounded"
+                >
+                  <span>Resume (PDF)</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+
+                <span className="text-slate-600">&middot;</span>
+
+                <a
+                  href={`https://${resumeData.github}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2fe0d0] rounded"
+                >
+                  <span>GitHub</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+
+                <span className="text-slate-600">&middot;</span>
+
+                <a
+                  href={`https://${resumeData.linkedin}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2fe0d0] rounded"
+                >
+                  <span>LinkedIn</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Clean, Non-Repetitive Sitemap Grid */}
@@ -239,30 +253,47 @@ export default function MotionFooter() {
                 Credentials
               </div>
               <ul className="space-y-1.5 text-slate-300">
-                <li>Anthropic CCA-F Architect</li>
-                <li>AWS AI Practitioner</li>
+                <li>
+                  <a
+                    href="https://www.credly.com/badges/f6636497-b9bf-4e6b-b553-4ae5b59858f7/linked_in_profile"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Anthropic CCA-F Architect ↗
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.credly.com/badges/898b89f1-5512-4d4a-8ba6-6a1597c7c510/public_url"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    AWS AI Practitioner ↗
+                  </a>
+                </li>
                 <li>USC &middot; MS in Computer Science</li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* ── Bottom Baseline: Clean Copyright & Back-to-Top Button ── */}
+        {/* ── Bottom Baseline: Clean Copyright & Back-to-Top Link ── */}
         <div className="relative z-10 w-full border-t border-white/10 bg-black/40 backdrop-blur-md px-6 sm:px-10 py-3.5 flex items-center justify-between text-xs text-slate-400">
           <div>
             &copy; 2026 {resumeData.name}
           </div>
 
-          <MagneticButton onClick={scrollToTop}>
-            <button
-              type="button"
-              aria-label="Back to top"
-              className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.06] hover:bg-white/20 text-slate-200 hover:text-white transition-all text-xs font-medium"
-            >
-              <span>Back to top</span>
-              <span className="transform group-hover:-translate-y-0.5 transition-transform text-[#2fe0d0]">↑</span>
-            </button>
-          </MagneticButton>
+          <button
+            type="button"
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            className="group flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#2fe0d0] rounded py-1 px-2"
+          >
+            <span>Back to top</span>
+            <span className="transform group-hover:-translate-y-0.5 transition-transform text-[#2fe0d0]">↑</span>
+          </button>
         </div>
 
       </div>

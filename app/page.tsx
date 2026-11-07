@@ -226,10 +226,10 @@ export default function Home() {
         <section id="projects" className="mx-auto max-w-6xl px-6 sm:px-10 py-16 sm:py-24 scroll-mt-24">
           <div className="space-y-10">
             <HaldenFadeUp>
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
                 <span className="h-2 w-2 rounded-full bg-[#2fe0d0]" />
-                <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
-                  FEATURED PROJECTS &amp; OPEN SOURCE
+                <span className="font-sans text-[13px] sm:text-[14px] font-medium text-[#5b7cf0] uppercase tracking-wider">
+                  Featured Projects &amp; Open Source
                 </span>
               </div>
 

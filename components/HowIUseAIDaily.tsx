@@ -132,10 +132,10 @@ export default function HowIUseAIDaily() {
       <div className="space-y-8">
         {/* Section Header */}
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/90 border border-[#0b1d3a]/10 px-4 py-1.5 mb-4 shadow-sm">
+          <div className="flex items-center gap-2 mb-3">
             <span className="h-2 w-2 rounded-full bg-[#5b7cf0]" />
-            <span className="mono-accent text-xs tracking-[0.16em] text-[#1d2f4f] uppercase font-semibold">
-              DAILY ENGINEERING PRACTICE
+            <span className="font-sans text-[13px] sm:text-[14px] font-medium text-[#5b7cf0] uppercase tracking-wider">
+              Daily Engineering Practice
             </span>
           </div>
 
